@@ -180,3 +180,22 @@ every phase is committed and pushed to `claude/zen-sagan-wzyp0k`.
 4. **Item 26 vs 82 (BGC-8088)** — merge into one product (qty 4) or keep separate?
 5. **Indicative replacement prices** — visible to buyers (clearly labelled) or admin-only?
 6. **Email provider** (SMTP / Resend) and domain — can be added later; console adapter until then.
+
+---
+
+## 5. Owner decisions (2026-11-08)
+1. **Initial import = clear items only.** `data/photo-mapping.json` classifies all 82 rows:
+   - `CLEAR` — 56 items / 416 units: photo visually confirmed for that item → imported and publishable.
+   - `NEEDS_REVIEW` — 23 items: photo plausible but not confirmed → **not published**; kept in the
+     importer's review queue so the owner can confirm and add them later with one action.
+   - `NO_PHOTO` — 3 items (1 ultrasonic cleaner, 63 W&G noise system, 79 FEEDBACK modules) → not published.
+   - Confirmed shift: Photos 1–39 → Items 2–40; Photos 40/41 (duplicate) → Item 41; 42–62 aligned;
+     Photos 63–75 → Items 64–76; Photos 76/77 (duplicate) → Item 77; 78–82 aligned (79 mismatched).
+2. **Add more equipment later** — admin "Add product" form (bilingual, photos, category, condition,
+   specs) plus promoting `NEEDS_REVIEW` rows from the import queue.
+3. **Prices editable after verification** — imported items get **no selling price** (public shows
+   "Price on request / السعر عند الطلب"). The indicative replacement price is stored as an internal
+   reference. Admin sets/edits the actual selling price per product; every change is audit-logged.
+4. **Store quantity** — initial stock = workbook quantity (as an `InventoryTransaction` of type
+   `IMPORT`); admin edits stock in the product form or Inventory module (adjustments recorded in the
+   ledger). Public shows "In stock: N" / "Out of stock".

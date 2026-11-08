@@ -5,6 +5,7 @@ _Last updated: 2026-11-08_
 ## Completed
 - Phase 1 — project and workbook inspection (see `DEVELOPMENT_PLAN.md` §1).
 - Workbook saved at `data/inventory.xlsx`.
+- Photo-to-item mapping reviewed visually: `data/photo-mapping.json` (56 CLEAR, 23 NEEDS_REVIEW, 3 NO_PHOTO).
 
 ## In progress
 - Waiting for owner approval of `DEVELOPMENT_PLAN.md` and answers to §4 open questions.

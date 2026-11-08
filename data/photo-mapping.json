@@ -1,0 +1,751 @@
+{
+  "source": "data/inventory.xlsx",
+  "notes": {
+    "unusedDuplicatePhotos": [
+      41,
+      77
+    ],
+    "photo53": "anchored off-grid at G12",
+    "photo79": "shows a DC/DC converter similar to Photo 21; does not match item 79"
+  },
+  "items": [
+    {
+      "itemNo": 1,
+      "description": "Ultrasonic Cleaner, SUNRED 300A or similar",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 100,
+      "photo": null,
+      "photoFile": null,
+      "status": "NO_PHOTO"
+    },
+    {
+      "itemNo": 2,
+      "description": "FEEDBACK Electrical/Electronics Training Modules",
+      "quantity": 27,
+      "indicativeUnitPriceOMR": 90,
+      "photo": 1,
+      "photoFile": "photo_01.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 3,
+      "description": "Nortel Networks Desktop Telephone Sets",
+      "quantity": 4,
+      "indicativeUnitPriceOMR": 20,
+      "photo": 2,
+      "photoFile": "photo_02.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 4,
+      "description": "FEEDBACK Microwave Trainer MWT 530",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 1040,
+      "photo": 3,
+      "photoFile": "photo_03.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 5,
+      "description": "Philip Harris Regulated Power Supply Unit",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 80,
+      "photo": 4,
+      "photoFile": "photo_04.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 6,
+      "description": "Electronic Control / Alarm Monitoring Training Unit",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 160,
+      "photo": 5,
+      "photoFile": "photo_05.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 7,
+      "description": "Nortel Networks Desktop Telephone Set",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 20,
+      "photo": 6,
+      "photoFile": "photo_06.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 8,
+      "description": "Electronic Breadboard / Prototyping Trainer Board",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 70,
+      "photo": 7,
+      "photoFile": "photo_07.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 9,
+      "description": "KL-68005 Lux Load Photometer Units",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 150,
+      "photo": 8,
+      "photoFile": "photo_08.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 10,
+      "description": "Farnell Laboratory DC Power Supply Units",
+      "quantity": 3,
+      "indicativeUnitPriceOMR": 100,
+      "photo": 9,
+      "photoFile": "photo_09.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 11,
+      "description": "Metrix AX 322 Dual DC Power Supply Units",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 155,
+      "photo": 10,
+      "photoFile": "photo_10.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 12,
+      "description": "FORTH Telephone Sets",
+      "quantity": 7,
+      "indicativeUnitPriceOMR": 20,
+      "photo": 11,
+      "photoFile": "photo_11.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 13,
+      "description": "Barrett Communication Radio Transceivers / Control Units",
+      "quantity": 3,
+      "indicativeUnitPriceOMR": 325,
+      "photo": 12,
+      "photoFile": "photo_12.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 14,
+      "description": "TTi APCS218-419 Interface Modules",
+      "quantity": 7,
+      "indicativeUnitPriceOMR": 80,
+      "photo": 13,
+      "photoFile": "photo_13.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 15,
+      "description": "Assorted Data Communication / Interface Accessories and Cables",
+      "quantity": 20,
+      "indicativeUnitPriceOMR": 10,
+      "photo": 14,
+      "photoFile": "photo_14.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 16,
+      "description": "KL-300 Digital Logic Lab Accessories Boxes",
+      "quantity": 18,
+      "indicativeUnitPriceOMR": 60,
+      "photo": 15,
+      "photoFile": "photo_15.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 17,
+      "description": "FEEDBACK Fibre-Optics Educator Transmitter Units",
+      "quantity": 14,
+      "indicativeUnitPriceOMR": 180,
+      "photo": 16,
+      "photoFile": "photo_16.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 18,
+      "description": "Laboratory Optical / Fibre-Optic Experiment Trainer Kits",
+      "quantity": 5,
+      "indicativeUnitPriceOMR": 360,
+      "photo": 17,
+      "photoFile": "photo_17.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 19,
+      "description": "FEEDBACK Sine Square Oscillator SS0603 Units",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 90,
+      "photo": 18,
+      "photoFile": "photo_18.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 20,
+      "description": "Stepper Motors / Precision Drive Motors",
+      "quantity": 6,
+      "indicativeUnitPriceOMR": 30,
+      "photo": 19,
+      "photoFile": "photo_19.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 21,
+      "description": "Huntron Tracker 2700 Component Analysis Units",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 2955,
+      "photo": 20,
+      "photoFile": "photo_20.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 22,
+      "description": "Ericsson BFD 200 001/1 DC/DC Converter Modules",
+      "quantity": 5,
+      "indicativeUnitPriceOMR": 115,
+      "photo": 21,
+      "photoFile": "photo_21.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 23,
+      "description": "FEEDBACK Capacitors and Inductors EE421C Modules",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 70,
+      "photo": 22,
+      "photoFile": "photo_22.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 24,
+      "description": "Regavolt Variable AC Voltage Regulators / Variac Units",
+      "quantity": 5,
+      "indicativeUnitPriceOMR": 70,
+      "photo": 23,
+      "photoFile": "photo_23.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 25,
+      "description": "IC Test Clips / Electronic Testing Device Clips",
+      "quantity": 11,
+      "indicativeUnitPriceOMR": 10,
+      "photo": 24,
+      "photoFile": "photo_24.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 26,
+      "description": "BGC-8088 MicroEngineer V3.5 Hardware Training System",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 300,
+      "photo": 25,
+      "photoFile": "photo_25.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 27,
+      "description": "K&H CI-53004 PLC I/O Interface Modules",
+      "quantity": 26,
+      "indicativeUnitPriceOMR": 140,
+      "photo": 26,
+      "photoFile": "photo_26.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 28,
+      "description": "Portable RF / Communications Test Equipment",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 470,
+      "photo": 27,
+      "photoFile": "photo_27.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 29,
+      "description": "DSP / Microprocessor Training and Development Boards",
+      "quantity": 4,
+      "indicativeUnitPriceOMR": 180,
+      "photo": 28,
+      "photoFile": "photo_28.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 30,
+      "description": "Scientech ST152 Mobile Phone Trainer Systems",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 280,
+      "photo": 29,
+      "photoFile": "photo_29.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 31,
+      "description": "K&H PH-74 Breadboard Trainer Modules",
+      "quantity": 11,
+      "indicativeUnitPriceOMR": 80,
+      "photo": 30,
+      "photoFile": "photo_30.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 32,
+      "description": "FEEDBACK Double Sideband / Audio Unit Training Modules",
+      "quantity": 40,
+      "indicativeUnitPriceOMR": 70,
+      "photo": 31,
+      "photoFile": "photo_31.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 33,
+      "description": "Telephone Operator Console / DSS Expansion Key Module",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 45,
+      "photo": 32,
+      "photoFile": "photo_32.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 34,
+      "description": "FEEDBACK Single Sideband 2960 Training Modules",
+      "quantity": 18,
+      "indicativeUnitPriceOMR": 90,
+      "photo": 33,
+      "photoFile": "photo_33.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 35,
+      "description": "FEEDBACK 465 kHz Crystal Unit Modules",
+      "quantity": 46,
+      "indicativeUnitPriceOMR": 35,
+      "photo": 34,
+      "photoFile": "photo_34.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 36,
+      "description": "Alcatel 4095 Digital Telephone Sets",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 30,
+      "photo": 35,
+      "photoFile": "photo_35.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 37,
+      "description": "Kanda PLD Starter Kits",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 90,
+      "photo": 36,
+      "photoFile": "photo_36.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 38,
+      "description": "Level A.C. Microvoltmeter Type TM3B",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 200,
+      "photo": 37,
+      "photoFile": "photo_37.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 39,
+      "description": "FEEDBACK Teknikit Consolette TK286",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 160,
+      "photo": 38,
+      "photoFile": "photo_38.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 40,
+      "description": "Siemens Transmission Measuring Set / Communications Test Equipment",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 515,
+      "photo": 39,
+      "photoFile": "photo_39.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 41,
+      "description": "Hewlett-Packard Laboratory Oscilloscope",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 350,
+      "photo": 40,
+      "photoFile": "photo_40.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 42,
+      "description": "TTi TGR104 10 MHz Synthesised RF Signal Generators",
+      "quantity": 4,
+      "indicativeUnitPriceOMR": 375,
+      "photo": 42,
+      "photoFile": "photo_42.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 43,
+      "description": "FEEDBACK Detector Module 295C",
+      "quantity": 30,
+      "indicativeUnitPriceOMR": 45,
+      "photo": 43,
+      "photoFile": "photo_43.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 44,
+      "description": "Alcatel 4098 FRE Fast IP Enabler Units",
+      "quantity": 3,
+      "indicativeUnitPriceOMR": 55,
+      "photo": 44,
+      "photoFile": "photo_44.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 45,
+      "description": "Dazheng PS-1502D DC Power Supply Units",
+      "quantity": 6,
+      "indicativeUnitPriceOMR": 45,
+      "photo": 45,
+      "photoFile": "photo_45.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 46,
+      "description": "Optical / Metallurgical Inspection Microscopes",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 395,
+      "photo": 46,
+      "photoFile": "photo_46.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 47,
+      "description": "Telephone Line Test Handsets / Lineman's Test Sets",
+      "quantity": 11,
+      "indicativeUnitPriceOMR": 55,
+      "photo": 47,
+      "photoFile": "photo_47.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 48,
+      "description": "FEEDBACK PS441 Dual DC Power Supply Modules",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 90,
+      "photo": 48,
+      "photoFile": "photo_48.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 49,
+      "description": "Plessey Battery Charger Unit",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 125,
+      "photo": 49,
+      "photoFile": "photo_49.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 50,
+      "description": "Axial Cooling / Equipment Cabinet Fans",
+      "quantity": 3,
+      "indicativeUnitPriceOMR": 20,
+      "photo": 50,
+      "photoFile": "photo_50.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 51,
+      "description": "Kehai 950 ESD-Safe Soldering Station",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 45,
+      "photo": 51,
+      "photoFile": "photo_51.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 52,
+      "description": "Kehai / Gordak / BILL 936A Soldering Station Control Units",
+      "quantity": 44,
+      "indicativeUnitPriceOMR": 35,
+      "photo": 52,
+      "photoFile": "photo_52.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 53,
+      "description": "Telephone Trainer Kit TT-03",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 240,
+      "photo": 53,
+      "photoFile": "photo_53.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 54,
+      "description": "Digital Logic / Interface Circuit Training Boards",
+      "quantity": 23,
+      "indicativeUnitPriceOMR": 70,
+      "photo": 54,
+      "photoFile": "photo_54.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 55,
+      "description": "Electric Soldering Guns / Heavy-Duty Soldering Tools",
+      "quantity": 14,
+      "indicativeUnitPriceOMR": 30,
+      "photo": 55,
+      "photoFile": "photo_55.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 56,
+      "description": "Electronic Measurement / Alignment Tool Kits",
+      "quantity": 4,
+      "indicativeUnitPriceOMR": 95,
+      "photo": 56,
+      "photoFile": "photo_56.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 57,
+      "description": "Siemens P2012 PCM Terminal Test Set",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 705,
+      "photo": 57,
+      "photoFile": "photo_57.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 58,
+      "description": "Samsung OfficeServ 720 Telephone System / PBX Unit",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 335,
+      "photo": 58,
+      "photoFile": "photo_58.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 59,
+      "description": "Siemens D2108 Level Meters",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 470,
+      "photo": 59,
+      "photoFile": "photo_59.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 60,
+      "description": "Rohde & Schwarz SMT03 Signal Generator",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 1835,
+      "photo": 60,
+      "photoFile": "photo_60.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 61,
+      "description": "Wandel & Goltermann RS-25 White Noise Generator / Filter Unit",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 425,
+      "photo": 61,
+      "photoFile": "photo_61.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 62,
+      "description": "Siemens D2053 Attenuator",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 350,
+      "photo": 62,
+      "photoFile": "photo_62.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 63,
+      "description": "Wandel & Goltermann White Noise Generator / Filter System",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 515,
+      "photo": null,
+      "photoFile": null,
+      "status": "NO_PHOTO"
+    },
+    {
+      "itemNo": 64,
+      "description": "Avaya Digital Telephone Sets",
+      "quantity": 4,
+      "indicativeUnitPriceOMR": 35,
+      "photo": 63,
+      "photoFile": "photo_63.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 65,
+      "description": "Axial Ventilation / Cooling Fan Assemblies",
+      "quantity": 3,
+      "indicativeUnitPriceOMR": 30,
+      "photo": 64,
+      "photoFile": "photo_64.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 66,
+      "description": "X-Ray Film Viewer / Light Box Illuminator",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 85,
+      "photo": 65,
+      "photoFile": "photo_65.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 67,
+      "description": "Microcontroller Development / Training Kits",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 110,
+      "photo": 66,
+      "photoFile": "photo_66.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 68,
+      "description": "Air Purifier / Air Cleaner Units",
+      "quantity": 7,
+      "indicativeUnitPriceOMR": 55,
+      "photo": 67,
+      "photoFile": "photo_67.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 69,
+      "description": "Digital Multimeters",
+      "quantity": 7,
+      "indicativeUnitPriceOMR": 30,
+      "photo": 68,
+      "photoFile": "photo_68.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 70,
+      "description": "Mobile Phone Training / Maintenance Systems",
+      "quantity": 11,
+      "indicativeUnitPriceOMR": 200,
+      "photo": 69,
+      "photoFile": "photo_69.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 71,
+      "description": "BGA Rework Station / PCB Rework and Inspection System",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 540,
+      "photo": 70,
+      "photoFile": "photo_70.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 72,
+      "description": "Battery Discharge Meter Control Panel Unit",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 200,
+      "photo": 71,
+      "photoFile": "photo_71.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 73,
+      "description": "Analogue Multimeters",
+      "quantity": 2,
+      "indicativeUnitPriceOMR": 25,
+      "photo": 72,
+      "photoFile": "photo_72.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 74,
+      "description": "Adjustable Soldering Stations",
+      "quantity": 17,
+      "indicativeUnitPriceOMR": 40,
+      "photo": 73,
+      "photoFile": "photo_73.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 75,
+      "description": "FEEDBACK Electronic Circuits Configuration Training Modules",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 90,
+      "photo": 74,
+      "photoFile": "photo_74.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 76,
+      "description": "Fujikura Fusion Splicer",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 2115,
+      "photo": 75,
+      "photoFile": "photo_75.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 77,
+      "description": "Rework Soldering Stations / Hot-Air Rework Units",
+      "quantity": 59,
+      "indicativeUnitPriceOMR": 45,
+      "photo": 76,
+      "photoFile": "photo_76.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 78,
+      "description": "Stereo Inspection / Laboratory Microscopes",
+      "quantity": 8,
+      "indicativeUnitPriceOMR": 280,
+      "photo": 78,
+      "photoFile": "photo_78.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 79,
+      "description": "FEEDBACK Electronic Circuit Configuration Modules",
+      "quantity": 5,
+      "indicativeUnitPriceOMR": 100,
+      "photo": null,
+      "photoFile": null,
+      "status": "NO_PHOTO"
+    },
+    {
+      "itemNo": 80,
+      "description": "Analogue Insulation / Resistance Tester",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 85,
+      "photo": 80,
+      "photoFile": "photo_80.jpg",
+      "status": "CLEAR"
+    },
+    {
+      "itemNo": 81,
+      "description": "Telecommunications / Line Interface Test Module",
+      "quantity": 1,
+      "indicativeUnitPriceOMR": 425,
+      "photo": 81,
+      "photoFile": "photo_81.jpg",
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "itemNo": 82,
+      "description": "BGC-8088 MicroEngineer V3.5 Hardware Training Systems",
+      "quantity": 3,
+      "indicativeUnitPriceOMR": 300,
+      "photo": 82,
+      "photoFile": "photo_82.jpg",
+      "status": "CLEAR"
+    }
+  ]
+}
