@@ -3,6 +3,7 @@ import { Cable, Cpu, FlaskConical, Microscope, Radio, Waves, Zap } from "lucide-
 import { Link } from "@/i18n/navigation";
 import { getStats } from "@/features/catalog/data";
 import { Reveal } from "./reveal";
+import type { SectionText } from "./types";
 import { SectionHeading } from "./section-heading";
 
 /** Top-level category groups. Phase 3 replaces this list with database categories managed by the admin. */
@@ -16,14 +17,14 @@ const groups = [
   { key: "laboratory", icon: FlaskConical },
 ] as const;
 
-export async function CategoriesSection() {
+export async function CategoriesSection({ text = {} }: { text?: SectionText }) {
   const t = await getTranslations("Categories");
   const th = await getTranslations("Home");
   const counts = (await getStats()).byCategory;
   return (
     <section id="categories" aria-labelledby="categories-title" className="scroll-mt-20 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeading id="categories-title" title={t("title")} subtitle={t("subtitle")} />
+        <SectionHeading id="categories-title" title={text.title || t("title")} subtitle={text.subtitle || t("subtitle")} />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {groups.map(({ key, icon: Icon }, i) => (
             <li key={key}>

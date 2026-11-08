@@ -5,12 +5,12 @@ import { useTranslations } from "next-intl";
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
-import { Logo } from "./logo";
+import { Logo, type BrandProps } from "./logo";
 import { LanguageSwitcher } from "./language-switcher";
 import { primaryNav } from "./nav-links";
 import { cn } from "@/lib/utils";
 
-export function SiteHeader() {
+export function SiteHeader({ brand }: { brand?: BrandProps }) {
   const t = useTranslations("Nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -33,7 +33,7 @@ export function SiteHeader() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
-        <Logo />
+        <Logo brand={brand} />
         <nav className="hidden flex-1 md:block" aria-label={t("menu")}>
           <ul className="flex items-center gap-1">
             {primaryNav.map((item) => {

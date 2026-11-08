@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { ClipboardCheck, Cpu, History, LayoutDashboard, UserCog, Users } from "lucide-react";
+import { ClipboardCheck, Cpu, History, LayoutDashboard, Palette, UserCog, Users } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,7 @@ const items = [
   { href: "/admin/devices", key: "navDevices", icon: Cpu },
   { href: "/admin/devices?status=REVIEW", key: "navReview", icon: ClipboardCheck },
   { href: "/admin/activity", key: "navActivity", icon: History },
+  { href: "/admin/site", key: "navSite", icon: Palette, adminOnly: true },
   { href: "/admin/users", key: "navUsers", icon: Users, adminOnly: true },
   { href: "/admin/account", key: "navAccount", icon: UserCog },
 ] as const;

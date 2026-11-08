@@ -1,11 +1,22 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-/** LabSouq wordmark: a flask outline crossed by a signal trace. */
-export function Logo({ inverted = false }: { inverted?: boolean }) {
+export type BrandProps = { name?: string; logoUrl?: string | null };
+
+/** LabSouq wordmark (flask crossed by a signal trace), or the logo uploaded in the website editor. */
+export function Logo({ inverted = false, brand = {} }: { inverted?: boolean; brand?: BrandProps }) {
   const t = useTranslations("Brand");
+  const label = brand.name || t("name");
+  if (brand.logoUrl) {
+    return (
+      <Link href="/" className="inline-flex items-center" aria-label={label}>
+        <Image src={brand.logoUrl} alt={label} width={200} height={48} className={`h-9 w-auto object-contain ${inverted ? "rounded bg-white/90 p-1" : ""}`} />
+      </Link>
+    );
+  }
   return (
-    <Link href="/" className="group inline-flex items-center gap-2.5" aria-label={t("name")}>
+    <Link href="/" className="group inline-flex items-center gap-2.5" aria-label={label}>
       <svg viewBox="0 0 36 36" className="size-9 shrink-0" aria-hidden="true">
         <rect width="36" height="36" rx="10" className={inverted ? "fill-white/10" : "fill-navy"} />
         <path d="M14 8h8M15.5 8v7.5L10 26a2.5 2.5 0 0 0 2.2 3.6h11.6A2.5 2.5 0 0 0 26 26l-5.5-10.5V8"
@@ -14,7 +25,7 @@ export function Logo({ inverted = false }: { inverted?: boolean }) {
           strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:-translate-y-0.5" />
       </svg>
       <span className={`text-lg font-bold tracking-tight ${inverted ? "text-white" : "text-navy"}`}>
-        Lab<span className={inverted ? "text-[#3FB8BE]" : "text-teal"}>Souq</span>
+        {brand.name ? brand.name : <>Lab<span className={inverted ? "text-[#3FB8BE]" : "text-teal"}>Souq</span></>}
       </span>
     </Link>
   );

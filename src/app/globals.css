@@ -69,3 +69,10 @@ html[dir="rtl"] p { line-height: 1.85; }
 .ls-enter { animation: ls-fade-up 0.7s var(--ease-out-soft) both; }
 .ls-enter-delay { animation-delay: 0.15s; }
 @media (prefers-reduced-motion: reduce) { .ls-enter { animation: none; } }
+
+/* Animations switched off in the website editor */
+html[data-motion="off"] *, html[data-motion="off"] *::before, html[data-motion="off"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}

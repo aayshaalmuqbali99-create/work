@@ -1,18 +1,29 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Logo } from "./logo";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { Logo, type BrandProps } from "./logo";
 import { LanguageSwitcher } from "./language-switcher";
 import { primaryNav } from "./nav-links";
 
-export function SiteFooter() {
+export type FooterContent = { tagline?: string; text?: string; email?: string; phone?: string; address?: string };
+
+export function SiteFooter({ brand, content = {} }: { brand?: BrandProps; content?: FooterContent }) {
   const t = useTranslations();
   return (
     <footer className="mt-24 bg-navy text-white/80">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div className="space-y-4">
-          <Logo inverted />
-          <p className="max-w-sm text-sm">{t("Brand.tagline")}</p>
+          <Logo inverted brand={brand} />
+          <p className="max-w-sm text-sm">{content.tagline || t("Brand.tagline")}</p>
+          {content.text && <p className="max-w-sm text-sm text-white/70">{content.text}</p>}
           <p className="text-sm text-teal-light/80">{t("Footer.market")}</p>
+          {(content.email || content.phone || content.address) && (
+            <ul className="space-y-1.5 text-sm">
+              {content.email && <li className="flex items-center gap-2"><Mail className="size-4 text-[#3FB8BE]" aria-hidden="true" /><a href={`mailto:${content.email}`} dir="ltr" className="hover:text-white">{content.email}</a></li>}
+              {content.phone && <li className="flex items-center gap-2"><Phone className="size-4 text-[#3FB8BE]" aria-hidden="true" /><a href={`tel:${content.phone.replace(/[^+\d]/g, "")}`} dir="ltr" className="hover:text-white">{content.phone}</a></li>}
+              {content.address && <li className="flex items-center gap-2"><MapPin className="size-4 text-[#3FB8BE]" aria-hidden="true" />{content.address}</li>}
+            </ul>
+          )}
         </div>
         <div>
           <h2 className="mb-3 text-sm font-semibold text-white">{t("Footer.explore")}</h2>
@@ -31,7 +42,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-white/10">
         <p className="mx-auto max-w-7xl px-4 py-5 text-xs text-white/60 sm:px-6 lg:px-8">
-          © {new Date().getFullYear()} LabSouq. {t("Footer.rights")}
+          © {new Date().getFullYear()} {brand?.name || "LabSouq"}. {t("Footer.rights")}
         </p>
       </div>
     </footer>

@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getDevices } from "@/features/catalog/data";
 import { DeviceCard } from "@/components/equipment/device-card";
 import { Reveal } from "./reveal";
+import type { SectionText } from "./types";
 
 /** Hand-picked showcase. Phase 8 makes this selection editable from the admin page builder. */
 const FEATURED = [
@@ -17,7 +18,7 @@ const FEATURED = [
   "bgc-8088-microengineer-v3-5",
 ];
 
-export async function FeaturedSection() {
+export async function FeaturedSection({ text = {} }: { text?: SectionText }) {
   const t = await getTranslations("Home");
   const all = await getDevices(await getLocale());
   // Hand-picked first, then fill with other published devices so the section is never empty.
@@ -29,8 +30,8 @@ export async function FeaturedSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
-            <h2 id="featured-title" className="text-h2 font-bold tracking-tight text-navy">{t("featuredTitle")}</h2>
-            <p className="mt-3 text-muted">{t("featuredSubtitle")}</p>
+            <h2 id="featured-title" className="text-h2 font-bold tracking-tight text-navy">{text.title || t("featuredTitle")}</h2>
+            <p className="mt-3 text-muted">{text.subtitle || t("featuredSubtitle")}</p>
           </div>
           <Link href="/equipment" className="group inline-flex items-center gap-2 font-semibold text-teal hover:text-navy">
             {t("viewAll")}

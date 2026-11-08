@@ -4,7 +4,9 @@ import { getStats } from "@/features/catalog/data";
 import { Link } from "@/i18n/navigation";
 import { HeroVisual } from "./hero-visual";
 
-export async function Hero() {
+export type HeroText = { eyebrow?: string; title?: string; subtitle?: string; showVisual: boolean };
+
+export async function Hero({ text }: { text: HeroText }) {
   const t = await getTranslations("Hero");
   const s = await getStats();
   const stats = [
@@ -19,10 +21,10 @@ export async function Hero() {
         <div className="ls-enter">
           <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-teal/20 bg-teal-light/60 px-3 py-1 text-xs font-semibold text-teal">
             <span className="size-1.5 rounded-full bg-teal" />
-            {t("eyebrow")}
+            {text.eyebrow || t("eyebrow")}
           </p>
-          <h1 className="text-display font-bold tracking-tight text-navy">{t("title")}</h1>
-          <p className="mt-6 max-w-xl text-lg text-muted">{t("subtitle")}</p>
+          <h1 className="text-display font-bold tracking-tight text-navy">{text.title || t("title")}</h1>
+          <p className="mt-6 max-w-xl text-lg text-muted">{text.subtitle || t("subtitle")}</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
               href="/equipment"
@@ -47,9 +49,11 @@ export async function Hero() {
             ))}
           </ul>
         </div>
-        <div className="ls-enter ls-enter-delay">
-          <HeroVisual />
-        </div>
+        {text.showVisual && (
+          <div className="ls-enter ls-enter-delay">
+            <HeroVisual />
+          </div>
+        )}
       </div>
     </section>
   );
