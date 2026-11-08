@@ -62,7 +62,7 @@ export type FormState = {
   redirectTo?: string;
 };
 
-const KNOWN = new Set(["required", "tooLong", "invalidNumber", "invalidSlug", "passwordRules", "passwordMismatch"]);
+const KNOWN = new Set(["required", "tooLong", "invalidNumber", "invalidSlug", "passwordRules", "passwordMismatch", "invalidEmail"]);
 
 export function fieldErrors(error: z.ZodError): Record<string, string> {
   const out: Record<string, string> = {};
@@ -72,3 +72,10 @@ export function fieldErrors(error: z.ZodError): Record<string, string> {
   }
   return out;
 }
+
+export const newUserSchema = z.object({
+  name: z.string().trim().min(1, "required").max(120, "tooLong"),
+  email: z.string().trim().toLowerCase().email("invalidEmail").max(200, "tooLong"),
+  role: z.enum(["ADMIN", "EDITOR"]),
+  password: z.string().min(12, "passwordRules").max(200, "tooLong"),
+});

@@ -20,7 +20,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
             Lab<span className="text-[#3FB8BE]">Souq</span> <span className="text-sm font-medium text-white/60">· {t("title")}</span>
           </Link>
         </div>
-        <Suspense><AdminNav reviewCount={reviewCount} /></Suspense>
+        <Suspense><AdminNav reviewCount={reviewCount} isAdmin={user.role === "ADMIN"} /></Suspense>
         <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4 text-sm lg:mt-auto lg:flex-col lg:items-stretch">
           <p className="truncate text-white/70">{user.name}</p>
           <Link href="/" className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-white/70 hover:bg-white/5 hover:text-white">

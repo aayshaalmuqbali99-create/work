@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { ClipboardCheck, Cpu, History, LayoutDashboard, UserCog } from "lucide-react";
+import { ClipboardCheck, Cpu, History, LayoutDashboard, UserCog, Users } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -11,16 +11,17 @@ const items = [
   { href: "/admin/devices", key: "navDevices", icon: Cpu },
   { href: "/admin/devices?status=REVIEW", key: "navReview", icon: ClipboardCheck },
   { href: "/admin/activity", key: "navActivity", icon: History },
+  { href: "/admin/users", key: "navUsers", icon: Users, adminOnly: true },
   { href: "/admin/account", key: "navAccount", icon: UserCog },
 ] as const;
 
-export function AdminNav({ reviewCount }: { reviewCount: number }) {
+export function AdminNav({ reviewCount, isAdmin }: { reviewCount: number; isAdmin: boolean }) {
   const t = useTranslations("Admin");
   const pathname = usePathname();
   const isReview = useSearchParams().get("status") === "REVIEW";
   return (
     <nav aria-label={t("title")} className="flex gap-1 overflow-x-auto lg:flex-col">
-      {items.map(({ href, key, icon: Icon, ...rest }) => {
+      {items.filter((i) => isAdmin || !("adminOnly" in i)).map(({ href, key, icon: Icon, ...rest }) => {
         const base = href.split("?")[0];
         const active =
           "exact" in rest
