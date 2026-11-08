@@ -40,6 +40,19 @@ _Last updated: 2026-11-08_
   - Verified end-to-end with Playwright (login fail/success, edit + validation keeps input, public page updates,
     review item publish flow, upload valid/invalid image, English admin, logout/guard). Test edits were reverted.
 
+- Phase 4 (owner request: all four):
+  - Users: admin-only management of editors/admins with guard rails (last admin, self), disable signs out.
+  - Real 3D models: Device3DModel versions, server-side GLB validation, part editor with live preview,
+    verified publishing (explicit confirmation), public viewer loads verified GLB; original demo GLB generator.
+  - Website editor: SiteVersion draft/published/archived, brand/logo/colours (contrast check)/animations,
+    hero texts, sections show/hide/reorder/titles, footer & contact, undo/redo, device-size preview via
+    Next.js draft mode, publish with note, restore versions.
+  - Deployment readiness: S3-compatible storage behind stable `/media` URLs (tested against an S3-compatible
+    test server), PostgreSQL-backed rate limiting, `DIRECT_URL`, `vercel-build`, Dockerfile (standalone) +
+    docker-compose (Postgres + app + Caddy HTTPS), `/api/health`, sitemap.xml, robots.txt, canonical URLs,
+    Arabic deployment guide `docs/DEPLOYMENT.md`. Standalone server tested end to end; Docker image itself not
+    built here (no Docker daemon in this environment).
+
 ## In progress
 - Phase 2 (part 2): shadcn/ui base components (button, input, card, dialog), full design-system page.
 - Open questions in `DEVELOPMENT_PLAN.md` §4 (hosting, storage, seller name, item 26/82, email).
@@ -48,8 +61,8 @@ _Last updated: 2026-11-08_
 - Phases 3–10.
 
 ## Known issues / risks
-- Login rate limiting is in-memory (one server process). Use Redis for multi-instance hosting.
-- Uploaded photos are stored on local disk (`UPLOAD_DIR`); production needs persistent disk or S3/R2.
+- The Docker image has not been built in this environment (no Docker daemon); the standalone server it runs was tested.
+- S3 storage was tested against a minimal S3-compatible test server, not yet against a real R2/S3 bucket.
 - Forms use server actions + Zod with React 19 `useActionState` instead of React Hook Form (fewer dependencies, same validation on the server).
 - Photo numbering in sheet `All Photos` does not consistently match `Item No.` in sheet `Houd`
   (shifted ranges, 2 duplicate images, 1 off-grid image, items 1 and 76 apparently without a photo).
@@ -58,6 +71,6 @@ _Last updated: 2026-11-08_
 
 ## Next step
 - Owner review of device texts and 3D models; owner works through the review queue.
-- Next: user management (add editors), category management, 3D asset manager (upload real GLB models),
-  automated test suite in the repo (Vitest + Playwright), then website customization / page builder.
+- Owner: choose hosting (Vercel+Neon+R2 or VPS), create the accounts, then follow docs/DEPLOYMENT.md.
+- Next development: automated test suite in the repo (Playwright), category management, quotation requests.
 - Note: category list and navigation are in code for now; they move to the database in Phases 3 and 8.

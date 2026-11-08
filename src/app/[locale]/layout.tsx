@@ -6,6 +6,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing, localeDirection } from "@/i18n/routing";
 import { MotionProvider } from "@/components/layout/motion-provider";
 import { getSiteContent } from "@/features/site/data";
+import { SITE_URL } from "@/lib/site-url";
 import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
@@ -24,9 +25,10 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Meta" });
   return {
+    metadataBase: new URL(SITE_URL),
     title: { default: t("title"), template: `%s · ${locale === "ar" ? "لاب سوق" : "LabSouq"}` },
     description: t("description"),
-    alternates: { languages: { ar: "/ar", en: "/en" } },
+    alternates: { canonical: `/${locale}`, languages: { ar: "/ar", en: "/en" } },
   };
 }
 

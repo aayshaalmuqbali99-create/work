@@ -1,0 +1,56 @@
+# Private server deployment: PostgreSQL + LabSouq + Caddy (automatic HTTPS).
+#   1. cp .env.example .env   → fill POSTGRES_PASSWORD, ADMIN_EMAIL, ADMIN_PASSWORD, DOMAIN
+#   2. docker compose build
+#   3. docker compose run --rm setup      # create tables + load data + first admin (safe to repeat)
+#   4. docker compose up -d
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: labsouq
+      POSTGRES_USER: labsouq
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U labsouq -d labsouq"]
+      interval: 10s
+      retries: 5
+
+  setup:
+    build: { context: ., target: setup }
+    profiles: ["setup"]
+    environment: &appenv
+      DATABASE_URL: postgresql://labsouq:${POSTGRES_PASSWORD}@db:5432/labsouq?schema=public
+      DIRECT_URL: postgresql://labsouq:${POSTGRES_PASSWORD}@db:5432/labsouq?schema=public
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      ADMIN_NAME: ${ADMIN_NAME:-LabSouq Admin}
+    depends_on:
+      db: { condition: service_healthy }
+
+  app:
+    build: { context: ., target: runner }
+    restart: unless-stopped
+    environment:
+      <<: *appenv
+      UPLOAD_DIR: /data/uploads
+    volumes:
+      - uploads:/data/uploads
+    depends_on:
+      db: { condition: service_healthy }
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443"]
+    command: caddy reverse-proxy --from ${DOMAIN:?set DOMAIN in .env} --to app:3000
+    volumes:
+      - caddy:/data
+    depends_on: [app]
+
+volumes:
+  pgdata:
+  uploads:
+  caddy:

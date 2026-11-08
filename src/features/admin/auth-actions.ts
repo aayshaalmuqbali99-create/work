@@ -21,8 +21,8 @@ export async function loginAction(_prev: FormState, form: FormData): Promise<For
   const { email, password } = parsed.data;
   const { ip } = await clientInfo();
 
-  const byIp = rateLimit(`login:ip:${ip}`, 20, 15 * 60_000);
-  const byEmail = rateLimit(`login:email:${email}`, 5, 15 * 60_000);
+  const byIp = await rateLimit(`login:ip:${ip}`, 20, 15 * 60_000);
+  const byEmail = await rateLimit(`login:email:${email}`, 5, 15 * 60_000);
   if (!byIp.ok || !byEmail.ok) {
     return { ok: false, message: "tooMany", fieldErrors: { seconds: String(Math.max(byIp.retryAfterSec, byEmail.retryAfterSec)) } };
   }
@@ -33,7 +33,7 @@ export async function loginAction(_prev: FormState, form: FormData): Promise<For
     await audit({ userId: null, action: "auth.login_failed", entity: "user", entityId: user?.id ?? null, after: { email } });
     return { ok: false, message: "loginFailed" };
   }
-  resetRateLimit(`login:email:${email}`);
+  await resetRateLimit(`login:email:${email}`);
   await createSession(user.id);
   await db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
   await audit({ userId: user.id, action: "auth.login", entity: "user", entityId: user.id });
@@ -52,7 +52,7 @@ export async function changePasswordAction(_prev: FormState, form: FormData): Pr
   const me = await requireUser();
   const parsed = passwordSchema.safeParse({ current: form.get("current"), next: form.get("next"), confirm: form.get("confirm") });
   if (!parsed.success) return { ok: false, fieldErrors: fieldErrors(parsed.error) };
-  const limited = rateLimit(`pw:${me.id}`, 5, 15 * 60_000);
+  const limited = await rateLimit(`pw:${me.id}`, 5, 15 * 60_000);
   if (!limited.ok) return { ok: false, message: "tooMany", fieldErrors: { seconds: String(limited.retryAfterSec) } };
   const user = await db.user.findUniqueOrThrow({ where: { id: me.id } });
   if (!(await verify(user.passwordHash, parsed.data.current).catch(() => false))) {

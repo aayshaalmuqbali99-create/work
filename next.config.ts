@@ -6,6 +6,8 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Self-contained server bundle for Docker / private servers (`STANDALONE=1 npm run build`).
+  output: process.env.STANDALONE === "1" ? "standalone" : undefined,
   async headers() {
     return [
       {

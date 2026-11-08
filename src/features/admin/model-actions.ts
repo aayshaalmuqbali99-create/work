@@ -1,7 +1,5 @@
 "use server";
 
-import { unlink } from "node:fs/promises";
-import path from "node:path";
 import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import type { Prisma } from "@prisma/client";
@@ -9,7 +7,7 @@ import { db } from "@/lib/db";
 import { audit } from "@/lib/audit";
 import { requireUser } from "@/lib/auth/guard";
 import { GlbError, inspectGlb } from "@/lib/glb";
-import { MAX_MODEL_BYTES, saveBinary, UPLOAD_DIR } from "@/lib/storage";
+import { deleteStored, MAX_MODEL_BYTES, saveBinary } from "@/lib/storage";
 import { CATALOG_TAG } from "@/features/catalog/data";
 import type { FormState } from "./schemas";
 
@@ -103,10 +101,7 @@ export async function deleteModelAction(modelId: string): Promise<FormState> {
   const model = await db.device3DModel.findUnique({ where: { id: modelId } });
   if (!model || model.status === "PUBLISHED") return { ok: false, message: "forbidden" };
   await db.device3DModel.delete({ where: { id: modelId } });
-  if (model.fileUrl.startsWith("/media/models/")) {
-    const file = path.resolve(UPLOAD_DIR, model.fileUrl.slice("/media/".length));
-    if (file.startsWith(UPLOAD_DIR + path.sep)) await unlink(file).catch(() => undefined);
-  }
+  await deleteStored(model.fileUrl);
   await audit({ userId: user.id, action: "model.delete", entity: "device", entityId: model.deviceId, before: { version: model.version, file: model.fileName } });
   return { ok: true, at: Date.now() };
 }

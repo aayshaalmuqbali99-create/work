@@ -37,6 +37,11 @@ npm run db:migrate            # after changing prisma/schema.prisma (development
   Arabic name and category, then **Publish**. Publishing requires an Arabic name, an English name and a category.
 - **Visibility**: Publish / Unpublish / Archive / Restore. Only published devices appear on the website.
 - **Activity log**: who changed what and when (sign-ins, edits with before → after, photos, status).
+- **3D models** (per device): upload a GLB of the actual device, name every part (Arabic/English, function,
+  take-apart direction) with a live preview, then publish after confirming it shows the actual device. Versions are kept.
+- **Website** (admins): brand, logo, colours, animations, homepage texts and sections, footer/contact; save draft,
+  preview on desktop/tablet/mobile, publish, restore older versions, undo/redo.
+- **Users** (admins): add editors/admins, disable, change role, set a new password.
 - **My account**: change password (signs out other sessions).
 - The website updates immediately after each save.
 
@@ -44,8 +49,8 @@ npm run db:migrate            # after changing prisma/schema.prisma (development
 - Passwords hashed with Argon2id; sessions stored server-side (only a SHA-256 of the cookie token is kept),
   httpOnly + SameSite=Lax cookie (+ Secure in production), 7-day expiry.
 - Every admin page and server action checks the session on the server; the middleware redirect is only a convenience.
-- Login is rate-limited (5 attempts per e-mail and 20 per IP per 15 minutes). The limiter is in-memory:
-  use Redis/Upstash if you run more than one server instance.
+- Login is rate-limited (5 attempts per e-mail and 20 per IP per 15 minutes), stored in PostgreSQL so it works
+  across several server instances.
 - Server actions include Next.js origin checks (CSRF protection). Uploaded images are validated by decoding
   them, not by file name. Admin pages are `noindex`.
 
@@ -56,33 +61,14 @@ pg_restore --clean --if-exists --dbname="$DATABASE_URL" labsouq-YYYY-MM-DD.dump
 ```
 Also back up the `UPLOAD_DIR` folder (uploaded photos).
 
-## Deployment checklist
-1. A PostgreSQL database and `DATABASE_URL`.
-2. `npm ci && npm run db:deploy && npm run db:seed && npm run build && npm run start`.
-3. Persistent storage for `UPLOAD_DIR` (or switch `src/lib/storage.ts` to S3/R2/Cloudinary).
-4. HTTPS in front of the app (the session cookie is `Secure` in production).
+## Deployment
+Full step-by-step guide (Arabic): **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**
+- **Vercel + Neon + Cloudflare R2**: build command `npm run vercel-build` (runs migrations, then builds).
+  Set `DATABASE_URL`, `DIRECT_URL`, `SITE_URL` and the `S3_*` variables.
+- **Private server (Docker)**: `docker compose build && docker compose run --rm setup && docker compose up -d`
+  (PostgreSQL + app + Caddy with automatic HTTPS). Health check: `/api/health`.
 
-## Equipment catalogue
-The database is seeded from files generated from the original workbook (after seeding, edit devices in the control panel):
-```bash
-python3 scripts/build_catalog.py   # needs: pip install openpyxl pillow
-```
-- `data/photo-mapping.json` — reviewed photo ↔ item mapping (only `CLEAR` items are published)
-- `content/equipment-details.json` — Arabic/English explanation, uses, student benefits, category, 3D type
-- 3D device-type models: `src/components/viewer3d/archetypes.ts` (illustrative, labelled as such)
-
-## Languages
-- Routes are prefixed: `/ar/...` (Arabic, RTL) and `/en/...` (English, LTR). `/` redirects to `/ar`.
-- The Arabic / English switch in the header and footer keeps the current page, query string and `#section`.
-- Texts live in `src/messages/ar.json` and `src/messages/en.json` (keys must match in both files).
-- Layout uses logical CSS (`ms-*`, `ps-*`, `start-*`, `rtl:` variants) so it mirrors correctly.
-
-## Project structure
-```
-data/                 original inventory workbook + reviewed photo mapping
-src/app/[locale]/     pages (home, about, …)
-src/components/       layout/ (header, footer, language switcher), home/ (sections)
-src/i18n/             routing, navigation helpers, request config
-src/messages/         ar.json, en.json
-src/app/globals.css   design tokens (colours, type scale, radius, animations)
-```
+### File storage
+Uploaded photos and 3D models are always referenced as `/media/<key>` and served by the app, so the back-end can change
+without breaking links: local disk (`UPLOAD_DIR`, default) or any S3-compatible bucket when `S3_BUCKET` is set
+(required on Vercel).
