@@ -1,0 +1,82 @@
+{
+  "Meta": {
+    "title": "LabSouq — Scientific & Engineering Equipment Marketplace",
+    "description": "Explore, understand, and source scientific and engineering equipment in one professional marketplace. Based in Oman."
+  },
+  "Brand": { "name": "LabSouq", "tagline": "Explore. Understand. Equip." },
+  "Nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "why": "Why LabSouq",
+    "about": "About",
+    "menu": "Menu",
+    "close": "Close menu",
+    "skip": "Skip to content"
+  },
+  "Language": {
+    "label": "Language",
+    "switchTo": "العربية",
+    "switchAria": "التبديل إلى العربية — Switch to Arabic"
+  },
+  "Hero": {
+    "eyebrow": "Scientific & Engineering Equipment Marketplace",
+    "title": "Discover the Equipment Behind Innovation",
+    "subtitle": "Explore, understand, and source scientific and engineering equipment in one professional marketplace.",
+    "browse": "Browse categories",
+    "learn": "Why LabSouq",
+    "statMarket": "Launching in Oman",
+    "statCurrency": "Prices in OMR",
+    "statLanguages": "Arabic & English"
+  },
+  "Categories": {
+    "title": "Browse by category",
+    "subtitle": "A structured catalogue for laboratories, universities, colleges and engineering teams.",
+    "electronics": "Electronics",
+    "electronicsDesc": "Oscilloscopes, multimeters, signal generators, power supplies and training kits.",
+    "electrical": "Electrical Engineering",
+    "electricalDesc": "Electrical measurement, machines, transformers and voltage regulators.",
+    "telecom": "Telecommunications",
+    "telecomDesc": "Fibre optics, fusion splicers, RF equipment, trainers and telephone systems.",
+    "microscopy": "Microscopy & Inspection",
+    "microscopyDesc": "Optical and stereo microscopes, inspection and imaging equipment.",
+    "soldering": "Soldering & Repair",
+    "solderingDesc": "Soldering stations, BGA rework, hot-air stations and PCB repair.",
+    "automation": "Automation",
+    "automationDesc": "PLC systems, microcontrollers, DSP boards and control systems.",
+    "laboratory": "Laboratory Equipment",
+    "laboratoryDesc": "Ultrasonic cleaners, laboratory supplies, measurement and testing equipment."
+  },
+  "Why": {
+    "title": "Why LabSouq?",
+    "subtitle": "Built for people who need to know exactly what they are buying.",
+    "honestTitle": "Honest listings",
+    "honestDesc": "Unknown specifications, condition or prices are shown as \"Not provided\" — never guessed.",
+    "explore3dTitle": "Interactive 3D",
+    "explore3dDesc": "Rotate, inspect and take apart equipment where a verified 3D model exists.",
+    "bilingualTitle": "Arabic & English",
+    "bilingualDesc": "Every page, product and specification in both languages.",
+    "quoteTitle": "Request a quotation",
+    "quoteDesc": "Institutions can request quotations and compare supplier offers."
+  },
+  "How": {
+    "title": "How it works",
+    "step1": "Explore",
+    "step1Desc": "Search the catalogue by name, brand, model or specification.",
+    "step2": "Understand",
+    "step2Desc": "Review photos, specifications, documents and 3D models.",
+    "step3": "Equip",
+    "step3Desc": "Contact the seller or request a quotation."
+  },
+  "About": {
+    "title": "About LabSouq",
+    "lead": "LabSouq is a marketplace for new and used scientific, laboratory, educational, electrical, electronic and engineering equipment.",
+    "body1": "We start in Oman and plan to expand to the GCC and international markets. The platform serves universities, colleges, students, laboratories, scientific institutions, engineering companies, equipment suppliers and independent sellers.",
+    "body2": "Our principle is simple: show what is known, and say clearly what is not."
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "market": "Oman · OMR",
+    "explore": "Explore",
+    "company": "Company"
+  }
+}

@@ -1,0 +1,67 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { Inter, IBM_Plex_Sans_Arabic } from "next/font/google";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { routing, localeDirection } from "@/i18n/routing";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
+import { MotionProvider } from "@/components/layout/motion-provider";
+import "../globals.css";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const plexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-arabic",
+  display: "swap",
+});
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Meta" });
+  return {
+    title: { default: t("title"), template: `%s · ${locale === "ar" ? "لاب سوق" : "LabSouq"}` },
+    description: t("description"),
+    alternates: { languages: { ar: "/ar", en: "/en" } },
+  };
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
+  const t = await getTranslations("Nav");
+
+  return (
+    <html lang={locale} dir={localeDirection[locale]} className={`${inter.variable} ${plexArabic.variable}`}>
+      <body className="min-h-dvh flex flex-col">
+        <NextIntlClientProvider>
+          <MotionProvider>
+            <a
+              href="#main"
+              className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-50 focus:rounded-lg focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
+            >
+              {t("skip")}
+            </a>
+            <SiteHeader />
+            <main id="main" className="flex-1">
+              {children}
+            </main>
+            <SiteFooter />
+          </MotionProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}

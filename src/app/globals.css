@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/*
+ * LabSouq design tokens.
+ * Brand colours are CSS variables so the admin Theme settings (Phase 8) can override them
+ * at runtime without a rebuild. Tailwind utilities (bg-navy, text-teal, …) read these variables.
+ */
+:root {
+  --ls-navy: #102f40;
+  --ls-teal: #167d83;
+  --ls-teal-light: #d6e9e8;
+  --ls-white: #ffffff;
+  --ls-bg: #f4f7f8;
+  --ls-ink: #172b36;
+  --ls-muted: #5f6e75; /* darkened from #75838A to meet WCAG AA on #F4F7F8 */
+  --ls-line: #dde5e8;
+  --ls-radius: 14px;
+}
+
+@theme inline {
+  --color-navy: var(--ls-navy);
+  --color-teal: var(--ls-teal);
+  --color-teal-light: var(--ls-teal-light);
+  --color-surface: var(--ls-white);
+  --color-canvas: var(--ls-bg);
+  --color-ink: var(--ls-ink);
+  --color-muted: var(--ls-muted);
+  --color-line: var(--ls-line);
+
+  --font-sans: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: var(--font-plex-arabic), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: var(--ls-radius);
+
+  /* Type scale (fluid) */
+  --text-display: clamp(2.25rem, 1.4rem + 3.6vw, 4.25rem);
+  --text-display--line-height: 1.08;
+  --text-h2: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+  --text-h2--line-height: 1.2;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; }
+html[dir="rtl"] body { font-family: var(--font-arabic); }
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+/* Arabic needs more line height than Latin text */
+html[dir="rtl"] p { line-height: 1.85; }
+
+:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; border-radius: 6px; }
+
+/* Signature hero waveform */
+@keyframes ls-trace { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+@keyframes ls-scan { 0%,100% { transform: translateX(0); } 50% { transform: translateX(220px); } }
+.ls-trace { stroke-dasharray: 600; animation: ls-trace 3.2s var(--ease-out-soft) infinite alternate; }
+.ls-scan { animation: ls-scan 6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ls-trace, .ls-scan { animation: none; stroke-dasharray: none; }
+}
+
+/* Entrance animation that needs no JavaScript (used above the fold so content is never hidden pre-hydration) */
+@keyframes ls-fade-up { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.ls-enter { animation: ls-fade-up 0.7s var(--ease-out-soft) both; }
+.ls-enter-delay { animation-delay: 0.15s; }
+@media (prefers-reduced-motion: reduce) { .ls-enter { animation: none; } }
