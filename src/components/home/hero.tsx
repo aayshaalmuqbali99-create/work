@@ -1,14 +1,16 @@
 import { useTranslations } from "next-intl";
-import { ArrowRight, Globe2, MapPin, Wallet } from "lucide-react";
+import { ArrowRight, Box, Cpu, Package } from "lucide-react";
+import { getStats } from "@/features/catalog/data";
 import { Link } from "@/i18n/navigation";
 import { HeroVisual } from "./hero-visual";
 
 export function Hero() {
   const t = useTranslations("Hero");
+  const s = getStats();
   const stats = [
-    { icon: MapPin, label: t("statMarket") },
-    { icon: Wallet, label: t("statCurrency") },
-    { icon: Globe2, label: t("statLanguages") },
+    { icon: Cpu, label: t("statDevices", { count: s.devices }) },
+    { icon: Package, label: t("statUnits", { count: s.units }) },
+    { icon: Box, label: t("stat3d") },
   ];
   return (
     <section className="relative overflow-hidden">
@@ -23,7 +25,7 @@ export function Hero() {
           <p className="mt-6 max-w-xl text-lg text-muted">{t("subtitle")}</p>
           <div className="mt-9 flex flex-wrap gap-3">
             <Link
-              href="/#categories"
+              href="/equipment"
               className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 font-semibold text-white shadow-lg shadow-navy/20 transition hover:bg-teal"
             >
               {t("browse")}

@@ -199,3 +199,21 @@ every phase is committed and pushed to `claude/zen-sagan-wzyp0k`.
 4. **Store quantity** — initial stock = workbook quantity (as an `InventoryTransaction` of type
    `IMPORT`); admin edits stock in the product form or Inventory module (adjustments recorded in the
    ledger). Public shows "In stock: N" / "Out of stock".
+
+---
+
+## 6. Direction change (2026-11-08): asset showcase for colleges and students
+The owner redefined the first release as a **public showcase of the inventory for colleges and students**
+(no buying/selling flow yet). Decisions:
+- Open to everyone, no login required to browse.
+- Publish the 56 CLEAR workbook items; items 26 + 82 (BGC-8088) merged → **55 devices, 416 units**.
+- Every device page shows: explanation, lab uses, how it helps college students, quantity, condition,
+  and the **estimated market price** = the workbook's indicative price of a comparable NEW unit,
+  always labelled as such (never as a selling price or the value of the used stock).
+- Condition shows **"Not yet verified"** until the owner sets it.
+- 3D: no real models exist, so each device uses an **illustrative model of its device type**
+  (16 types, built in code, each part named in Arabic + English with its function), permanently
+  labelled "Illustrative model of this device type — not the actual unit". A verified GLB of the real
+  unit can replace it later (Phase 6 asset manager).
+- Educational text in `content/equipment-details.json` describes the device type and its teaching use;
+  it does not state specifications of the individual units.

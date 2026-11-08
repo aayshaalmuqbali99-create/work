@@ -4,7 +4,7 @@
  */
 export const primaryNav = [
   { key: "home", href: "/" },
+  { key: "equipment", href: "/equipment" },
   { key: "categories", href: "/#categories" },
-  { key: "why", href: "/#why" },
   { key: "about", href: "/about" },
 ] as const;

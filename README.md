@@ -18,6 +18,15 @@ npm run typecheck
 npm run build && npm run start
 ```
 
+## Equipment catalogue
+The showcase is generated from the original workbook — never edit `src/data/equipment.json` by hand:
+```bash
+python3 scripts/build_catalog.py   # needs: pip install openpyxl pillow
+```
+- `data/photo-mapping.json` — reviewed photo ↔ item mapping (only `CLEAR` items are published)
+- `content/equipment-details.json` — Arabic/English explanation, uses, student benefits, category, 3D type
+- 3D device-type models: `src/components/viewer3d/archetypes.ts` (illustrative, labelled as such)
+
 ## Languages
 - Routes are prefixed: `/ar/...` (Arabic, RTL) and `/en/...` (English, LTR). `/` redirects to `/ar`.
 - The Arabic / English switch in the header and footer keeps the current page, query string and `#section`.

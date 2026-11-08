@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Cable, Cpu, FlaskConical, Microscope, Radio, Waves, Zap } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { getStats } from "@/features/catalog/data";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
@@ -16,6 +18,8 @@ const groups = [
 
 export function CategoriesSection() {
   const t = useTranslations("Categories");
+  const th = useTranslations("Home");
+  const counts = getStats().byCategory;
   return (
     <section id="categories" aria-labelledby="categories-title" className="scroll-mt-20 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -24,14 +28,15 @@ export function CategoriesSection() {
           {groups.map(({ key, icon: Icon }, i) => (
             <li key={key}>
               <Reveal delay={i * 0.05} className="h-full">
-                <article className="group relative h-full overflow-hidden rounded-card border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-teal/40 hover:shadow-xl hover:shadow-navy/5">
+                <Link href={`/equipment?category=${key}`} className="group relative block h-full overflow-hidden rounded-card border border-line bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-teal/40 hover:shadow-xl hover:shadow-navy/5">
                   <span className="mb-5 inline-flex size-12 items-center justify-center rounded-xl bg-teal-light text-teal transition-colors duration-300 group-hover:bg-teal group-hover:text-white">
                     <Icon className="size-6" aria-hidden="true" />
                   </span>
                   <h3 className="text-lg font-semibold text-navy">{t(key)}</h3>
                   <p className="mt-2 text-sm text-muted">{t(`${key}Desc`)}</p>
+                  <p className="mt-4 text-sm font-semibold text-teal">{th("categoryCount", { count: counts[key] })}</p>
                   <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-teal transition-transform duration-500 group-hover:scale-x-100 rtl:origin-right" />
-                </article>
+                </Link>
               </Reveal>
             </li>
           ))}

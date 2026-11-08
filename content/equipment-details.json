@@ -1,0 +1,1569 @@
+{
+  "_about": "Hand-written bilingual educational content for the CLEAR inventory items. Text describes the general type of device and its teaching use; it does not claim exact specifications of the individual units. 'items' lists the workbook Item No. values merged into one listing.",
+  "devices": [
+    {
+      "items": [
+        2
+      ],
+      "slug": "feedback-electronics-training-modules",
+      "category": "electronics",
+      "archetype": "training-board",
+      "brand": "FEEDBACK",
+      "model": null,
+      "nameAr": "وحدات تدريب الكهرباء والإلكترونيات من FEEDBACK",
+      "descEn": "Panel-mounted training modules that present basic electrical and electronic circuits with clearly printed diagrams and 4 mm sockets, so students can wire, measure and test circuits safely.",
+      "descAr": "وحدات تدريبية مثبتة على ألواح تعرض دوائر كهربائية وإلكترونية أساسية مع مخططات مطبوعة بوضوح ومقابس 4 مم، ليقوم الطلاب بالتوصيل والقياس واختبار الدوائر بأمان.",
+      "usesEn": [
+        "Building and testing basic DC and AC circuits",
+        "Practising measurements with meters and oscilloscopes",
+        "Demonstrating circuit theory in the lab"
+      ],
+      "usesAr": [
+        "بناء واختبار دوائر التيار المستمر والمتردد الأساسية",
+        "التدرب على القياس بأجهزة القياس وراسمات الإشارة",
+        "شرح نظرية الدوائر عملياً في المختبر"
+      ],
+      "benefitsEn": [
+        "Connects lecture theory to real measurements",
+        "Lets many students work in parallel groups",
+        "Safe, low-voltage hands-on practice for first-year courses"
+      ],
+      "benefitsAr": [
+        "يربط الشرح النظري بقياسات حقيقية",
+        "يتيح لعدة مجموعات من الطلاب العمل في نفس الوقت",
+        "تدريب عملي آمن بجهد منخفض لمقررات السنة الأولى"
+      ]
+    },
+    {
+      "items": [
+        3
+      ],
+      "slug": "nortel-desktop-telephone-sets",
+      "category": "telecom",
+      "archetype": "telephone",
+      "brand": "Nortel Networks",
+      "model": null,
+      "nameAr": "أجهزة هاتف مكتبية من Nortel Networks",
+      "descEn": "Business desktop telephone sets designed to work with an office telephone system (PBX), with a display and programmable keys.",
+      "descAr": "أجهزة هاتف مكتبية مخصصة للعمل مع نظام هاتف مؤسسي (مقسم PBX)، مزودة بشاشة ومفاتيح قابلة للبرمجة.",
+      "usesEn": [
+        "Connecting extensions to a PBX in a telecom lab",
+        "Studying signalling and call set-up",
+        "Practising installation and configuration"
+      ],
+      "usesAr": [
+        "توصيل التحويلات الداخلية بمقسم هاتفي في مختبر الاتصالات",
+        "دراسة إشارات الاتصال وإنشاء المكالمات",
+        "التدرب على التركيب والإعداد"
+      ],
+      "benefitsEn": [
+        "Real enterprise equipment instead of simulations",
+        "Builds practical skills for telecom technician roles"
+      ],
+      "benefitsAr": [
+        "معدات مؤسسية حقيقية بدلاً من المحاكاة",
+        "يبني مهارات عملية لوظائف فنيي الاتصالات"
+      ]
+    },
+    {
+      "items": [
+        5
+      ],
+      "slug": "philip-harris-regulated-power-supply",
+      "category": "electronics",
+      "archetype": "power-supply",
+      "brand": "Philip Harris",
+      "model": null,
+      "nameAr": "مزود طاقة منظم من Philip Harris",
+      "descEn": "An educational regulated power supply that provides stable voltages for school and college experiments, with labelled outputs on the front panel.",
+      "descAr": "مزود طاقة تعليمي منظم يوفر جهوداً مستقرة لتجارب المدارس والكليات، مع مخارج موضحة على اللوحة الأمامية.",
+      "usesEn": [
+        "Powering circuits during experiments",
+        "Demonstrating voltage regulation",
+        "Supplying DC to training modules"
+      ],
+      "usesAr": [
+        "تغذية الدوائر بالطاقة أثناء التجارب",
+        "شرح مفهوم تنظيم الجهد",
+        "تزويد وحدات التدريب بالتيار المستمر"
+      ],
+      "benefitsEn": [
+        "Teaches correct, safe use of a lab power source",
+        "Essential base equipment for most electronics experiments"
+      ],
+      "benefitsAr": [
+        "يعلّم الاستخدام الصحيح والآمن لمصدر الطاقة في المختبر",
+        "جهاز أساسي لمعظم تجارب الإلكترونيات"
+      ]
+    },
+    {
+      "items": [
+        7
+      ],
+      "slug": "nortel-desktop-telephone-set",
+      "category": "telecom",
+      "archetype": "telephone",
+      "brand": "Nortel Networks",
+      "model": null,
+      "nameAr": "جهاز هاتف مكتبي من Nortel Networks",
+      "descEn": "A business desktop telephone for use with an office telephone system, with keypad, handset and feature keys.",
+      "descAr": "هاتف مكتبي للأعمال يعمل مع نظام هاتف مؤسسي، مزود بلوحة أرقام وسماعة ومفاتيح للميزات.",
+      "usesEn": [
+        "Extension handset for PBX lab exercises",
+        "Testing call features and transfer"
+      ],
+      "usesAr": [
+        "هاتف تحويلة لتمارين مختبر المقسم الهاتفي",
+        "اختبار ميزات المكالمات وتحويلها"
+      ],
+      "benefitsEn": [
+        "Hands-on experience with real office telephony"
+      ],
+      "benefitsAr": [
+        "خبرة عملية مع أنظمة الهاتف المكتبية الحقيقية"
+      ]
+    },
+    {
+      "items": [
+        8
+      ],
+      "slug": "electronic-breadboard-prototyping-trainer",
+      "category": "electronics",
+      "archetype": "training-board",
+      "brand": null,
+      "model": null,
+      "nameAr": "لوحة تدريب للتجارب الإلكترونية (Breadboard)",
+      "descEn": "A prototyping trainer with a solderless breadboard area, used to assemble circuits quickly without soldering.",
+      "descAr": "لوحة تدريب تحتوي على مساحة توصيل بدون لحام، تُستخدم لتجميع الدوائر بسرعة دون الحاجة إلى اللحام.",
+      "usesEn": [
+        "Assembling and modifying circuits quickly",
+        "Testing components and small designs",
+        "Student projects"
+      ],
+      "usesAr": [
+        "تجميع الدوائر وتعديلها بسرعة",
+        "اختبار المكونات والتصاميم الصغيرة",
+        "مشاريع الطلاب"
+      ],
+      "benefitsEn": [
+        "Encourages experimentation and learning from mistakes",
+        "No soldering needed, so components can be reused"
+      ],
+      "benefitsAr": [
+        "يشجع على التجربة والتعلم من الأخطاء",
+        "لا يحتاج إلى لحام، فيمكن إعادة استخدام المكونات"
+      ]
+    },
+    {
+      "items": [
+        9
+      ],
+      "slug": "kl-68005-lux-load-photometer",
+      "category": "electronics",
+      "archetype": "bench-instrument",
+      "brand": null,
+      "model": "KL-68005",
+      "nameAr": "وحدات مقياس الضوء KL-68005 (Lux Load Photometer)",
+      "descEn": "Training units for measuring light intensity (lux) with an analogue meter, a light source and signal outputs.",
+      "descAr": "وحدات تدريبية لقياس شدة الإضاءة (لوكس) بمؤشر تناظري، مع مصدر ضوئي ومخارج للإشارة.",
+      "usesEn": [
+        "Light-intensity measurement experiments",
+        "Studying optical sensors such as photocells",
+        "Comparing light sources"
+      ],
+      "usesAr": [
+        "تجارب قياس شدة الإضاءة",
+        "دراسة الحساسات الضوئية مثل الخلايا الضوئية",
+        "مقارنة مصادر الإضاءة"
+      ],
+      "benefitsEn": [
+        "Shows how sensors turn light into an electrical signal",
+        "Supports physics and instrumentation courses"
+      ],
+      "benefitsAr": [
+        "يوضح كيف تحوّل الحساسات الضوء إلى إشارة كهربائية",
+        "يدعم مقررات الفيزياء والأجهزة والقياسات"
+      ]
+    },
+    {
+      "items": [
+        10
+      ],
+      "slug": "farnell-laboratory-dc-power-supply",
+      "category": "electronics",
+      "archetype": "power-supply",
+      "brand": "Farnell",
+      "model": null,
+      "nameAr": "مزودات طاقة مختبرية للتيار المستمر من Farnell",
+      "descEn": "Laboratory DC power supplies with analogue meters and adjustable voltage and current controls.",
+      "descAr": "مزودات طاقة مختبرية للتيار المستمر بمؤشرات تناظرية وأزرار لضبط الجهد والتيار.",
+      "usesEn": [
+        "Supplying adjustable DC voltage to circuits",
+        "Setting current limits to protect components",
+        "Characterising components such as diodes"
+      ],
+      "usesAr": [
+        "تزويد الدوائر بجهد مستمر قابل للضبط",
+        "تحديد حد التيار لحماية المكونات",
+        "دراسة خصائص المكونات مثل الثنائيات"
+      ],
+      "benefitsEn": [
+        "Teaches voltage and current limiting in practice",
+        "A standard instrument on every electronics bench"
+      ],
+      "benefitsAr": [
+        "يعلّم ضبط الجهد وتحديد التيار عملياً",
+        "جهاز قياسي على كل طاولة إلكترونيات"
+      ]
+    },
+    {
+      "items": [
+        11
+      ],
+      "slug": "metrix-ax-322-dual-dc-power-supply",
+      "category": "electronics",
+      "archetype": "power-supply",
+      "brand": "Metrix",
+      "model": "AX 322",
+      "nameAr": "مزود طاقة مزدوج للتيار المستمر Metrix AX 322",
+      "descEn": "A dual-output DC power supply with digital displays for voltage and current on each channel.",
+      "descAr": "مزود طاقة للتيار المستمر بمخرجين، مع شاشات رقمية للجهد والتيار لكل قناة.",
+      "usesEn": [
+        "Powering circuits that need two supplies (e.g. ±V for op-amps)",
+        "Series/parallel output experiments",
+        "Accurate bench power"
+      ],
+      "usesAr": [
+        "تغذية الدوائر التي تحتاج مصدرين (مثل ±V لمكبرات العمليات)",
+        "تجارب توصيل المخارج على التوالي والتوازي",
+        "مصدر طاقة دقيق على طاولة العمل"
+      ],
+      "benefitsEn": [
+        "Introduces dual and symmetric power supplies",
+        "Digital readouts make results easy to record"
+      ],
+      "benefitsAr": [
+        "يعرّف الطلاب بمصادر الطاقة المزدوجة والمتماثلة",
+        "الشاشات الرقمية تسهّل تسجيل النتائج"
+      ]
+    },
+    {
+      "items": [
+        12
+      ],
+      "slug": "forth-telephone-sets",
+      "category": "telecom",
+      "archetype": "telephone",
+      "brand": "FORTH",
+      "model": null,
+      "nameAr": "أجهزة هاتف FORTH",
+      "descEn": "Standard telephone sets (packaged) suitable for telephone line and exchange experiments.",
+      "descAr": "أجهزة هاتف قياسية (في عبوتها) مناسبة لتجارب خطوط الهاتف والمقاسم.",
+      "usesEn": [
+        "Telephone line connection exercises",
+        "Studying ringing, dialling and speech signals"
+      ],
+      "usesAr": [
+        "تمارين توصيل خطوط الهاتف",
+        "دراسة إشارات الرنين والاتصال والصوت"
+      ],
+      "benefitsEn": [
+        "Low-cost equipment students can open, connect and test"
+      ],
+      "benefitsAr": [
+        "معدات منخفضة التكلفة يمكن للطلاب فتحها وتوصيلها واختبارها"
+      ]
+    },
+    {
+      "items": [
+        13
+      ],
+      "slug": "barrett-radio-transceivers",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "Barrett Communications",
+      "model": null,
+      "nameAr": "أجهزة إرسال واستقبال لاسلكية ووحدات تحكم من Barrett",
+      "descEn": "Radio transceivers / control units used for long-range voice and data radio communication.",
+      "descAr": "أجهزة إرسال واستقبال لاسلكية / وحدات تحكم تُستخدم للاتصال اللاسلكي الصوتي وللبيانات لمسافات بعيدة.",
+      "usesEn": [
+        "Demonstrating radio transmission and reception",
+        "Studying modulation and frequency channels",
+        "Radio communication practice"
+      ],
+      "usesAr": [
+        "شرح الإرسال والاستقبال اللاسلكي",
+        "دراسة التضمين وقنوات التردد",
+        "التدرب على الاتصالات اللاسلكية"
+      ],
+      "benefitsEn": [
+        "Real communication hardware for telecom students",
+        "Links RF theory to field equipment"
+      ],
+      "benefitsAr": [
+        "أجهزة اتصال حقيقية لطلاب الاتصالات",
+        "يربط نظرية الترددات الراديوية بالمعدات الميدانية"
+      ]
+    },
+    {
+      "items": [
+        16
+      ],
+      "slug": "kl-300-digital-logic-accessories-box",
+      "category": "electronics",
+      "archetype": "kit-case",
+      "brand": null,
+      "model": "KL-300",
+      "nameAr": "صناديق ملحقات مختبر المنطق الرقمي KL-300",
+      "descEn": "Accessory boxes that accompany the KL-300 digital logic lab, holding the small parts and leads needed for experiments.",
+      "descAr": "صناديق ملحقات مرافقة لمختبر المنطق الرقمي KL-300، تحتوي على القطع الصغيرة وأسلاك التوصيل اللازمة للتجارب.",
+      "usesEn": [
+        "Supplying parts for digital logic experiments",
+        "Organising components per student group"
+      ],
+      "usesAr": [
+        "توفير القطع لتجارب المنطق الرقمي",
+        "تنظيم المكونات لكل مجموعة من الطلاب"
+      ],
+      "benefitsEn": [
+        "Keeps lab sessions organised and complete"
+      ],
+      "benefitsAr": [
+        "يحافظ على تنظيم جلسات المختبر واكتمالها"
+      ]
+    },
+    {
+      "items": [
+        19
+      ],
+      "slug": "feedback-sine-square-oscillator-ss0603",
+      "category": "electronics",
+      "archetype": "bench-instrument",
+      "brand": "FEEDBACK",
+      "model": "SS0603",
+      "nameAr": "مذبذب الموجة الجيبية والمربعة SS0603 من FEEDBACK",
+      "descEn": "An educational signal source that produces sine and square waves with adjustable frequency and amplitude.",
+      "descAr": "مصدر إشارة تعليمي ينتج موجات جيبية ومربعة مع إمكانية ضبط التردد والسعة.",
+      "usesEn": [
+        "Feeding test signals into amplifiers and filters",
+        "Frequency-response experiments",
+        "Learning to read waveforms on an oscilloscope"
+      ],
+      "usesAr": [
+        "إدخال إشارات اختبار إلى المكبرات والمرشحات",
+        "تجارب الاستجابة الترددية",
+        "تعلم قراءة الموجات على راسم الإشارة"
+      ],
+      "benefitsEn": [
+        "Makes signals and frequency visible and measurable",
+        "Core instrument for analogue electronics labs"
+      ],
+      "benefitsAr": [
+        "يجعل الإشارات والترددات مرئية وقابلة للقياس",
+        "جهاز أساسي لمختبرات الإلكترونيات التناظرية"
+      ]
+    },
+    {
+      "items": [
+        20
+      ],
+      "slug": "stepper-precision-drive-motors",
+      "category": "automation",
+      "archetype": "motor",
+      "brand": null,
+      "model": null,
+      "nameAr": "محركات خطوية / محركات دقيقة",
+      "descEn": "Motors that rotate in precise steps, widely used where exact positioning is needed.",
+      "descAr": "محركات تدور بخطوات دقيقة، وتُستخدم على نطاق واسع حيث يلزم تحديد الموضع بدقة.",
+      "usesEn": [
+        "Motor-control experiments with microcontrollers",
+        "Positioning systems and robotics projects",
+        "Studying driver circuits"
+      ],
+      "usesAr": [
+        "تجارب التحكم بالمحركات باستخدام المتحكمات الدقيقة",
+        "أنظمة تحديد المواقع ومشاريع الروبوتات",
+        "دراسة دوائر تشغيل المحركات"
+      ],
+      "benefitsEn": [
+        "Connects programming with physical motion",
+        "Popular in graduation projects"
+      ],
+      "benefitsAr": [
+        "يربط البرمجة بالحركة الفعلية",
+        "شائع في مشاريع التخرج"
+      ]
+    },
+    {
+      "items": [
+        21
+      ],
+      "slug": "huntron-tracker-2700",
+      "category": "electronics",
+      "archetype": "bench-instrument",
+      "brand": "Huntron",
+      "model": "Tracker 2700",
+      "nameAr": "جهاز تحليل المكونات Huntron Tracker 2700",
+      "descEn": "A component analyser that displays the voltage–current signature of components and circuit nodes, used for fault-finding without powering the circuit.",
+      "descAr": "جهاز لتحليل المكونات يعرض بصمة الجهد والتيار للمكونات ونقاط الدائرة، ويُستخدم لاكتشاف الأعطال دون تشغيل الدائرة.",
+      "usesEn": [
+        "Fault-finding on circuit boards",
+        "Comparing a good board with a faulty one",
+        "Testing diodes, transistors and ICs"
+      ],
+      "usesAr": [
+        "اكتشاف الأعطال في اللوحات الإلكترونية",
+        "مقارنة لوحة سليمة بلوحة معطلة",
+        "اختبار الثنائيات والترانزستورات والدوائر المتكاملة"
+      ],
+      "benefitsEn": [
+        "Teaches professional troubleshooting methods",
+        "Safe: the circuit under test is unpowered"
+      ],
+      "benefitsAr": [
+        "يعلّم أساليب احترافية في تشخيص الأعطال",
+        "آمن: الدائرة المختبرة لا تكون موصولة بالطاقة"
+      ]
+    },
+    {
+      "items": [
+        22
+      ],
+      "slug": "ericsson-bfd-200-dc-dc-converter",
+      "category": "electrical",
+      "archetype": "network-unit",
+      "brand": "Ericsson",
+      "model": "BFD 200 001/1",
+      "nameAr": "وحدات محول تيار مستمر إلى مستمر Ericsson BFD 200 001/1",
+      "descEn": "DC/DC converter modules with heatsink fins, used to convert one DC voltage to another in telecom power systems.",
+      "descAr": "وحدات تحويل من تيار مستمر إلى تيار مستمر بزعانف تبريد، تُستخدم لتحويل جهد مستمر إلى جهد آخر في أنظمة طاقة الاتصالات.",
+      "usesEn": [
+        "Studying switch-mode power conversion",
+        "Telecom power system demonstrations"
+      ],
+      "usesAr": [
+        "دراسة تحويل الطاقة بأسلوب التبديل",
+        "شرح أنظمة الطاقة في الاتصالات"
+      ],
+      "benefitsEn": [
+        "Shows real industrial power electronics",
+        "Illustrates heat management in power devices"
+      ],
+      "benefitsAr": [
+        "يعرض إلكترونيات قدرة صناعية حقيقية",
+        "يوضح إدارة الحرارة في أجهزة القدرة"
+      ]
+    },
+    {
+      "items": [
+        24
+      ],
+      "slug": "regavolt-variable-ac-voltage-regulator",
+      "category": "electrical",
+      "archetype": "variac",
+      "brand": "Regavolt",
+      "model": null,
+      "nameAr": "منظمات جهد متردد متغيرة (Variac) من Regavolt",
+      "descEn": "Variable autotransformers that let the output AC voltage be adjusted smoothly with a rotary knob.",
+      "descAr": "محولات ذاتية متغيرة تتيح ضبط جهد التيار المتردد الخارج بسلاسة عبر مقبض دوار.",
+      "usesEn": [
+        "Supplying adjustable AC voltage in experiments",
+        "Testing equipment at different supply voltages",
+        "Transformer and machine labs"
+      ],
+      "usesAr": [
+        "توفير جهد متردد قابل للضبط في التجارب",
+        "اختبار الأجهزة عند جهود تغذية مختلفة",
+        "مختبرات المحولات والآلات الكهربائية"
+      ],
+      "benefitsEn": [
+        "Demonstrates the autotransformer principle",
+        "Allows safe, gradual voltage increase"
+      ],
+      "benefitsAr": [
+        "يوضح مبدأ المحول الذاتي",
+        "يتيح رفع الجهد تدريجياً وبأمان"
+      ]
+    },
+    {
+      "items": [
+        26,
+        82
+      ],
+      "slug": "bgc-8088-microengineer-v3-5",
+      "category": "automation",
+      "archetype": "training-board",
+      "brand": "Microport Computer Research",
+      "model": "BGC-8088 MicroEngineer V3.5",
+      "nameAr": "نظام التدريب على العتاد BGC-8088 MicroEngineer V3.5",
+      "descEn": "A microprocessor training system based on the 8088 processor, used to learn how a computer works at hardware level.",
+      "descAr": "نظام تدريبي للمعالجات الدقيقة مبني على المعالج 8088، يُستخدم لفهم طريقة عمل الحاسوب على مستوى العتاد.",
+      "usesEn": [
+        "Assembly-language programming",
+        "Memory and I/O interfacing experiments",
+        "Microprocessor architecture courses"
+      ],
+      "usesAr": [
+        "البرمجة بلغة التجميع",
+        "تجارب ربط الذاكرة ووحدات الإدخال والإخراج",
+        "مقررات بنية المعالجات الدقيقة"
+      ],
+      "benefitsEn": [
+        "Shows what happens inside a processor step by step",
+        "Strong foundation for embedded systems"
+      ],
+      "benefitsAr": [
+        "يوضح ما يحدث داخل المعالج خطوة بخطوة",
+        "أساس قوي لدراسة الأنظمة المدمجة"
+      ]
+    },
+    {
+      "items": [
+        27
+      ],
+      "slug": "kh-ci-53004-plc-io-interface-module",
+      "category": "automation",
+      "archetype": "training-board",
+      "brand": "K&H",
+      "model": "CI-53004",
+      "nameAr": "وحدات واجهة الإدخال والإخراج لـ PLC من K&H طراز CI-53004",
+      "descEn": "Interface modules that connect switches, lamps and other signals to a PLC for automation training.",
+      "descAr": "وحدات واجهة تربط المفاتيح والمصابيح والإشارات الأخرى بوحدة التحكم المنطقي المبرمج (PLC) للتدريب على الأتمتة.",
+      "usesEn": [
+        "Wiring inputs and outputs to a PLC",
+        "Ladder-logic programming exercises",
+        "Simulating industrial processes"
+      ],
+      "usesAr": [
+        "توصيل المداخل والمخارج بوحدة PLC",
+        "تمارين البرمجة بلغة السلم (Ladder)",
+        "محاكاة العمليات الصناعية"
+      ],
+      "benefitsEn": [
+        "Prepares students for industrial automation jobs",
+        "Makes PLC programs visible through lamps and switches"
+      ],
+      "benefitsAr": [
+        "يؤهل الطلاب لوظائف الأتمتة الصناعية",
+        "يجعل برامج PLC مرئية عبر المصابيح والمفاتيح"
+      ]
+    },
+    {
+      "items": [
+        30
+      ],
+      "slug": "scientech-st152-mobile-phone-trainer",
+      "category": "telecom",
+      "archetype": "training-board",
+      "brand": "Scientech",
+      "model": "ST152",
+      "nameAr": "أنظمة التدريب على الهاتف المحمول Scientech ST152",
+      "descEn": "Trainer systems that lay out the sections of a mobile phone on a board so each stage can be studied and measured.",
+      "descAr": "أنظمة تدريبية تعرض أقسام الهاتف المحمول على لوحة واحدة لدراسة كل مرحلة وقياسها.",
+      "usesEn": [
+        "Studying mobile phone circuit blocks",
+        "Signal tracing and fault simulation",
+        "Mobile repair training"
+      ],
+      "usesAr": [
+        "دراسة أقسام دوائر الهاتف المحمول",
+        "تتبع الإشارات ومحاكاة الأعطال",
+        "التدريب على صيانة الهواتف"
+      ],
+      "benefitsEn": [
+        "Turns a complex device into understandable blocks",
+        "Direct link to repair and maintenance careers"
+      ],
+      "benefitsAr": [
+        "يحوّل جهازاً معقداً إلى أقسام مفهومة",
+        "مرتبط مباشرة بمهن الصيانة والإصلاح"
+      ]
+    },
+    {
+      "items": [
+        31
+      ],
+      "slug": "kh-ph-74-breadboard-trainer",
+      "category": "electronics",
+      "archetype": "training-board",
+      "brand": "K&H",
+      "model": "PH-74",
+      "nameAr": "وحدات تدريب Breadboard من K&H طراز PH-74",
+      "descEn": "Breadboard trainer modules with a large solderless area and terminals for building circuits.",
+      "descAr": "وحدات تدريب بمساحة توصيل كبيرة بدون لحام وأطراف توصيل لبناء الدوائر.",
+      "usesEn": [
+        "Building analogue and digital circuits",
+        "Course projects and lab assignments"
+      ],
+      "usesAr": [
+        "بناء الدوائر التناظرية والرقمية",
+        "مشاريع المقررات وواجبات المختبر"
+      ],
+      "benefitsEn": [
+        "Fast, reusable circuit building for every student"
+      ],
+      "benefitsAr": [
+        "بناء سريع للدوائر وقابل لإعادة الاستخدام لكل طالب"
+      ]
+    },
+    {
+      "items": [
+        33
+      ],
+      "slug": "telephone-operator-console-dss-key-module",
+      "category": "telecom",
+      "archetype": "telephone",
+      "brand": null,
+      "model": null,
+      "nameAr": "وحدة مفاتيح توسعة DSS لوحدة تحكم مشغل الهاتف",
+      "descEn": "A key-expansion module attached to an operator telephone, giving direct-station-select buttons for many extensions.",
+      "descAr": "وحدة توسعة مفاتيح تُركّب مع هاتف المشغّل، توفر أزرار اختيار مباشر لعدد كبير من التحويلات.",
+      "usesEn": [
+        "Demonstrating receptionist / operator consoles",
+        "PBX configuration exercises"
+      ],
+      "usesAr": [
+        "شرح وحدات تحكم موظف الاستقبال / المشغّل",
+        "تمارين إعداد المقسم الهاتفي"
+      ],
+      "benefitsEn": [
+        "Shows how large offices manage calls"
+      ],
+      "benefitsAr": [
+        "يوضح كيف تدير المكاتب الكبيرة المكالمات"
+      ]
+    },
+    {
+      "items": [
+        36
+      ],
+      "slug": "alcatel-4095-digital-telephone",
+      "category": "telecom",
+      "archetype": "telephone",
+      "brand": "Alcatel",
+      "model": "4095",
+      "nameAr": "أجهزة هاتف رقمية Alcatel 4095",
+      "descEn": "Digital telephone sets designed for Alcatel business telephone systems.",
+      "descAr": "أجهزة هاتف رقمية مخصصة لأنظمة الهاتف المؤسسية من Alcatel.",
+      "usesEn": [
+        "Digital telephony lab exercises",
+        "Comparing analogue and digital handsets"
+      ],
+      "usesAr": [
+        "تمارين مختبر الهاتف الرقمي",
+        "المقارنة بين الهواتف التناظرية والرقمية"
+      ],
+      "benefitsEn": [
+        "Introduces digital voice systems used in companies"
+      ],
+      "benefitsAr": [
+        "يعرّف بأنظمة الصوت الرقمية المستخدمة في الشركات"
+      ]
+    },
+    {
+      "items": [
+        37
+      ],
+      "slug": "kanda-pld-starter-kit",
+      "category": "automation",
+      "archetype": "training-board",
+      "brand": "Kanda",
+      "model": "PLD Starter Kit",
+      "nameAr": "حقائب البداية للمنطق القابل للبرمجة (PLD) من Kanda",
+      "descEn": "Starter kits for programmable logic devices, used to design digital circuits in software and load them onto a chip.",
+      "descAr": "حقائب بداية لأجهزة المنطق القابلة للبرمجة، تُستخدم لتصميم الدوائر الرقمية برمجياً وتحميلها على شريحة.",
+      "usesEn": [
+        "Designing logic with hardware description tools",
+        "Programming and testing PLD chips"
+      ],
+      "usesAr": [
+        "تصميم الدوائر المنطقية بأدوات وصف العتاد",
+        "برمجة شرائح PLD واختبارها"
+      ],
+      "benefitsEn": [
+        "Bridges digital logic theory and modern chip design"
+      ],
+      "benefitsAr": [
+        "يربط نظرية المنطق الرقمي بتصميم الشرائح الحديث"
+      ]
+    },
+    {
+      "items": [
+        38
+      ],
+      "slug": "level-ac-microvoltmeter-tm3b",
+      "category": "electrical",
+      "archetype": "bench-instrument",
+      "brand": null,
+      "model": "TM3B",
+      "nameAr": "مقياس الميكروفولت للتيار المتردد Level TM3B",
+      "descEn": "A sensitive analogue AC voltmeter for measuring very small alternating voltages.",
+      "descAr": "مقياس جهد تناظري حساس لقياس الجهود المترددة الصغيرة جداً.",
+      "usesEn": [
+        "Measuring small AC signals in amplifiers",
+        "Noise and gain measurements"
+      ],
+      "usesAr": [
+        "قياس الإشارات المترددة الصغيرة في المكبرات",
+        "قياسات الضوضاء والكسب"
+      ],
+      "benefitsEn": [
+        "Teaches measurement ranges and sensitivity"
+      ],
+      "benefitsAr": [
+        "يعلّم مفهوم نطاقات القياس والحساسية"
+      ]
+    },
+    {
+      "items": [
+        39
+      ],
+      "slug": "feedback-teknikit-consolette-tk286",
+      "category": "electronics",
+      "archetype": "training-board",
+      "brand": "FEEDBACK",
+      "model": "Teknikit Consolette TK286",
+      "nameAr": "وحدة التدريب Teknikit Consolette TK286 من FEEDBACK",
+      "descEn": "A compact training console with controls and sockets for electronics experiments.",
+      "descAr": "وحدة تدريب مدمجة مزودة بأزرار تحكم ومقابس لتجارب الإلكترونيات.",
+      "usesEn": [
+        "Guided electronics experiments",
+        "Introductory lab sessions"
+      ],
+      "usesAr": [
+        "تجارب إلكترونيات موجهة",
+        "جلسات مختبر تمهيدية"
+      ],
+      "benefitsEn": [
+        "Structured hands-on learning for beginners"
+      ],
+      "benefitsAr": [
+        "تعلم عملي منظم للمبتدئين"
+      ]
+    },
+    {
+      "items": [
+        40
+      ],
+      "slug": "siemens-transmission-measuring-set",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "Siemens",
+      "model": null,
+      "nameAr": "جهاز قياس الإرسال من Siemens",
+      "descEn": "Communications test equipment for measuring signal level, loss and quality on transmission lines.",
+      "descAr": "معدات اختبار اتصالات لقياس مستوى الإشارة والفقد والجودة على خطوط الإرسال.",
+      "usesEn": [
+        "Measuring attenuation of telephone lines",
+        "Transmission quality tests"
+      ],
+      "usesAr": [
+        "قياس توهين خطوط الهاتف",
+        "اختبارات جودة الإرسال"
+      ],
+      "benefitsEn": [
+        "Real test instrument used by telecom operators"
+      ],
+      "benefitsAr": [
+        "جهاز اختبار حقيقي تستخدمه شركات الاتصالات"
+      ]
+    },
+    {
+      "items": [
+        41
+      ],
+      "slug": "hewlett-packard-laboratory-oscilloscope",
+      "category": "electronics",
+      "archetype": "oscilloscope",
+      "brand": "Hewlett-Packard",
+      "model": null,
+      "nameAr": "راسم إشارة (أوسيلوسكوب) مختبري من Hewlett-Packard",
+      "descEn": "An analogue laboratory oscilloscope that draws electrical signals on a screen so their shape, amplitude and frequency can be measured.",
+      "descAr": "راسم إشارة مختبري تناظري يرسم الإشارات الكهربائية على الشاشة لقياس شكلها وسعتها وترددها.",
+      "usesEn": [
+        "Viewing and measuring waveforms",
+        "Checking amplifier and oscillator outputs",
+        "Timing measurements"
+      ],
+      "usesAr": [
+        "عرض الموجات وقياسها",
+        "فحص مخارج المكبرات والمذبذبات",
+        "قياسات الزمن"
+      ],
+      "benefitsEn": [
+        "The most important instrument in any electronics lab",
+        "Makes invisible signals visible"
+      ],
+      "benefitsAr": [
+        "أهم جهاز في أي مختبر إلكترونيات",
+        "يجعل الإشارات غير المرئية مرئية"
+      ]
+    },
+    {
+      "items": [
+        42
+      ],
+      "slug": "tti-tgr104-10mhz-rf-signal-generator",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "TTi",
+      "model": "TGR104",
+      "nameAr": "مولد إشارات راديوية مركّب 10 ميجاهرتز TTi TGR104",
+      "descEn": "A synthesised RF signal generator with digital frequency entry, used to produce accurate radio-frequency test signals up to 10 MHz (per the inventory description).",
+      "descAr": "مولد إشارات راديوية مركّب بإدخال رقمي للتردد، يُستخدم لإنتاج إشارات اختبار دقيقة حتى 10 ميجاهرتز (حسب وصف الجرد).",
+      "usesEn": [
+        "Testing radio receivers",
+        "Modulation experiments (AM/FM)",
+        "Calibrating filters"
+      ],
+      "usesAr": [
+        "اختبار أجهزة الاستقبال الراديوي",
+        "تجارب التضمين (AM/FM)",
+        "معايرة المرشحات"
+      ],
+      "benefitsEn": [
+        "Gives precise, repeatable signals for RF labs"
+      ],
+      "benefitsAr": [
+        "يوفر إشارات دقيقة وقابلة للتكرار لمختبرات الترددات الراديوية"
+      ]
+    },
+    {
+      "items": [
+        43
+      ],
+      "slug": "feedback-detector-module-295c",
+      "category": "telecom",
+      "archetype": "training-board",
+      "brand": "FEEDBACK",
+      "model": "295C",
+      "nameAr": "وحدة الكاشف 295C من FEEDBACK",
+      "descEn": "A communication-training module that demonstrates signal detection (demodulation) with a printed circuit diagram and test points.",
+      "descAr": "وحدة تدريبية للاتصالات توضح كشف الإشارة (إزالة التضمين) مع مخطط دائرة مطبوع ونقاط اختبار.",
+      "usesEn": [
+        "AM detection experiments",
+        "Measuring signals before and after detection"
+      ],
+      "usesAr": [
+        "تجارب كشف إشارات AM",
+        "قياس الإشارة قبل الكشف وبعده"
+      ],
+      "benefitsEn": [
+        "Shows step by step how a radio recovers sound"
+      ],
+      "benefitsAr": [
+        "يوضح خطوة بخطوة كيف يستعيد الراديو الصوت"
+      ]
+    },
+    {
+      "items": [
+        44
+      ],
+      "slug": "alcatel-4098-fre-ip-enabler",
+      "category": "telecom",
+      "archetype": "network-unit",
+      "brand": "Alcatel",
+      "model": "4098 FRE",
+      "nameAr": "وحدات Alcatel 4098 FRE Fast IP Enabler",
+      "descEn": "Adapter units that connect Alcatel digital telephones to IP networks.",
+      "descAr": "وحدات مهايئة تربط هواتف Alcatel الرقمية بشبكات IP.",
+      "usesEn": [
+        "Demonstrating voice over IP",
+        "Network and telephony integration labs"
+      ],
+      "usesAr": [
+        "شرح نقل الصوت عبر بروتوكول الإنترنت",
+        "مختبرات دمج الشبكات والهاتف"
+      ],
+      "benefitsEn": [
+        "Shows the move from traditional telephony to IP"
+      ],
+      "benefitsAr": [
+        "يوضح الانتقال من الهاتف التقليدي إلى IP"
+      ]
+    },
+    {
+      "items": [
+        45
+      ],
+      "slug": "dazheng-ps-1502d-dc-power-supply",
+      "category": "electronics",
+      "archetype": "power-supply",
+      "brand": "Dazheng",
+      "model": "PS-1502D",
+      "nameAr": "مزودات طاقة للتيار المستمر Dazheng PS-1502D",
+      "descEn": "Compact bench DC power supplies with digital displays and adjustable output.",
+      "descAr": "مزودات طاقة مدمجة للتيار المستمر بشاشات رقمية ومخرج قابل للضبط.",
+      "usesEn": [
+        "Powering student circuits",
+        "Electronics repair benches"
+      ],
+      "usesAr": [
+        "تغذية دوائر الطلاب بالطاقة",
+        "طاولات صيانة الإلكترونيات"
+      ],
+      "benefitsEn": [
+        "Affordable power source for every bench"
+      ],
+      "benefitsAr": [
+        "مصدر طاقة مناسب التكلفة لكل طاولة"
+      ]
+    },
+    {
+      "items": [
+        46
+      ],
+      "slug": "optical-metallurgical-inspection-microscope",
+      "category": "microscopy",
+      "archetype": "microscope",
+      "brand": null,
+      "model": null,
+      "nameAr": "مجاهر فحص ضوئية / معدنية",
+      "descEn": "Optical microscopes for inspecting small samples and surfaces at high magnification.",
+      "descAr": "مجاهر ضوئية لفحص العينات الصغيرة والأسطح بتكبير عالٍ.",
+      "usesEn": [
+        "Inspecting material surfaces and metal samples",
+        "Checking solder joints and PCB tracks",
+        "Science lab observation"
+      ],
+      "usesAr": [
+        "فحص أسطح المواد وعينات المعادن",
+        "فحص نقاط اللحام ومسارات اللوحات",
+        "المشاهدة في مختبرات العلوم"
+      ],
+      "benefitsEn": [
+        "Develops careful observation skills",
+        "Used across engineering and science courses"
+      ],
+      "benefitsAr": [
+        "ينمّي مهارات الملاحظة الدقيقة",
+        "يُستخدم في مقررات الهندسة والعلوم"
+      ]
+    },
+    {
+      "items": [
+        47
+      ],
+      "slug": "telephone-line-test-handset",
+      "category": "telecom",
+      "archetype": "telephone",
+      "brand": null,
+      "model": null,
+      "nameAr": "سماعات اختبار خطوط الهاتف (Lineman's Test Sets)",
+      "descEn": "Rugged handheld test phones that technicians clip onto a telephone line to check dial tone and talk.",
+      "descAr": "هواتف اختبار يدوية متينة يوصلها الفنيون بخط الهاتف لفحص نغمة الاتصال وإجراء مكالمة.",
+      "usesEn": [
+        "Testing telephone lines",
+        "Locating faults in cabling"
+      ],
+      "usesAr": [
+        "اختبار خطوط الهاتف",
+        "تحديد أعطال الكوابل"
+      ],
+      "benefitsEn": [
+        "Real field tool used by telecom technicians"
+      ],
+      "benefitsAr": [
+        "أداة ميدانية حقيقية يستخدمها فنيو الاتصالات"
+      ]
+    },
+    {
+      "items": [
+        48
+      ],
+      "slug": "feedback-ps441-dual-dc-power-supply",
+      "category": "electronics",
+      "archetype": "power-supply",
+      "brand": "FEEDBACK",
+      "model": "PS441",
+      "nameAr": "وحدات مزود طاقة مزدوج للتيار المستمر FEEDBACK PS441",
+      "descEn": "Dual DC power supply modules made for FEEDBACK training systems.",
+      "descAr": "وحدات مزود طاقة مزدوج للتيار المستمر مصممة لأنظمة تدريب FEEDBACK.",
+      "usesEn": [
+        "Powering FEEDBACK training modules",
+        "Providing positive and negative rails"
+      ],
+      "usesAr": [
+        "تغذية وحدات تدريب FEEDBACK",
+        "توفير جهد موجب وسالب"
+      ],
+      "benefitsEn": [
+        "Completes FEEDBACK lab sets"
+      ],
+      "benefitsAr": [
+        "يكمل أطقم مختبر FEEDBACK"
+      ]
+    },
+    {
+      "items": [
+        49
+      ],
+      "slug": "plessey-battery-charger",
+      "category": "electrical",
+      "archetype": "power-supply",
+      "brand": "Plessey",
+      "model": null,
+      "nameAr": "شاحن بطاريات من Plessey",
+      "descEn": "A battery charger unit with meter and controls, used to charge batteries for equipment.",
+      "descAr": "وحدة شحن بطاريات مزودة بمؤشر وأزرار تحكم، تُستخدم لشحن بطاريات المعدات.",
+      "usesEn": [
+        "Battery charging demonstrations",
+        "Studying charge current and voltage"
+      ],
+      "usesAr": [
+        "شرح عملية شحن البطاريات",
+        "دراسة تيار الشحن وجهده"
+      ],
+      "benefitsEn": [
+        "Explains how stored energy is managed"
+      ],
+      "benefitsAr": [
+        "يشرح كيفية إدارة الطاقة المخزنة"
+      ]
+    },
+    {
+      "items": [
+        50
+      ],
+      "slug": "axial-cooling-cabinet-fans",
+      "category": "laboratory",
+      "archetype": "fan",
+      "brand": null,
+      "model": null,
+      "nameAr": "مراوح تبريد محورية لخزائن المعدات",
+      "descEn": "Axial fans used to cool electronic cabinets and equipment racks.",
+      "descAr": "مراوح محورية تُستخدم لتبريد خزائن الإلكترونيات وحوامل المعدات.",
+      "usesEn": [
+        "Cooling equipment enclosures",
+        "Thermal management experiments"
+      ],
+      "usesAr": [
+        "تبريد حاويات المعدات",
+        "تجارب إدارة الحرارة"
+      ],
+      "benefitsEn": [
+        "Shows why cooling matters in electronics"
+      ],
+      "benefitsAr": [
+        "يوضح أهمية التبريد في الإلكترونيات"
+      ]
+    },
+    {
+      "items": [
+        51
+      ],
+      "slug": "kehai-950-esd-safe-soldering-station",
+      "category": "soldering",
+      "archetype": "soldering-station",
+      "brand": "Kehai",
+      "model": "950",
+      "nameAr": "محطة لحام آمنة من الكهرباء الساكنة Kehai 950",
+      "descEn": "A temperature-controlled soldering station with ESD protection, for safe work on sensitive components.",
+      "descAr": "محطة لحام بتحكم في درجة الحرارة مع حماية من الكهرباء الساكنة، للعمل بأمان على المكونات الحساسة.",
+      "usesEn": [
+        "Soldering components on circuit boards",
+        "Repair and assembly practice"
+      ],
+      "usesAr": [
+        "لحام المكونات على اللوحات الإلكترونية",
+        "التدرب على الصيانة والتجميع"
+      ],
+      "benefitsEn": [
+        "Teaches correct soldering and ESD safety"
+      ],
+      "benefitsAr": [
+        "يعلّم اللحام الصحيح والوقاية من الكهرباء الساكنة"
+      ]
+    },
+    {
+      "items": [
+        52
+      ],
+      "slug": "936a-soldering-station-control-units",
+      "category": "soldering",
+      "archetype": "soldering-station",
+      "brand": "Kehai / Gordak / BILL",
+      "model": "936A",
+      "nameAr": "وحدات تحكم محطات اللحام 936A (Kehai / Gordak / BILL)",
+      "descEn": "Classic 936-type soldering station control units with a temperature knob, used widely in teaching labs.",
+      "descAr": "وحدات تحكم لمحطات لحام من النوع 936 الشائع، بمقبض لضبط درجة الحرارة، وتُستخدم كثيراً في مختبرات التدريب.",
+      "usesEn": [
+        "Through-hole soldering practice",
+        "Kit assembly in student projects"
+      ],
+      "usesAr": [
+        "التدرب على لحام المكونات ذات الأطراف",
+        "تجميع الحقائب في مشاريع الطلاب"
+      ],
+      "benefitsEn": [
+        "Enough units to equip a full class"
+      ],
+      "benefitsAr": [
+        "عدد كافٍ من الوحدات لتجهيز فصل كامل"
+      ]
+    },
+    {
+      "items": [
+        55
+      ],
+      "slug": "electric-soldering-guns",
+      "category": "soldering",
+      "archetype": "soldering-gun",
+      "brand": null,
+      "model": null,
+      "nameAr": "مسدسات لحام كهربائية / أدوات لحام للأعمال الثقيلة",
+      "descEn": "Trigger-operated soldering guns that heat quickly, used for heavier wires and terminals.",
+      "descAr": "مسدسات لحام تعمل بالزناد وتسخن بسرعة، تُستخدم للأسلاك والأطراف الأكبر حجماً.",
+      "usesEn": [
+        "Soldering thick wires and connectors",
+        "Workshop and maintenance tasks"
+      ],
+      "usesAr": [
+        "لحام الأسلاك السميكة والموصلات",
+        "أعمال الورشة والصيانة"
+      ],
+      "benefitsEn": [
+        "Shows a different heating method (transformer tip)"
+      ],
+      "benefitsAr": [
+        "يعرض طريقة تسخين مختلفة (رأس يعمل بمحول)"
+      ]
+    },
+    {
+      "items": [
+        57
+      ],
+      "slug": "siemens-p2012-pcm-terminal-test-set",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "Siemens",
+      "model": "P2012",
+      "nameAr": "جهاز اختبار أطراف PCM من Siemens طراز P2012",
+      "descEn": "Test equipment for digital PCM transmission systems, with a screen and keypad.",
+      "descAr": "جهاز اختبار لأنظمة الإرسال الرقمي PCM، مزود بشاشة ولوحة مفاتيح.",
+      "usesEn": [
+        "Testing PCM digital links",
+        "Studying digital telephony multiplexing"
+      ],
+      "usesAr": [
+        "اختبار وصلات PCM الرقمية",
+        "دراسة تعدد الإرسال في الهاتف الرقمي"
+      ],
+      "benefitsEn": [
+        "Professional instrument for digital communications courses"
+      ],
+      "benefitsAr": [
+        "جهاز احترافي لمقررات الاتصالات الرقمية"
+      ]
+    },
+    {
+      "items": [
+        58
+      ],
+      "slug": "samsung-officeserv-720-pbx",
+      "category": "telecom",
+      "archetype": "network-unit",
+      "brand": "Samsung",
+      "model": "OfficeServ 720",
+      "nameAr": "نظام الهاتف / المقسم Samsung OfficeServ 720",
+      "descEn": "A business telephone system (PBX) that connects office extensions and external lines.",
+      "descAr": "نظام هاتف مؤسسي (مقسم) يربط التحويلات الداخلية بالخطوط الخارجية.",
+      "usesEn": [
+        "Building a working telephone network in the lab",
+        "Programming extensions and call routing"
+      ],
+      "usesAr": [
+        "بناء شبكة هاتف عاملة في المختبر",
+        "برمجة التحويلات وتوجيه المكالمات"
+      ],
+      "benefitsEn": [
+        "Complete real system for telecom students"
+      ],
+      "benefitsAr": [
+        "نظام حقيقي متكامل لطلاب الاتصالات"
+      ]
+    },
+    {
+      "items": [
+        59
+      ],
+      "slug": "siemens-d2108-level-meter",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "Siemens",
+      "model": "D2108",
+      "nameAr": "مقاييس المستوى Siemens D2108",
+      "descEn": "Level meters for measuring signal levels in communication systems.",
+      "descAr": "مقاييس مستوى لقياس مستويات الإشارة في أنظمة الاتصالات.",
+      "usesEn": [
+        "Measuring signal levels in dB",
+        "Line and channel testing"
+      ],
+      "usesAr": [
+        "قياس مستويات الإشارة بالديسيبل",
+        "اختبار الخطوط والقنوات"
+      ],
+      "benefitsEn": [
+        "Teaches decibel measurements in practice"
+      ],
+      "benefitsAr": [
+        "يعلّم القياس بالديسيبل عملياً"
+      ]
+    },
+    {
+      "items": [
+        60
+      ],
+      "slug": "rohde-schwarz-smt03-signal-generator",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "Rohde & Schwarz",
+      "model": "SMT03",
+      "nameAr": "مولد الإشارات Rohde & Schwarz SMT03",
+      "descEn": "A professional RF signal generator from Rohde & Schwarz for producing precise, modulated radio-frequency signals.",
+      "descAr": "مولد إشارات راديوية احترافي من Rohde & Schwarz لإنتاج إشارات راديوية دقيقة ومضمّنة.",
+      "usesEn": [
+        "Testing receivers and RF circuits",
+        "Modulation experiments",
+        "Advanced RF and wireless labs"
+      ],
+      "usesAr": [
+        "اختبار أجهزة الاستقبال والدوائر الراديوية",
+        "تجارب التضمين",
+        "مختبرات الترددات الراديوية واللاسلكي المتقدمة"
+      ],
+      "benefitsEn": [
+        "Industry-grade instrument for senior students and research"
+      ],
+      "benefitsAr": [
+        "جهاز بمستوى صناعي لطلاب السنوات المتقدمة والبحث"
+      ]
+    },
+    {
+      "items": [
+        62
+      ],
+      "slug": "siemens-d2053-attenuator",
+      "category": "telecom",
+      "archetype": "bench-instrument",
+      "brand": "Siemens",
+      "model": "D2053",
+      "nameAr": "موهِّن الإشارة Siemens D2053",
+      "descEn": "A precision attenuator with rotary switches that reduces signal level by known amounts.",
+      "descAr": "موهِّن دقيق بمفاتيح دوارة يخفض مستوى الإشارة بمقادير معروفة.",
+      "usesEn": [
+        "Setting accurate signal levels",
+        "Testing receiver sensitivity"
+      ],
+      "usesAr": [
+        "ضبط مستويات إشارة دقيقة",
+        "اختبار حساسية أجهزة الاستقبال"
+      ],
+      "benefitsEn": [
+        "Makes attenuation and dB easy to understand"
+      ],
+      "benefitsAr": [
+        "يسهّل فهم التوهين والديسيبل"
+      ]
+    },
+    {
+      "items": [
+        65
+      ],
+      "slug": "axial-ventilation-fan-assemblies",
+      "category": "laboratory",
+      "archetype": "fan",
+      "brand": null,
+      "model": null,
+      "nameAr": "مجموعات مراوح تهوية وتبريد محورية",
+      "descEn": "Axial ventilation fan assemblies for equipment cooling.",
+      "descAr": "مجموعات مراوح تهوية محورية لتبريد المعدات.",
+      "usesEn": [
+        "Ventilating equipment cabinets",
+        "Airflow demonstrations"
+      ],
+      "usesAr": [
+        "تهوية خزائن المعدات",
+        "شرح تدفق الهواء"
+      ],
+      "benefitsEn": [
+        "Practical example of electric motors and airflow"
+      ],
+      "benefitsAr": [
+        "مثال عملي على المحركات الكهربائية وتدفق الهواء"
+      ]
+    },
+    {
+      "items": [
+        66
+      ],
+      "slug": "x-ray-film-viewer-light-box",
+      "category": "laboratory",
+      "archetype": "lightbox",
+      "brand": null,
+      "model": null,
+      "nameAr": "جهاز عرض أفلام الأشعة / صندوق إضاءة",
+      "descEn": "A light box with an even, diffused backlight used to view X-ray films and transparencies.",
+      "descAr": "صندوق إضاءة بإضاءة خلفية منتشرة ومتساوية يُستخدم لعرض أفلام الأشعة والشفافيات.",
+      "usesEn": [
+        "Viewing films and transparencies",
+        "Tracing and inspecting PCB artwork"
+      ],
+      "usesAr": [
+        "عرض الأفلام والشفافيات",
+        "تتبع وفحص رسومات اللوحات الإلكترونية"
+      ],
+      "benefitsEn": [
+        "Simple, useful tool for lab and design work"
+      ],
+      "benefitsAr": [
+        "أداة بسيطة ومفيدة لأعمال المختبر والتصميم"
+      ]
+    },
+    {
+      "items": [
+        68
+      ],
+      "slug": "air-purifier-units",
+      "category": "laboratory",
+      "archetype": "air-purifier",
+      "brand": null,
+      "model": null,
+      "nameAr": "أجهزة تنقية الهواء",
+      "descEn": "Air cleaner units that filter dust and fumes from the air in a room.",
+      "descAr": "أجهزة لتنقية الهواء تُرشّح الغبار والأبخرة من هواء الغرفة.",
+      "usesEn": [
+        "Improving air quality in soldering and lab rooms"
+      ],
+      "usesAr": [
+        "تحسين جودة الهواء في غرف اللحام والمختبرات"
+      ],
+      "benefitsEn": [
+        "Supports a healthier, safer lab environment"
+      ],
+      "benefitsAr": [
+        "يدعم بيئة مختبر صحية وآمنة"
+      ]
+    },
+    {
+      "items": [
+        69
+      ],
+      "slug": "digital-multimeters",
+      "category": "electronics",
+      "archetype": "multimeter",
+      "brand": null,
+      "model": null,
+      "nameAr": "أجهزة قياس متعددة رقمية (ملتيميتر)",
+      "descEn": "Handheld digital multimeters for measuring voltage, current and resistance.",
+      "descAr": "أجهزة قياس رقمية محمولة لقياس الجهد والتيار والمقاومة.",
+      "usesEn": [
+        "Basic electrical measurements",
+        "Checking continuity and components",
+        "Fault-finding"
+      ],
+      "usesAr": [
+        "القياسات الكهربائية الأساسية",
+        "فحص التوصيل والمكونات",
+        "اكتشاف الأعطال"
+      ],
+      "benefitsEn": [
+        "The first instrument every student must master"
+      ],
+      "benefitsAr": [
+        "أول جهاز يجب أن يتقنه كل طالب"
+      ]
+    },
+    {
+      "items": [
+        70
+      ],
+      "slug": "mobile-phone-training-maintenance-system",
+      "category": "telecom",
+      "archetype": "training-board",
+      "brand": null,
+      "model": null,
+      "nameAr": "أنظمة تدريب وصيانة الهواتف المحمولة",
+      "descEn": "Training systems (boxed) for learning mobile phone circuits and maintenance procedures.",
+      "descAr": "أنظمة تدريبية (في عبوتها) لتعلم دوائر الهواتف المحمولة وإجراءات صيانتها.",
+      "usesEn": [
+        "Mobile phone repair courses",
+        "Studying phone circuit sections"
+      ],
+      "usesAr": [
+        "دورات صيانة الهواتف المحمولة",
+        "دراسة أقسام دوائر الهاتف"
+      ],
+      "benefitsEn": [
+        "Practical, job-ready repair skills"
+      ],
+      "benefitsAr": [
+        "مهارات صيانة عملية جاهزة لسوق العمل"
+      ]
+    },
+    {
+      "items": [
+        71
+      ],
+      "slug": "bga-rework-station",
+      "category": "soldering",
+      "archetype": "soldering-station",
+      "brand": null,
+      "model": null,
+      "nameAr": "محطة إعادة عمل BGA / نظام إصلاح وفحص اللوحات",
+      "descEn": "A rework system for removing and replacing BGA chips and other surface-mount parts on circuit boards.",
+      "descAr": "نظام لإزالة واستبدال شرائح BGA وغيرها من المكونات السطحية على اللوحات الإلكترونية.",
+      "usesEn": [
+        "Replacing BGA and SMD components",
+        "Advanced PCB repair training"
+      ],
+      "usesAr": [
+        "استبدال شرائح BGA والمكونات السطحية",
+        "التدريب المتقدم على إصلاح اللوحات"
+      ],
+      "benefitsEn": [
+        "Exposure to professional electronics repair equipment"
+      ],
+      "benefitsAr": [
+        "تعرّف على معدات إصلاح الإلكترونيات الاحترافية"
+      ]
+    },
+    {
+      "items": [
+        73
+      ],
+      "slug": "analogue-multimeters",
+      "category": "electronics",
+      "archetype": "multimeter",
+      "brand": null,
+      "model": null,
+      "nameAr": "أجهزة قياس متعددة تناظرية",
+      "descEn": "Needle-type multimeters for measuring voltage, current and resistance.",
+      "descAr": "أجهزة قياس متعددة بمؤشر إبرة لقياس الجهد والتيار والمقاومة.",
+      "usesEn": [
+        "Basic measurements",
+        "Watching slowly changing values"
+      ],
+      "usesAr": [
+        "القياسات الأساسية",
+        "متابعة القيم المتغيرة ببطء"
+      ],
+      "benefitsEn": [
+        "Teaches scale reading and measurement ranges"
+      ],
+      "benefitsAr": [
+        "يعلّم قراءة التدريج ونطاقات القياس"
+      ]
+    },
+    {
+      "items": [
+        74
+      ],
+      "slug": "adjustable-soldering-stations",
+      "category": "soldering",
+      "archetype": "soldering-station",
+      "brand": null,
+      "model": null,
+      "nameAr": "محطات لحام قابلة للضبط",
+      "descEn": "Soldering stations with adjustable tip temperature.",
+      "descAr": "محطات لحام بدرجة حرارة رأس قابلة للضبط.",
+      "usesEn": [
+        "General soldering practice",
+        "Student project assembly"
+      ],
+      "usesAr": [
+        "التدرب على اللحام بشكل عام",
+        "تجميع مشاريع الطلاب"
+      ],
+      "benefitsEn": [
+        "Learn how temperature affects solder quality"
+      ],
+      "benefitsAr": [
+        "تعلّم أثر درجة الحرارة على جودة اللحام"
+      ]
+    },
+    {
+      "items": [
+        77
+      ],
+      "slug": "hot-air-rework-soldering-stations",
+      "category": "soldering",
+      "archetype": "soldering-station",
+      "brand": null,
+      "model": null,
+      "nameAr": "محطات لحام بالهواء الساخن / إعادة العمل",
+      "descEn": "Hot-air rework stations that blow controlled hot air to remove and fit surface-mount components.",
+      "descAr": "محطات إعادة عمل تنفث هواءً ساخناً متحكماً به لإزالة المكونات السطحية وتركيبها.",
+      "usesEn": [
+        "Removing and fitting SMD components",
+        "Heat-shrink and repair work"
+      ],
+      "usesAr": [
+        "فك المكونات السطحية وتركيبها",
+        "أعمال الأنابيب الحرارية والإصلاح"
+      ],
+      "benefitsEn": [
+        "Large quantity: can equip several lab rooms"
+      ],
+      "benefitsAr": [
+        "كمية كبيرة: تكفي لتجهيز عدة مختبرات"
+      ]
+    },
+    {
+      "items": [
+        78
+      ],
+      "slug": "stereo-inspection-microscopes",
+      "category": "microscopy",
+      "archetype": "microscope",
+      "brand": null,
+      "model": null,
+      "nameAr": "مجاهر فحص مجسّمة (ستيريو) / مخبرية",
+      "descEn": "Stereo microscopes that give a 3D view at low magnification, ideal for inspecting boards and assembling small parts.",
+      "descAr": "مجاهر مجسّمة تعطي رؤية ثلاثية الأبعاد بتكبير منخفض، مثالية لفحص اللوحات وتجميع القطع الصغيرة.",
+      "usesEn": [
+        "Inspecting solder joints",
+        "Working on small components",
+        "Biology and materials observation"
+      ],
+      "usesAr": [
+        "فحص نقاط اللحام",
+        "العمل على المكونات الصغيرة",
+        "المشاهدة في الأحياء والمواد"
+      ],
+      "benefitsEn": [
+        "Improves the quality of students' practical work"
+      ],
+      "benefitsAr": [
+        "يحسّن جودة العمل العملي للطلاب"
+      ]
+    },
+    {
+      "items": [
+        80
+      ],
+      "slug": "analogue-insulation-resistance-tester",
+      "category": "electrical",
+      "archetype": "bench-instrument",
+      "brand": null,
+      "model": null,
+      "nameAr": "جهاز اختبار العزل / المقاومة التناظري",
+      "descEn": "An analogue tester for measuring insulation resistance of cables, motors and installations.",
+      "descAr": "جهاز اختبار تناظري لقياس مقاومة العزل في الكوابل والمحركات والتمديدات.",
+      "usesEn": [
+        "Insulation testing of cables and machines",
+        "Electrical safety checks"
+      ],
+      "usesAr": [
+        "اختبار عزل الكوابل والآلات",
+        "فحوصات السلامة الكهربائية"
+      ],
+      "benefitsEn": [
+        "Teaches essential electrical safety testing"
+      ],
+      "benefitsAr": [
+        "يعلّم اختبارات السلامة الكهربائية الأساسية"
+      ]
+    }
+  ]
+}
