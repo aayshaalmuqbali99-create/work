@@ -80,7 +80,11 @@ export default async function DevicePage({ params }: { params: Promise<{ locale:
       <section className="mt-10" aria-labelledby="explore-3d">
         <h2 id="explore-3d" className="text-xl font-bold text-navy">{t("explore3d")}</h2>
         <p className="mb-4 mt-1 text-sm text-muted">{t("explore3dSub")}</p>
-        <ViewerLoader archetypeKey={d.archetype} deviceName={d.name} fallbackImage={d.photo} />
+        <ViewerLoader
+          model={d.model3d ? { type: "verified", ...d.model3d } : d.archetype ? { type: "illustrative", key: d.archetype } : null}
+          deviceName={d.name}
+          fallbackImage={d.photo}
+        />
       </section>
 
       <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_340px]">

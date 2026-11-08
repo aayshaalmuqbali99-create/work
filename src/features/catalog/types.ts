@@ -1,3 +1,5 @@
+import type { PartInfo } from "@/components/viewer3d/types";
+
 export type CategoryKey = "electronics" | "electrical" | "telecom" | "microscopy" | "soldering" | "automation" | "laboratory";
 export type Condition = "unverified" | "new" | "used";
 
@@ -22,6 +24,8 @@ export interface Device {
   /** Estimated price of a comparable NEW unit — never a selling price. */
   indicativeNewUnitPriceOMR: number | null;
   photo: { src: string; width: number; height: number } | null;
+  /** Published, verified real 3D model of this device (takes priority over the illustrative archetype). */
+  model3d: { url: string; parts: PartInfo[] } | null;
 }
 
 /** Bilingual view of a device for the current locale. */

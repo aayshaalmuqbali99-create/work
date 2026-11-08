@@ -30,6 +30,12 @@ enum DeviceCondition {
   USED
 }
 
+enum ModelStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 enum InventoryTxType {
   IMPORT
   ADJUSTMENT
@@ -115,6 +121,7 @@ model Device {
   updatedAt  DateTime        @updatedAt
   images     DeviceImage[]
   inventory  InventoryTransaction[]
+  models3d   Device3DModel[]
 
   @@index([status, categoryId])
   @@index([deletedAt])
@@ -135,6 +142,32 @@ model DeviceImage {
   createdAt   DateTime @default(now())
 
   @@index([deviceId, sortOrder])
+}
+
+/// A real 3D model (GLB) of the actual device. Several versions per device; at most one PUBLISHED.
+model Device3DModel {
+  id            String      @id @default(cuid())
+  deviceId      String
+  device        Device      @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  version       Int
+  status        ModelStatus @default(DRAFT)
+  /// Set when an editor confirms the model represents this actual device. Required to publish.
+  verified      Boolean     @default(false)
+  fileUrl       String
+  fileName      String
+  fileSize      Int
+  triangleCount Int
+  /// Names of the nodes that can be configured as parts.
+  nodeNames     String[]
+  /// Part configuration: [{ id, node, en, ar, fnEn, fnAr, parent, explode: [x,y,z] | null }]
+  parts         Json        @default("[]")
+  createdById   String?
+  publishedAt   DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([deviceId, version])
+  @@index([deviceId, status])
 }
 
 model InventoryTransaction {

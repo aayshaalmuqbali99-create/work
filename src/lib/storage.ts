@@ -37,3 +37,14 @@ export async function saveImage(file: File): Promise<{ url: string; width: numbe
   await writeFile(path.join(dir, name), data);
   return { url: `/media/devices/${name}`, width: info.width, height: info.height };
 }
+
+export const MAX_MODEL_BYTES = 30 * 1024 * 1024;
+
+/** Store an already-validated binary file (e.g. a GLB) under UPLOAD_DIR/<folder>. */
+export async function saveBinary(data: Buffer, folder: string, ext: string): Promise<{ url: string }> {
+  const dir = path.join(UPLOAD_DIR, folder);
+  await mkdir(dir, { recursive: true });
+  const name = `${randomUUID()}.${ext}`;
+  await writeFile(path.join(dir, name), data);
+  return { url: `/media/${folder}/${name}` };
+}

@@ -9,6 +9,7 @@ import type { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { archetypes } from "@/components/viewer3d/archetypes";
 import inventory from "@/data/inventory-rows.json";
+import type { PartInfo } from "@/components/viewer3d/types";
 import type { CategoryKey, Condition, Device, LocalizedDevice } from "./types";
 
 export const CATALOG_TAG = "catalog";
@@ -38,6 +39,7 @@ const SYNONYMS: Record<string, string> = {
 const include = {
   category: { select: { key: true } },
   images: { orderBy: { sortOrder: "asc" }, take: 1 },
+  models3d: { where: { status: "PUBLISHED", verified: true }, orderBy: { version: "desc" }, take: 1, select: { fileUrl: true, parts: true } },
 } satisfies Prisma.DeviceInclude;
 
 type Row = Prisma.DeviceGetPayload<{ include: typeof include }>;
@@ -63,6 +65,7 @@ function toDevice(r: Row): Device {
     condition: r.condition.toLowerCase() as Condition,
     indicativeNewUnitPriceOMR: r.marketPriceOMR == null ? null : Number(r.marketPriceOMR),
     photo: img ? { src: img.url, width: img.width, height: img.height } : null,
+    model3d: r.models3d[0] ? { url: r.models3d[0].fileUrl, parts: r.models3d[0].parts as unknown as PartInfo[] } : null,
   };
 }
 

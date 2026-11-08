@@ -38,3 +38,19 @@ export interface Archetype {
   /** Radius used to frame the camera. */
   size: number;
 }
+
+/** A configured part of a real (GLB) model. `node` is the node name in the GLB file. */
+export interface PartInfo {
+  id: string;
+  node?: string;
+  en: string;
+  ar: string;
+  fnEn: string;
+  fnAr: string;
+  parent?: string | null;
+  /** Explode direction/distance in scene units; null = automatic (away from the model centre). */
+  explode: V3 | null;
+}
+
+/** What the public viewer shows for a device. */
+export type ViewerModel = { type: "illustrative"; key: string } | { type: "verified"; url: string; parts: PartInfo[] };

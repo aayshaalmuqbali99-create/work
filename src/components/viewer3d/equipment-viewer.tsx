@@ -8,12 +8,12 @@ import {
   Boxes, Eye, EyeOff, Focus, Maximize2, Minimize2, Pause, Play, RotateCcw, Shrink, Tag, Expand,
 } from "lucide-react";
 import { getArchetype } from "./archetypes";
-import { EquipmentScene, type SceneState, type ViewPreset } from "./scene";
-import type { PartSpec } from "./types";
+import { EquipmentScene, type SceneModel, type SceneState, type ViewPreset } from "./scene";
+import type { PartInfo, ViewerModel } from "./types";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  archetypeKey: string | null;
+  model: ViewerModel | null;
   deviceName: string;
   fallbackImage: { src: string; width: number; height: number } | null;
 }
@@ -31,11 +31,26 @@ function hasWebGL() {
  * InteractiveEquipmentViewer — rotate / zoom / pan, camera presets, fullscreen,
  * exploded view with speed + distance, component tree with show/hide/isolate, and an info panel.
  */
-export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackImage }: Props) {
+export function InteractiveEquipmentViewer({ model, deviceName, fallbackImage }: Props) {
   const t = useTranslations("Viewer");
   const locale = useLocale() as "ar" | "en";
   const reducedMotion = !!useReducedMotion();
-  const archetype = archetypeKey ? getArchetype(archetypeKey) : undefined;
+  const archetype = model?.type === "illustrative" ? getArchetype(model.key) : undefined;
+  /** Normalised scene model + flat part list for the tree and info panel. */
+  const scene: { model: SceneModel; parts: PartInfo[]; typeName: string } | null = useMemo(() => {
+    if (model?.type === "verified" && model.parts.length > 0) {
+      return { model: { type: "verified", url: model.url, parts: model.parts }, parts: model.parts, typeName: "" };
+    }
+    if (archetype) {
+      return {
+        model: { type: "illustrative", archetype },
+        parts: archetype.parts.map((p) => ({ id: p.id, en: p.en, ar: p.ar, fnEn: p.fnEn, fnAr: p.fnAr, parent: p.parent ?? null, explode: p.explode })),
+        typeName: locale === "ar" ? archetype.ar : archetype.en,
+      };
+    }
+    return null;
+  }, [model, archetype, locale]);
+  const verified = scene?.model.type === "verified";
   const wrapRef = useRef<HTMLDivElement>(null);
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
@@ -63,12 +78,13 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
   const view = (preset: ViewPreset) => setState((s) => ({ ...s, view: { preset, nonce: s.view.nonce + 1 } }));
 
   const tree = useMemo(() => {
-    if (!archetype) return [];
-    const top = archetype.parts.filter((p) => !p.parent);
-    return top.map((p) => ({ part: p, children: archetype.parts.filter((c) => c.parent === p.id) }));
-  }, [archetype]);
+    if (!scene) return [];
+    const ids = new Set(scene.parts.map((p) => p.id));
+    const top = scene.parts.filter((p) => !p.parent || !ids.has(p.parent));
+    return top.map((p) => ({ part: p, children: scene.parts.filter((c) => c.parent === p.id) }));
+  }, [scene]);
 
-  if (!archetype || webgl === false) {
+  if (!scene || webgl === false) {
     return (
       <div className="overflow-hidden rounded-card border border-line bg-surface">
         {fallbackImage && <Image src={fallbackImage.src} alt={deviceName} width={fallbackImage.width} height={fallbackImage.height} className="mx-auto h-72 w-auto object-contain" />}
@@ -77,9 +93,10 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
     );
   }
 
-  const selected = archetype.parts.find((p) => p.id === state.selected) ?? null;
-  const name = (p: PartSpec) => (locale === "ar" ? p.ar : p.en);
-  const otherName = (p: PartSpec) => (locale === "ar" ? p.en : p.ar);
+  const parts = scene.parts;
+  const selected = parts.find((p) => p.id === state.selected) ?? null;
+  const name = (p: PartInfo) => (locale === "ar" ? p.ar || p.en : p.en || p.ar);
+  const otherName = (p: PartInfo) => (locale === "ar" ? p.en : p.ar);
   const toggleHidden = (id: string) =>
     setState((s) => {
       const hidden = new Set(s.hidden);
@@ -88,11 +105,11 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
       return { ...s, hidden, selected: hidden.has(id) && s.selected === id ? null : s.selected };
     });
   const isolate = (id: string) =>
-    set({ hidden: new Set(archetype.parts.filter((p) => p.id !== id && p.parent !== id).map((p) => p.id)), selected: id });
+    set({ hidden: new Set(parts.filter((p) => p.id !== id && p.parent !== id).map((p) => p.id)), selected: id });
 
-  const parent = selected?.parent ? archetype.parts.find((p) => p.id === selected.parent) : undefined;
+  const parent = selected?.parent ? parts.find((p) => p.id === selected.parent) : undefined;
   const related = selected
-    ? archetype.parts.filter((p) => p.id !== selected.id && (p.parent === selected.id || p.id === selected.parent || (selected.parent && p.parent === selected.parent)))
+    ? parts.filter((p) => p.id !== selected.id && (p.parent === selected.id || p.id === selected.parent || (selected.parent && p.parent === selected.parent)))
     : [];
 
   return (
@@ -101,12 +118,12 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
         {webgl === null ? (
           <div className="grid h-full place-items-center text-sm text-muted">{t("loading")}</div>
         ) : (
-          <EquipmentScene archetype={archetype} state={state} onSelect={(id) => set({ selected: id })} reducedMotion={reducedMotion} />
+          <EquipmentScene model={scene.model} state={state} onSelect={(id) => set({ selected: id })} reducedMotion={reducedMotion} />
         )}
 
         {/* Illustrative badge */}
-        <p className="pointer-events-none absolute start-3 top-3 z-30 max-w-[75%] rounded-full bg-navy/90 px-3 py-1.5 text-xs font-semibold text-white shadow">
-          {t("illustrative")}
+        <p className={cn("pointer-events-none absolute start-3 top-3 z-30 max-w-[75%] rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow", verified ? "bg-emerald-700/90" : "bg-navy/90")}>
+          {verified ? t("verified") : t("illustrative")}
         </p>
 
         {/* Camera views */}
@@ -187,13 +204,13 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
         {/* Component tree */}
         <div className="rounded-card border border-line bg-surface p-4">
           <div className="mb-2 flex items-center justify-between gap-2">
-            <h3 className="font-semibold text-navy">{t("components")} <span className="text-sm font-normal text-muted">({archetype.parts.length})</span></h3>
+            <h3 className="font-semibold text-navy">{t("components")} <span className="text-sm font-normal text-muted">({parts.length})</span></h3>
             <div className="flex gap-1">
               <button type="button" onClick={() => set({ hidden: new Set() })} className="rounded-full px-2 py-1 text-xs text-teal hover:bg-teal-light">{t("showAll")}</button>
-              <button type="button" onClick={() => set({ hidden: new Set(archetype.parts.map((p) => p.id)), selected: null })} className="rounded-full px-2 py-1 text-xs text-muted hover:bg-canvas">{t("hideAll")}</button>
+              <button type="button" onClick={() => set({ hidden: new Set(parts.map((p) => p.id)), selected: null })} className="rounded-full px-2 py-1 text-xs text-muted hover:bg-canvas">{t("hideAll")}</button>
             </div>
           </div>
-          <p className="mb-2 text-xs font-medium text-muted">{locale === "ar" ? archetype.ar : archetype.en}</p>
+          {scene.typeName && <p className="mb-2 text-xs font-medium text-muted">{scene.typeName}</p>}
           <ul className="space-y-0.5 border-s border-line ps-2">
             {tree.map(({ part, children }) => (
               <li key={part.id}>
@@ -216,7 +233,7 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
   );
 }
 
-function TreeRow({ label, selected, hidden, onSelect, onToggle, t }: { part: PartSpec; label: string; selected: boolean; hidden: boolean; onSelect: () => void; onToggle: () => void; t: (k: string) => string }) {
+function TreeRow({ label, selected, hidden, onSelect, onToggle, t }: { part: PartInfo; label: string; selected: boolean; hidden: boolean; onSelect: () => void; onToggle: () => void; t: (k: string) => string }) {
   return (
     <div className={cn("flex items-center gap-1 rounded-lg", selected && "bg-teal-light")}>
       <button type="button" onClick={onSelect} className={cn("flex-1 truncate rounded-lg px-2 py-1.5 text-start text-sm", hidden ? "text-muted line-through" : "text-ink", selected && "font-semibold text-teal")}>

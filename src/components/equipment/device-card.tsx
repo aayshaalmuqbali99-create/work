@@ -25,7 +25,7 @@ export function DeviceCard({ device }: { device: LocalizedDevice }) {
         ) : (
           <ImageOff className="size-10 text-muted/50" aria-label={t("notProvided")} />
         )}
-        {device.archetype && (
+        {(device.archetype || device.model3d) && (
           <span className="absolute end-3 top-3 inline-flex items-center gap-1 rounded-full bg-navy px-2 py-0.5 text-[11px] font-semibold text-white">
             <Box className="size-3" aria-hidden="true" />
             {t("has3d")}

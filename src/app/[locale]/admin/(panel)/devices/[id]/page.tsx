@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, Box, ExternalLink } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getDeviceForEdit } from "@/features/admin/queries";
+import { db } from "@/lib/db";
 import { formOptions } from "@/features/admin/form-options";
 import inventory from "@/data/inventory-rows.json";
 import { DeviceForm } from "@/components/admin/device-form";
@@ -18,6 +19,9 @@ export default async function EditDevicePage({ params }: { params: Promise<{ loc
   const t = await getTranslations("Admin");
   const opts = await formOptions(locale);
   const img = d.images[0] ?? null;
+  const models = await db.device3DModel.groupBy({ by: ["status"], where: { deviceId: d.id }, _count: true });
+  const published3d = models.some((m) => m.status === "PUBLISHED");
+  const total3d = models.reduce((a, m) => a + m._count, 0);
   const suggested = d.sourceItemNos.length === 1 ? inventory.rows.find((r) => r.itemNo === d.sourceItemNos[0])?.suggestedPhoto ?? null : null;
   const fmt = new Intl.DateTimeFormat(locale === "ar" ? "ar-OM-u-nu-latn" : "en-GB", { dateStyle: "medium", timeStyle: "short" });
 
@@ -56,6 +60,12 @@ export default async function EditDevicePage({ params }: { params: Promise<{ loc
           <Card title={t("sectionStatus")}>
             <StatusControls id={d.id} status={d.status} />
             {d.status !== "PUBLISHED" && <p className="mt-3 text-xs text-muted">{t("publishNeeds")}</p>}
+          </Card>
+          <Card title={t("section3d")}>
+            <p className="mb-3 text-sm text-muted">
+              {published3d ? <span className="font-medium text-emerald-700">{t("model_PUBLISHED")} · {t("verifiedLabel")}</span> : total3d ? `${total3d} × ${t("model_DRAFT")}` : t("noModels")}
+            </p>
+            <Link href={`/admin/devices/${d.id}/models`} className="inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-medium text-navy hover:border-teal"><Box className="size-4" />{t("models3dTitle")}</Link>
           </Card>
           <Card title={t("sectionPhoto")}>
             <PhotoManager

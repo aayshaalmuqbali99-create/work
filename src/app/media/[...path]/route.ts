@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { UPLOAD_DIR } from "@/lib/storage";
 
-const TYPES: Record<string, string> = { ".webp": "image/webp", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png" };
+const TYPES: Record<string, string> = { ".webp": "image/webp", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png", ".glb": "model/gltf-binary" };
 
 /** Serves uploaded files from UPLOAD_DIR. Rejects path traversal and unknown types. */
 export async function GET(_req: Request, { params }: { params: Promise<{ path: string[] }> }) {
