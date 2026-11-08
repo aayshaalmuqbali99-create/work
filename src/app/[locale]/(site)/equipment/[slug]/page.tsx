@@ -4,41 +4,38 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, CheckCircle2, FlaskConical, GraduationCap, Info } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
-import { formatOMR, getAllSlugs, getDevice, getDevices, pricingNotes } from "@/features/catalog/data";
+import { formatOMR, getDevice, getDevices, pricingNotes } from "@/features/catalog/data";
 import { ViewerLoader } from "@/components/viewer3d/viewer-loader";
 import { DeviceCard } from "@/components/equipment/device-card";
 
-export function generateStaticParams() {
-  return routing.locales.flatMap((locale) => getAllSlugs().map((slug) => ({ locale, slug })));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const d = getDevice(slug, locale);
+  const d = await getDevice(slug, locale);
   if (!d) return {};
   return {
     title: d.name,
     description: d.desc,
     alternates: { languages: { ar: `/ar/equipment/${slug}`, en: `/en/equipment/${slug}` } },
-    openGraph: { title: d.name, description: d.desc, images: [d.photo.src] },
+    openGraph: { title: d.name, description: d.desc, images: d.photo ? [d.photo.src] : [] },
   };
 }
 
 export default async function DevicePage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const d = getDevice(slug, locale);
+  const d = await getDevice(slug, locale);
   if (!d) notFound();
   const t = await getTranslations("Equipment");
   const tc = await getTranslations("Categories");
-  const related = getDevices(locale).filter((x) => x.category === d.category && x.slug !== d.slug).slice(0, 4);
+  const related = d.category ? (await getDevices(locale)).filter((x) => x.category === d.category && x.slug !== d.slug).slice(0, 4) : [];
   const conditionLabel = { unverified: t("conditionUnverified"), new: t("conditionNew"), used: t("conditionUsed") }[d.condition];
 
   const facts: { label: string; value: React.ReactNode; ltr?: boolean }[] = [
     { label: t("brand"), value: d.brand ?? t("notProvided"), ltr: !!d.brand },
     { label: t("model"), value: d.model ?? t("notProvided"), ltr: !!d.model },
-    { label: t("category"), value: tc(d.category) },
+    { label: t("category"), value: d.category ? tc(d.category) : t("notProvided") },
     { label: t("itemNo"), value: d.itemNos.join(" + "), ltr: true },
   ];
 
@@ -50,7 +47,7 @@ export default async function DevicePage({ params }: { params: Promise<{ locale:
       </Link>
 
       <header className="ls-enter mt-4 max-w-4xl">
-        <p className="text-sm font-semibold text-teal">{tc(d.category)}</p>
+        {d.category && <p className="text-sm font-semibold text-teal">{tc(d.category)}</p>}
         <h1 className="mt-1 text-h2 font-bold tracking-tight text-navy">{d.name}</h1>
         <p className="mt-1 text-muted" lang={locale === "ar" ? "en" : "ar"} dir={locale === "ar" ? "ltr" : "rtl"}>{d.altName}</p>
       </header>
@@ -90,31 +87,31 @@ export default async function DevicePage({ params }: { params: Promise<{ locale:
         <div className="space-y-8">
           <section>
             <h2 className="text-xl font-bold text-navy">{t("about")}</h2>
-            <p className="mt-3 text-ink">{d.desc}</p>
+            <p className="mt-3 text-ink">{d.desc || t("notProvided")}</p>
           </section>
-          <section>
+          {d.uses.length > 0 && (<section>
             <h2 className="flex items-center gap-2 text-xl font-bold text-navy"><FlaskConical className="size-5 text-teal" aria-hidden="true" />{t("uses")}</h2>
             <ul className="mt-3 space-y-2">
               {d.uses.map((u) => (
                 <li key={u} className="flex gap-2 text-ink"><CheckCircle2 className="mt-1 size-4 shrink-0 text-teal" aria-hidden="true" />{u}</li>
               ))}
             </ul>
-          </section>
-          <section className="rounded-card bg-navy p-6 text-white">
+          </section>)}
+          {d.benefits.length > 0 && (<section className="rounded-card bg-navy p-6 text-white">
             <h2 className="flex items-center gap-2 text-xl font-bold"><GraduationCap className="size-5 text-[#3FB8BE]" aria-hidden="true" />{t("benefits")}</h2>
             <ul className="mt-3 space-y-2">
               {d.benefits.map((b) => (
                 <li key={b} className="flex gap-2 text-white/85"><CheckCircle2 className="mt-1 size-4 shrink-0 text-[#3FB8BE]" aria-hidden="true" />{b}</li>
               ))}
             </ul>
-          </section>
+          </section>)}
         </div>
         <aside className="space-y-4">
-          <figure className="rounded-card border border-line bg-surface p-4">
+          {d.photo && (<figure className="rounded-card border border-line bg-surface p-4">
             <figcaption className="mb-3 text-sm font-semibold text-navy">{t("photo")}</figcaption>
             <Image src={d.photo.src} alt={d.name} width={d.photo.width} height={d.photo.height} className="mx-auto max-h-56 w-auto rounded-md object-contain" />
             <p className="mt-3 text-xs text-muted">{t("photoNote")}</p>
-          </figure>
+          </figure>)}
           <dl className="divide-y divide-line rounded-card border border-line bg-surface">
             {facts.map((f) => (
               <div key={f.label} className="flex justify-between gap-4 p-3 text-sm">

@@ -1,12 +1,12 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { ArrowRight, Box, Cpu, Package } from "lucide-react";
 import { getStats } from "@/features/catalog/data";
 import { Link } from "@/i18n/navigation";
 import { HeroVisual } from "./hero-visual";
 
-export function Hero() {
-  const t = useTranslations("Hero");
-  const s = getStats();
+export async function Hero() {
+  const t = await getTranslations("Hero");
+  const s = await getStats();
   const stats = [
     { icon: Cpu, label: t("statDevices", { count: s.devices }) },
     { icon: Package, label: t("statUnits", { count: s.units }) },

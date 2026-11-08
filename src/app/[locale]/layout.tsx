@@ -4,8 +4,6 @@ import { Inter, IBM_Plex_Sans_Arabic } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing, localeDirection } from "@/i18n/routing";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
 import { MotionProvider } from "@/components/layout/motion-provider";
 import "../globals.css";
 
@@ -54,11 +52,7 @@ export default async function LocaleLayout({
             >
               {t("skip")}
             </a>
-            <SiteHeader />
-            <main id="main" className="flex-1">
-              {children}
-            </main>
-            <SiteFooter />
+            {children}
           </MotionProvider>
         </NextIntlClientProvider>
       </body>

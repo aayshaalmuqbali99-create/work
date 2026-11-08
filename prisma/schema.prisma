@@ -1,0 +1,169 @@
+// LabSouq database schema.
+// Phase 3 scope: administration of the equipment showcase (users, sessions, categories, devices,
+// images, inventory ledger, audit log). Marketplace entities (quotations, orders, messaging…) are
+// added in later phases without changing these tables.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN // full access, manages users
+  EDITOR // edits devices, categories, stock and prices
+}
+
+enum DeviceStatus {
+  REVIEW // imported but not yet verified by the owner (not public)
+  DRAFT // being prepared (not public)
+  PUBLISHED // visible on the website
+  ARCHIVED // hidden, kept for history
+}
+
+enum DeviceCondition {
+  UNVERIFIED
+  NEW
+  USED
+}
+
+enum InventoryTxType {
+  IMPORT
+  ADJUSTMENT
+  CORRECTION
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         Role       @default(EDITOR)
+  active       Boolean    @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  sessions     Session[]
+  auditLogs    AuditLog[]
+  inventoryTxs InventoryTransaction[]
+}
+
+/// Server-side session. Only a SHA-256 hash of the cookie token is stored.
+model Session {
+  id        String   @id // sha256(token)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  nameEn    String
+  nameAr    String
+  descEn    String   @default("")
+  descAr    String   @default("")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  devices   Device[]
+
+  @@index([sortOrder])
+}
+
+model Device {
+  id         String          @id @default(cuid())
+  slug       String          @unique
+  status     DeviceStatus    @default(DRAFT)
+  categoryId String?
+  category   Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  /// Key of the illustrative 3D device-type model (see src/components/viewer3d/archetypes.ts); null = no 3D.
+  archetype  String?
+  brand      String?
+  model      String?
+  nameEn     String
+  nameAr     String          @default("")
+  descEn     String          @default("")
+  descAr     String          @default("")
+  usesEn     String[]
+  usesAr     String[]
+  benefitsEn String[]
+  benefitsAr String[]
+  condition  DeviceCondition @default(UNVERIFIED)
+  /// Current stock. Every change is recorded in InventoryTransaction.
+  quantity   Int             @default(0)
+  /// Estimated market price of a comparable NEW unit (OMR). Never a selling price.
+  marketPriceOMR Decimal?    @db.Decimal(12, 3)
+  /// Workbook item numbers this device came from (empty for devices added manually).
+  sourceItemNos  Int[]
+  /// Stable import key, e.g. "inventory-v1:26+82". Makes re-import idempotent.
+  sourceKey  String?         @unique
+  /// Original workbook description, kept for reference.
+  sourceDescription String?
+  sortOrder  Int             @default(0)
+  deletedAt  DateTime?
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  images     DeviceImage[]
+  inventory  InventoryTransaction[]
+
+  @@index([status, categoryId])
+  @@index([deletedAt])
+}
+
+model DeviceImage {
+  id          String   @id @default(cuid())
+  deviceId    String
+  device      Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  url         String
+  width       Int
+  height      Int
+  altEn       String   @default("")
+  altAr       String   @default("")
+  /// Workbook "Photo N" number when the image came from the workbook.
+  sourcePhoto Int?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@index([deviceId, sortOrder])
+}
+
+model InventoryTransaction {
+  id            String          @id @default(cuid())
+  deviceId      String
+  device        Device          @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  type          InventoryTxType
+  delta         Int
+  quantityAfter Int
+  reason        String?
+  userId        String?
+  user          User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt     DateTime        @default(now())
+
+  @@index([deviceId, createdAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String // e.g. device.update, device.publish, auth.login
+  entity    String
+  entityId  String?
+  before    Json?
+  after     Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}

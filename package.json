@@ -7,9 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "prisma db seed",
+    "catalog:build": "python3 scripts/build_catalog.py",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@node-rs/argon2": "2.0.2",
+    "@prisma/client": "6.19.3",
     "@react-three/drei": "10.7.6",
     "@react-three/fiber": "9.3.0",
     "clsx": "2.1.1",
@@ -19,8 +26,11 @@
     "next-intl": "4.14.9",
     "react": "19.1.1",
     "react-dom": "19.1.1",
+    "server-only": "0.0.1",
+    "sharp": "0.35.5",
     "tailwind-merge": "3.3.1",
-    "three": "0.180.0"
+    "three": "0.180.0",
+    "zod": "3.25.76"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.3.1",
@@ -31,7 +41,12 @@
     "@types/three": "0.180.0",
     "eslint": "9.35.0",
     "eslint-config-next": "15.5.29",
+    "prisma": "6.19.3",
     "tailwindcss": "4.1.13",
+    "tsx": "4.20.5",
     "typescript": "5.9.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   }
 }

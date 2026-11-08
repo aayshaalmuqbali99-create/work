@@ -10,6 +10,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return { title: t("title"), description: t("subtitle"), alternates: { languages: { ar: "/ar/equipment", en: "/en/equipment" } } };
 }
 
+export const dynamic = "force-dynamic";
+
 export default async function EquipmentPage({
   params,
   searchParams,
@@ -21,7 +23,7 @@ export default async function EquipmentPage({
   const sp = await searchParams;
   setRequestLocale(locale);
   const t = await getTranslations("Equipment");
-  const stats = getStats();
+  const stats = await getStats();
   const categories = categoryKeys.map((key) => ({ key, count: stats.byCategory[key] })).filter((c) => c.count > 0);
   const initialCategory = categoryKeys.includes(sp.category as CategoryKey) ? (sp.category as CategoryKey) : null;
 
@@ -31,7 +33,7 @@ export default async function EquipmentPage({
         <h1 className="text-h2 font-bold tracking-tight text-navy">{t("title")}</h1>
         <p className="mt-2 text-muted">{t("subtitle")}</p>
       </header>
-      <EquipmentBrowser devices={getDevices(locale)} categories={categories} initialCategory={initialCategory} initialQuery={sp.q ?? ""} />
+      <EquipmentBrowser devices={await getDevices(locale)} categories={categories} initialCategory={initialCategory} initialQuery={sp.q ?? ""} />
     </div>
   );
 }

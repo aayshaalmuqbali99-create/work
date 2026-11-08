@@ -8,8 +8,10 @@ Inputs (never modified):
   content/equipment-details.json    bilingual educational content for each listed device
 
 Outputs:
-  src/data/equipment.json           catalogue consumed by the website
+  src/data/equipment.json           curated catalogue (seed source for published devices)
+  src/data/inventory-rows.json      all workbook rows + photo review status (seed source for the review queue)
   public/equipment/<slug>.jpg       device photo extracted from the workbook
+  public/inventory-photos/photo_NN.jpg   every workbook photo, for the admin photo picker
 
 Only CLEAR items that have an entry in equipment-details.json are published.
 Run:  python3 scripts/build_catalog.py
@@ -78,5 +80,17 @@ catalogue.sort(key=lambda x: x["itemNos"][0])
 (ROOT / "src/data").mkdir(parents=True, exist_ok=True)
 json.dump({"source": "data/inventory.xlsx", "pricingNotes": notes, "devices": catalogue},
           open(ROOT / "src/data/equipment.json", "w"), ensure_ascii=False, indent=2)
+# all rows + all photos (admin review queue and photo picker)
+all_dir = ROOT / "public/inventory-photos"
+all_dir.mkdir(parents=True, exist_ok=True)
+photo_meta = {}
+for n, data in sorted(photos.items()):
+    im = Image.open(io.BytesIO(data)).convert("RGB")
+    im.save(all_dir / f"photo_{n:02d}.jpg", quality=90)
+    photo_meta[n] = {"src": f"/inventory-photos/photo_{n:02d}.jpg", "width": im.width, "height": im.height}
+inv = [{"itemNo": n, **rows[n], "photoStatus": mapping[n]["status"], "suggestedPhoto": mapping[n]["photo"]} for n in sorted(rows)]
+json.dump({"source": "data/inventory.xlsx", "pricingNotes": notes, "photos": photo_meta, "rows": inv},
+          open(ROOT / "src/data/inventory-rows.json", "w"), ensure_ascii=False, indent=2)
+
 print(f"{len(catalogue)} devices, {sum(c['quantity'] for c in catalogue)} units, "
       f"{len(notes)} pricing notes preserved")

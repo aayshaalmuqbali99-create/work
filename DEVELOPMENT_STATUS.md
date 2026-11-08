@@ -28,6 +28,18 @@ _Last updated: 2026-11-08_
   - Home: featured devices, live device/unit counts, categories with counts linking to the filtered catalogue.
   - Verified with Playwright (desktop + iPhone 13, ar + en): viewer actions, filters, search, language switch, no console errors.
 
+- Phase 3 (database + control panel):
+  - PostgreSQL 16 + Prisma 6: User, Session, Category, Device, DeviceImage, InventoryTransaction, AuditLog.
+  - Idempotent seed: 7 categories, 55 published devices (416 units), 26 review-queue items (236 units), first admin.
+  - Public pages read from the database through a cached data layer (tag `catalog`, refreshed on every admin save).
+  - Auth: Argon2id, DB sessions, rate-limited login, server-side checks in every admin page/action, middleware redirect.
+  - Control panel (`/ar/admin`, `/en/admin`, fully bilingual/RTL): dashboard KPIs, device list with status tabs and
+    search, device editor (all fields incl. condition, quantity with reason → stock ledger, market price, AR/EN content),
+    publish/unpublish/archive/restore with publish validation, photo upload or pick from 82 workbook photos,
+    stock history, activity log with before → after, change password, logout.
+  - Verified end-to-end with Playwright (login fail/success, edit + validation keeps input, public page updates,
+    review item publish flow, upload valid/invalid image, English admin, logout/guard). Test edits were reverted.
+
 ## In progress
 - Phase 2 (part 2): shadcn/ui base components (button, input, card, dialog), full design-system page.
 - Open questions in `DEVELOPMENT_PLAN.md` §4 (hosting, storage, seller name, item 26/82, email).
@@ -36,12 +48,16 @@ _Last updated: 2026-11-08_
 - Phases 3–10.
 
 ## Known issues / risks
+- Login rate limiting is in-memory (one server process). Use Redis for multi-instance hosting.
+- Uploaded photos are stored on local disk (`UPLOAD_DIR`); production needs persistent disk or S3/R2.
+- Forms use server actions + Zod with React 19 `useActionState` instead of React Hook Form (fewer dependencies, same validation on the server).
 - Photo numbering in sheet `All Photos` does not consistently match `Item No.` in sheet `Houd`
   (shifted ranges, 2 duplicate images, 1 off-grid image, items 1 and 76 apparently without a photo).
   Photo mapping must be confirmed manually in the importer.
 - Workbook has no brand, model, condition, specification or location data.
 
 ## Next step
-- Owner review of device texts and 3D models.
-- Phase 3 — PostgreSQL + Prisma schema, authentication and roles.
+- Owner review of device texts and 3D models; owner works through the review queue.
+- Next: user management (add editors), category management, 3D asset manager (upload real GLB models),
+  automated test suite in the repo (Vitest + Playwright), then website customization / page builder.
 - Note: category list and navigation are in code for now; they move to the database in Phases 3 and 8.

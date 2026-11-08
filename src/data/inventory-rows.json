@@ -1,0 +1,1077 @@
+{
+  "source": "data/inventory.xlsx",
+  "pricingNotes": [
+    "Pricing note: New prices are indicative replacement-cost estimates for comparable modern equipment. Exact legacy models may be discontinued. Estimates use category-based uplifts benchmarked against public new-versus-used market ranges and exclude freight, customs duty, installation, calibration and VAT. Obtain supplier quotations before procurement or formal asset valuation.",
+    "Important: Prices are indicative market averages for comparable new/used equipment, based on publicly listed asking prices. Exact condition, completeness, calibration status, accessories, freight, duties and local demand may materially change realised value. This is not a formal asset appraisal or reserve-price recommendation."
+  ],
+  "photos": {
+    "1": {
+      "src": "/inventory-photos/photo_01.jpg",
+      "width": 74,
+      "height": 145
+    },
+    "2": {
+      "src": "/inventory-photos/photo_02.jpg",
+      "width": 80,
+      "height": 145
+    },
+    "3": {
+      "src": "/inventory-photos/photo_03.jpg",
+      "width": 87,
+      "height": 145
+    },
+    "4": {
+      "src": "/inventory-photos/photo_04.jpg",
+      "width": 169,
+      "height": 145
+    },
+    "5": {
+      "src": "/inventory-photos/photo_05.jpg",
+      "width": 149,
+      "height": 145
+    },
+    "6": {
+      "src": "/inventory-photos/photo_06.jpg",
+      "width": 91,
+      "height": 145
+    },
+    "7": {
+      "src": "/inventory-photos/photo_07.jpg",
+      "width": 93,
+      "height": 145
+    },
+    "8": {
+      "src": "/inventory-photos/photo_08.jpg",
+      "width": 245,
+      "height": 143
+    },
+    "9": {
+      "src": "/inventory-photos/photo_09.jpg",
+      "width": 176,
+      "height": 145
+    },
+    "10": {
+      "src": "/inventory-photos/photo_10.jpg",
+      "width": 245,
+      "height": 130
+    },
+    "11": {
+      "src": "/inventory-photos/photo_11.jpg",
+      "width": 89,
+      "height": 145
+    },
+    "12": {
+      "src": "/inventory-photos/photo_12.jpg",
+      "width": 245,
+      "height": 91
+    },
+    "13": {
+      "src": "/inventory-photos/photo_13.jpg",
+      "width": 91,
+      "height": 145
+    },
+    "14": {
+      "src": "/inventory-photos/photo_14.jpg",
+      "width": 88,
+      "height": 145
+    },
+    "15": {
+      "src": "/inventory-photos/photo_15.jpg",
+      "width": 201,
+      "height": 145
+    },
+    "16": {
+      "src": "/inventory-photos/photo_16.jpg",
+      "width": 104,
+      "height": 145
+    },
+    "17": {
+      "src": "/inventory-photos/photo_17.jpg",
+      "width": 97,
+      "height": 145
+    },
+    "18": {
+      "src": "/inventory-photos/photo_18.jpg",
+      "width": 245,
+      "height": 133
+    },
+    "19": {
+      "src": "/inventory-photos/photo_19.jpg",
+      "width": 132,
+      "height": 145
+    },
+    "20": {
+      "src": "/inventory-photos/photo_20.jpg",
+      "width": 245,
+      "height": 117
+    },
+    "21": {
+      "src": "/inventory-photos/photo_21.jpg",
+      "width": 133,
+      "height": 145
+    },
+    "22": {
+      "src": "/inventory-photos/photo_22.jpg",
+      "width": 103,
+      "height": 145
+    },
+    "23": {
+      "src": "/inventory-photos/photo_23.jpg",
+      "width": 98,
+      "height": 145
+    },
+    "24": {
+      "src": "/inventory-photos/photo_24.jpg",
+      "width": 80,
+      "height": 145
+    },
+    "25": {
+      "src": "/inventory-photos/photo_25.jpg",
+      "width": 119,
+      "height": 145
+    },
+    "26": {
+      "src": "/inventory-photos/photo_26.jpg",
+      "width": 118,
+      "height": 145
+    },
+    "27": {
+      "src": "/inventory-photos/photo_27.jpg",
+      "width": 128,
+      "height": 145
+    },
+    "28": {
+      "src": "/inventory-photos/photo_28.jpg",
+      "width": 95,
+      "height": 145
+    },
+    "29": {
+      "src": "/inventory-photos/photo_29.jpg",
+      "width": 191,
+      "height": 145
+    },
+    "30": {
+      "src": "/inventory-photos/photo_30.jpg",
+      "width": 155,
+      "height": 145
+    },
+    "31": {
+      "src": "/inventory-photos/photo_31.jpg",
+      "width": 131,
+      "height": 145
+    },
+    "32": {
+      "src": "/inventory-photos/photo_32.jpg",
+      "width": 75,
+      "height": 145
+    },
+    "33": {
+      "src": "/inventory-photos/photo_33.jpg",
+      "width": 107,
+      "height": 145
+    },
+    "34": {
+      "src": "/inventory-photos/photo_34.jpg",
+      "width": 132,
+      "height": 145
+    },
+    "35": {
+      "src": "/inventory-photos/photo_35.jpg",
+      "width": 110,
+      "height": 145
+    },
+    "36": {
+      "src": "/inventory-photos/photo_36.jpg",
+      "width": 92,
+      "height": 145
+    },
+    "37": {
+      "src": "/inventory-photos/photo_37.jpg",
+      "width": 175,
+      "height": 145
+    },
+    "38": {
+      "src": "/inventory-photos/photo_38.jpg",
+      "width": 131,
+      "height": 145
+    },
+    "39": {
+      "src": "/inventory-photos/photo_39.jpg",
+      "width": 155,
+      "height": 145
+    },
+    "40": {
+      "src": "/inventory-photos/photo_40.jpg",
+      "width": 153,
+      "height": 145
+    },
+    "41": {
+      "src": "/inventory-photos/photo_41.jpg",
+      "width": 153,
+      "height": 145
+    },
+    "42": {
+      "src": "/inventory-photos/photo_42.jpg",
+      "width": 223,
+      "height": 145
+    },
+    "43": {
+      "src": "/inventory-photos/photo_43.jpg",
+      "width": 175,
+      "height": 145
+    },
+    "44": {
+      "src": "/inventory-photos/photo_44.jpg",
+      "width": 106,
+      "height": 145
+    },
+    "45": {
+      "src": "/inventory-photos/photo_45.jpg",
+      "width": 125,
+      "height": 145
+    },
+    "46": {
+      "src": "/inventory-photos/photo_46.jpg",
+      "width": 102,
+      "height": 145
+    },
+    "47": {
+      "src": "/inventory-photos/photo_47.jpg",
+      "width": 67,
+      "height": 145
+    },
+    "48": {
+      "src": "/inventory-photos/photo_48.jpg",
+      "width": 85,
+      "height": 145
+    },
+    "49": {
+      "src": "/inventory-photos/photo_49.jpg",
+      "width": 113,
+      "height": 145
+    },
+    "50": {
+      "src": "/inventory-photos/photo_50.jpg",
+      "width": 102,
+      "height": 145
+    },
+    "51": {
+      "src": "/inventory-photos/photo_51.jpg",
+      "width": 100,
+      "height": 145
+    },
+    "52": {
+      "src": "/inventory-photos/photo_52.jpg",
+      "width": 137,
+      "height": 145
+    },
+    "53": {
+      "src": "/inventory-photos/photo_53.jpg",
+      "width": 107,
+      "height": 145
+    },
+    "54": {
+      "src": "/inventory-photos/photo_54.jpg",
+      "width": 85,
+      "height": 145
+    },
+    "55": {
+      "src": "/inventory-photos/photo_55.jpg",
+      "width": 83,
+      "height": 145
+    },
+    "56": {
+      "src": "/inventory-photos/photo_56.jpg",
+      "width": 176,
+      "height": 145
+    },
+    "57": {
+      "src": "/inventory-photos/photo_57.jpg",
+      "width": 245,
+      "height": 111
+    },
+    "58": {
+      "src": "/inventory-photos/photo_58.jpg",
+      "width": 245,
+      "height": 88
+    },
+    "59": {
+      "src": "/inventory-photos/photo_59.jpg",
+      "width": 245,
+      "height": 114
+    },
+    "60": {
+      "src": "/inventory-photos/photo_60.jpg",
+      "width": 245,
+      "height": 124
+    },
+    "61": {
+      "src": "/inventory-photos/photo_61.jpg",
+      "width": 245,
+      "height": 113
+    },
+    "62": {
+      "src": "/inventory-photos/photo_62.jpg",
+      "width": 245,
+      "height": 132
+    },
+    "63": {
+      "src": "/inventory-photos/photo_63.jpg",
+      "width": 150,
+      "height": 145
+    },
+    "64": {
+      "src": "/inventory-photos/photo_64.jpg",
+      "width": 120,
+      "height": 145
+    },
+    "65": {
+      "src": "/inventory-photos/photo_65.jpg",
+      "width": 172,
+      "height": 145
+    },
+    "66": {
+      "src": "/inventory-photos/photo_66.jpg",
+      "width": 131,
+      "height": 145
+    },
+    "67": {
+      "src": "/inventory-photos/photo_67.jpg",
+      "width": 112,
+      "height": 145
+    },
+    "68": {
+      "src": "/inventory-photos/photo_68.jpg",
+      "width": 115,
+      "height": 145
+    },
+    "69": {
+      "src": "/inventory-photos/photo_69.jpg",
+      "width": 104,
+      "height": 145
+    },
+    "70": {
+      "src": "/inventory-photos/photo_70.jpg",
+      "width": 245,
+      "height": 135
+    },
+    "71": {
+      "src": "/inventory-photos/photo_71.jpg",
+      "width": 191,
+      "height": 145
+    },
+    "72": {
+      "src": "/inventory-photos/photo_72.jpg",
+      "width": 75,
+      "height": 145
+    },
+    "73": {
+      "src": "/inventory-photos/photo_73.jpg",
+      "width": 105,
+      "height": 145
+    },
+    "74": {
+      "src": "/inventory-photos/photo_74.jpg",
+      "width": 166,
+      "height": 145
+    },
+    "75": {
+      "src": "/inventory-photos/photo_75.jpg",
+      "width": 85,
+      "height": 145
+    },
+    "76": {
+      "src": "/inventory-photos/photo_76.jpg",
+      "width": 79,
+      "height": 145
+    },
+    "77": {
+      "src": "/inventory-photos/photo_77.jpg",
+      "width": 79,
+      "height": 145
+    },
+    "78": {
+      "src": "/inventory-photos/photo_78.jpg",
+      "width": 87,
+      "height": 145
+    },
+    "79": {
+      "src": "/inventory-photos/photo_79.jpg",
+      "width": 128,
+      "height": 145
+    },
+    "80": {
+      "src": "/inventory-photos/photo_80.jpg",
+      "width": 206,
+      "height": 100
+    },
+    "81": {
+      "src": "/inventory-photos/photo_81.jpg",
+      "width": 159,
+      "height": 145
+    },
+    "82": {
+      "src": "/inventory-photos/photo_82.jpg",
+      "width": 113,
+      "height": 145
+    }
+  },
+  "rows": [
+    {
+      "itemNo": 1,
+      "description": "Ultrasonic Cleaner, SUNRED 300A or similar",
+      "quantity": 1,
+      "unitPrice": 100,
+      "photoStatus": "NO_PHOTO",
+      "suggestedPhoto": null
+    },
+    {
+      "itemNo": 2,
+      "description": "FEEDBACK Electrical/Electronics Training Modules",
+      "quantity": 27,
+      "unitPrice": 90,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 1
+    },
+    {
+      "itemNo": 3,
+      "description": "Nortel Networks Desktop Telephone Sets",
+      "quantity": 4,
+      "unitPrice": 20,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 2
+    },
+    {
+      "itemNo": 4,
+      "description": "FEEDBACK Microwave Trainer MWT 530",
+      "quantity": 1,
+      "unitPrice": 1040,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 3
+    },
+    {
+      "itemNo": 5,
+      "description": "Philip Harris Regulated Power Supply Unit",
+      "quantity": 1,
+      "unitPrice": 80,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 4
+    },
+    {
+      "itemNo": 6,
+      "description": "Electronic Control / Alarm Monitoring Training Unit",
+      "quantity": 1,
+      "unitPrice": 160,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 5
+    },
+    {
+      "itemNo": 7,
+      "description": "Nortel Networks Desktop Telephone Set",
+      "quantity": 1,
+      "unitPrice": 20,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 6
+    },
+    {
+      "itemNo": 8,
+      "description": "Electronic Breadboard / Prototyping Trainer Board",
+      "quantity": 2,
+      "unitPrice": 70,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 7
+    },
+    {
+      "itemNo": 9,
+      "description": "KL-68005 Lux Load Photometer Units",
+      "quantity": 8,
+      "unitPrice": 150,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 8
+    },
+    {
+      "itemNo": 10,
+      "description": "Farnell Laboratory DC Power Supply Units",
+      "quantity": 3,
+      "unitPrice": 100,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 9
+    },
+    {
+      "itemNo": 11,
+      "description": "Metrix AX 322 Dual DC Power Supply Units",
+      "quantity": 2,
+      "unitPrice": 155,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 10
+    },
+    {
+      "itemNo": 12,
+      "description": "FORTH Telephone Sets",
+      "quantity": 7,
+      "unitPrice": 20,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 11
+    },
+    {
+      "itemNo": 13,
+      "description": "Barrett Communication Radio Transceivers / Control Units",
+      "quantity": 3,
+      "unitPrice": 325,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 12
+    },
+    {
+      "itemNo": 14,
+      "description": "TTi APCS218-419 Interface Modules",
+      "quantity": 7,
+      "unitPrice": 80,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 13
+    },
+    {
+      "itemNo": 15,
+      "description": "Assorted Data Communication / Interface Accessories and Cables",
+      "quantity": 20,
+      "unitPrice": 10,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 14
+    },
+    {
+      "itemNo": 16,
+      "description": "KL-300 Digital Logic Lab Accessories Boxes",
+      "quantity": 18,
+      "unitPrice": 60,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 15
+    },
+    {
+      "itemNo": 17,
+      "description": "FEEDBACK Fibre-Optics Educator Transmitter Units",
+      "quantity": 14,
+      "unitPrice": 180,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 16
+    },
+    {
+      "itemNo": 18,
+      "description": "Laboratory Optical / Fibre-Optic Experiment Trainer Kits",
+      "quantity": 5,
+      "unitPrice": 360,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 17
+    },
+    {
+      "itemNo": 19,
+      "description": "FEEDBACK Sine Square Oscillator SS0603 Units",
+      "quantity": 8,
+      "unitPrice": 90,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 18
+    },
+    {
+      "itemNo": 20,
+      "description": "Stepper Motors / Precision Drive Motors",
+      "quantity": 6,
+      "unitPrice": 30,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 19
+    },
+    {
+      "itemNo": 21,
+      "description": "Huntron Tracker 2700 Component Analysis Units",
+      "quantity": 2,
+      "unitPrice": 2955,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 20
+    },
+    {
+      "itemNo": 22,
+      "description": "Ericsson BFD 200 001/1 DC/DC Converter Modules",
+      "quantity": 5,
+      "unitPrice": 115,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 21
+    },
+    {
+      "itemNo": 23,
+      "description": "FEEDBACK Capacitors and Inductors EE421C Modules",
+      "quantity": 8,
+      "unitPrice": 70,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 22
+    },
+    {
+      "itemNo": 24,
+      "description": "Regavolt Variable AC Voltage Regulators / Variac Units",
+      "quantity": 5,
+      "unitPrice": 70,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 23
+    },
+    {
+      "itemNo": 25,
+      "description": "IC Test Clips / Electronic Testing Device Clips",
+      "quantity": 11,
+      "unitPrice": 10,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 24
+    },
+    {
+      "itemNo": 26,
+      "description": "BGC-8088 MicroEngineer V3.5 Hardware Training System",
+      "quantity": 1,
+      "unitPrice": 300,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 25
+    },
+    {
+      "itemNo": 27,
+      "description": "K&H CI-53004 PLC I/O Interface Modules",
+      "quantity": 26,
+      "unitPrice": 140,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 26
+    },
+    {
+      "itemNo": 28,
+      "description": "Portable RF / Communications Test Equipment",
+      "quantity": 2,
+      "unitPrice": 470,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 27
+    },
+    {
+      "itemNo": 29,
+      "description": "DSP / Microprocessor Training and Development Boards",
+      "quantity": 4,
+      "unitPrice": 180,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 28
+    },
+    {
+      "itemNo": 30,
+      "description": "Scientech ST152 Mobile Phone Trainer Systems",
+      "quantity": 8,
+      "unitPrice": 280,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 29
+    },
+    {
+      "itemNo": 31,
+      "description": "K&H PH-74 Breadboard Trainer Modules",
+      "quantity": 11,
+      "unitPrice": 80,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 30
+    },
+    {
+      "itemNo": 32,
+      "description": "FEEDBACK Double Sideband / Audio Unit Training Modules",
+      "quantity": 40,
+      "unitPrice": 70,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 31
+    },
+    {
+      "itemNo": 33,
+      "description": "Telephone Operator Console / DSS Expansion Key Module",
+      "quantity": 1,
+      "unitPrice": 45,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 32
+    },
+    {
+      "itemNo": 34,
+      "description": "FEEDBACK Single Sideband 2960 Training Modules",
+      "quantity": 18,
+      "unitPrice": 90,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 33
+    },
+    {
+      "itemNo": 35,
+      "description": "FEEDBACK 465 kHz Crystal Unit Modules",
+      "quantity": 46,
+      "unitPrice": 35,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 34
+    },
+    {
+      "itemNo": 36,
+      "description": "Alcatel 4095 Digital Telephone Sets",
+      "quantity": 8,
+      "unitPrice": 30,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 35
+    },
+    {
+      "itemNo": 37,
+      "description": "Kanda PLD Starter Kits",
+      "quantity": 8,
+      "unitPrice": 90,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 36
+    },
+    {
+      "itemNo": 38,
+      "description": "Level A.C. Microvoltmeter Type TM3B",
+      "quantity": 1,
+      "unitPrice": 200,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 37
+    },
+    {
+      "itemNo": 39,
+      "description": "FEEDBACK Teknikit Consolette TK286",
+      "quantity": 1,
+      "unitPrice": 160,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 38
+    },
+    {
+      "itemNo": 40,
+      "description": "Siemens Transmission Measuring Set / Communications Test Equipment",
+      "quantity": 1,
+      "unitPrice": 515,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 39
+    },
+    {
+      "itemNo": 41,
+      "description": "Hewlett-Packard Laboratory Oscilloscope",
+      "quantity": 1,
+      "unitPrice": 350,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 40
+    },
+    {
+      "itemNo": 42,
+      "description": "TTi TGR104 10 MHz Synthesised RF Signal Generators",
+      "quantity": 4,
+      "unitPrice": 375,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 42
+    },
+    {
+      "itemNo": 43,
+      "description": "FEEDBACK Detector Module 295C",
+      "quantity": 30,
+      "unitPrice": 45,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 43
+    },
+    {
+      "itemNo": 44,
+      "description": "Alcatel 4098 FRE Fast IP Enabler Units",
+      "quantity": 3,
+      "unitPrice": 55,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 44
+    },
+    {
+      "itemNo": 45,
+      "description": "Dazheng PS-1502D DC Power Supply Units",
+      "quantity": 6,
+      "unitPrice": 45,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 45
+    },
+    {
+      "itemNo": 46,
+      "description": "Optical / Metallurgical Inspection Microscopes",
+      "quantity": 2,
+      "unitPrice": 395,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 46
+    },
+    {
+      "itemNo": 47,
+      "description": "Telephone Line Test Handsets / Lineman's Test Sets",
+      "quantity": 11,
+      "unitPrice": 55,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 47
+    },
+    {
+      "itemNo": 48,
+      "description": "FEEDBACK PS441 Dual DC Power Supply Modules",
+      "quantity": 2,
+      "unitPrice": 90,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 48
+    },
+    {
+      "itemNo": 49,
+      "description": "Plessey Battery Charger Unit",
+      "quantity": 1,
+      "unitPrice": 125,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 49
+    },
+    {
+      "itemNo": 50,
+      "description": "Axial Cooling / Equipment Cabinet Fans",
+      "quantity": 3,
+      "unitPrice": 20,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 50
+    },
+    {
+      "itemNo": 51,
+      "description": "Kehai 950 ESD-Safe Soldering Station",
+      "quantity": 1,
+      "unitPrice": 45,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 51
+    },
+    {
+      "itemNo": 52,
+      "description": "Kehai / Gordak / BILL 936A Soldering Station Control Units",
+      "quantity": 44,
+      "unitPrice": 35,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 52
+    },
+    {
+      "itemNo": 53,
+      "description": "Telephone Trainer Kit TT-03",
+      "quantity": 1,
+      "unitPrice": 240,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 53
+    },
+    {
+      "itemNo": 54,
+      "description": "Digital Logic / Interface Circuit Training Boards",
+      "quantity": 23,
+      "unitPrice": 70,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 54
+    },
+    {
+      "itemNo": 55,
+      "description": "Electric Soldering Guns / Heavy-Duty Soldering Tools",
+      "quantity": 14,
+      "unitPrice": 30,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 55
+    },
+    {
+      "itemNo": 56,
+      "description": "Electronic Measurement / Alignment Tool Kits",
+      "quantity": 4,
+      "unitPrice": 95,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 56
+    },
+    {
+      "itemNo": 57,
+      "description": "Siemens P2012 PCM Terminal Test Set",
+      "quantity": 1,
+      "unitPrice": 705,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 57
+    },
+    {
+      "itemNo": 58,
+      "description": "Samsung OfficeServ 720 Telephone System / PBX Unit",
+      "quantity": 1,
+      "unitPrice": 335,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 58
+    },
+    {
+      "itemNo": 59,
+      "description": "Siemens D2108 Level Meters",
+      "quantity": 2,
+      "unitPrice": 470,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 59
+    },
+    {
+      "itemNo": 60,
+      "description": "Rohde & Schwarz SMT03 Signal Generator",
+      "quantity": 1,
+      "unitPrice": 1835,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 60
+    },
+    {
+      "itemNo": 61,
+      "description": "Wandel & Goltermann RS-25 White Noise Generator / Filter Unit",
+      "quantity": 1,
+      "unitPrice": 425,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 61
+    },
+    {
+      "itemNo": 62,
+      "description": "Siemens D2053 Attenuator",
+      "quantity": 1,
+      "unitPrice": 350,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 62
+    },
+    {
+      "itemNo": 63,
+      "description": "Wandel & Goltermann White Noise Generator / Filter System",
+      "quantity": 1,
+      "unitPrice": 515,
+      "photoStatus": "NO_PHOTO",
+      "suggestedPhoto": null
+    },
+    {
+      "itemNo": 64,
+      "description": "Avaya Digital Telephone Sets",
+      "quantity": 4,
+      "unitPrice": 35,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 63
+    },
+    {
+      "itemNo": 65,
+      "description": "Axial Ventilation / Cooling Fan Assemblies",
+      "quantity": 3,
+      "unitPrice": 30,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 64
+    },
+    {
+      "itemNo": 66,
+      "description": "X-Ray Film Viewer / Light Box Illuminator",
+      "quantity": 1,
+      "unitPrice": 85,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 65
+    },
+    {
+      "itemNo": 67,
+      "description": "Microcontroller Development / Training Kits",
+      "quantity": 8,
+      "unitPrice": 110,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 66
+    },
+    {
+      "itemNo": 68,
+      "description": "Air Purifier / Air Cleaner Units",
+      "quantity": 7,
+      "unitPrice": 55,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 67
+    },
+    {
+      "itemNo": 69,
+      "description": "Digital Multimeters",
+      "quantity": 7,
+      "unitPrice": 30,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 68
+    },
+    {
+      "itemNo": 70,
+      "description": "Mobile Phone Training / Maintenance Systems",
+      "quantity": 11,
+      "unitPrice": 200,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 69
+    },
+    {
+      "itemNo": 71,
+      "description": "BGA Rework Station / PCB Rework and Inspection System",
+      "quantity": 1,
+      "unitPrice": 540,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 70
+    },
+    {
+      "itemNo": 72,
+      "description": "Battery Discharge Meter Control Panel Unit",
+      "quantity": 1,
+      "unitPrice": 200,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 71
+    },
+    {
+      "itemNo": 73,
+      "description": "Analogue Multimeters",
+      "quantity": 2,
+      "unitPrice": 25,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 72
+    },
+    {
+      "itemNo": 74,
+      "description": "Adjustable Soldering Stations",
+      "quantity": 17,
+      "unitPrice": 40,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 73
+    },
+    {
+      "itemNo": 75,
+      "description": "FEEDBACK Electronic Circuits Configuration Training Modules",
+      "quantity": 8,
+      "unitPrice": 90,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 74
+    },
+    {
+      "itemNo": 76,
+      "description": "Fujikura Fusion Splicer",
+      "quantity": 1,
+      "unitPrice": 2115,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 75
+    },
+    {
+      "itemNo": 77,
+      "description": "Rework Soldering Stations / Hot-Air Rework Units",
+      "quantity": 59,
+      "unitPrice": 45,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 76
+    },
+    {
+      "itemNo": 78,
+      "description": "Stereo Inspection / Laboratory Microscopes",
+      "quantity": 8,
+      "unitPrice": 280,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 78
+    },
+    {
+      "itemNo": 79,
+      "description": "FEEDBACK Electronic Circuit Configuration Modules",
+      "quantity": 5,
+      "unitPrice": 100,
+      "photoStatus": "NO_PHOTO",
+      "suggestedPhoto": null
+    },
+    {
+      "itemNo": 80,
+      "description": "Analogue Insulation / Resistance Tester",
+      "quantity": 1,
+      "unitPrice": 85,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 80
+    },
+    {
+      "itemNo": 81,
+      "description": "Telecommunications / Line Interface Test Module",
+      "quantity": 1,
+      "unitPrice": 425,
+      "photoStatus": "NEEDS_REVIEW",
+      "suggestedPhoto": 81
+    },
+    {
+      "itemNo": 82,
+      "description": "BGC-8088 MicroEngineer V3.5 Hardware Training Systems",
+      "quantity": 3,
+      "unitPrice": 300,
+      "photoStatus": "CLEAR",
+      "suggestedPhoto": 82
+    }
+  ]
+}

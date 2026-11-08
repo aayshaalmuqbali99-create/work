@@ -1,7 +1,7 @@
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
-import { getDevice } from "@/features/catalog/data";
+import { getDevices } from "@/features/catalog/data";
 import { DeviceCard } from "@/components/equipment/device-card";
 import { Reveal } from "./reveal";
 
@@ -17,10 +17,13 @@ const FEATURED = [
   "bgc-8088-microengineer-v3-5",
 ];
 
-export function FeaturedSection() {
-  const t = useTranslations("Home");
-  const locale = useLocale();
-  const devices = FEATURED.map((s) => getDevice(s, locale)).filter((d) => d !== undefined);
+export async function FeaturedSection() {
+  const t = await getTranslations("Home");
+  const all = await getDevices(await getLocale());
+  // Hand-picked first, then fill with other published devices so the section is never empty.
+  const picked = FEATURED.map((s) => all.find((d) => d.slug === s)).filter((d) => d !== undefined);
+  const devices = [...picked, ...all.filter((d) => !picked.includes(d))].slice(0, 8);
+  if (devices.length === 0) return null;
   return (
     <section aria-labelledby="featured-title" className="py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

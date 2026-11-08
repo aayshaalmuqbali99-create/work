@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Cable, Cpu, FlaskConical, Microscope, Radio, Waves, Zap } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { getStats } from "@/features/catalog/data";
@@ -16,10 +16,10 @@ const groups = [
   { key: "laboratory", icon: FlaskConical },
 ] as const;
 
-export function CategoriesSection() {
-  const t = useTranslations("Categories");
-  const th = useTranslations("Home");
-  const counts = getStats().byCategory;
+export async function CategoriesSection() {
+  const t = await getTranslations("Categories");
+  const th = await getTranslations("Home");
+  const counts = (await getStats()).byCategory;
   return (
     <section id="categories" aria-labelledby="categories-title" className="scroll-mt-20 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

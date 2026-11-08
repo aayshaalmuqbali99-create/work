@@ -13,9 +13,9 @@ import type { PartSpec } from "./types";
 import { cn } from "@/lib/utils";
 
 interface Props {
-  archetypeKey: string;
+  archetypeKey: string | null;
   deviceName: string;
-  fallbackImage: { src: string; width: number; height: number };
+  fallbackImage: { src: string; width: number; height: number } | null;
 }
 
 function hasWebGL() {
@@ -35,7 +35,7 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
   const t = useTranslations("Viewer");
   const locale = useLocale() as "ar" | "en";
   const reducedMotion = !!useReducedMotion();
-  const archetype = getArchetype(archetypeKey);
+  const archetype = archetypeKey ? getArchetype(archetypeKey) : undefined;
   const wrapRef = useRef<HTMLDivElement>(null);
   const [webgl, setWebgl] = useState<boolean | null>(null);
   const [fullscreen, setFullscreen] = useState(false);
@@ -71,7 +71,7 @@ export function InteractiveEquipmentViewer({ archetypeKey, deviceName, fallbackI
   if (!archetype || webgl === false) {
     return (
       <div className="overflow-hidden rounded-card border border-line bg-surface">
-        <Image src={fallbackImage.src} alt={deviceName} width={fallbackImage.width} height={fallbackImage.height} className="mx-auto h-72 w-auto object-contain" />
+        {fallbackImage && <Image src={fallbackImage.src} alt={deviceName} width={fallbackImage.width} height={fallbackImage.height} className="mx-auto h-72 w-auto object-contain" />}
         <p className="border-t border-line p-4 text-sm text-muted">{webgl === false ? t("noWebgl") : t("notAvailable")}</p>
       </div>
     );

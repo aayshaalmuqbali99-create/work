@@ -4,8 +4,9 @@ export type Condition = "unverified" | "new" | "used";
 export interface Device {
   slug: string;
   itemNos: number[];
-  category: CategoryKey;
-  archetype: string;
+  category: CategoryKey | null;
+  /** Illustrative 3D device-type model key, or null when no 3D model is assigned. */
+  archetype: string | null;
   brand: string | null;
   model: string | null;
   nameEn: string;
@@ -18,9 +19,9 @@ export interface Device {
   benefitsAr: string[];
   quantity: number;
   condition: Condition;
-  /** Indicative price of a comparable NEW unit from the workbook — never a selling price. */
+  /** Estimated price of a comparable NEW unit — never a selling price. */
   indicativeNewUnitPriceOMR: number | null;
-  photo: { src: string; width: number; height: number; sourcePhoto: number };
+  photo: { src: string; width: number; height: number } | null;
 }
 
 /** Bilingual view of a device for the current locale. */
