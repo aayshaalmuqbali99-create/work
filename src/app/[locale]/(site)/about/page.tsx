@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowRight, FlaskConical } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -46,6 +47,21 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             </figcaption>
           </figure>
         </div>
+      </section>
+
+      {/* Goals banner (image provided by the owner) */}
+      <section className="pt-14" aria-label={t("bannerAlt")}>
+        <Reveal className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Image
+            src="/about/goals-banner.webp"
+            alt={t("bannerAlt")}
+            width={1672}
+            height={941}
+            sizes="(min-width: 1280px) 1216px, 100vw"
+            className="h-auto w-full rounded-[28px] shadow-2xl shadow-navy/20"
+            priority={false}
+          />
+        </Reveal>
       </section>
 
       <GoalsSection />
