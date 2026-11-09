@@ -42,7 +42,7 @@ export function SiteFooter({ brand, content = {} }: { brand?: BrandProps; conten
       </div>
       <div className="border-t border-white/10">
         <p className="mx-auto max-w-7xl px-4 py-5 text-xs text-white/60 sm:px-6 lg:px-8">
-          © {new Date().getFullYear()} {brand?.name || "LabSouq"}. {t("Footer.rights")}
+          © {new Date().getFullYear()} {brand?.name || t("Brand.name")}. {t("Footer.rights")}
         </p>
       </div>
     </footer>

@@ -26,7 +26,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const h = site.hero as unknown as Record<string, unknown>;
   return (
     <>
-      <Hero text={{ eyebrow: pick(h, "eyebrow", locale, ""), title: pick(h, "title", locale, ""), subtitle: pick(h, "subtitle", locale, ""), showVisual: site.hero.showVisual }} />
+      <Hero text={{ eyebrow: pick(h, "eyebrow", locale, ""), title: pick(h, "title", locale, ""), subtitle: pick(h, "subtitle", locale, ""), showVisual: site.hero.showVisual }} slides={site.hero.slides} />
       {site.sections
         .filter((s) => s.enabled)
         .map((s) => {

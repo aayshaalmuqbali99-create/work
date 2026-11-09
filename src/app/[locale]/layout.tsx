@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = await getTranslations({ locale, namespace: "Meta" });
   return {
     metadataBase: new URL(SITE_URL),
-    title: { default: t("title"), template: `%s · ${locale === "ar" ? "لاب سوق" : "LabSouq"}` },
+    title: { default: t("title"), template: `%s · ${locale === "ar" ? "أصول عُمانتل" : "Omantel Assets"}` },
     description: t("description"),
     alternates: { canonical: `/${locale}`, languages: { ar: "/ar", en: "/en" } },
   };

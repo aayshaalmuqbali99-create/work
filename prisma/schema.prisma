@@ -42,6 +42,19 @@ enum ContentStatus {
   ARCHIVED
 }
 
+enum RequestType {
+  DONATION // educational institution asks for a donation
+  PURCHASE // buyer asks to purchase
+}
+
+enum RequestStatus {
+  NEW
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
 enum InventoryTxType {
   IMPORT
   ADJUSTMENT
@@ -231,4 +244,25 @@ model RateLimit {
   resetAt DateTime
 
   @@index([resetAt])
+}
+
+/// Donation or purchase request sent from the public "Request" page.
+model AssetRequest {
+  id           String        @id @default(cuid())
+  type         RequestType
+  status       RequestStatus @default(NEW)
+  name         String
+  organization String
+  email        String
+  phone        String
+  city         String        @default("")
+  /// [{ slug, name, quantity }]
+  items        Json
+  message      String        @default("")
+  adminNote    String        @default("")
+  ip           String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status, createdAt])
 }

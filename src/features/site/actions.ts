@@ -51,13 +51,13 @@ export async function discardSiteDraftAction(): Promise<FormState> {
   return saveSiteDraftAction(pub ? readSite(pub.data) : DEFAULT_SITE);
 }
 
-export async function uploadLogoAction(form: FormData): Promise<{ ok: boolean; url?: string; message?: string }> {
+export async function uploadLogoAction(form: FormData): Promise<{ ok: boolean; url?: string; width?: number; height?: number; message?: string }> {
   await requireUser("ADMIN");
   const file = form.get("file");
   if (!(file instanceof File)) return { ok: false, message: "uploadEmpty" };
   try {
     const img = await saveImage(file);
-    return { ok: true, url: img.url };
+    return { ok: true, url: img.url, width: img.width, height: img.height };
   } catch (e) {
     if (e instanceof UploadError) return { ok: false, message: { TOO_LARGE: "uploadTooLarge", BAD_TYPE: "uploadBadType", EMPTY: "uploadEmpty" }[e.code] };
     throw e;

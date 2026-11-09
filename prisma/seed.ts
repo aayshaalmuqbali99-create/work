@@ -116,7 +116,7 @@ async function main() {
       console.warn("No admin created: set ADMIN_EMAIL and ADMIN_PASSWORD (12+ chars) in .env and run the seed again.");
     } else {
       await db.user.create({
-        data: { email: ADMIN_EMAIL.toLowerCase(), name: ADMIN_NAME || "Admin", role: "ADMIN", passwordHash: await hash(ADMIN_PASSWORD) },
+        data: { email: ADMIN_EMAIL.toLowerCase(), name: ADMIN_NAME || "المسؤول", role: "ADMIN", passwordHash: await hash(ADMIN_PASSWORD) },
       });
       console.log(`Admin created: ${ADMIN_EMAIL}`);
     }

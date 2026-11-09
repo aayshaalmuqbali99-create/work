@@ -14,6 +14,8 @@ export const siteSchema = z.object({
   brand: z.object({
     nameEn: t(60), nameAr: t(60), taglineEn: t(120), taglineAr: t(120),
     logoUrl: z.string().max(300).nullable().default(null),
+    /** Partner logo shown next to the brand in the header (e.g. the official Omantel logo file). */
+    partnerLogoUrl: z.string().max(300).nullable().default(null),
   }),
   theme: z.object({
     navy: hex.default("#102F40"),
@@ -26,6 +28,14 @@ export const siteSchema = z.object({
   hero: z.object({
     eyebrowEn: t(120), eyebrowAr: t(120), titleEn: t(120), titleAr: t(120), subtitleEn: t(400), subtitleAr: t(400),
     showVisual: z.boolean().default(true),
+    /** Background photos of the homepage banner (rotate automatically). */
+    slides: z
+      .array(z.object({ url: z.string().max(300), width: z.number().int().positive(), height: z.number().int().positive() }))
+      .max(6)
+      .default([
+        { url: "/hero/students.webp", width: 1520, height: 810 },
+        { url: "/hero/equipment.webp", width: 1440, height: 780 },
+      ]),
   }),
   // Older saved versions may miss newer sections: unknown keys are dropped and missing ones appended (visible).
   sections: z.preprocess(

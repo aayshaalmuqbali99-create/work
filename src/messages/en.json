@@ -1,21 +1,27 @@
 {
   "Meta": {
-    "title": "LabSouq — Scientific & Engineering Equipment Marketplace",
-    "description": "Explore, understand, and source scientific and engineering equipment in one professional marketplace. Based in Oman."
+    "title": "Omantel Assets — equipment supporting technical education",
+    "description": "A digital platform to manage and showcase Omantel's assets and increase their use in support of technical education and sustainability."
   },
   "Brand": {
-    "name": "LabSouq",
-    "tagline": "Explore. Understand. Equip."
+    "name": "Omantel Assets",
+    "tagline": "Assets that inspire knowledge, value that builds the future"
   },
   "Nav": {
     "home": "Home",
     "categories": "Categories",
-    "why": "Why LabSouq",
+    "why": "Why Omantel Assets",
     "about": "About",
     "menu": "Menu",
     "close": "Close menu",
     "skip": "Skip to content",
-    "equipment": "Equipment"
+    "equipment": "Assets",
+    "request": "Request",
+    "greeting": "Hello, {name}",
+    "notifications": "New requests",
+    "controlPanel": "Control panel",
+    "logout": "Sign out",
+    "account": "Account"
   },
   "Language": {
     "label": "Language",
@@ -24,16 +30,17 @@
   },
   "Hero": {
     "eyebrow": "Supporting technical colleges & institutes in Oman",
-    "title": "Real lab equipment for the next generation of engineers",
-    "subtitle": "Explore laboratory and telecommunications equipment in interactive 3D — available as a donation to educational institutions or for sale.",
-    "browse": "Browse equipment",
-    "learn": "Our goals",
+    "title": "Assets that inspire knowledge, value that builds the future",
+    "subtitle": "A digital platform to manage and showcase Omantel's assets and increase their use in support of technical education and sustainability.",
+    "browse": "Explore assets",
+    "learn": "About the platform",
     "statMarket": "Launching in Oman",
     "statCurrency": "Prices in OMR",
     "statLanguages": "Arabic & English",
     "statDevices": "{count} devices",
     "statUnits": "{count} units available",
-    "stat3d": "Interactive 3D models"
+    "stat3d": "Interactive 3D models",
+    "slide": "Slide {n}"
   },
   "Categories": {
     "title": "Browse by category",
@@ -54,7 +61,7 @@
     "laboratoryDesc": "Ultrasonic cleaners, laboratory supplies, measurement and testing equipment."
   },
   "Why": {
-    "title": "Why LabSouq?",
+    "title": "Why Omantel Assets?",
     "subtitle": "Built for people who need to know exactly what they are buying.",
     "honestTitle": "Honest listings",
     "honestDesc": "Unknown specifications, condition or prices are shown as \"Not provided\" — never guessed.",
@@ -76,8 +83,8 @@
   },
   "About": {
     "title": "About us",
-    "eyebrow": "About LabSouq",
-    "lead": "LabSouq is an Omani platform that gives laboratory, electronic and telecommunications equipment a second life — in the hands of students.",
+    "eyebrow": "About Omantel Assets",
+    "lead": "Omantel Assets is an Omani platform that gives laboratory, electronic and telecommunications equipment a second life — in the hands of students.",
     "body1": "Every device is listed with a clear explanation, the quantity available and an interactive 3D model, plus how students benefit from it in the lab — so educational institutions can choose what fits their courses with confidence.",
     "body2": "Our principle is simple: show what is known, and say clearly what is not.",
     "inLab": "In the lab",
@@ -100,9 +107,9 @@
     "featuredSubtitle": "A selection from the current inventory. Each device has an explanation, its lab uses and an interactive 3D model.",
     "viewAll": "View all equipment",
     "categoryCount": "{count, plural, =0 {No devices yet} one {# device} other {# devices}}",
-    "aboutEyebrow": "About LabSouq",
+    "aboutEyebrow": "About Omantel Assets",
     "aboutTitle": "Lab equipment that keeps on teaching",
-    "aboutLead": "LabSouq is an Omani platform that gives laboratory, electronic and telecommunications equipment a second life. Every device is listed with a clear explanation, its quantity, an interactive 3D model and how it helps students in the lab.",
+    "aboutLead": "Omantel Assets is an Omani platform that gives laboratory, electronic and telecommunications equipment a second life. Every device is listed with a clear explanation, its quantity, an interactive 3D model and how it helps students in the lab.",
     "goalsTitle": "Our two goals",
     "goal1Tag": "Goal 1",
     "goal1Title": "Supporting educational institutions",
@@ -402,7 +409,7 @@
     "glb_NO_MESHES": "The file contains no 3D geometry.",
     "glb_TOO_COMPLEX": "The model is too detailed (over 1.5 million triangles). Please simplify it.",
     "modelTooLarge": "The file is larger than 30 MB.",
-    "demoModelNote": "Need a test file? Download the original LabSouq demonstration model:",
+    "demoModelNote": "Need a test file? Download the original Omantel Assets demonstration model:",
     "demoModel": "demo GLB",
     "back3d": "All 3D versions",
     "modelPublished": "Published. The device page now shows this model.",
@@ -422,7 +429,7 @@
     "taglineEn": "Tagline (English)",
     "taglineAr": "Tagline (Arabic)",
     "logo": "Logo",
-    "logoDefault": "Default LabSouq logo",
+    "logoDefault": "Default Omantel Assets logo",
     "useDefaultLogo": "Use default logo",
     "emptyUsesDefault": "Leave empty to use the default text.",
     "colorNavy": "Main colour (navy)",
@@ -439,10 +446,10 @@
     "heroTitleAr": "Main title (Arabic)",
     "heroSubtitleEn": "Subtitle (English)",
     "heroSubtitleAr": "Subtitle (Arabic)",
-    "showVisual": "Show the animated instrument picture",
+    "showVisual": "Show the banner photos",
     "section_featured": "Featured equipment",
     "section_categories": "Browse by category",
-    "section_why": "Why LabSouq",
+    "section_why": "Why Omantel Assets",
     "section_how": "How it works",
     "sectionVisible": "Visible",
     "moveUp": "Move up",
@@ -483,7 +490,23 @@
     "previewBanner": "Preview mode — you are seeing the unpublished draft.",
     "nothingPublishedYet": "Nothing published yet — the site uses the default content.",
     "section_about": "About & goals",
-    "section_stats": "Numbers"
+    "section_stats": "Numbers",
+    "navRequests": "Requests",
+    "requestsTitle": "Donation & purchase requests",
+    "noRequests": "No requests yet.",
+    "rtype_DONATION": "Donation",
+    "rtype_PURCHASE": "Purchase",
+    "rstatus_NEW": "New",
+    "rstatus_IN_REVIEW": "In review",
+    "rstatus_APPROVED": "Approved",
+    "rstatus_REJECTED": "Rejected",
+    "rstatus_COMPLETED": "Completed",
+    "adminNote": "Internal note",
+    "partnerLogo": "Partner logo (shown next to the platform name)",
+    "heroSlides": "Homepage banner photos",
+    "heroSlidesHelp": "They rotate automatically at the top of the homepage. Use wide, high-resolution photos without text.",
+    "addSlide": "Add photo",
+    "removeSlide": "Remove"
   },
   "Access": {
     "title": "Private preview",
@@ -492,5 +515,38 @@
     "enter": "Enter",
     "wrong": "Incorrect password.",
     "tooMany": "Too many attempts. Try again in {seconds} seconds."
+  },
+  "Request": {
+    "title": "Donation or purchase request",
+    "intro": "Choose the request type and the equipment you need; the platform team will contact you.",
+    "type": "Request type",
+    "typeDonation": "Donation request (educational institutions)",
+    "typePurchase": "Purchase request",
+    "name": "Full name",
+    "organization": "Organisation",
+    "email": "E-mail",
+    "phone": "Phone number",
+    "city": "City / Wilayat",
+    "items": "Requested equipment",
+    "addItem": "Add device",
+    "chooseDevice": "Choose a device",
+    "quantity": "Quantity",
+    "available": "Available: {n}",
+    "remove": "Remove",
+    "message": "Additional details",
+    "messageHelp": "For example: lab name, course, number of students.",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "sentTitle": "Your request was received",
+    "sentText": "Thank you. The platform team will review the request and contact you.",
+    "newRequest": "Send another request",
+    "errors": "Please correct the highlighted fields.",
+    "required": "Required",
+    "invalidEmail": "Invalid e-mail address",
+    "invalidPhone": "Invalid phone number",
+    "noItems": "Add at least one device.",
+    "tooMany": "Too many requests. Please try again later.",
+    "privacy": "Your details are only used to contact you about this request.",
+    "fromDevice": "Request this device"
   }
 }

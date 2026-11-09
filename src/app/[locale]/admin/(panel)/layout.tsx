@@ -11,13 +11,14 @@ import { LanguageSwitcher } from "@/components/layout/language-switcher";
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
   const user = await requirePageUser();
   const t = await getTranslations("Admin");
+  const tb = await getTranslations("Brand");
   const reviewCount = await db.device.count({ where: { status: "REVIEW", deletedAt: null } });
   return (
     <div className="lg:grid lg:min-h-dvh lg:grid-cols-[250px_1fr]">
       <aside className="bg-navy px-4 py-4 text-white lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:py-6">
         <div className="mb-4 flex items-center justify-between gap-3 lg:mb-8 lg:block">
           <Link href="/admin" className="text-lg font-bold">
-            Lab<span className="text-[#3FB8BE]">Souq</span> <span className="text-sm font-medium text-white/60">· {t("title")}</span>
+            {tb("name")} <span className="text-sm font-medium text-white/60">· {t("title")}</span>
           </Link>
         </div>
         <Suspense><AdminNav reviewCount={reviewCount} isAdmin={user.role === "ADMIN"} /></Suspense>

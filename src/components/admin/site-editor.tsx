@@ -189,6 +189,16 @@ export function SiteEditor({ initial, published, versions }: { initial: SiteCont
               {site.brand.logoUrl && <button type="button" className={btnSecondary} onClick={() => set("brand", "logoUrl", null)}>{t("useDefaultLogo")}</button>}
             </div>
           </div>
+          <div className="mt-6 space-y-3">
+            <p className="text-sm font-medium text-navy">{t("partnerLogo")}</p>
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="grid h-16 min-w-40 place-items-center rounded-xl border border-line bg-canvas px-4">
+                {site.brand.partnerLogoUrl ? <Image src={site.brand.partnerLogoUrl} alt="" width={160} height={40} className="h-10 w-auto object-contain" /> : <span className="text-xs text-muted">—</span>}
+              </div>
+              <UploadButton label={t("upload")} onUploaded={(url) => set("brand", "partnerLogoUrl", url)} onError={(m) => setMsg({ ok: false, text: t(m) })} />
+              {site.brand.partnerLogoUrl && <button type="button" className={btnSecondary} onClick={() => set("brand", "partnerLogoUrl", null)}>{t("removeSlide")}</button>}
+            </div>
+          </div>
         </Card>
       )}
 
@@ -232,7 +242,7 @@ export function SiteEditor({ initial, published, versions }: { initial: SiteCont
           <div className="mt-6 flex flex-wrap items-center gap-3 rounded-xl p-4" style={{ background: site.theme.background }}>
             <span className="rounded-full px-5 py-2.5 text-sm font-semibold text-white" style={{ background: site.theme.navy }}>{t("tabBrand")}</span>
             <span className="rounded-full px-5 py-2.5 text-sm font-semibold text-white" style={{ background: site.theme.teal }}>{t("preview")}</span>
-            <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: site.theme.tealLight, color: site.theme.teal }}>LabSouq</span>
+            <span className="rounded-full px-3 py-1 text-xs font-semibold" style={{ background: site.theme.tealLight, color: site.theme.teal }}>{t("tabBrand")}</span>
             <span className="h-16 w-24 border bg-white" style={{ borderRadius: site.theme.radius }} />
           </div>
         </Card>
@@ -253,6 +263,32 @@ export function SiteEditor({ initial, published, versions }: { initial: SiteCont
             <input type="checkbox" checked={site.hero.showVisual} onChange={(e) => set("hero", "showVisual", e.target.checked)} className="size-5 accent-[#167d83]" />
             {t("showVisual")}
           </label>
+          <div className="mt-6">
+            <p className="text-sm font-medium text-navy">{t("heroSlides")}</p>
+            <p className="mb-3 text-xs text-muted">{t("heroSlidesHelp")}</p>
+            <ul className="flex flex-wrap gap-3">
+              {site.hero.slides.map((sl, i) => (
+                <li key={sl.url + i} className="relative overflow-hidden rounded-xl border border-line">
+                  <Image src={sl.url} alt="" width={sl.width} height={sl.height} className="h-24 w-40 object-cover" />
+                  <div className="absolute inset-x-0 bottom-0 flex justify-between bg-black/50 p-1">
+                    <button type="button" disabled={i === 0} aria-label={t("moveUp")} onClick={() => update((d) => { [d.hero.slides[i - 1], d.hero.slides[i]] = [d.hero.slides[i], d.hero.slides[i - 1]]; return d; })} className="rounded px-1.5 text-xs text-white disabled:opacity-30">◀</button>
+                    <button type="button" onClick={() => update((d) => { d.hero.slides.splice(i, 1); return d; })} className="rounded px-1.5 text-xs text-white">{t("removeSlide")}</button>
+                    <button type="button" disabled={i === site.hero.slides.length - 1} aria-label={t("moveDown")} onClick={() => update((d) => { [d.hero.slides[i + 1], d.hero.slides[i]] = [d.hero.slides[i], d.hero.slides[i + 1]]; return d; })} className="rounded px-1.5 text-xs text-white disabled:opacity-30">▶</button>
+                  </div>
+                </li>
+              ))}
+              {site.hero.slides.length < 6 && (
+                <li className="grid h-24 w-40 place-items-center rounded-xl border-2 border-dashed border-line">
+                  <UploadButton
+                    label={t("addSlide")}
+                    withSize
+                    onUploaded={(url, w, h) => update((d) => { d.hero.slides.push({ url, width: w ?? 1600, height: h ?? 900 }); return d; })}
+                    onError={(m) => setMsg({ ok: false, text: t(m) })}
+                  />
+                </li>
+              )}
+            </ul>
+          </div>
         </Card>
       )}
 
@@ -353,5 +389,33 @@ export function SiteEditor({ initial, published, versions }: { initial: SiteCont
         </div>
       </Card>
     </div>
+  );
+}
+
+/** Small upload button that stores an image and returns its URL (and size). */
+function UploadButton({ label, onUploaded, onError, withSize = false }: { label: string; onUploaded: (url: string, w?: number, h?: number) => void; onError: (messageKey: string) => void; withSize?: boolean }) {
+  const [busy, setBusy] = useState(false);
+  return (
+    <label className={cn(btnSecondary, "cursor-pointer", busy && "opacity-60")}>
+      <Upload className="size-4" />
+      {label}
+      <input
+        type="file"
+        accept="image/png,image/jpeg,image/webp"
+        className="sr-only"
+        disabled={busy}
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+          setBusy(true);
+          const fd = new FormData();
+          fd.set("file", file);
+          const r = await uploadLogoAction(fd);
+          setBusy(false);
+          if (r.ok && r.url) onUploaded(r.url, withSize ? r.width : undefined, withSize ? r.height : undefined);
+          else onError(r.message ?? "uploadBadType");
+        }}
+      />
+    </label>
   );
 }

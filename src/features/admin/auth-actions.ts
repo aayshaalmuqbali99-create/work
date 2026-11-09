@@ -65,3 +65,13 @@ export async function changePasswordAction(_prev: FormState, form: FormData): Pr
   await audit({ userId: me.id, action: "auth.password_changed", entity: "user", entityId: me.id });
   return { ok: true, message: "passwordChanged", at: Date.now() };
 }
+
+/** Change the display name of the signed-in user (shown in the site header greeting). */
+export async function updateMyNameAction(name: string): Promise<FormState> {
+  const me = await requireUser();
+  const clean = String(name ?? "").trim();
+  if (clean.length < 2 || clean.length > 120) return { ok: false, message: "required" };
+  await db.user.update({ where: { id: me.id }, data: { name: clean } });
+  await audit({ userId: me.id, action: "user.rename", entity: "user", entityId: me.id, after: { name: clean } });
+  return { ok: true, message: "saved", at: Date.now() };
+}

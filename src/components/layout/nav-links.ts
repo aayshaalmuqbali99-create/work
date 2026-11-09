@@ -1,10 +1,11 @@
 /**
- * Primary navigation. Phase 8 moves this into the database (NavigationItem) so the admin
- * can add, edit and reorder links; only routes/anchors that exist are listed here.
+ * Primary navigation (icons are attached in site-header.tsx).
+ * Only routes/anchors that exist are listed here.
  */
 export const primaryNav = [
   { key: "home", href: "/" },
   { key: "equipment", href: "/equipment" },
   { key: "categories", href: "/#categories" },
+  { key: "request", href: "/request" },
   { key: "about", href: "/about" },
 ] as const;

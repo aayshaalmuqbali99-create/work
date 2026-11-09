@@ -2,31 +2,44 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-export type BrandProps = { name?: string; logoUrl?: string | null };
+export type BrandProps = { name?: string; logoUrl?: string | null; partnerLogoUrl?: string | null };
 
-/** LabSouq wordmark (flask crossed by a signal trace), or the logo uploaded in the website editor. */
+/** Stacked-layers mark: assets that are reused layer after layer. */
+function Mark({ inverted }: { inverted: boolean }) {
+  return (
+    <svg viewBox="0 0 40 40" className="size-10 shrink-0" aria-hidden="true">
+      <path d="M20 5 4 13l16 8 16-8z" fill="none" stroke={inverted ? "#ffffff" : "#102F40"} strokeWidth="2.4" strokeLinejoin="round" />
+      <path d="m4 20 16 8 16-8" fill="none" stroke="#F59E0B" strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" />
+      <path d="m4 27 16 8 16-8" fill="none" stroke={inverted ? "#ffffff" : "#102F40"} strokeWidth="2.4" strokeLinejoin="round" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/**
+ * Brand: the platform mark + name (or an uploaded logo), and an optional partner logo after a divider.
+ * Logos are uploaded in the control panel (Website → Brand).
+ */
 export function Logo({ inverted = false, brand = {} }: { inverted?: boolean; brand?: BrandProps }) {
   const t = useTranslations("Brand");
   const label = brand.name || t("name");
-  if (brand.logoUrl) {
-    return (
-      <Link href="/" className="inline-flex items-center" aria-label={label}>
-        <Image src={brand.logoUrl} alt={label} width={200} height={48} className={`h-9 w-auto object-contain ${inverted ? "rounded bg-white/90 p-1" : ""}`} />
-      </Link>
-    );
-  }
   return (
-    <Link href="/" className="group inline-flex items-center gap-2.5" aria-label={label}>
-      <svg viewBox="0 0 36 36" className="size-9 shrink-0" aria-hidden="true">
-        <rect width="36" height="36" rx="10" className={inverted ? "fill-white/10" : "fill-navy"} />
-        <path d="M14 8h8M15.5 8v7.5L10 26a2.5 2.5 0 0 0 2.2 3.6h11.6A2.5 2.5 0 0 0 26 26l-5.5-10.5V8"
-          fill="none" stroke="#D6E9E8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M11.5 23.5h3l1.5-3 2.5 6 2-4.5 1.2 1.5h3" fill="none" stroke="#3FB8BE" strokeWidth="1.8"
-          strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:-translate-y-0.5" />
-      </svg>
-      <span className={`text-lg font-bold tracking-tight ${inverted ? "text-white" : "text-navy"}`}>
-        {brand.name ? brand.name : <>Lab<span className={inverted ? "text-[#3FB8BE]" : "text-teal"}>Souq</span></>}
-      </span>
-    </Link>
+    <span className="inline-flex items-center gap-3">
+      <Link href="/" className="group inline-flex items-center gap-2" aria-label={label}>
+        {brand.logoUrl ? (
+          <Image src={brand.logoUrl} alt={label} width={200} height={48} className={`h-10 w-auto object-contain ${inverted ? "rounded bg-white/90 p-1" : ""}`} />
+        ) : (
+          <>
+            <Mark inverted={inverted} />
+            <span className={`whitespace-nowrap text-lg font-bold tracking-tight sm:text-xl ${inverted ? "text-white" : "text-navy"}`}>{label}</span>
+          </>
+        )}
+      </Link>
+      {brand.partnerLogoUrl && (
+        <>
+          <span className={`hidden h-9 w-px sm:block ${inverted ? "bg-white/25" : "bg-line"}`} aria-hidden="true" />
+          <Image src={brand.partnerLogoUrl} alt="" width={160} height={48} className={`hidden h-9 w-auto object-contain sm:block ${inverted ? "rounded bg-white/90 p-1" : ""}`} />
+        </>
+      )}
+    </span>
   );
 }

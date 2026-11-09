@@ -3,6 +3,8 @@ import { Eye } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { getSiteContent, pick } from "@/features/site/data";
+import { getCurrentUser } from "@/lib/auth/session";
+import { db } from "@/lib/db";
 
 /** Public website chrome (header + footer), driven by the website editor content. */
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -10,7 +12,10 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   const { site, preview } = await getSiteContent();
   const b = site.brand as unknown as Record<string, unknown>;
   const f = site.footer as unknown as Record<string, unknown>;
-  const brand = { name: pick(b, "name", locale, ""), logoUrl: site.brand.logoUrl };
+  const brand = { name: pick(b, "name", locale, ""), logoUrl: site.brand.logoUrl, partnerLogoUrl: site.brand.partnerLogoUrl };
+  // Signed-in staff see a greeting and the number of new requests in the header.
+  const me = await getCurrentUser();
+  const headerUser = me ? { name: me.name, newRequests: await db.assetRequest.count({ where: { status: "NEW" } }) } : null;
   const t = await getTranslations("Admin");
   return (
     <>
@@ -21,7 +26,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <a href={`/api/preview?on=0&to=/${locale}`} className="rounded-full bg-navy px-3 py-1 text-xs text-white">{t("exitPreview")}</a>
         </div>
       )}
-      <SiteHeader brand={brand} />
+      <SiteHeader brand={brand} user={headerUser} />
       <main id="main" className="flex-1">
         {children}
       </main>

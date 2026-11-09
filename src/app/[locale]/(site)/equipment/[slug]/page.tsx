@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Activity, ArrowLeft, CheckCircle2, Cpu, FlaskConical, GraduationCap, Info, Share2 } from "lucide-react";
+import { Activity, ArrowLeft, CheckCircle2, Cpu, FlaskConical, GraduationCap, Info, Share2, ShoppingCart } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { formatOMR, getDevice, getDevices, pricingNotes } from "@/features/catalog/data";
 import { ViewerLoader } from "@/components/viewer3d/viewer-loader";
@@ -29,6 +29,7 @@ export default async function DevicePage({ params }: { params: Promise<{ locale:
   if (!d) notFound();
   const t = await getTranslations("Equipment");
   const tc = await getTranslations("Categories");
+  const tr = await getTranslations("Request");
   const related = d.category ? (await getDevices(locale)).filter((x) => x.category === d.category && x.slug !== d.slug).slice(0, 4) : [];
   const conditionLabel = { unverified: t("conditionUnverified"), new: t("conditionNew"), used: t("conditionUsed") }[d.condition];
 
@@ -50,6 +51,10 @@ export default async function DevicePage({ params }: { params: Promise<{ locale:
         {d.category && <p className="text-sm font-semibold text-teal">{tc(d.category)}</p>}
         <h1 className="mt-1 text-h2 font-bold tracking-tight text-navy">{d.name}</h1>
         <p className="mt-1 text-muted" lang={locale === "ar" ? "en" : "ar"} dir={locale === "ar" ? "ltr" : "rtl"}>{d.altName}</p>
+        <Link href={`/request?device=${d.slug}`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#1b6fd1] px-6 py-3 font-semibold text-white shadow-lg shadow-[#1b6fd1]/30 transition hover:bg-[#2b7ff0]">
+          <ShoppingCart className="size-4" aria-hidden="true" />
+          {tr("fromDevice")}
+        </Link>
       </header>
 
       {/* Key facts */}
