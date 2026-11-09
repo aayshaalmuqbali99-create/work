@@ -14,46 +14,23 @@
 
 ---
 
-## الطريقة أ: Vercel + Neon (قاعدة بيانات) + Cloudflare R2 (ملفات)
+## الطريقة أ: Vercel (كل شيء من داخل Vercel)
 
-### 1) قاعدة البيانات — Neon
-1. أنشئ حساباً في neon.tech ثم مشروعاً جديداً (اختر أقرب منطقة، مثل Frankfurt).
-2. انسخ رابطين من صفحة الاتصال:
-   - **Pooled connection** ← سيكون `DATABASE_URL`
-   - **Direct connection** ← سيكون `DIRECT_URL`
-
-### 2) تخزين الملفات — Cloudflare R2
-1. في لوحة Cloudflare: R2 ← Create bucket (مثلاً `labsouq-media`).
-2. R2 ← Manage API tokens ← Create token بصلاحية **Object Read & Write** على هذا الـ bucket.
-3. احتفظ بـ: Access Key ID، Secret Access Key، و endpoint بالشكل `https://<account-id>.r2.cloudflarestorage.com`.
-   (لا حاجة لجعل الـ bucket عاماً: المنصة تعرض الملفات عبر `/media/...`.)
-
-### 3) Vercel
-1. في vercel.com: Add New ← Project ← اختر مستودع GitHub `work` والفرع المطلوب.
-2. **Build Command**: `npm run vercel-build` (ينشئ الجداول، ويحمّل الأجهزة وحساب المسؤول الأول، ثم يبني الموقع. التحميل آمن للتكرار ولا يكرر البيانات ولا يمسح تعديلاتك).
-3. **Environment Variables** — أضف:
-
-| المتغير | القيمة |
-|---|---|
-| `DATABASE_URL` | رابط Neon (Pooled) |
-| `DIRECT_URL` | رابط Neon (Direct) |
-| `SITE_URL` | عنوان موقعك، مثل `https://labsouq.om` |
-| `ADMIN_EMAIL` | بريد حساب المسؤول الأول |
-| `ADMIN_PASSWORD` | كلمة مرور قوية (12 حرفاً أو أكثر) — تُستخدم فقط لإنشاء الحساب أول مرة |
-| `S3_BUCKET` | `labsouq-media` |
-| `S3_REGION` | `auto` |
-| `S3_ENDPOINT` | `https://<account-id>.r2.cloudflarestorage.com` |
-| `S3_ACCESS_KEY_ID` | من R2 |
-| `S3_SECRET_ACCESS_KEY` | من R2 |
-
-4. اضغط Deploy.
-
-### 4) أول دخول
-البيانات وحساب المسؤول تُحمَّل تلقائياً أثناء النشر. افتح `https://<موقعك>/ar/admin` وسجّل الدخول بـ `ADMIN_EMAIL` و `ADMIN_PASSWORD`.
-**غيّر كلمة المرور من «حسابي» بعد أول دخول.**
-
-### 5) الدومين
-Vercel ← Project ← Settings ← Domains ← أضف الدومين (مثل `labsouq.om`) واتبع تعليمات DNS. ثم حدّث `SITE_URL` وأعد النشر.
+1. **ربط المشروع:** Vercel ← **Add New… ← Project** ← بجانب مستودع `work` اضغط **Import**.
+   - في صفحة الإعداد افتح **Environment Variables** وأضف:
+     - `ADMIN_EMAIL` = بريدك
+     - `ADMIN_PASSWORD` = كلمة مرور قوية (12 حرفاً أو أكثر)
+   - اضغط **Deploy**. ستفشل المحاولة الأولى (باللون الأحمر) لأنه لا توجد قاعدة بيانات بعد — هذا طبيعي.
+2. **قاعدة البيانات:** في صفحة المشروع ← تبويب **Storage** ← **Create Database** ← اختر **Neon** ← **Continue** ←
+   اقبل الخطة المجانية ← **Create** ← تأكد أن المشروع `work` محدد ← **Connect**.
+   (هذا يضيف `DATABASE_URL` و `DATABASE_URL_UNPOOLED` تلقائياً.)
+3. **إعادة النشر:** تبويب **Deployments** ← على آخر محاولة اضغط **⋯ ← Redeploy**.
+   يُنشئ الجداول ويحمّل الأجهزة وحساب المسؤول تلقائياً (آمن للتكرار)، ثم يظهر رابط الموقع.
+4. **أول دخول:** `https://<الرابط>/ar/admin` بالبريد وكلمة المرور من الخطوة 1، ثم غيّر كلمة المرور من «حسابي».
+5. **رفع الصور وملفات 3D (لاحقاً):** Vercel لا يحفظ الملفات المرفوعة على قرصه. أنشئ bucket في Cloudflare R2
+   وأضف المتغيرات `S3_BUCKET`, `S3_REGION=auto`, `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` ثم أعد النشر.
+   عرض الموقع وتعديل البيانات يعمل بدونها؛ فقط الرفع يحتاجها.
+6. **الدومين (اختياري):** Settings ← Domains. ثم أضف `SITE_URL` بعنوان موقعك وأعد النشر.
 
 ---
 

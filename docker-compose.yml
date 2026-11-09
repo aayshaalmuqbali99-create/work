@@ -23,7 +23,6 @@ services:
     profiles: ["setup"]
     environment: &appenv
       DATABASE_URL: postgresql://labsouq:${POSTGRES_PASSWORD}@db:5432/labsouq?schema=public
-      DIRECT_URL: postgresql://labsouq:${POSTGRES_PASSWORD}@db:5432/labsouq?schema=public
       ADMIN_EMAIL: ${ADMIN_EMAIL:-}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       ADMIN_NAME: ${ADMIN_NAME:-LabSouq Admin}
