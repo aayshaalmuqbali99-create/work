@@ -7,8 +7,8 @@ import type { SectionText } from "./types";
 export async function GoalsSection({ text = {} }: { text?: SectionText }) {
   const t = await getTranslations("Home");
   const goals = [
-    { tag: t("goal1Tag"), title: t("goal1Title"), desc: t("goal1Desc"), points: t("goal1Points").split("|"), icon: GraduationCap, accent: "from-[#167d83] to-[#3FB8BE]" },
-    { tag: t("goal2Tag"), title: t("goal2Title"), desc: t("goal2Desc"), points: t("goal2Points").split("|"), icon: HandHeart, accent: "from-[#1b6fd1] to-[#6aa8ff]", icon2: ShoppingBag },
+    { tag: t("goal1Tag"), title: t("goal1Title"), subtitle: t("goal1Subtitle"), desc: t("goal1Desc"), points: t("goal1Points").split("|"), icon: GraduationCap, accent: "from-[#167d83] to-[#3FB8BE]" },
+    { tag: t("goal2Tag"), title: t("goal2Title"), subtitle: t("goal2Subtitle"), desc: t("goal2Desc"), points: t("goal2Points").split("|"), icon: HandHeart, accent: "from-[#1b6fd1] to-[#6aa8ff]", icon2: ShoppingBag },
   ];
   return (
     <section aria-labelledby="goals-title" className="relative overflow-hidden py-16">
@@ -31,10 +31,12 @@ export async function GoalsSection({ text = {} }: { text?: SectionText }) {
                           <Icon className="size-7" aria-hidden="true" />
                         </span>
                         <span className="rounded-full bg-canvas px-3 py-1 text-xs font-bold text-navy">{g.tag}</span>
-                        <span className="ms-auto font-mono text-5xl font-bold text-navy/10" dir="ltr">0{i + 1}</span>
                       </div>
-                      <h4 className="mt-6 text-2xl font-bold text-navy">{g.title}</h4>
-                      <p className="mt-3 leading-relaxed text-muted">{g.desc}</p>
+                      <h4 className="mt-6 text-2xl font-bold text-navy">
+                        <span className="font-mono text-teal" dir="ltr">0{i + 1}</span> <span className="text-line">|</span> {g.title}
+                      </h4>
+                      <p className="mt-2 text-lg font-semibold text-teal">{g.subtitle}</p>
+                      <p className="mt-4 leading-relaxed text-muted">{g.desc}</p>
                       <ul className="mt-6 space-y-3">
                         {g.points.map((p) => (
                           <li key={p} className="flex items-start gap-2.5 font-medium text-ink">
