@@ -30,7 +30,7 @@
 
 ### 3) Vercel
 1. في vercel.com: Add New ← Project ← اختر مستودع GitHub `work` والفرع المطلوب.
-2. **Build Command**: `npm run vercel-build` (ينشئ جداول قاعدة البيانات تلقائياً ثم يبني الموقع).
+2. **Build Command**: `npm run vercel-build` (ينشئ الجداول، ويحمّل الأجهزة وحساب المسؤول الأول، ثم يبني الموقع. التحميل آمن للتكرار ولا يكرر البيانات ولا يمسح تعديلاتك).
 3. **Environment Variables** — أضف:
 
 | المتغير | القيمة |
@@ -38,6 +38,8 @@
 | `DATABASE_URL` | رابط Neon (Pooled) |
 | `DIRECT_URL` | رابط Neon (Direct) |
 | `SITE_URL` | عنوان موقعك، مثل `https://labsouq.om` |
+| `ADMIN_EMAIL` | بريد حساب المسؤول الأول |
+| `ADMIN_PASSWORD` | كلمة مرور قوية (12 حرفاً أو أكثر) — تُستخدم فقط لإنشاء الحساب أول مرة |
 | `S3_BUCKET` | `labsouq-media` |
 | `S3_REGION` | `auto` |
 | `S3_ENDPOINT` | `https://<account-id>.r2.cloudflarestorage.com` |
@@ -46,12 +48,9 @@
 
 4. اضغط Deploy.
 
-### 4) تحميل البيانات وإنشاء حساب المسؤول (مرة واحدة)
-من جهازك (بعد تنزيل المشروع و `npm install`):
-```bash
-DATABASE_URL="<Direct من Neon>" DIRECT_URL="<Direct من Neon>" ADMIN_EMAIL="you@example.com" ADMIN_PASSWORD="<كلمة مرور قوية 12+ حرف>" npm run db:seed
-```
-ثم افتح `https://<موقعك>/ar/admin` وسجّل الدخول. **غيّر كلمة المرور من «حسابي» بعد أول دخول.**
+### 4) أول دخول
+البيانات وحساب المسؤول تُحمَّل تلقائياً أثناء النشر. افتح `https://<موقعك>/ar/admin` وسجّل الدخول بـ `ADMIN_EMAIL` و `ADMIN_PASSWORD`.
+**غيّر كلمة المرور من «حسابي» بعد أول دخول.**
 
 ### 5) الدومين
 Vercel ← Project ← Settings ← Domains ← أضف الدومين (مثل `labsouq.om`) واتبع تعليمات DNS. ثم حدّث `SITE_URL` وأعد النشر.
