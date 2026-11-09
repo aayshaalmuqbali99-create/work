@@ -1,0 +1,28 @@
+{
+  "_about": "Devices added by the owner outside the original workbook. Created once by the seed (by sourceKey); after that they are edited in the control panel. Quantity 1 = the unit photographed by the owner; price unknown until the owner sets it.",
+  "devices": [
+    {
+      "sourceKey": "manual:kl-93063",
+      "slug": "kh-kl-93063-fm-transmitter-trainer",
+      "status": "PUBLISHED",
+      "category": "telecom",
+      "archetype": "kl-93063",
+      "brand": "K&H (King Instrument Electronics)",
+      "model": "KL-93063",
+      "nameEn": "K&H KL-93063 FM Transmitter Training Module",
+      "nameAr": "وحدة تدريب مرسل FM طراز KL-93063 من K&H",
+      "descEn": "A training module for the FM transmitter circuit. The front panel shows the full circuit diagram with test points: crystal oscillator, buffer/doubler, RF amplifier, audio input with modulation, reference oscillator and a frequency-tachometer meter, with an antenna (BNC) output and a built-in loudspeaker. The circuit board is visible through the clear acrylic case.",
+      "descAr": "وحدة تدريبية لدائرة مرسل FM. تعرض اللوحة الأمامية مخطط الدائرة كاملاً مع نقاط الاختبار: المذبذب البلوري، ومرحلة العزل/المضاعفة، ومكبر الترددات الراديوية، ومدخل الصوت مع التضمين، والمذبذب المرجعي، ومؤشر قياس التردد، مع خرج للهوائي (BNC) وسماعة مدمجة. واللوحة الإلكترونية ظاهرة من خلال الصندوق الأكريليك الشفاف.",
+      "usesEn": ["Studying how an FM transmitter works stage by stage", "Measuring signals at test points with an oscilloscope", "Frequency modulation (FM) experiments with an audio input", "Adjusting transmitter frequency and modulation level"],
+      "usesAr": ["دراسة طريقة عمل مرسل FM مرحلة بمرحلة", "قياس الإشارات عند نقاط الاختبار براسم الإشارة", "تجارب التضمين الترددي (FM) باستخدام مدخل الصوت", "ضبط تردد المرسل ومستوى التضمين"],
+      "benefitsEn": ["Turns radio-communication theory into visible, measurable stages", "Clear acrylic case lets students see the real circuit behind the diagram", "Directly supports telecommunications and electronics courses"],
+      "benefitsAr": ["يحوّل نظرية الاتصالات اللاسلكية إلى مراحل مرئية وقابلة للقياس", "الصندوق الشفاف يتيح للطالب رؤية الدائرة الحقيقية خلف المخطط", "يدعم مباشرة مقررات الاتصالات والإلكترونيات"],
+      "quantity": 1,
+      "marketPriceOMR": null,
+      "images": [
+        { "url": "/devices/kl-93063/photo.jpg", "width": 900, "height": 825 },
+        { "url": "/devices/kl-93063/photo-inside.jpg", "width": 900, "height": 750 }
+      ]
+    }
+  ]
+}

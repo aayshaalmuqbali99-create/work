@@ -2,7 +2,7 @@
 
 import { createContext, Suspense, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
-import { ContactShadows, Html, OrbitControls, useGLTF } from "@react-three/drei";
+import { ContactShadows, Html, OrbitControls, useGLTF, useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import type { Archetype, MeshSpec, PartInfo, PartSpec, V3 } from "./types";
 import { getTexture } from "./textures";
@@ -95,7 +95,31 @@ function Geometry({ m }: { m: MeshSpec }) {
       return <torusGeometry args={[s.r, s.tube, 16, 48, s.arc ?? Math.PI * 2]} />;
     case "sphere":
       return <sphereGeometry args={[s.r, 32, 16]} />;
+    case "plane":
+      return <planeGeometry args={s.size} />;
   }
+}
+
+/** Photo-textured material (loaded lazily; the part renders once the photo is ready). */
+function PhotoMaterial({ url, emissive, emissiveIntensity, dimmed }: { url: string; emissive: string; emissiveIntensity: number; dimmed: boolean }) {
+  const map = useTexture(url);
+  map.colorSpace = THREE.SRGBColorSpace;
+  map.anisotropy = 8;
+  return (
+    <meshStandardMaterial
+      key={dimmed ? "dim" : "solid"}
+      map={map}
+      color="#d4d4d4"
+      roughness={0.9}
+      metalness={0}
+      toneMapped={false}
+      emissive={emissive}
+      emissiveIntensity={emissiveIntensity}
+      transparent={dimmed}
+      opacity={dimmed ? 0.15 : 1}
+      depthWrite={!dimmed}
+    />
+  );
 }
 
 function IllustrativePart({ part, state, dimmed, onSelect }: { part: PartSpec; state: SceneState; dimmed: boolean; onSelect: (id: string) => void }) {
@@ -131,8 +155,16 @@ function IllustrativePart({ part, state, dimmed, onSelect }: { part: PartSpec; s
       onPointerOut={() => setHover(false)}
     >
       {part.meshes.map((m, i) => (
-        <mesh key={i} position={m.pos} rotation={m.rot ?? [0, 0, 0]} castShadow receiveShadow>
+        <mesh key={i} position={m.pos} rotation={m.shape.kind === "plane" ? [-Math.PI / 2, 0, 0] : (m.rot ?? [0, 0, 0])} castShadow receiveShadow>
           <Geometry m={m} />
+          {m.textureUrl ? (
+            <PhotoMaterial
+              url={m.textureUrl}
+              dimmed={dimmed}
+              emissive={selected ? "#167d83" : hover ? "#3fb8be" : "#000000"}
+              emissiveIntensity={selected ? 0.35 : hover ? 0.15 : 0}
+            />
+          ) : (
           <meshStandardMaterial
             key={`${dimmed ? "dim" : "solid"}-${m.texture ?? ""}`}
             map={m.texture ? getTexture(m.texture) : null}
@@ -145,6 +177,7 @@ function IllustrativePart({ part, state, dimmed, onSelect }: { part: PartSpec; s
             opacity={dimmed ? 0.15 : m.glass ? 0.22 : 1}
             depthWrite={!(dimmed || m.glass)}
           />
+          )}
         </mesh>
       ))}
       {state.showLabels && !state.hidden.has(part.id) && ((state.exploded && !part.parent) || selected) && (
@@ -395,11 +428,13 @@ export function EquipmentScene({ model, state, onSelect, reducedMotion, dark = f
       <directionalLight position={[-6, 3, -4]} intensity={0.5} />
       <SceneCtx.Provider value={ctx}>
         {model.type === "illustrative" ? (
-          <group>
-            {model.archetype.parts.map((p) => (
-              <IllustrativePart key={p.id} part={p} state={state} dimmed={!!state.selected && state.selected !== p.id} onSelect={onSelect} />
-            ))}
-          </group>
+          <Suspense fallback={<Loading />}>
+            <group>
+              {model.archetype.parts.map((p) => (
+                <IllustrativePart key={p.id} part={p} state={state} dimmed={!!state.selected && state.selected !== p.id} onSelect={onSelect} />
+              ))}
+            </group>
+          </Suspense>
         ) : (
           <Suspense fallback={<Loading />}>
             <GlbModel url={model.url} parts={model.parts} state={state} onSelect={onSelect} />

@@ -76,7 +76,7 @@ const loadPublished = unstable_cache(
     const rows = await db.device.findMany({ where: publishedWhere, include, orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }] });
     return rows.map(toDevice);
   },
-  ["catalog-published"],
+  ["catalog-published-v2"],
   { tags: [CATALOG_TAG], revalidate: 3600 },
 );
 

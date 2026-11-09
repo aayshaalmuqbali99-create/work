@@ -4,7 +4,9 @@ export type Shape =
   | { kind: "box"; size: V3 }
   | { kind: "cyl"; r: number; h: number; rTop?: number; seg?: number }
   | { kind: "torus"; r: number; tube: number; arc?: number }
-  | { kind: "sphere"; r: number };
+  | { kind: "sphere"; r: number }
+  /** Flat rectangle lying on the XZ plane (faces up), used to show real photos. */
+  | { kind: "plane"; size: [number, number] };
 
 export interface MeshSpec {
   shape: Shape;
@@ -19,6 +21,8 @@ export interface MeshSpec {
   texture?: "pcb" | "panel" | "meter" | "grille" | "label";
   /** Clear acrylic / glass look (transparent, does not hide the parts behind it). */
   glass?: boolean;
+  /** Real photo applied to the surface (e.g. the device front panel). */
+  textureUrl?: string;
 }
 
 export interface PartSpec {
@@ -41,6 +45,8 @@ export interface Archetype {
   parts: PartSpec[];
   /** Radius used to frame the camera. */
   size: number;
+  /** "photos": built from photos of the actual unit (badge says so); default: illustrative device type. */
+  basis?: "photos";
 }
 
 /** A configured part of a real (GLB) model. `node` is the node name in the GLB file. */

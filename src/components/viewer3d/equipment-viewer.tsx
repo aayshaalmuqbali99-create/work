@@ -166,8 +166,8 @@ export function InteractiveEquipmentViewer({ model, deviceName, fallbackImage }:
             <EquipmentScene model={scene.model} state={state} onSelect={(id) => set({ selected: id })} reducedMotion={reducedMotion} dark />
           )}
 
-          <p className={cn("pointer-events-none absolute start-3 top-3 z-30 max-w-[70%] rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow", verified ? "bg-emerald-600/90" : "bg-white/15 backdrop-blur")}>
-            {verified ? t("verified") : t("illustrative")}
+          <p className={cn("pointer-events-none absolute start-3 top-3 z-30 max-w-[70%] rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow", verified || archetype?.basis === "photos" ? "bg-emerald-600/90" : "bg-white/15 backdrop-blur")}>
+            {verified ? t("verified") : archetype?.basis === "photos" ? t("fromPhotos") : t("illustrative")}
           </p>
 
           <div className="absolute end-3 top-3 z-30 flex flex-col gap-1.5">

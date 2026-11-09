@@ -826,8 +826,108 @@ const kitCase: Archetype = {
   ],
 };
 
+/**
+ * K&H KL-93063 FM transmitter trainer — built from photos of the actual unit:
+ * the front panel and circuit board surfaces ARE the photos; knobs, meter, connectors, heat sink and
+ * loudspeaker are placed where they appear in those photos. (The board photo was taken from behind
+ * and is mirrored so it lines up with the front panel.)
+ */
+const KW = 3.0, KD = 2.514;
+const kp = (u: number, v: number, y: number): V3 => [(u - 0.5) * KW, y, (v - 0.5) * KD];
+const kl93063: Archetype = {
+  key: "kl-93063", en: "KL-93063 FM transmitter trainer", ar: "وحدة تدريب مرسل FM طراز KL-93063", size: 3.4, basis: "photos",
+  parts: [
+    {
+      id: "front-panel", en: "Front panel (FM transmitter circuit diagram)", ar: "اللوحة الأمامية (مخطط دائرة مرسل FM)",
+      fnEn: "Shows the complete transmitter circuit — crystal oscillator, buffer/doubler, RF amplifier, audio input and reference oscillator — with test points (TP1–TP9) for measurements.",
+      fnAr: "تعرض دائرة المرسل كاملة — المذبذب البلوري، ومرحلة العزل/المضاعفة، ومكبر الترددات الراديوية، ومدخل الصوت، والمذبذب المرجعي — مع نقاط اختبار (TP1–TP9) لأخذ القياسات.",
+      meshes: [box([KW, 0.04, KD], [0, 0.42, 0], C.panel), { shape: { kind: "plane", size: [KW, KD] }, pos: [0, 0.441, 0], color: C.white, textureUrl: "/devices/kl-93063/front-panel.jpg" }],
+      explode: [0, 1.5, 0],
+    },
+    {
+      id: "meter", en: "Frequency meter (tachometer)", ar: "مؤشر قياس التردد",
+      fnEn: "Analogue meter of the frequency-tachometer section; it shows a reading that changes as the transmitter frequency changes.",
+      fnAr: "مؤشر تناظري لقسم قياس التردد، تتغير قراءته بتغير تردد المرسل.",
+      meshes: [box([0.5, 0.12, 0.42], kp(0.867, 0.309, 0.505), C.glass, { glass: true })],
+      explode: [0.5, 2.4, -0.3], parent: "front-panel",
+    },
+    {
+      id: "controls", en: "Adjustments: VR1 frequency, VR2 level, VR3 reference oscillator", ar: "مقابض الضبط: VR1 التردد، VR2 المستوى، VR3 المذبذب المرجعي",
+      fnEn: "VR1 sets the transmitter frequency, VR2 the audio (modulation) level and VR3 the reference oscillator; the toggle selects MOD or OSC.",
+      fnAr: "يضبط VR1 تردد المرسل، وVR2 مستوى الصوت (التضمين)، وVR3 المذبذب المرجعي؛ ويختار المفتاح بين MOD وOSC.",
+      meshes: [
+        ...[kp(0.102, 0.315, 0.48), kp(0.498, 0.633, 0.48), kp(0.854, 0.858, 0.48)].flatMap((p) => [box([0.13, 0.07, 0.13], p, C.blue), cyl(0.04, 0.1, [p[0], p[1] + 0.07, p[2]], C.black)]),
+        cyl(0.035, 0.05, kp(0.49, 0.558, 0.47), C.metal, "y", { metal: 0.9 }),
+        box([0.03, 0.03, 0.12], kp(0.49, 0.53, 0.5), C.red),
+        ...[kp(0.498, 0.324, 0.47), kp(0.684, 0.324, 0.47)].map((p) => box([0.11, 0.06, 0.11], p, C.white)),
+      ],
+      explode: [-0.6, 2.2, 0.2], parent: "front-panel",
+    },
+    {
+      id: "connectors", en: "Antenna (BNC), audio input and +12 V power socket", ar: "موصل الهوائي (BNC) ومدخل الصوت ومقبس التغذية +12 فولت",
+      fnEn: "ANT connects an antenna or measuring instrument to the RF output, AUDIO INPUT feeds the signal to transmit, and the DIN socket supplies +12 V.",
+      fnAr: "يوصل ANT هوائياً أو جهاز قياس بخرج الترددات الراديوية، ويُدخل AUDIO INPUT الإشارة المراد إرسالها، ويزوّد مقبس DIN الجهاز بجهد +12 فولت.",
+      meshes: [
+        cyl(0.06, 0.16, kp(0.86, 0.15, 0.52), C.metal, "y", { metal: 0.9, rough: 0.2 }),
+        cyl(0.045, 0.06, kp(0.383, 0.574, 0.47), C.dark),
+        cyl(0.1, 0.06, kp(0.072, 0.876, 0.47), C.metal, "y", { metal: 0.9 }),
+      ],
+      explode: [0.9, 2.0, 0.4], parent: "front-panel",
+    },
+    {
+      id: "power-switch", en: "Power switch", ar: "مفتاح التشغيل",
+      fnEn: "Turns the trainer on and off.",
+      fnAr: "لتشغيل وحدة التدريب وإطفائها.",
+      meshes: [box([0.43, 0.08, 0.24], kp(0.347, 0.871, 0.48), C.black)],
+      explode: [-0.3, 1.9, 0.8], parent: "front-panel",
+    },
+    {
+      id: "pcb", en: "Circuit board (transmitter electronics)", ar: "اللوحة الإلكترونية (إلكترونيات المرسل)",
+      fnEn: "The actual circuit behind the panel: transistors, crystal, coils, capacitors and the two IC amplifiers, connected by copper tracks.",
+      fnAr: "الدائرة الفعلية خلف اللوحة: ترانزستورات وكريستالة وملفات ومكثفات ودائرتا تكبير متكاملتان، تربطها مسارات نحاسية.",
+      meshes: [box([2.9, 0.03, 2.2], [0, 0.06, 0], C.pcb), { shape: { kind: "plane", size: [2.85, 2.13] }, pos: [0, 0.077, 0], color: C.white, textureUrl: "/devices/kl-93063/circuit-board.jpg" }],
+      explode: [0, 0.45, 0],
+    },
+    {
+      id: "heatsink", en: "Heat sink", ar: "المشتت الحراري",
+      fnEn: "Aluminium fins that carry heat away from the power components on the board.",
+      fnAr: "زعانف ألمنيوم تبدد الحرارة الناتجة عن مكونات القدرة على اللوحة.",
+      meshes: grid(8, 1, [-1.36, 0.19, -0.385], [0.11, 0], "xz", (p) => box([0.035, 0.22, 0.85], p, C.metal, { metal: 0.85, rough: 0.3 })),
+      explode: [-0.7, 1.1, -0.5], parent: "pcb",
+    },
+    {
+      id: "loudspeaker", en: "Loudspeaker", ar: "السماعة",
+      fnEn: "Lets students hear the audio signal used in the experiments.",
+      fnAr: "تتيح للطلاب سماع الإشارة الصوتية المستخدمة في التجارب.",
+      meshes: [cyl(0.29, 0.1, [1.08, 0.13, 0.08], C.black), cone(0.25, 0.08, 0.05, [1.08, 0.2, 0.08], "#c9b27a"), cyl(0.05, 0.03, [1.08, 0.23, 0.08], C.dark)],
+      explode: [0.7, 1.0, 0.4], parent: "pcb",
+    },
+    {
+      id: "acrylic-case", en: "Clear acrylic case", ar: "الصندوق الأكريليك الشفاف",
+      fnEn: "Protects the circuit while keeping it visible from the back of the unit.",
+      fnAr: "يحمي الدائرة مع إبقائها ظاهرة من خلف الجهاز.",
+      meshes: [
+        box([KW, 0.03, KD - 0.2], [0, -0.3, 0], C.glass, { glass: true }),
+        box([KW, 0.7, 0.03], [0, 0.05, (KD - 0.2) / 2], C.glass, { glass: true }), box([KW, 0.7, 0.03], [0, 0.05, -(KD - 0.2) / 2], C.glass, { glass: true }),
+        box([0.03, 0.7, KD - 0.2], [KW / 2, 0.05, 0], C.glass, { glass: true }), box([0.03, 0.7, KD - 0.2], [-KW / 2, 0.05, 0], C.glass, { glass: true }),
+      ],
+      explode: [0, -1.0, 0],
+    },
+    {
+      id: "standoffs", en: "Corner posts and feet", ar: "الأعمدة الطرفية والأقدام",
+      fnEn: "Hold the board at the corners and keep the unit stable on the bench.",
+      fnAr: "تثبت اللوحة من الأطراف وتحافظ على ثبات الجهاز على الطاولة.",
+      meshes: [
+        ...[[-1.3, -0.95], [1.3, -0.95], [-1.3, 0.95], [1.3, 0.95]].map(([x, z]) => cyl(0.07, 0.72, [x, 0.06, z], C.black)),
+        ...[[-1.3, -0.95], [1.3, -0.95], [-1.3, 0.95], [1.3, 0.95]].map(([x, z]) => cyl(0.11, 0.06, [x, -0.35, z], C.black)),
+      ],
+      explode: [0, -1.6, 0],
+    },
+  ],
+};
+
 export const archetypes: Record<string, Archetype> = Object.fromEntries(
-  [powerSupply, oscilloscope, benchInstrument, trainingBoard, telephone, networkUnit, solderingStation, solderingGun, microscope, fan, airPurifier, motor, variac, lightbox, multimeter, kitCase].map((a) => [a.key, a]),
+  [powerSupply, oscilloscope, benchInstrument, trainingBoard, kl93063, telephone, networkUnit, solderingStation, solderingGun, microscope, fan, airPurifier, motor, variac, lightbox, multimeter, kitCase].map((a) => [a.key, a]),
 );
 
 export function getArchetype(key: string): Archetype | undefined {

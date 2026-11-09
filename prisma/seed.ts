@@ -10,6 +10,7 @@ import { PrismaClient, Prisma } from "@prisma/client";
 import { hash } from "@node-rs/argon2";
 import curated from "../src/data/equipment.json";
 import inventory from "../src/data/inventory-rows.json";
+import extra from "../content/extra-devices.json";
 import { slugify } from "../src/lib/slug";
 
 const db = new PrismaClient();
@@ -108,7 +109,39 @@ async function main() {
     created++;
   }
 
-  // 3) first administrator
+  // 3) devices added by the owner outside the workbook (created once; edited in the control panel afterwards)
+  for (const [i, d] of extra.devices.entries()) {
+    if (await db.device.findUnique({ where: { sourceKey: d.sourceKey } })) { skipped++; continue; }
+    await db.device.create({
+      data: {
+        slug: await uniqueSlug(d.slug),
+        status: d.status as "PUBLISHED" | "DRAFT",
+        categoryId: cat[d.category] ?? null,
+        archetype: d.archetype,
+        brand: d.brand,
+        model: d.model,
+        nameEn: d.nameEn,
+        nameAr: d.nameAr,
+        descEn: d.descEn,
+        descAr: d.descAr,
+        usesEn: d.usesEn,
+        usesAr: d.usesAr,
+        benefitsEn: d.benefitsEn,
+        benefitsAr: d.benefitsAr,
+        condition: "UNVERIFIED",
+        quantity: d.quantity,
+        marketPriceOMR: d.marketPriceOMR == null ? null : new Prisma.Decimal(d.marketPriceOMR),
+        sourceItemNos: [],
+        sourceKey: d.sourceKey,
+        sortOrder: 500 + i,
+        images: { create: d.images.map((im, k) => ({ ...im, sortOrder: k })) },
+        inventory: d.quantity > 0 ? { create: [{ type: "ADJUSTMENT", delta: d.quantity, quantityAfter: d.quantity, reason: "Added by owner (photographed unit)" }] } : undefined,
+      },
+    });
+    created++;
+  }
+
+  // 4) first administrator
   const admins = await db.user.count({ where: { role: "ADMIN" } });
   const { ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_NAME } = process.env;
   if (admins === 0) {

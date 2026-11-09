@@ -217,7 +217,8 @@
     "modeAnimate": "Animation",
     "settings": "Viewer settings",
     "layersTitle": "Exploded view — layers",
-    "mainComponents": "Main components"
+    "mainComponents": "Main components",
+    "fromPhotos": "3D model built from photos of the actual unit"
   },
   "Admin": {
     "title": "Control panel",
