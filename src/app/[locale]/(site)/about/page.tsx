@@ -5,7 +5,6 @@ import { ArrowRight, FlaskConical } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { GoalsSection } from "@/components/home/about-section";
 import { StatsSection } from "@/components/home/stats-section";
-import { LabIllustration } from "@/components/about/lab-illustration";
 import { Reveal } from "@/components/home/reveal";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -26,7 +25,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <section className="relative isolate overflow-hidden bg-[#071423] text-white">
         <div aria-hidden="true" className="ls-hero-grid absolute inset-0 -z-10" />
         <div aria-hidden="true" className="ls-float-slow absolute -top-40 end-1/4 -z-10 size-[460px] rounded-full bg-[#167d83]/30 blur-[120px]" />
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:px-8 lg:py-20">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[1fr_1.35fr] lg:px-8 lg:py-20">
           <div className="ls-enter">
             <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-[#9fe7ea]">
               <FlaskConical className="size-4" aria-hidden="true" />
@@ -38,30 +37,17 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <p className="mt-6 border-s-4 border-[#3FB8BE] ps-4 font-medium text-white">{t("body2")}</p>
           </div>
           <figure className="ls-enter ls-enter-delay">
-            <div className="overflow-hidden rounded-[28px] border border-white/10 shadow-2xl shadow-black/40">
-              <LabIllustration title={t("illustration")} />
-            </div>
-            <figcaption className="mt-3 text-center text-sm text-white/70">
-              <span className="font-semibold text-white">{t("inLab")}</span> — {t("inLabText")}
-              <span className="mt-1 block text-xs text-white/50">{t("photosSoon")}</span>
-            </figcaption>
+            <Image
+              src="/about/goals-banner.webp"
+              alt={t("bannerAlt")}
+              width={1672}
+              height={941}
+              priority
+              sizes="(min-width: 1024px) 700px, 100vw"
+              className="h-auto w-full rounded-[28px] border border-white/10 shadow-2xl shadow-black/40"
+            />
           </figure>
         </div>
-      </section>
-
-      {/* Goals banner (image provided by the owner) */}
-      <section className="pt-14" aria-label={t("bannerAlt")}>
-        <Reveal className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Image
-            src="/about/goals-banner.webp"
-            alt={t("bannerAlt")}
-            width={1672}
-            height={941}
-            sizes="(min-width: 1280px) 1216px, 100vw"
-            className="h-auto w-full rounded-[28px] shadow-2xl shadow-navy/20"
-            priority={false}
-          />
-        </Reveal>
       </section>
 
       <GoalsSection />
