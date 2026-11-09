@@ -12,7 +12,7 @@ const loadPublished = unstable_cache(
     const v = await db.siteVersion.findFirst({ where: { status: "PUBLISHED" }, orderBy: { publishedAt: "desc" } });
     return readSite(v?.data);
   },
-  ["site-published"],
+  ["site-published-v2"],
   { tags: [SITE_TAG], revalidate: 3600 },
 );
 
@@ -22,7 +22,8 @@ export async function getSiteContent(): Promise<{ site: SiteContent; preview: bo
     const draft = await db.siteVersion.findFirst({ where: { status: "DRAFT" }, orderBy: { updatedAt: "desc" } });
     if (draft) return { site: readSite(draft.data), preview: true };
   }
-  return { site: await loadPublished(), preview: false };
+  // Re-validate cached content too, so sections added in newer versions always appear.
+  return { site: readSite(await loadPublished()), preview: false };
 }
 
 /** Pick the locale field, falling back to the translation when the editor left it empty. */

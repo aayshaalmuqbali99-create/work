@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft, CheckCircle2, FlaskConical, GraduationCap, Info } from "lucide-react";
+import { Activity, ArrowLeft, CheckCircle2, Cpu, FlaskConical, GraduationCap, Info, Share2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { formatOMR, getDevice, getDevices, pricingNotes } from "@/features/catalog/data";
 import { ViewerLoader } from "@/components/viewer3d/viewer-loader";
@@ -76,15 +76,45 @@ export default async function DevicePage({ params }: { params: Promise<{ locale:
         </div>
       </dl>
 
-      {/* 3D first */}
-      <section className="mt-10" aria-labelledby="explore-3d">
-        <h2 id="explore-3d" className="text-xl font-bold text-navy">{t("explore3d")}</h2>
-        <p className="mb-4 mt-1 text-sm text-muted">{t("explore3dSub")}</p>
-        <ViewerLoader
-          model={d.model3d ? { type: "verified", ...d.model3d } : d.archetype ? { type: "illustrative", key: d.archetype } : null}
-          deviceName={d.name}
-          fallbackImage={d.photo}
-        />
+      {/* Showcase: dark stage with title, features, real photo and the interactive 3D model */}
+      <section className="mt-10 overflow-hidden rounded-[28px] bg-[radial-gradient(120%_80%_at_80%_0%,#16426e_0%,#0d2440_45%,#081626_100%)] p-5 text-white shadow-2xl shadow-navy/20 sm:p-8" aria-labelledby="explore-3d">
+        <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+          <div className="flex items-start gap-4">
+            <span className="grid size-14 shrink-0 place-items-center rounded-2xl border border-white/20 bg-white/5"><Cpu className="size-7 text-[#3FB8BE]" aria-hidden="true" /></span>
+            <div>
+              <h2 id="explore-3d" className="text-2xl font-bold sm:text-3xl">{d.name}</h2>
+              <p className="mt-1 max-w-xl text-sm text-white/70">{t("explore3dSub")}</p>
+              <span className="mt-3 block h-1 w-24 rounded-full bg-[#1b6fd1]" />
+            </div>
+          </div>
+          {d.uses.length > 0 && (
+            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:max-w-xl">
+              {d.uses.slice(0, 3).map((u, i) => {
+                const Icon = [GraduationCap, Activity, Share2][i % 3];
+                return (
+                  <li key={u} className="flex flex-col items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] p-3 text-center text-xs text-white/85">
+                    <Icon className="size-6 text-[#3FB8BE]" aria-hidden="true" />
+                    {u}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+
+        <div className="mt-8 grid gap-5 2xl:grid-cols-[220px_minmax(0,1fr)]">
+          {d.photo && (
+            <figure className="flex min-w-0 flex-col items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+              <Image src={d.photo.src} alt={d.name} width={d.photo.width} height={d.photo.height} className="max-h-56 w-auto rounded-lg object-contain shadow-lg" />
+              <figcaption className="rounded-full border border-white/20 px-3 py-1 text-xs text-white/80">{t("photo")}</figcaption>
+            </figure>
+          )}
+          <ViewerLoader
+            model={d.model3d ? { type: "verified", ...d.model3d } : d.archetype ? { type: "illustrative", key: d.archetype } : null}
+            deviceName={d.name}
+            fallbackImage={d.photo}
+          />
+        </div>
       </section>
 
       <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_340px]">

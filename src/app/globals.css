@@ -76,3 +76,24 @@ html[data-motion="off"] *, html[data-motion="off"] *::before, html[data-motion="
   transition: none !important;
   scroll-behavior: auto !important;
 }
+
+/* ---- Homepage hero effects ---- */
+.ls-hero-grid {
+  background-image: linear-gradient(rgba(63,184,190,0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(63,184,190,0.09) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(80% 70% at 50% 30%, #000 30%, transparent 75%);
+  animation: ls-grid-move 18s linear infinite;
+}
+@keyframes ls-grid-move { to { background-position: 48px 48px, 48px 48px; } }
+@keyframes ls-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+.ls-float { animation: ls-float 7s ease-in-out infinite; }
+.ls-float-slow { animation: ls-float 11s ease-in-out infinite; }
+@keyframes ls-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ls-marquee-rtl { from { transform: translateX(0); } to { transform: translateX(50%); } }
+.ls-marquee { animation: ls-marquee 60s linear infinite; }
+html[dir="rtl"] .ls-marquee { animation-name: ls-marquee-rtl; }
+.ls-marquee-wrap:hover .ls-marquee { animation-play-state: paused; }
+.ls-gradient-text { background: linear-gradient(90deg, #7fe3e8, #3FB8BE 40%, #6aa8ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+@media (prefers-reduced-motion: reduce) {
+  .ls-hero-grid, .ls-float, .ls-float-slow, .ls-marquee { animation: none; }
+}

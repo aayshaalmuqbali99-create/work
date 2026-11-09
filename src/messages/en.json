@@ -23,11 +23,11 @@
     "switchAria": "التبديل إلى العربية — Switch to Arabic"
   },
   "Hero": {
-    "eyebrow": "Laboratory equipment for colleges & students",
-    "title": "Discover the Equipment Behind Innovation",
-    "subtitle": "Browse the laboratory equipment available for colleges and students: what each device is, how it is used in the lab, how many units are available, and its estimated market price.",
+    "eyebrow": "Supporting technical colleges & institutes in Oman",
+    "title": "Real lab equipment for the next generation of engineers",
+    "subtitle": "Explore laboratory and telecommunications equipment in interactive 3D — available as a donation to educational institutions or for sale.",
     "browse": "Browse equipment",
-    "learn": "Why LabSouq",
+    "learn": "Our goals",
     "statMarket": "Launching in Oman",
     "statCurrency": "Prices in OMR",
     "statLanguages": "Arabic & English",
@@ -68,11 +68,11 @@
   "How": {
     "title": "How it works",
     "step1": "Explore",
-    "step1Desc": "Search the catalogue by name, brand, model or specification.",
-    "step2": "Understand",
-    "step2Desc": "Review photos, specifications, documents and 3D models.",
+    "step1Desc": "Browse the equipment, read what each device does and explore it in 3D.",
+    "step2": "Choose",
+    "step2Desc": "Check quantities and estimated prices, and pick what your lab needs.",
     "step3": "Equip",
-    "step3Desc": "Contact the seller or request a quotation."
+    "step3Desc": "Educational institutions request a donation; other buyers request a purchase."
   },
   "About": {
     "title": "About LabSouq",
@@ -90,7 +90,25 @@
     "featuredTitle": "Featured equipment",
     "featuredSubtitle": "A selection from the current inventory. Each device has an explanation, its lab uses and an interactive 3D model.",
     "viewAll": "View all equipment",
-    "categoryCount": "{count, plural, =0 {No devices yet} one {# device} other {# devices}}"
+    "categoryCount": "{count, plural, =0 {No devices yet} one {# device} other {# devices}}",
+    "aboutEyebrow": "About LabSouq",
+    "aboutTitle": "Lab equipment that keeps on teaching",
+    "aboutLead": "LabSouq is an Omani platform that gives laboratory, electronic and telecommunications equipment a second life. Every device is listed with a clear explanation, its quantity, an interactive 3D model and how it helps students in the lab.",
+    "goalsTitle": "Our two goals",
+    "goal1Tag": "Goal 1",
+    "goal1Title": "Supporting educational institutions",
+    "goal1Desc": "Equipping the laboratories of technical colleges, vocational institutes and training centres with real equipment, so students learn on the devices they will meet at work.",
+    "goal1Points": "Lab equipment for technical colleges and institutes|Hands-on training on real devices|Supported by Omantel",
+    "goal2Tag": "Goal 2",
+    "goal2Title": "Donation or sale",
+    "goal2Desc": "Making the available equipment easy to obtain: donated to eligible educational institutions, or offered for sale to other buyers.",
+    "goal2Points": "Donation to eligible educational institutions|Sale to companies, labs and individuals|Clear quantities and estimated market prices",
+    "statsTitle": "The platform in numbers",
+    "statDevices": "Devices",
+    "statUnits": "Units available",
+    "statCategories": "Categories",
+    "statModels": "3D model types",
+    "tickerLabel": "Available now"
   },
   "Equipment": {
     "title": "Equipment",
@@ -166,7 +184,15 @@
     "loading": "Loading 3D viewer…",
     "noWebgl": "3D is not supported on this device. Showing the inventory photo instead.",
     "notAvailable": "A 3D model is not yet available for this device.",
-    "verified": "Verified 3D model of this device"
+    "verified": "Verified 3D model of this device",
+    "modes": "View modes",
+    "modeNormal": "Normal view",
+    "modeExploded": "Exploded view",
+    "modeRotate": "Rotate 360°",
+    "modeAnimate": "Animation",
+    "settings": "Viewer settings",
+    "layersTitle": "Exploded view — layers",
+    "mainComponents": "Main components"
   },
   "Admin": {
     "title": "Control panel",
@@ -444,7 +470,9 @@
     "changedFields": "{n} fields differ from the live site",
     "noChanges": "Same as the live site",
     "previewBanner": "Preview mode — you are seeing the unpublished draft.",
-    "nothingPublishedYet": "Nothing published yet — the site uses the default content."
+    "nothingPublishedYet": "Nothing published yet — the site uses the default content.",
+    "section_about": "About & goals",
+    "section_stats": "Numbers"
   },
   "Access": {
     "title": "Private preview",

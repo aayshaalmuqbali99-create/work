@@ -15,6 +15,10 @@ export interface MeshSpec {
   metal?: number;
   rough?: number;
   emissive?: string;
+  /** Procedural surface texture drawn in the browser (see textures.ts). */
+  texture?: "pcb" | "panel" | "meter" | "grille" | "label";
+  /** Clear acrylic / glass look (transparent, does not hide the parts behind it). */
+  glass?: boolean;
 }
 
 export interface PartSpec {

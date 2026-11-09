@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree, type ThreeEvent } from "@react-three/fiber"
 import { ContactShadows, Html, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import type { Archetype, MeshSpec, PartInfo, PartSpec, V3 } from "./types";
+import { getTexture } from "./textures";
 
 export type ViewPreset = "front" | "rear" | "top" | "side" | "iso";
 
@@ -16,6 +17,8 @@ export interface SceneState {
   selected: string | null;
   hidden: Set<string>;
   showLabels: boolean;
+  /** Slow automatic turntable rotation ("Rotate 360°"). */
+  autoRotate: boolean;
   locale: "ar" | "en";
   view: { preset: ViewPreset; nonce: number };
 }
@@ -28,6 +31,10 @@ interface Props {
   state: SceneState;
   onSelect: (id: string | null) => void;
   reducedMotion: boolean;
+  /** Dark stage background (showcase layout). */
+  dark?: boolean;
+  /** false = rotate only (no zoom/pan), e.g. on the homepage so scrolling the page is not captured. */
+  interactive?: boolean;
 }
 
 /** Camera distance relative to model size — leaves room for the exploded parts. */
@@ -127,19 +134,20 @@ function IllustrativePart({ part, state, dimmed, onSelect }: { part: PartSpec; s
         <mesh key={i} position={m.pos} rotation={m.rot ?? [0, 0, 0]} castShadow receiveShadow>
           <Geometry m={m} />
           <meshStandardMaterial
-            key={dimmed ? "dim" : "solid"}
-            color={m.color}
-            metalness={m.metal ?? 0.1}
-            roughness={m.rough ?? 0.55}
+            key={`${dimmed ? "dim" : "solid"}-${m.texture ?? ""}`}
+            map={m.texture ? getTexture(m.texture) : null}
+            color={m.texture ? "#ffffff" : m.color}
+            metalness={m.glass ? 0.1 : (m.metal ?? 0.1)}
+            roughness={m.glass ? 0.05 : (m.rough ?? 0.55)}
             emissive={selected ? "#167d83" : hover ? "#3fb8be" : (m.emissive ?? "#000000")}
             emissiveIntensity={selected ? 0.55 : hover ? 0.25 : m.emissive ? 0.6 : 0}
-            transparent={dimmed}
-            opacity={dimmed ? 0.15 : 1}
-            depthWrite={!dimmed}
+            transparent={dimmed || m.glass}
+            opacity={dimmed ? 0.15 : m.glass ? 0.22 : 1}
+            depthWrite={!(dimmed || m.glass)}
           />
         </mesh>
       ))}
-      {state.showLabels && !state.hidden.has(part.id) && (state.exploded || selected) && (
+      {state.showLabels && !state.hidden.has(part.id) && ((state.exploded && !part.parent) || selected) && (
         <PartLabel text={state.locale === "ar" ? part.ar : part.en} selected={selected} locale={state.locale} position={[center.x, center.y + 0.25, center.z]} />
       )}
     </group>
@@ -285,7 +293,7 @@ function GlbLabel({ item, state }: { item: { part: PartInfo; center: THREE.Vecto
     ref.current.position.y += 0.2;
   });
   const selected = state.selected === item.part.id;
-  if (state.hidden.has(item.part.id) || !(state.exploded || selected)) return null;
+  if (state.hidden.has(item.part.id) || !((state.exploded && !item.part.parent) || selected)) return null;
   const text = state.locale === "ar" ? item.part.ar || item.part.en : item.part.en || item.part.ar;
   return (
     <group ref={ref}>
@@ -316,6 +324,23 @@ function Rig({ size, state, reducedMotion }: { size: number; state: SceneState; 
     goal.current = { pos: new THREE.Vector3(...presets[state.view.preset]), target: new THREE.Vector3(0, 0, 0) };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.view.nonce]);
+
+  // When the device is taken apart, aim at the middle of the spread parts and step back so everything stays in view.
+  useEffect(() => {
+    if (!controls) return;
+    let maxUp = 0;
+    let maxDown = 0;
+    geom.forEach((g) => {
+      maxUp = Math.max(maxUp, g.center.y + g.explode.y * state.distance);
+      maxDown = Math.min(maxDown, g.center.y + g.explode.y * state.distance);
+    });
+    const lift = state.exploded ? (maxUp + maxDown) / 2 : 0;
+    const target = new THREE.Vector3(0, lift, 0);
+    const dir = camera.position.clone().sub(controls.target).normalize();
+    const dist = r * (state.exploded ? 1.25 + 0.15 * state.distance : 1);
+    goal.current = { pos: target.clone().add(dir.multiplyScalar(dist)), target };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.exploded, state.distance]);
 
   useEffect(() => {
     if (!state.selected) return;
@@ -352,7 +377,7 @@ function Loading() {
   );
 }
 
-export function EquipmentScene({ model, state, onSelect, reducedMotion }: Props) {
+export function EquipmentScene({ model, state, onSelect, reducedMotion, dark = false, interactive = true }: Props) {
   const ctx = useMemo(() => ({ progress: { current: 0 }, geom: new Map<string, PartGeom>() }), []);
   const size = model.type === "illustrative" ? model.archetype.size : GLB_SIZE;
   const r = size * CAMERA_FACTOR;
@@ -364,8 +389,8 @@ export function EquipmentScene({ model, state, onSelect, reducedMotion }: Props)
       onPointerMissed={() => onSelect(null)}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
     >
-      <color attach="background" args={["#eef3f4"]} />
-      <hemisphereLight args={["#ffffff", "#b9c7cc", 1.1]} />
+      <color attach="background" args={[dark ? "#0e2236" : "#eef3f4"]} />
+      <hemisphereLight args={["#ffffff", dark ? "#4d6680" : "#b9c7cc", dark ? 1.35 : 1.1]} />
       <directionalLight position={[5, 8, 6]} intensity={1.6} castShadow shadow-mapSize={[1024, 1024]} />
       <directionalLight position={[-6, 3, -4]} intensity={0.5} />
       <SceneCtx.Provider value={ctx}>
@@ -382,8 +407,8 @@ export function EquipmentScene({ model, state, onSelect, reducedMotion }: Props)
         )}
         <Rig size={size} state={state} reducedMotion={reducedMotion} />
       </SceneCtx.Provider>
-      <ContactShadows position={[0, -size * 0.62, 0]} opacity={0.35} scale={size * 4} blur={2.4} far={4} />
-      <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={size * 0.6} maxDistance={size * 5} />
+      <ContactShadows position={[0, -size * 0.62, 0]} opacity={dark ? 0.6 : 0.35} scale={size * 4} blur={2.4} far={4} />
+      <OrbitControls makeDefault enableDamping dampingFactor={0.08} minDistance={size * 0.6} maxDistance={size * 5} autoRotate={state.autoRotate && !reducedMotion} autoRotateSpeed={1.4} enableZoom={interactive} enablePan={interactive} />
     </Canvas>
   );
 }

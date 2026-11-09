@@ -7,7 +7,7 @@ import { z } from "zod";
 const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/);
 const t = (max: number) => z.string().trim().max(max).default("");
 
-export const SECTION_KEYS = ["featured", "categories", "why", "how"] as const;
+export const SECTION_KEYS = ["about", "stats", "featured", "categories", "why", "how"] as const;
 export type SectionKey = (typeof SECTION_KEYS)[number];
 
 export const siteSchema = z.object({
@@ -27,9 +27,17 @@ export const siteSchema = z.object({
     eyebrowEn: t(120), eyebrowAr: t(120), titleEn: t(120), titleAr: t(120), subtitleEn: t(400), subtitleAr: t(400),
     showVisual: z.boolean().default(true),
   }),
-  sections: z
-    .array(z.object({ key: z.enum(SECTION_KEYS), enabled: z.boolean(), titleEn: t(120), titleAr: t(120), subtitleEn: t(300), subtitleAr: t(300) }))
-    .refine((a) => a.length === SECTION_KEYS.length && new Set(a.map((s) => s.key)).size === SECTION_KEYS.length, "sections"),
+  // Older saved versions may miss newer sections: unknown keys are dropped and missing ones appended (visible).
+  sections: z.preprocess(
+    (raw) => {
+      const list = Array.isArray(raw) ? (raw as { key?: string }[]).filter((s) => SECTION_KEYS.includes(s?.key as SectionKey)) : [];
+      const seen = new Set(list.map((s) => s.key));
+      return [...list, ...SECTION_KEYS.filter((k) => !seen.has(k)).map((key) => ({ key, enabled: true }))];
+    },
+    z
+      .array(z.object({ key: z.enum(SECTION_KEYS), enabled: z.boolean(), titleEn: t(120), titleAr: t(120), subtitleEn: t(300), subtitleAr: t(300) }))
+      .refine((a) => a.length === SECTION_KEYS.length && new Set(a.map((s) => s.key)).size === SECTION_KEYS.length, "sections"),
+  ),
   footer: z.object({
     textEn: t(300), textAr: t(300), email: z.string().trim().max(120).default(""), phone: z.string().trim().max(40).default(""),
     addressEn: t(200), addressAr: t(200),

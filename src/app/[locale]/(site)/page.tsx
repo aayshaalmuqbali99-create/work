@@ -3,6 +3,8 @@ import { Hero } from "@/components/home/hero";
 import { CategoriesSection } from "@/components/home/categories-section";
 import { FeaturedSection } from "@/components/home/featured-section";
 import { WhySection, HowSection } from "@/components/home/why-section";
+import { AboutSection } from "@/components/home/about-section";
+import { StatsSection } from "@/components/home/stats-section";
 import type { SectionText } from "@/components/home/types";
 import { getSiteContent, pick } from "@/features/site/data";
 import type { SectionKey } from "@/features/site/schema";
@@ -11,6 +13,8 @@ import type { SectionKey } from "@/features/site/schema";
 export const dynamic = "force-dynamic";
 
 const SECTIONS: Record<SectionKey, (p: { text: SectionText }) => React.ReactNode> = {
+  about: (p) => <AboutSection {...p} />,
+  stats: (p) => <StatsSection {...p} />,
   featured: (p) => <FeaturedSection {...p} />,
   categories: (p) => <CategoriesSection {...p} />,
   why: (p) => <WhySection {...p} />,

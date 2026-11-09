@@ -199,43 +199,113 @@ const benchInstrument: Archetype = {
   ],
 };
 
+/**
+ * Training module in a clear acrylic case (layered like a real educational trainer):
+ * printed front panel with controls on top, circuit board in the middle, acrylic case and base below.
+ */
+const PW = 3.0, PD = 2.2;
 const trainingBoard: Archetype = {
-  key: "training-board", en: "Training module / trainer board", ar: "وحدة / لوحة تدريبية", size: 3.2,
+  key: "training-board", en: "Training module / trainer board", ar: "وحدة / لوحة تدريبية", size: 3.4,
   parts: [
     {
-      id: "enclosure", en: "Base enclosure", ar: "الصندوق السفلي",
-      fnEn: "Sturdy case that carries the panel and protects the electronics underneath.",
-      fnAr: "صندوق متين يحمل اللوحة ويحمي الإلكترونيات الموجودة أسفلها.",
-      meshes: [box([3, 0.35, 2.2], [0, -0.2, 0], C.navy)],
-      explode: [0, -1.1, 0],
+      id: "front-panel", en: "Front panel (printed circuit diagram)", ar: "اللوحة الأمامية (مخطط الدائرة المطبوع)",
+      fnEn: "Shows the circuit diagram so students can see what each socket, knob and test point connects to.",
+      fnAr: "تعرض مخطط الدائرة ليعرف الطالب ما يتصل به كل مقبس ومقبض ونقطة اختبار.",
+      meshes: [box([PW, 0.04, PD], [0, 0.42, 0], C.panel, { texture: "panel" }), box([0.9, 0.006, 0.5], [0.9, 0.443, -0.75], C.white, { texture: "label" })],
+      explode: [0, 1.5, 0],
     },
     {
-      id: "panel", en: "Printed top panel", ar: "اللوحة العلوية المطبوعة",
-      fnEn: "Shows the circuit diagram so students can see what each socket and test point connects to.",
-      fnAr: "تعرض مخطط الدائرة ليعرف الطالب ما يتصل به كل مقبس ونقطة اختبار.",
-      meshes: [box([2.9, 0.04, 2.1], [0, 0, 0], C.panel), ...grid(3, 1, [-0.9, 0.025, -0.5], [0.9, 0], "xz", (p) => box([0.6, 0.005, 0.35], p, "#c9d6da")), box([2.2, 0.005, 0.02], [0, 0.025, 0.1], C.navy)],
-      explode: [0, 0.8, 0],
+      id: "meter", en: "Analogue meter", ar: "مؤشر القياس التناظري",
+      fnEn: "Shows a measured value (for example the output current) with a needle, so students can watch it change.",
+      fnAr: "يعرض قيمة مقاسة (مثل تيار الخرج) بإبرة، ليرى الطالب تغيّرها مباشرة.",
+      meshes: [box([0.75, 0.12, 0.55], [0.95, 0.5, 0.45], C.dark), box([0.66, 0.01, 0.46], [0.95, 0.565, 0.45], C.white, { texture: "meter" })],
+      explode: [0.5, 2.6, 0.4], parent: "front-panel",
+    },
+    {
+      id: "controls", en: "Knobs, variable resistor and switches", ar: "المقابض والمقاومة المتغيرة والمفاتيح",
+      fnEn: "Adjust the circuit (frequency, level) and switch it on or off during experiments.",
+      fnAr: "لضبط الدائرة (التردد والمستوى) وتشغيلها أو إطفاؤها أثناء التجارب.",
+      meshes: [
+        cyl(0.11, 0.12, [-1.05, 0.5, -0.35], C.dark), cyl(0.11, 0.12, [-0.2, 0.5, -0.35], C.dark),
+        box([0.14, 0.1, 0.14], [-1.25, 0.49, 0.25], C.blue), box([0.07, 0.04, 0.07], [-1.25, 0.555, 0.25], C.white),
+        box([0.34, 0.12, 0.2], [-0.95, 0.5, 0.85], C.black), box([0.12, 0.08, 0.12], [-0.3, 0.48, 0.55], C.dark), cyl(0.04, 0.04, [-0.3, 0.53, 0.55], C.red),
+      ],
+      explode: [-0.6, 2.4, 0.3], parent: "front-panel",
     },
     {
       id: "sockets", en: "4 mm sockets and test points", ar: "مقابس 4 مم ونقاط الاختبار",
-      fnEn: "Where students plug leads to connect circuits and attach measuring instruments.",
-      fnAr: "يوصل فيها الطلاب الأسلاك لربط الدوائر وتوصيل أجهزة القياس.",
-      meshes: grid(6, 3, [-1.2, 0.07, -0.7], [0.48, 0.55], "xz", (p, i) => cyl(0.06, 0.1, p, [C.red, C.black, C.yellow, C.blue][i % 4])),
-      explode: [0, 1.6, 0.2], parent: "panel",
+      fnEn: "Where students plug leads to connect circuit stages, power and measuring instruments.",
+      fnAr: "يوصل فيها الطلاب الأسلاك لربط مراحل الدائرة والتغذية وأجهزة القياس.",
+      meshes: grid(7, 2, [-1.25, 0.47, -0.85], [0.33, 1.15], "xz", (p, i) => cyl(0.05, 0.08, p, [C.red, C.black, C.yellow, C.blue][i % 4])),
+      explode: [0, 2.9, -0.2], parent: "front-panel",
     },
     {
-      id: "controls", en: "Switches and adjustment knob", ar: "المفاتيح ومقبض الضبط",
-      fnEn: "Change circuit settings, such as switching a stage in or adjusting a value.",
-      fnAr: "لتغيير إعدادات الدائرة مثل تفعيل مرحلة معينة أو ضبط قيمة.",
-      meshes: [cyl(0.16, 0.14, [1.05, 0.09, 0.75], C.dark), box([0.12, 0.1, 0.22], [0.55, 0.07, 0.8], C.dark)],
-      explode: [0.6, 1.9, 0.6], parent: "panel",
+      id: "connectors", en: "Antenna (BNC) and audio input", ar: "موصل الهوائي (BNC) ومدخل الصوت",
+      fnEn: "Connect an antenna or test equipment, and feed an audio signal into the circuit.",
+      fnAr: "لتوصيل هوائي أو أجهزة اختبار، وإدخال إشارة صوتية إلى الدائرة.",
+      meshes: [cyl(0.08, 0.16, [1.25, 0.52, -0.25], C.metal, "y", { metal: 0.9, rough: 0.2 }), cyl(0.05, 0.06, [1.25, 0.62, -0.25], C.yellow, "y", { metal: 0.8 }), cyl(0.06, 0.1, [0.35, 0.49, 0.9], C.metal, "y", { metal: 0.9 })],
+      explode: [1.0, 2.2, -0.3], parent: "front-panel",
     },
     {
-      id: "circuit-board", en: "Circuit board and components", ar: "اللوحة الإلكترونية والمكونات",
-      fnEn: "The real circuit under the panel: ICs, resistors and capacitors wired to the sockets.",
-      fnAr: "الدائرة الفعلية أسفل اللوحة: دوائر متكاملة ومقاومات ومكثفات موصولة بالمقابس.",
-      meshes: [box([2.6, 0.03, 1.8], [0, -0.06, 0], C.pcb), ...grid(4, 2, [-0.9, -0.01, -0.4], [0.6, 0.7], "xz", (p) => box([0.3, 0.06, 0.14], p, C.chip)), cyl(0.07, 0.14, [1.0, 0.0, -0.4], C.blue)],
-      explode: [0, 0.15, 0],
+      id: "speaker-grille", en: "Speaker grille", ar: "شبكة السماعة",
+      fnEn: "Lets the sound from the loudspeaker underneath come out of the panel.",
+      fnAr: "تسمح بخروج الصوت من السماعة الموجودة أسفل اللوحة.",
+      meshes: [cyl(0.32, 0.03, [0.15, 0.455, -0.2], C.dark, "y", { texture: "grille" })],
+      explode: [0.2, 2.0, -0.1], parent: "front-panel",
+    },
+    {
+      id: "pcb", en: "Main circuit board (PCB)", ar: "اللوحة الإلكترونية الرئيسية (PCB)",
+      fnEn: "The real circuit: copper tracks connect the soldered components that make the device work.",
+      fnAr: "الدائرة الفعلية: مسارات نحاسية تربط المكونات الملحومة التي تُشغّل الجهاز.",
+      meshes: [box([2.85, 0.035, 2.05], [0, 0.06, 0], C.pcb, { texture: "pcb" })],
+      explode: [0, 0.45, 0],
+    },
+    {
+      id: "components", en: "Electronic components (ICs, transistors, capacitors)", ar: "المكونات الإلكترونية (دوائر متكاملة، ترانزستورات، مكثفات)",
+      fnEn: "Amplify, oscillate, filter and switch the signals — each one matches a symbol on the front panel.",
+      fnAr: "تقوم بالتكبير والتذبذب والترشيح والتبديل — كل منها يقابل رمزاً على اللوحة الأمامية.",
+      meshes: [
+        ...grid(3, 2, [-1.0, 0.11, -0.65], [0.45, 0.5], "xz", (p) => box([0.3, 0.06, 0.14], p, C.chip)),
+        ...grid(4, 2, [0.1, 0.14, 0.45], [0.22, 0.3], "xz", (p, i) => cyl(0.06, 0.13, p, i % 2 ? C.blue : "#1f3e8a")),
+        ...grid(5, 1, [-1.1, 0.1, 0.75], [0.16, 0], "xz", () => box([0.1, 0.06, 0.04], [0, 0, 0], C.yellow)).map((m, i) => ({ ...m, pos: [-1.1 + i * 0.16, 0.1, 0.75] as V3 })),
+        box([0.18, 0.12, 0.12], [-0.35, 0.14, -0.1], C.black), box([0.18, 0.12, 0.12], [-0.05, 0.14, -0.1], C.black),
+      ],
+      explode: [0, 0.95, 0.15], parent: "pcb",
+    },
+    {
+      id: "heatsink", en: "Heat sink", ar: "المشتت الحراري",
+      fnEn: "Aluminium fins that carry heat away from the output transistor.",
+      fnAr: "زعانف ألمنيوم تبدد الحرارة الناتجة عن ترانزستور الخرج.",
+      meshes: grid(8, 1, [0.55, 0.2, -0.55], [0.07, 0], "xz", (p) => box([0.035, 0.24, 0.5], p, C.metal, { metal: 0.85, rough: 0.3 })),
+      explode: [0.7, 1.2, -0.5], parent: "pcb",
+    },
+    {
+      id: "loudspeaker", en: "Loudspeaker", ar: "السماعة",
+      fnEn: "Turns the electrical audio signal into sound so students can hear the result.",
+      fnAr: "تحوّل الإشارة الصوتية الكهربائية إلى صوت ليسمع الطالب النتيجة.",
+      meshes: [cyl(0.3, 0.12, [0.15, 0.16, -0.2], C.black), cone(0.26, 0.08, 0.06, [0.15, 0.24, -0.2], "#c9b27a"), cyl(0.06, 0.04, [0.15, 0.27, -0.2], C.dark)],
+      explode: [-0.2, 1.05, -0.9], parent: "pcb",
+    },
+    {
+      id: "acrylic-case", en: "Clear acrylic case", ar: "الصندوق الأكريليك الشفاف",
+      fnEn: "Protects the circuit while keeping it visible, so students can see the real components inside.",
+      fnAr: "يحمي الدائرة مع إبقائها ظاهرة، ليرى الطلاب المكونات الحقيقية بداخلها.",
+      meshes: [
+        box([PW, 0.03, PD], [0, -0.3, 0], C.glass, { glass: true }),
+        box([PW, 0.7, 0.03], [0, 0.05, PD / 2], C.glass, { glass: true }), box([PW, 0.7, 0.03], [0, 0.05, -PD / 2], C.glass, { glass: true }),
+        box([0.03, 0.7, PD], [PW / 2, 0.05, 0], C.glass, { glass: true }), box([0.03, 0.7, PD], [-PW / 2, 0.05, 0], C.glass, { glass: true }),
+      ],
+      explode: [0, -1.0, 0],
+    },
+    {
+      id: "standoffs", en: "Standoffs and rubber feet", ar: "الأعمدة الفاصلة والأقدام المطاطية",
+      fnEn: "Hold the board at a safe distance from the case and keep the unit stable on the bench.",
+      fnAr: "تثبت اللوحة على مسافة آمنة من الصندوق وتحافظ على ثبات الجهاز على الطاولة.",
+      meshes: [
+        ...[[-1.3, -0.95], [1.3, -0.95], [-1.3, 0.95], [1.3, 0.95]].map(([x, z]) => cyl(0.04, 0.72, [x, 0.06, z], C.metal, "y", { metal: 0.9, rough: 0.25 })),
+        ...[[-1.3, -0.95], [1.3, -0.95], [-1.3, 0.95], [1.3, 0.95]].map(([x, z]) => cyl(0.1, 0.06, [x, -0.35, z], C.black)),
+      ],
+      explode: [0, -1.6, 0],
     },
   ],
 };
