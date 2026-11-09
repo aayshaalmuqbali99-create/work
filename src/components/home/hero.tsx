@@ -21,13 +21,13 @@ export async function Hero({ text, slides }: { text: HeroText; slides: Slide[] }
           <HeroCarousel
             slides={slides}
             alt={title}
-            className="absolute inset-y-0 end-0 -z-10 w-full lg:w-[70%] lg:[mask-image:linear-gradient(to_left,#000_86%,transparent)] lg:rtl:[mask-image:linear-gradient(to_right,#000_86%,transparent)]"
+            className="absolute inset-y-0 end-0 -z-10 w-full lg:w-[72%] lg:[mask-image:linear-gradient(to_left,#000_82%,transparent)] lg:rtl:[mask-image:linear-gradient(to_right,#000_82%,transparent)]"
           />
         )}
         {/* navy from the text side so the headline stays readable over any photo */}
         <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#0b1d38] via-[#0b1d38]/80 to-transparent rtl:bg-gradient-to-l lg:via-[#0b1d38]/45 lg:to-[#0b1d38]/0" />
 
-        <div className="mx-auto flex min-h-[420px] max-w-7xl items-center px-4 py-12 sm:px-6 lg:min-h-[300px] lg:py-8 lg:px-8">
+        <div className="mx-auto flex min-h-[420px] max-w-7xl items-center px-4 py-12 sm:px-6 lg:min-h-[360px] lg:py-10 lg:px-8">
           <div className="ls-enter max-w-md">
             <h1 className="border-s-4 border-amber-500 ps-5 text-[clamp(2rem,1.3rem+1.9vw,2.6rem)] font-bold leading-[1.2] tracking-tight drop-shadow-sm">
               {title}

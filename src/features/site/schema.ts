@@ -33,7 +33,7 @@ export const siteSchema = z.object({
       .array(z.object({ url: z.string().max(300), width: z.number().int().positive(), height: z.number().int().positive() }))
       .max(6)
       .default([
-        { url: "/hero/lab-students.webp", width: 1560, height: 370 },
+        { url: "/hero/lab-students-hd.webp", width: 1891, height: 831 },
         { url: "/hero/students.webp", width: 1520, height: 810 },
         { url: "/hero/equipment.webp", width: 1440, height: 780 },
       ]),

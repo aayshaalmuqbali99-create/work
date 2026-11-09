@@ -12,7 +12,7 @@ const loadPublished = unstable_cache(
     const v = await db.siteVersion.findFirst({ where: { status: "PUBLISHED" }, orderBy: { publishedAt: "desc" } });
     return readSite(v?.data);
   },
-  ["site-published-v3"],
+  ["site-published-v4"],
   { tags: [SITE_TAG], revalidate: 3600 },
 );
 
