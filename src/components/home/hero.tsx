@@ -17,18 +17,23 @@ export async function Hero({ text, slides }: { text: HeroText; slides: Slide[] }
   return (
     <>
       <section className="relative isolate overflow-hidden bg-[#0b1d38] text-white">
-        {text.showVisual && slides.length > 0 && <HeroCarousel slides={slides} alt={title} />}
-        {/* gradient from the text side so the headline stays readable over any photo */}
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#0b1d38]/95 via-[#0b1d38]/70 to-[#0b1d38]/5 rtl:bg-gradient-to-l" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-[#0b1d38]/50 to-transparent" />
+        {text.showVisual && slides.length > 0 && (
+          <HeroCarousel
+            slides={slides}
+            alt={title}
+            className="absolute inset-y-0 end-0 -z-10 w-full lg:w-[70%] lg:[mask-image:linear-gradient(to_left,#000_86%,transparent)] lg:rtl:[mask-image:linear-gradient(to_right,#000_86%,transparent)]"
+          />
+        )}
+        {/* navy from the text side so the headline stays readable over any photo */}
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-r from-[#0b1d38] via-[#0b1d38]/80 to-transparent rtl:bg-gradient-to-l lg:via-[#0b1d38]/45 lg:to-[#0b1d38]/0" />
 
-        <div className="mx-auto flex min-h-[460px] max-w-7xl items-center px-4 py-16 sm:px-6 lg:min-h-[520px] lg:px-8">
-          <div className="ls-enter max-w-xl">
-            <h1 className="border-s-4 border-amber-500 ps-5 text-[clamp(2rem,1.3rem+3vw,3.5rem)] font-bold leading-[1.2] tracking-tight drop-shadow-sm">
+        <div className="mx-auto flex min-h-[420px] max-w-7xl items-center px-4 py-12 sm:px-6 lg:min-h-[300px] lg:py-8 lg:px-8">
+          <div className="ls-enter max-w-md">
+            <h1 className="border-s-4 border-amber-500 ps-5 text-[clamp(2rem,1.3rem+1.9vw,2.6rem)] font-bold leading-[1.2] tracking-tight drop-shadow-sm">
               {title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/90">{text.subtitle || t("subtitle")}</p>
-            <div className="mt-9 flex flex-wrap gap-3">
+            <p className="mt-5 text-lg leading-relaxed text-white/90">{text.subtitle || t("subtitle")}</p>
+            <div className="mt-7 flex flex-wrap gap-3">
               <Link
                 href="/equipment"
                 className="group inline-flex items-center gap-2 rounded-full bg-[#1b6fd1] px-7 py-3.5 font-semibold text-white shadow-lg shadow-[#1b6fd1]/40 transition hover:bg-[#2b7ff0]"

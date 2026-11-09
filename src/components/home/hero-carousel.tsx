@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export type Slide = { url: string; width: number; height: number };
 
 /** Cross-fading background photos with dots. Auto-advances unless the user prefers reduced motion. */
-export function HeroCarousel({ slides, alt }: { slides: Slide[]; alt: string }) {
+export function HeroCarousel({ slides, alt, className = "absolute inset-0 -z-10" }: { slides: Slide[]; alt: string; className?: string }) {
   const t = useTranslations("Hero");
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -20,7 +20,7 @@ export function HeroCarousel({ slides, alt }: { slides: Slide[]; alt: string }) 
   }, [slides.length, paused]);
 
   return (
-    <div className="absolute inset-0 -z-10" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    <div className={className} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
       {slides.map((s, i) => (
         <Image
           key={s.url}
@@ -30,11 +30,11 @@ export function HeroCarousel({ slides, alt }: { slides: Slide[]; alt: string }) 
           fill
           priority={i === 0}
           sizes="100vw"
-          className={cn("object-cover transition-opacity duration-1000 ease-out", i === index ? "opacity-100" : "opacity-0")}
+          className={cn("object-cover object-right transition-opacity duration-1000 ease-out rtl:object-right ltr:object-left", i === index ? "opacity-100" : "opacity-0")}
         />
       ))}
       {slides.length > 1 && (
-        <div className="absolute bottom-5 end-6 z-10 flex gap-2" role="group" aria-label={t("slide", { n: index + 1 })}>
+        <div className="absolute bottom-4 end-5 z-10 flex gap-2" role="group" aria-label={t("slide", { n: index + 1 })}>
           {slides.map((s, i) => (
             <button
               key={s.url}
