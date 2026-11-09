@@ -445,5 +445,13 @@
     "noChanges": "Same as the live site",
     "previewBanner": "Preview mode — you are seeing the unpublished draft.",
     "nothingPublishedYet": "Nothing published yet — the site uses the default content."
+  },
+  "Access": {
+    "title": "Private preview",
+    "intro": "This website is not public yet. Enter the access password you received.",
+    "password": "Access password",
+    "enter": "Enter",
+    "wrong": "Incorrect password.",
+    "tooMany": "Too many attempts. Try again in {seconds} seconds."
   }
 }
