@@ -10,7 +10,7 @@ export type FooterContent = { tagline?: string; text?: string; email?: string; p
 export function SiteFooter({ brand, content = {} }: { brand?: BrandProps; content?: FooterContent }) {
   const t = useTranslations();
   return (
-    <footer className="mt-24 bg-navy text-white/80">
+    <footer id="site-footer" className="mt-16 bg-navy text-white/80">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr] lg:px-8">
         <div className="space-y-4">
           <Logo inverted brand={brand} />

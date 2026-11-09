@@ -5,6 +5,8 @@ import { LanguageSwitcher } from "@/components/layout/language-switcher";
 import { AccessForm } from "@/components/layout/access-form";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
+/** Rendered per request (reads site settings from the database, never at build time). */
+export const dynamic = "force-dynamic";
 
 export default async function AccessPage({ params, searchParams }: { params: Promise<{ locale: string }>; searchParams: Promise<{ next?: string }> }) {
   const { locale } = await params;

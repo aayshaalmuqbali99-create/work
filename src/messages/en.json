@@ -30,9 +30,9 @@
   },
   "Hero": {
     "eyebrow": "Supporting technical colleges & institutes in Oman",
-    "title": "Assets that inspire knowledge, value that builds the future",
-    "subtitle": "A digital platform to manage and showcase Omantel's assets and increase their use in support of technical education and sustainability.",
-    "browse": "Explore assets",
+    "title": "Omantel Assets Platform",
+    "subtitle": "Optimal management and use of assets to support educational and training institutions.",
+    "browse": "Explore the platform",
     "learn": "About the platform",
     "statMarket": "Launching in Oman",
     "statCurrency": "Prices in OMR",
@@ -126,7 +126,14 @@
     "statModels": "3D model types",
     "tickerLabel": "Available now",
     "goal1Subtitle": "Towards applied education that builds the skills of the future",
-    "goal2Subtitle": "Lasting value from assets with renewed opportunities for use"
+    "goal2Subtitle": "Lasting value from assets with renewed opportunities for use",
+    "f1Title": "Supporting applied education",
+    "f1Desc": "Enabling educational institutions to benefit from real devices and equipment.",
+    "f2Title": "Reusing assets",
+    "f2Desc": "Offering usable assets for donation or sale.",
+    "f3Title": "Resource sustainability",
+    "f3Desc": "Extending the operational life of assets and creating lasting value.",
+    "more": "More"
   },
   "Equipment": {
     "title": "Equipment",
@@ -506,7 +513,8 @@
     "heroSlides": "Homepage banner photos",
     "heroSlidesHelp": "They rotate automatically at the top of the homepage. Use wide, high-resolution photos without text.",
     "addSlide": "Add photo",
-    "removeSlide": "Remove"
+    "removeSlide": "Remove",
+    "section_features": "Three highlights"
   },
   "Access": {
     "title": "Private preview",

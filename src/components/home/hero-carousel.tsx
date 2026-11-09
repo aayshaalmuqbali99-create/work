@@ -30,7 +30,7 @@ export function HeroCarousel({ slides, alt, className = "absolute inset-0 -z-10"
           fill
           priority={i === 0}
           sizes="100vw"
-          className={cn("object-cover object-[50%_28%] transition-opacity duration-1000 ease-out", i === index ? "opacity-100" : "opacity-0")}
+          className={cn("object-cover object-[30%_30%] rtl:object-[0%_30%] ltr:object-[100%_30%] transition-opacity duration-1000 ease-out", i === index ? "opacity-100" : "opacity-0")}
         />
       ))}
       {slides.length > 1 && (

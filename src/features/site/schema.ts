@@ -7,7 +7,9 @@ import { z } from "zod";
 const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/);
 const t = (max: number) => z.string().trim().max(max).default("");
 
-export const SECTION_KEYS = ["stats", "featured", "categories", "why", "how"] as const;
+export const SECTION_KEYS = ["features", "stats", "featured", "categories", "why", "how"] as const;
+/** Sections shown on a fresh homepage (the others can be switched on in the website editor). */
+const DEFAULT_ON: readonly string[] = ["features"];
 export type SectionKey = (typeof SECTION_KEYS)[number];
 
 export const siteSchema = z.object({
@@ -15,7 +17,7 @@ export const siteSchema = z.object({
     nameEn: t(60), nameAr: t(60), taglineEn: t(120), taglineAr: t(120),
     logoUrl: z.string().max(300).nullable().default(null),
     /** Partner logo shown next to the brand in the header (e.g. the official Omantel logo file). */
-    partnerLogoUrl: z.string().max(300).nullable().default(null),
+    partnerLogoUrl: z.string().max(300).nullable().default("/brand/partner-logo.png"),
   }),
   theme: z.object({
     navy: hex.default("#102F40"),
@@ -43,7 +45,7 @@ export const siteSchema = z.object({
     (raw) => {
       const list = Array.isArray(raw) ? (raw as { key?: string }[]).filter((s) => SECTION_KEYS.includes(s?.key as SectionKey)) : [];
       const seen = new Set(list.map((s) => s.key));
-      return [...list, ...SECTION_KEYS.filter((k) => !seen.has(k)).map((key) => ({ key, enabled: true }))];
+      return [...list, ...SECTION_KEYS.filter((k) => !seen.has(k)).map((key) => ({ key, enabled: DEFAULT_ON.includes(key) }))];
     },
     z
       .array(z.object({ key: z.enum(SECTION_KEYS), enabled: z.boolean(), titleEn: t(120), titleAr: t(120), subtitleEn: t(300), subtitleAr: t(300) }))
@@ -61,7 +63,7 @@ export const DEFAULT_SITE: SiteContent = siteSchema.parse({
   brand: {},
   theme: {},
   hero: {},
-  sections: SECTION_KEYS.map((key) => ({ key, enabled: true })),
+  sections: SECTION_KEYS.map((key) => ({ key, enabled: DEFAULT_ON.includes(key) })),
   footer: {},
 });
 
