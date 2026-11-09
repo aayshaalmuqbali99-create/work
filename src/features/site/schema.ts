@@ -7,7 +7,7 @@ import { z } from "zod";
 const hex = z.string().regex(/^#[0-9a-fA-F]{6}$/);
 const t = (max: number) => z.string().trim().max(max).default("");
 
-export const SECTION_KEYS = ["about", "stats", "featured", "categories", "why", "how"] as const;
+export const SECTION_KEYS = ["stats", "featured", "categories", "why", "how"] as const;
 export type SectionKey = (typeof SECTION_KEYS)[number];
 
 export const siteSchema = z.object({

@@ -75,10 +75,18 @@
     "step3Desc": "Educational institutions request a donation; other buyers request a purchase."
   },
   "About": {
-    "title": "About LabSouq",
-    "lead": "LabSouq is a marketplace for new and used scientific, laboratory, educational, electrical, electronic and engineering equipment.",
-    "body1": "We start in Oman and plan to expand to the GCC and international markets. The platform serves universities, colleges, students, laboratories, scientific institutions, engineering companies, equipment suppliers and independent sellers.",
-    "body2": "Our principle is simple: show what is known, and say clearly what is not."
+    "title": "About us",
+    "eyebrow": "About LabSouq",
+    "lead": "LabSouq is an Omani platform that gives laboratory, electronic and telecommunications equipment a second life — in the hands of students.",
+    "body1": "Every device is listed with a clear explanation, the quantity available and an interactive 3D model, plus how students benefit from it in the lab — so educational institutions can choose what fits their courses with confidence.",
+    "body2": "Our principle is simple: show what is known, and say clearly what is not.",
+    "inLab": "In the lab",
+    "inLabText": "Hands-on learning: a teacher and students testing circuits and measuring signals on real equipment.",
+    "illustration": "Illustration: a teacher and students running an experiment on lab equipment",
+    "photosSoon": "Illustration — real photos from college labs will be added soon.",
+    "ctaTitle": "Do you represent an educational institution?",
+    "ctaText": "Browse the available equipment and choose what your lab needs.",
+    "cta": "Browse equipment"
   },
   "Footer": {
     "rights": "All rights reserved.",

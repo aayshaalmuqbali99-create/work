@@ -43,7 +43,7 @@ export async function Hero({ text }: { text: HeroText }) {
               {t("browse")}
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100 rtl:group-hover:-translate-x-0.5" />
             </Link>
-            <Link href="/#about" className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur transition hover:border-white/60">
+            <Link href="/about" className="inline-flex items-center rounded-full border border-white/25 bg-white/5 px-6 py-3 font-semibold text-white backdrop-blur transition hover:border-white/60">
               {t("learn")}
             </Link>
           </div>
