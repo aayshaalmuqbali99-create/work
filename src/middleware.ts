@@ -3,6 +3,7 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 import { SESSION_COOKIE } from "./lib/auth/constants";
 import { ACCESS_COOKIE, accessToken } from "./lib/site-access";
+import { FAC_SESSION_COOKIE } from "./features/facility/constants";
 
 const intl = createMiddleware(routing);
 
@@ -15,6 +16,19 @@ const intl = createMiddleware(routing);
 export default async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const admin = pathname.match(/^\/(ar|en)\/admin(\/.*)?$/);
+  // Facility Hub has its own sign-in (Microsoft Entra ID); pages that need a user are guarded here
+  // optimistically and checked again on the server.
+  const facility = pathname.match(/^\/(ar|en)\/facility(\/.*)?$/);
+  if (facility) {
+    const rest = facility[2] ?? "";
+    const needsUser = /^\/(request|requests|map|ops|q)(\/|$)/.test(rest);
+    if (needsUser && !req.cookies.has(FAC_SESSION_COOKIE)) {
+      const url = new URL(`/${facility[1]}/facility/login`, req.url);
+      url.searchParams.set("next", `/facility${rest}${search}`);
+      return NextResponse.redirect(url);
+    }
+    return intl(req);
+  }
 
   const sitePassword = process.env.SITE_PASSWORD;
   if (sitePassword && !admin) {

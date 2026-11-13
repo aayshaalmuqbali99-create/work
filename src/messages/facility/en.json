@@ -64,7 +64,12 @@
     "step3": "Track until it's fixed",
     "step3Text": "Get e-mail updates and confirm when the issue is resolved.",
     "safetyTitle": "In an emergency, don't wait for a ticket",
-    "safetyText": "Smoke, exposed wiring, water near electricity, blocked exits or someone trapped in a lift: contact building security or emergency services first, through the verified channels in your building."
+    "safetyText": "Smoke, exposed wiring, water near electricity, blocked exits or someone trapped in a lift: contact building security or emergency services first, through the verified channels in your building.",
+    "qrTitle": "Scan a location QR code",
+    "qrHint": "Point your camera at the Facility Hub code on site.",
+    "qrUnsupported": "This browser can't scan codes here. Open your phone's camera app and point it at the code instead.",
+    "qrDenied": "Camera access was blocked. Allow the camera, or use your phone's camera app.",
+    "qrInvalid": "This isn't a Facility Hub location code."
   },
   "Footer": {
     "about": "An internal Omantel platform for facility maintenance and cleaning requests. Not for IT, network, software or audio-visual support.",
@@ -73,7 +78,10 @@
     "rights": "© {year} Omantel. Internal use only.",
     "itNote": "IT, computer, network and audio-visual issues are handled by IT support, not Facility Hub."
   },
-  "Service": { "MAINTENANCE": "Maintenance", "CLEANING": "Cleaning" },
+  "Service": {
+    "MAINTENANCE": "Maintenance",
+    "CLEANING": "Cleaning"
+  },
   "Status": {
     "SUBMITTED": "Submitted",
     "UNDER_REVIEW": "Under Review",
@@ -86,7 +94,12 @@
     "CANCELLED": "Cancelled",
     "REJECTED": "Rejected"
   },
-  "Priority": { "LOW": "Low", "MEDIUM": "Medium", "HIGH": "High", "EMERGENCY": "Emergency" },
+  "Priority": {
+    "LOW": "Low",
+    "MEDIUM": "Medium",
+    "HIGH": "High",
+    "EMERGENCY": "Emergency"
+  },
   "PriorityHelp": {
     "LOW": "Cosmetic or can wait a few days",
     "MEDIUM": "Affects comfort or work, not urgent",
@@ -350,7 +363,12 @@
       "groupConfig": "Configuration",
       "groupAdmin": "Administration"
     },
-    "role": { "EMPLOYEE": "Employee", "CONTRACTOR": "Contractor", "AGENT": "Operations agent", "ADMIN": "Operations admin" },
+    "role": {
+      "EMPLOYEE": "Employee",
+      "CONTRACTOR": "Contractor",
+      "AGENT": "Operations agent",
+      "ADMIN": "Operations admin"
+    },
     "sampleBanner": "This environment contains sample development data (marked \"Sample\"). It is not real operational data.",
     "purgeSample": "Remove sample requests",
     "purgeConfirm": "Delete all sample requests? Configuration is kept.",
@@ -606,5 +624,25 @@
     "ELEVATOR_LOBBY": "Elevator lobby",
     "OTHER": "Other"
   },
-  "Days": { "0": "Sun", "1": "Mon", "2": "Tue", "3": "Wed", "4": "Thu", "5": "Fri", "6": "Sat" }
+  "Days": {
+    "0": "Sun",
+    "1": "Mon",
+    "2": "Tue",
+    "3": "Wed",
+    "4": "Thu",
+    "5": "Fri",
+    "6": "Sat"
+  },
+  "Action": {
+    "confirmTitle": "Confirm the issue is fixed",
+    "reopenTitle": "Reopen this request",
+    "confirmText": "Thank you for confirming. This closes the request.",
+    "reopenText": "Tell us briefly what is still wrong.",
+    "confirmBtn": "Yes, it's fixed",
+    "reopenBtn": "Reopen request",
+    "doneConfirm": "Thank you. The request is now closed.",
+    "doneReopen": "The request has been reopened. Facility Operations will follow up.",
+    "expired": "This link has expired or has already been used.",
+    "view": "Open the request"
+  }
 }

@@ -97,3 +97,83 @@ html[dir="rtl"] .ls-marquee { animation-name: ls-marquee-rtl; }
 @media (prefers-reduced-motion: reduce) {
   .ls-hero-grid, .ls-float, .ls-float-slow, .ls-marquee { animation: none; }
 }
+
+/* =====================================================================================
+ * Omantel Facility Hub — design tokens (Omantel Brand Guidelines 2024)
+ * Primary: Deep Sea #2D13EA, Gold Mountains #FF7800, White. Secondary used for accents
+ * (70/30), tertiary (Omani Sky lavender, Omani Sunset coral, Silver) only for small details.
+ * Black (Dishdasha) is reserved for text, never as a background.
+ * ===================================================================================== */
+:root {
+  --fh-deep: #2D13EA;
+  --fh-deep-700: #2410C2; /* hover/pressed state of Deep Sea */
+  --fh-gold: #FF7800;
+  --fh-lav: #9C94FF;
+  --fh-lav-50: #F6F5FF;
+  --fh-lav-100: #ECEAFF;
+  --fh-lav-200: #D9D5FF;
+  --fh-coral: #FF9878;
+  --fh-green: #50D88D;
+  --fh-spring: #40E2D2;
+  --fh-exotic: #FFC000;
+  --fh-ink: #1D1D1D;
+  --fh-muted: #5B5870;
+  --fh-line: #E7E5F3;
+  --fh-surface: #FFFFFF;
+}
+
+@theme inline {
+  --color-deep: var(--fh-deep);
+  --color-deep-700: var(--fh-deep-700);
+  --color-gold: var(--fh-gold);
+  --color-lav: var(--fh-lav);
+  --color-lav-50: var(--fh-lav-50);
+  --color-lav-100: var(--fh-lav-100);
+  --color-lav-200: var(--fh-lav-200);
+  --color-coral: var(--fh-coral);
+  --color-fgreen: var(--fh-green);
+  --color-spring: var(--fh-spring);
+  --color-exotic: var(--fh-exotic);
+  --color-fink: var(--fh-ink);
+  --color-fmuted: var(--fh-muted);
+  --color-fline: var(--fh-line);
+  --text-hero: clamp(2.5rem, 1.2rem + 5.2vw, 5.75rem);
+  --text-hero--line-height: 1.02;
+  --text-title: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+  --text-title--line-height: 1.12;
+  --shadow-soft: 0 1px 2px rgb(29 29 29 / 0.04), 0 8px 24px -8px rgb(45 19 234 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(29 29 29 / 0.04), 0 24px 48px -16px rgb(45 19 234 / 0.28);
+}
+
+.fh { color: var(--fh-ink); background: #fff; }
+.fh :focus-visible { outline: 3px solid var(--fh-gold); outline-offset: 3px; border-radius: 10px; }
+.fh ::selection { background: var(--fh-lav-200); }
+
+/* Glass surface for floating navigation and overlays */
+.fh-glass { background: rgb(255 255 255 / 0.78); backdrop-filter: saturate(1.6) blur(18px); -webkit-backdrop-filter: saturate(1.6) blur(18px); }
+.fh-glass-dark { background: rgb(45 19 234 / 0.22); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+
+/* Soft entrance (CSS only, so content is visible before hydration) */
+@keyframes fh-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.fh-rise { animation: fh-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.fh-d1 { animation-delay: 0.12s; } .fh-d2 { animation-delay: 0.24s; } .fh-d3 { animation-delay: 0.36s; } .fh-d4 { animation-delay: 0.5s; }
+@keyframes fh-cue { 0%, 100% { transform: translateY(0); opacity: 1; } 50% { transform: translateY(8px); opacity: 0.5; } }
+.fh-cue { animation: fh-cue 2.2s ease-in-out infinite; }
+@keyframes fh-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.fh-float { animation: fh-float 6s ease-in-out infinite; }
+@keyframes fh-shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+.fh-skeleton { background: linear-gradient(90deg, var(--fh-lav-50), var(--fh-lav-100), var(--fh-lav-50)); background-size: 200% 100%; animation: fh-shimmer 1.4s linear infinite; border-radius: 12px; }
+@keyframes fh-pulse-ring { 0% { box-shadow: 0 0 0 0 rgb(255 120 0 / 0.45); } 100% { box-shadow: 0 0 0 10px rgb(255 120 0 / 0); } }
+.fh-pulse { animation: fh-pulse-ring 1.8s ease-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fh-rise, .fh-cue, .fh-float, .fh-skeleton, .fh-pulse { animation: none !important; }
+}
+
+/* Floor-plan viewer */
+.fh-map-stage { touch-action: none; cursor: grab; }
+.fh-map-stage:active { cursor: grabbing; }
+
+@media print {
+  .fh-noprint { display: none !important; }
+}
