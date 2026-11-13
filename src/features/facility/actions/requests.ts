@@ -13,7 +13,7 @@ import { employeeCanCancel, employeeCanConfirm, employeeCanReopen } from "../dom
 import { actionError, requireFac, type ActionResult } from "../server/guard";
 import { getSettings } from "../server/calendar";
 import { addComment, changeStatus, createRequest, RequestInputError } from "../server/requests";
-import { processOutbox } from "../server/notify";
+import { isGuestEmail, processOutbox } from "../server/notify";
 import { facAudit } from "../server/audit";
 import { getFacUser } from "../server/session";
 
@@ -33,6 +33,8 @@ const payloadSchema = z.object({
   priority: z.enum(["LOW", "MEDIUM", "HIGH", "EMERGENCY"]),
   phone: z.string().trim().max(40).regex(/^[+\d\s()-]*$/).default(""),
   department: z.string().trim().max(120).default(""),
+  name: z.string().trim().max(120).default(""),
+  employeeNo: z.string().trim().max(30).regex(/^[\w\-/ ]*$/).default(""),
   safetyAcknowledged: z.boolean().default(false),
 });
 
@@ -54,6 +56,12 @@ export async function submitRequestAction(form: FormData): Promise<ActionResult<
       return { ok: false, error: "invalid", fields };
     }
     const p = parsed.data;
+    // requester details: name, employee number and unit are required on the form
+    const missing: Record<string, string> = {};
+    if (p.name.length < 2) missing.name = "required";
+    if (!p.employeeNo) missing.employeeNo = "required";
+    if (p.department.length < 2) missing.department = "required";
+    if (Object.keys(missing).length) return { ok: false, error: "invalid", fields: missing };
 
     const files = form.getAll("photos").filter((f): f is File => f instanceof File && f.size > 0);
     if (files.length > MAX_PHOTOS) return { ok: false, error: "invalid" };
@@ -73,6 +81,11 @@ export async function submitRequestAction(form: FormData): Promise<ActionResult<
     const safetyFlag = !!issue?.safetyRisk || detectSafetyRisks(`${p.description} ${p.issueOther}`).length > 0 || p.priority === "EMERGENCY";
 
     const req = await createRequest(user, { ...p, safetyFlag, photos });
+    // remember the details for next time (a guest's display name becomes the typed name)
+    await db.facUser.update({
+      where: { id: user.id },
+      data: { employeeNo: p.employeeNo, department: p.department, ...(isGuestEmail(user.email) ? { name: p.name } : {}) },
+    });
     await facAudit(user, "request.create", "request", req.id, { reference: req.reference });
     deliverSoon();
     revalidatePath("/[locale]/facility", "layout");

@@ -19,6 +19,7 @@ const NAV = [
   { href: "/facility/requests", key: "myRequests" },
   { href: "/facility/guide", key: "guide" },
   { href: "/facility/map", key: "map" },
+  { href: "/facility/ops", key: "dashboard" },
 ] as const;
 
 /** Language switch that keeps the page, query string and (via the draft store) form state. */

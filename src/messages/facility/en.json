@@ -21,7 +21,8 @@
     "menu": "Menu",
     "close": "Close",
     "skip": "Skip to content",
-    "language": "Language"
+    "language": "Language",
+    "dashboard": "Dashboard"
   },
   "Home": {
     "eyebrow": "Omantel Facility Hub",
@@ -738,7 +739,7 @@
   },
   "Simple": {
     "title": "Report an issue",
-    "subtitle": "Four quick questions. Photos help the team a lot.",
+    "subtitle": "A few quick questions. Photos help the team a lot.",
     "typeTitle": "What type of request?",
     "whereTitle": "Where is it?",
     "floor": "Floor",
@@ -761,6 +762,20 @@
     "clear": "Clear form",
     "floorNotListed": "My floor isn't listed",
     "provisional": "Areas on this floor are still being confirmed. If yours isn't listed, choose Other.",
-    "fixErrors": "Please complete the highlighted fields."
+    "fixErrors": "Please complete the highlighted fields.",
+    "detailsTitle": "Your details",
+    "detailsHint": "So the team can reach you if needed. We'll remember them for next time.",
+    "name": "Name",
+    "employeeNo": "Employee number",
+    "employeeNoPh": "e.g. 123456",
+    "employeeNoInvalid": "Enter a valid employee number",
+    "unit": "Unit / department",
+    "unitPh": "e.g. Human Resources",
+    "required": "This field is required",
+    "detailsMissing": "Please complete your details: name, employee number and unit."
+  },
+  "Requester": {
+    "employeeNo": "Employee no.",
+    "unit": "Unit"
   }
 }

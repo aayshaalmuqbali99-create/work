@@ -339,6 +339,8 @@ model FacUser {
   name         String
   phone        String       @default("")
   department   String       @default("")
+  /// Employee number (الرقم الوظيفي), remembered from the last request.
+  employeeNo   String       @default("")
   role         FacRole      @default(EMPLOYEE)
   /// Local development sign-in only. Production users sign in with Microsoft Entra ID (no password stored).
   passwordHash String?
@@ -661,6 +663,7 @@ model FacRequest {
   employeeEmail     String
   contactPhone      String            @default("")
   department        String            @default("")
+  employeeNo        String            @default("")
   service           FacService
   categoryId        String?
   category          FacCategory?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)

@@ -15,7 +15,7 @@ export function filtersToWhere(user: FacUserSession, f: RequestFilters): Prisma.
     and.push(
       REFERENCE_RE.test(q.toUpperCase())
         ? { reference: q.toUpperCase() }
-        : { OR: [{ reference: { contains: q, mode: "insensitive" } }, { employeeName: { contains: q, mode: "insensitive" } }, { employeeEmail: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }] },
+        : { OR: [{ reference: { contains: q, mode: "insensitive" } }, { employeeName: { contains: q, mode: "insensitive" } }, { employeeNo: { contains: q, mode: "insensitive" } }, { department: { contains: q, mode: "insensitive" } }, { employeeEmail: { contains: q, mode: "insensitive" } }, { description: { contains: q, mode: "insensitive" } }] },
     );
   }
   if (f.status && (STATUSES as string[]).includes(f.status)) and.push({ status: f.status as FacStatus });

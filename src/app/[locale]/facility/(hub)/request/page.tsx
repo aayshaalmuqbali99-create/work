@@ -3,6 +3,8 @@ import { SimpleRequestForm, type WizardPreset } from "@/components/facility/wiza
 import { requireFacPage } from "@/features/facility/server/guard";
 import { getWizardConfig } from "@/features/facility/server/queries";
 import { getSettings } from "@/features/facility/server/calendar";
+import { isGuestEmail } from "@/features/facility/server/notify";
+import { db } from "@/lib/db";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({ locale: (await params).locale, namespace: "Fac.Simple" });
@@ -20,7 +22,15 @@ export default async function NewRequestPage({
   setRequestLocale(locale);
   const sp = await searchParams;
   const user = await requireFacPage("request.create", "/facility/request");
-  const [config, settings, t] = await Promise.all([getWizardConfig(), getSettings(), getTranslations("Fac")]);
+  const [config, settings, t, me] = await Promise.all([
+    getWizardConfig(),
+    getSettings(),
+    getTranslations("Fac"),
+    db.facUser.findUnique({ where: { id: user.id }, select: { name: true, email: true, employeeNo: true, department: true } }),
+  ]);
+  // a guest who has never sent a request still carries the placeholder "Guest xxxx" name: start empty
+  const fresh = !!me && isGuestEmail(me.email) && !me.employeeNo;
+  const requester = { name: fresh ? "" : (me?.name ?? ""), employeeNo: me?.employeeNo ?? "", unit: me?.department ?? "" };
   const preset: WizardPreset = {
     service: sp.service === "MAINTENANCE" || sp.service === "CLEANING" ? sp.service : undefined,
     areaId: typeof sp.area === "string" && sp.area.length < 40 ? sp.area : undefined,
@@ -33,7 +43,7 @@ export default async function NewRequestPage({
         <h1 className="text-4xl font-extrabold tracking-tight text-fink sm:text-5xl">{t("Simple.title")}</h1>
         <p className="mt-2 text-lg text-fmuted">{t("Simple.subtitle")}</p>
       </div>
-      <SimpleRequestForm config={config} userId={user.id} preset={preset} emergencyContact={locale === "ar" ? settings.emergencyContactAr : settings.emergencyContactEn} />
+      <SimpleRequestForm config={config} userId={user.id} requester={requester} preset={preset} emergencyContact={locale === "ar" ? settings.emergencyContactAr : settings.emergencyContactEn} />
     </div>
   );
 }

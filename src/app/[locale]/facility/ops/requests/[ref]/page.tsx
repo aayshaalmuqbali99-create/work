@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { isGuestEmail } from "@/features/facility/server/notify";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, ArrowRight, AlertTriangle, Mail, Phone, Star } from "lucide-react";
 import { Link } from "@/i18n/navigation";
@@ -82,9 +83,19 @@ export default async function OpsRequestPage({ params }: { params: Promise<{ ref
           </section>
           <section className={`${fhCard} p-6`}>
             <h2 className="font-extrabold text-fink">{t("Ops.detail.employee")}</h2>
-            <p className="mt-2 font-semibold text-fink">{r.employeeName}{r.department && <span className="font-normal text-fmuted"> · {r.department}</span>}</p>
-            <div className="mt-2 flex flex-wrap gap-4 text-sm">
-              <a href={`mailto:${r.employeeEmail}`} className="inline-flex items-center gap-1.5 text-deep hover:underline" dir="ltr"><Mail className="size-4" /> {r.employeeEmail}</a>
+            <p className="mt-2 text-lg font-bold text-fink">{r.employeeName}</p>
+            <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
+              <div className="rounded-2xl bg-lav-50 px-3 py-2">
+                <dt className="text-xs font-semibold text-fmuted">{t("Requester.employeeNo")}</dt>
+                <dd className="mt-0.5 font-mono font-bold text-fink" dir="ltr">{r.employeeNo || "—"}</dd>
+              </div>
+              <div className="rounded-2xl bg-lav-50 px-3 py-2">
+                <dt className="text-xs font-semibold text-fmuted">{t("Requester.unit")}</dt>
+                <dd className="mt-0.5 font-bold text-fink">{r.department || "—"}</dd>
+              </div>
+            </dl>
+            <div className="mt-3 flex flex-wrap gap-4 text-sm">
+              {!isGuestEmail(r.employeeEmail) && <a href={`mailto:${r.employeeEmail}`} className="inline-flex items-center gap-1.5 text-deep hover:underline" dir="ltr"><Mail className="size-4" /> {r.employeeEmail}</a>}
               {r.contactPhone && <a href={`tel:${r.contactPhone.replace(/\s/g, "")}`} className="inline-flex items-center gap-1.5 text-deep hover:underline" dir="ltr"><Phone className="size-4" /> {r.contactPhone}</a>}
             </div>
             {r.rating && (

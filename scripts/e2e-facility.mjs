@@ -60,6 +60,13 @@ writeFileSync(svgMap, '<svg xmlns="http://www.w3.org/2000/svg" width="1200" heig
 const browser = await chromium.launch();
 let reference = "";
 
+/** Requester details are required on the form (name, employee number, unit). */
+async function fillDetails(pg) {
+  if (!(await pg.inputValue("#fh-name"))) await pg.fill("#fh-name", "E2E Employee");
+  if (!(await pg.inputValue("#fh-empno"))) await pg.fill("#fh-empno", "E2E-001");
+  if (!(await pg.inputValue("#fh-unit"))) await pg.fill("#fh-unit", "E2E Unit");
+}
+
 await step("anonymous: homepage renders in Arabic (RTL) and English with photo hero", async () => {
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
@@ -135,6 +142,7 @@ await step("locations: B1 has 7 areas, B2/B3 Parking + Other; Ground and upper f
   // 7: Other requires a description
   await page.selectOption("#fh-floor", { label: "Basement 2 (B2)" });
   await page.selectOption("#fh-area", { label: "Other" });
+  await fillDetails(page);
   await page.getByRole("button", { name: "Send report" }).click();
   await page.getByText("Please describe where it is").waitFor();
   await ctx.close();
@@ -179,6 +187,7 @@ await step("admin location changes reach employees; full location is stored; ops
   await emp.getByText("Floor 2 → Sun Wing → Meeting Rooms → E2E Innovation Room 12").waitFor();
   await emp.selectOption("#fh-issue", { label: "Air conditioning" });
   await emp.fill("#fh-desc", "[e2e] The room is warm during afternoon meetings.");
+  await fillDetails(emp);
   await emp.getByRole("button", { name: "Send report" }).click();
   await emp.getByText("Thank You for Letting Us Know!").waitFor({ timeout: T });
   roomReference = (await emp.locator("p.font-mono").first().innerText()).trim();
@@ -246,12 +255,14 @@ await step("employee: one-page request with photo, safety warning; language swit
   await page.selectOption("#fh-issue", { label: "Lighting failure" });
   await page.fill("#fh-desc", "[e2e] There is smoke near the light fitting above column C-14.");
   await page.getByRole("alert").filter({ hasText: "This may be an emergency" }).waitFor();
+  await fillDetails(page);
   await page.getByRole("button", { name: "Send report" }).click();
   await page.getByText("Please complete the highlighted fields.").waitFor(); // blocked until acknowledged
   await page.fill("#fh-desc", "[e2e] Two ceiling lights are flickering above column C-14.");
   await page.getByText("This may be an emergency").waitFor({ state: "detached", timeout: T });
   await page.locator('input[type=file][multiple]').setInputFiles(png);
   await page.locator('img[src^="blob:"]').first().waitFor();
+  await fillDetails(page);
   await page.getByRole("button", { name: "Send report" }).click();
   await page.getByText("Thank You for Letting Us Know!").waitFor({ timeout: T });
   await page.getByText("Your report has been successfully received by Facility Operations.", { exact: false }).waitFor();
