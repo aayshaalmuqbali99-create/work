@@ -11,6 +11,8 @@ export type EmailAction = { label: string; url: string; tone: "primary" | "secon
 /** Which transport delivers e-mail. "log" (default) records e-mails in the outbox only — safe for development. */
 /** Guest identities (open access) have no mailbox. */
 export const GUEST_DOMAIN = "@guest.facility-hub.local";
+/** Anonymous visitors (open-access mode) get a private guest identity on this domain. */
+export const isGuestEmail = (email: string) => email.endsWith(GUEST_DOMAIN);
 
 export const emailTransport = () => (process.env.EMAIL_TRANSPORT === "graph" ? "graph" : "log");
 

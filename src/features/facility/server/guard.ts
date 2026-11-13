@@ -3,6 +3,7 @@ import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { can, type Permission } from "../domain/permissions";
 import { getFacUser, type FacUserSession } from "./session";
+import { isGuestEmail } from "./notify";
 
 export class FacAuthError extends Error {
   constructor(public code: "UNAUTHENTICATED" | "FORBIDDEN") {
@@ -27,6 +28,8 @@ export async function requireFacPage(permission?: Permission, next?: string): Pr
     throw new Error("unreachable");
   }
   if (permission && !can(user.role, permission)) {
+    // A guest visitor (QR / open access) is sent to the team sign-in instead of being bounced home.
+    if (isGuestEmail(user.email)) redirect({ href: { pathname: "/facility/login", query: next ? { next } : {} }, locale });
     redirect({ href: "/facility", locale });
     throw new Error("unreachable");
   }

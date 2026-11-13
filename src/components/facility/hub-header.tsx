@@ -10,7 +10,7 @@ import { facLogoutAction, setFacLocaleAction } from "@/features/facility/actions
 import { OmantelLogo } from "./brand-logo";
 import { fhBtn } from "./ui";
 
-export type HeaderUser = { name: string; email: string; role: string; canOps: boolean } | null;
+export type HeaderUser = { name: string; email: string; role: string; canOps: boolean; guest?: boolean } | null;
 export type HeaderNotification = { id: string; reference: string; text: string; when: string };
 
 const NAV = [
@@ -173,7 +173,7 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
               </AnimatePresence>
             </div>
           )}
-          {user ? (
+          {user && !user.guest ? (
             <div className="relative" data-fh-panel>
               <button
                 type="button"
@@ -215,7 +215,7 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
             </div>
           ) : (
             <Link href="/facility/login" className={cn(dark ? fhBtn.onDark : fhBtn.secondary, "hidden min-h-10 py-2 sm:inline-flex")}>
-              <UserRound className="size-4" aria-hidden="true" /> {t("signIn")}
+              <UserRound className="size-4" aria-hidden="true" /> {t("teamSignIn")}
             </Link>
           )}
           <Link href="/facility/request" className={cn(fhBtn.accent, "hidden min-h-10 py-2 md:inline-flex")}>
@@ -257,9 +257,9 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
             ))}
             <div className="mt-2 flex items-center justify-between border-t border-fline px-2 pt-3">
               <FacLanguageSwitch />
-              {!user && (
+              {(!user || user.guest) && (
                 <Link href="/facility/login" className={fhBtn.secondary}>
-                  {t("signIn")}
+                  <UserRound className="size-4" aria-hidden="true" /> {t("teamSignIn")}
                 </Link>
               )}
             </div>

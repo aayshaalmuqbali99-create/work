@@ -8,6 +8,7 @@ import { FacLanguageSwitch } from "@/components/facility/hub-header";
 import { fhBtn } from "@/components/facility/ui";
 import { getFacUser } from "@/features/facility/server/session";
 import { devLoginEnabled, entraEnabled } from "@/features/facility/server/config-flags";
+import { isGuestEmail } from "@/features/facility/server/notify";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({ locale: (await params).locale, namespace: "Fac.Login" });
@@ -27,7 +28,7 @@ export default async function LoginPage({ params, searchParams }: { params: Prom
   setRequestLocale(locale);
   const { next = "", error } = await searchParams;
   const user = await getFacUser();
-  if (user) redirect({ href: next.startsWith("/facility") ? next : "/facility", locale });
+  if (user && !isGuestEmail(user.email)) redirect({ href: next.startsWith("/facility") ? next : "/facility", locale });
   const t = await getTranslations("Fac");
   const sso = entraEnabled();
   const dev = devLoginEnabled();
