@@ -8,6 +8,7 @@ import { FAC_SESSION_COOKIE } from "./features/facility/constants";
 const intl = createMiddleware(routing);
 
 /**
+ * 0. APP_MODE=facility: only Facility Hub pages are reachable on this deployment.
  * 1. Optional private preview: when SITE_PASSWORD is set, visitors must enter it once (cookie, 30 days).
  *    The control panel keeps its own login and is not behind this password.
  * 2. Optimistic admin guard: no session cookie → admin login page (real checks run on the server).
@@ -15,6 +16,11 @@ const intl = createMiddleware(routing);
  */
 export default async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
+  // APP_MODE=facility: this deployment serves Omantel Facility Hub only (separate from the assets platform).
+  if (process.env.APP_MODE === "facility" && !/^\/(ar|en)\/facility(\/|$)/.test(pathname)) {
+    const loc = pathname.match(/^\/(ar|en)(\/|$)/)?.[1] ?? "ar";
+    return NextResponse.redirect(new URL(`/${loc}/facility`, req.url));
+  }
   const admin = pathname.match(/^\/(ar|en)\/admin(\/.*)?$/);
   // Facility Hub has its own sign-in (Microsoft Entra ID); pages that need a user are guarded here
   // optimistically and checked again on the server.
