@@ -12,6 +12,7 @@ import curated from "../src/data/equipment.json";
 import inventory from "../src/data/inventory-rows.json";
 import extra from "../content/extra-devices.json";
 import { slugify } from "../src/lib/slug";
+import { seedFacility } from "./seed-facility";
 
 const db = new PrismaClient();
 
@@ -161,6 +162,8 @@ async function main() {
     db.device.aggregate({ _sum: { quantity: true } }),
   ]);
   console.log(`Devices created: ${created}, already present: ${skipped}. Published: ${published}, review queue: ${review}, total units: ${units._sum.quantity}`);
+
+  await seedFacility(db);
 }
 
 main()

@@ -37,7 +37,7 @@ async function s3() {
 }
 
 /** Keys look like "devices/<uuid>.webp" — only these characters are ever accepted. */
-const KEY_RE = /^[a-z0-9-]+\/[a-f0-9-]+\.(webp|jpg|jpeg|png|glb)$/;
+const KEY_RE = /^[a-z0-9-]+\/[a-f0-9-]+\.(webp|jpg|jpeg|png|glb|svg)$/;
 
 function localPath(key: string) {
   const file = path.resolve(UPLOAD_DIR, key);
@@ -89,7 +89,7 @@ export async function deleteStored(url: string) {
 }
 
 /** Validates by decoding the actual bytes (not the file name or MIME header), re-encodes to WebP (strips metadata). */
-export async function saveImage(file: File): Promise<{ url: string; width: number; height: number }> {
+export async function saveImage(file: File, folder = "devices", maxSide = 1600): Promise<{ url: string; key: string; width: number; height: number }> {
   if (!file || file.size === 0) throw new UploadError("EMPTY");
   if (file.size > MAX_IMAGE_BYTES) throw new UploadError("TOO_LARGE");
   const input = Buffer.from(await file.arrayBuffer());
@@ -100,13 +100,19 @@ export async function saveImage(file: File): Promise<{ url: string; width: numbe
     throw new UploadError("BAD_TYPE");
   }
   if (!meta.format || !ALLOWED.has(meta.format)) throw new UploadError("BAD_TYPE");
-  const { data, info } = await sharp(input).rotate().resize({ width: 1600, height: 1600, fit: "inside", withoutEnlargement: true }).webp({ quality: 85 }).toBuffer({ resolveWithObject: true });
-  const url = await put(`devices/${randomUUID()}.webp`, data, "image/webp");
-  return { url, width: info.width, height: info.height };
+  const { data, info } = await sharp(input).rotate().resize({ width: maxSide, height: maxSide, fit: "inside", withoutEnlargement: true }).webp({ quality: 85 }).toBuffer({ resolveWithObject: true });
+  const key = `${folder}/${randomUUID()}.webp`;
+  const url = await put(key, data, "image/webp");
+  return { url, key, width: info.width, height: info.height };
 }
 
 /** Store an already-validated binary file (e.g. a GLB). */
-export async function saveBinary(data: Buffer, folder: string, ext: string): Promise<{ url: string }> {
-  const types: Record<string, string> = { glb: "model/gltf-binary" };
-  return { url: await put(`${folder}/${randomUUID()}.${ext}`, data, types[ext] ?? "application/octet-stream") };
+export async function saveBinary(data: Buffer, folder: string, ext: string): Promise<{ url: string; key: string }> {
+  const types: Record<string, string> = { glb: "model/gltf-binary", svg: "image/svg+xml" };
+  const key = `${folder}/${randomUUID()}.${ext}`;
+  return { url: await put(key, data, types[ext] ?? "application/octet-stream"), key };
 }
+
+/** Folders whose files are private: served only through authorised routes, never through /media. */
+export const PRIVATE_FOLDERS = ["facility", "facmaps"];
+export const isPrivateKey = (key: string) => PRIVATE_FOLDERS.some((f) => key.startsWith(`${f}/`));
