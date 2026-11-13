@@ -8,7 +8,7 @@
  *  - Maintenance and cleaning categories with the problems per area type.
  *  - E-mail templates (Arabic + English).
  *
- * Sample data (only when FAC_SAMPLE_DATA is not "false" and NODE_ENV is not production):
+ * Sample data (development, or production with FAC_SAMPLE_DATA=true for a demo):
  *  - Sample users for each role, sample internal teams, sample routing rules, SAMPLE SLA values and
  *    sample requests. Every sample row is flagged `isSample` and labelled "Sample" in the UI.
  */
@@ -270,7 +270,8 @@ export async function seedFacility(db: Db) {
     await db.facSlaPolicy.upsert({ where: { priority: p }, update: {}, create: { priority: p, businessHoursOnly: p !== "EMERGENCY" } });
   }
 
-  const sample = process.env.FAC_SAMPLE_DATA !== "false" && process.env.NODE_ENV !== "production";
+  // Sample data: always in development (unless FAC_SAMPLE_DATA=false); in production only when FAC_SAMPLE_DATA=true (e.g. a demo).
+  const sample = process.env.FAC_SAMPLE_DATA === "true" || (process.env.FAC_SAMPLE_DATA !== "false" && process.env.NODE_ENV !== "production");
   if (sample) await seedSample(db);
 
   // Bootstrap administrator for production (signs in with Microsoft Entra ID; no password).

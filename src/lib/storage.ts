@@ -17,6 +17,11 @@ export const MAX_IMAGE_BYTES = 8 * 1024 * 1024;
 export const MAX_MODEL_BYTES = 30 * 1024 * 1024;
 const ALLOWED = new Set(["jpeg", "png", "webp"]);
 const useS3 = !!process.env.S3_BUCKET;
+/** Database storage: explicit (STORAGE_BACKEND=db) or automatic on Vercel when no bucket is configured. */
+const useDb = !useS3 && (process.env.STORAGE_BACKEND === "db" || !!process.env.VERCEL);
+async function storeDb() {
+  return (await import("./db")).db;
+}
 
 export class UploadError extends Error {
   constructor(public code: "TOO_LARGE" | "BAD_TYPE" | "EMPTY") {
@@ -46,7 +51,10 @@ function localPath(key: string) {
 }
 
 async function put(key: string, data: Buffer, contentType: string) {
-  if (useS3) {
+  if (useDb) {
+    const bytes = new Uint8Array(data);
+    await (await storeDb()).storedFile.upsert({ where: { key }, update: { data: bytes, contentType, size: bytes.length }, create: { key, data: bytes, contentType, size: bytes.length } });
+  } else if (useS3) {
     const { sdk, client, bucket } = await s3();
     await client.send(new sdk.PutObjectCommand({ Bucket: bucket, Key: key, Body: data, ContentType: contentType }));
   } else {
@@ -61,6 +69,10 @@ async function put(key: string, data: Buffer, contentType: string) {
 export async function readStored(key: string): Promise<Buffer | null> {
   if (!KEY_RE.test(key)) return null;
   try {
+    if (useDb) {
+      const row = await (await storeDb()).storedFile.findUnique({ where: { key } });
+      return row ? Buffer.from(row.data) : null;
+    }
     if (useS3) {
       const { sdk, client, bucket } = await s3();
       const res = await client.send(new sdk.GetObjectCommand({ Bucket: bucket, Key: key }));
@@ -77,6 +89,10 @@ export async function deleteStored(url: string) {
   const key = url.startsWith("/media/") ? url.slice("/media/".length) : "";
   if (!KEY_RE.test(key)) return;
   try {
+    if (useDb) {
+      await (await storeDb()).storedFile.deleteMany({ where: { key } });
+      return;
+    }
     if (useS3) {
       const { sdk, client, bucket } = await s3();
       await client.send(new sdk.DeleteObjectCommand({ Bucket: bucket, Key: key }));

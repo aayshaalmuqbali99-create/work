@@ -851,3 +851,13 @@ model FacAudit {
   @@index([entity, entityId])
   @@index([createdAt])
 }
+
+/// File storage in the database — used on hosts without a persistent disk or S3 bucket
+/// (e.g. a Vercel demo). Production should use S3-compatible object storage.
+model StoredFile {
+  key         String   @id
+  data        Bytes
+  contentType String
+  size        Int
+  createdAt   DateTime @default(now())
+}
