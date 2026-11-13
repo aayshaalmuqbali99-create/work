@@ -99,10 +99,10 @@ export function MyRequests({ rows, categories }: { rows: MyRequestRow[]; categor
           />
         </div>
       ) : (
-        <motion.ul layout className="mt-6 grid gap-4">
+        <motion.ul layout className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-4">
           <AnimatePresence initial={false}>
             {filtered.map((r) => (
-              <motion.li key={r.id} layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <motion.li key={r.id} layout className="min-w-0" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
                 <Link href={`/facility/requests/${r.reference}`} className="group flex flex-col gap-4 rounded-[24px] border border-fline bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift sm:flex-row sm:items-center">
                   <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-lav-50 text-deep">
                     <CategoryIcon name={r.categoryIcon} className="size-6" />

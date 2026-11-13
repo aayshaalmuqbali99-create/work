@@ -448,7 +448,7 @@ export function RequestWizard({
                         d.floorId === f.id ? "border-deep bg-lav-50 shadow-soft" : "border-fline hover:border-lav-200",
                       )}
                     >
-                      <span className="block text-2xl font-extrabold text-deep" dir="ltr">{f.code}</span>
+                      <span className="inline-block text-2xl font-extrabold text-deep" dir="ltr">{f.code}</span>
                       <span className="mt-1 block text-xs font-medium text-fmuted">
                         {pickName(f, locale)}
                         {f.wingId && ` · ${pickName(building.wings.find((w) => w.id === f.wingId), locale)}`}

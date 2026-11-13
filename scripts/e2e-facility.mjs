@@ -124,11 +124,15 @@ await step("employee: full maintenance request with photo, safety warning and la
   await page.fill("#fh-column", "C-14");
   await page.fill("#fh-parkingSpace", "112");
   await page.waitForTimeout(700); // draft autosave
+  await page.evaluate(() => window.scrollTo(0, 0)); // the header hides while scrolling down
+  await page.waitForTimeout(400);
   // switch language mid-way: the draft must survive
   await page.getByRole("button", { name: /Language: العربية/ }).click();
   await page.waitForURL(/\/ar\/facility\/request/, { timeout: T });
   await page.getByText("استعدنا طلبك غير المكتمل.").waitFor({ timeout: T });
   assert.equal(await page.inputValue("#fh-column"), "C-14");
+  await page.evaluate(() => window.scrollTo(0, 0)); // the header hides while scrolling down
+  await page.waitForTimeout(400);
   await page.getByRole("button", { name: /: English$/ }).click();
   await page.waitForURL(/\/en\/facility\/request/, { timeout: T });
   await page.getByRole("button", { name: "Continue" }).click();
