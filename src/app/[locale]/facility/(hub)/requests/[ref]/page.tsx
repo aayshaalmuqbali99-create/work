@@ -8,6 +8,7 @@ import { getSettings } from "@/features/facility/server/calendar";
 import { employeeCanCancel, employeeCanConfirm, employeeCanReopen, MILESTONES } from "@/features/facility/domain/status";
 import { REFERENCE_RE } from "@/features/facility/domain/reference";
 import { formatDate, pickName } from "@/features/facility/format";
+import { exactLocationParts } from "@/features/facility/location-text";
 import { Timeline } from "@/components/facility/timeline";
 import { PhotoGrid } from "@/components/facility/photo-grid";
 import { RequestActions } from "@/components/facility/request-actions";
@@ -74,8 +75,12 @@ export default async function RequestDetailPage({ params }: { params: Promise<{ 
               <dl className="mt-6 grid gap-4 border-t border-fline pt-5 sm:grid-cols-2">
                 <Info label={t("Detail.category")}>{r.category ? pickName(r.category, locale) : t("Common.other")} · {t(`Service.${r.service}`)}</Info>
                 <Info label={t("Detail.submitted")}>{formatDate(r.createdAt, locale, true)}</Info>
-                <Info label={t("Detail.location")}>{locale === "ar" ? r.locationLabelAr : r.locationLabelEn}</Info>
                 <Info label={t("Detail.team")}>{r.team ? pickName(r.team, locale) : "—"}</Info>
+                <Info label={t("Detail.building")}>{r.building ? pickName(r.building, locale) : "—"}</Info>
+                <Info label={t("Detail.floor")}>{r.floor ? `${r.floor.code} · ${pickName(r.floor, locale)}` : t("Wizard.notListedFloor")}</Info>
+                {r.wing && <Info label={t("Detail.wing")}>{pickName(r.wing, locale)}</Info>}
+                <Info label={t("Detail.area")}>{r.area ? pickName(r.area, locale) : "—"}</Info>
+                <Info label={t("Detail.exactLocation")} wide>{exactLocationParts(r, locale, (k) => t(k as "Fields.room")).join(" · ") || "—"}</Info>
               </dl>
             </section>
             {report.length > 0 && (
@@ -111,9 +116,9 @@ export default async function RequestDetailPage({ params }: { params: Promise<{ 
   );
 }
 
-function Info({ label, children }: { label: string; children: React.ReactNode }) {
+function Info({ label, children, wide }: { label: string; children: React.ReactNode; wide?: boolean }) {
   return (
-    <div>
+    <div className={wide ? "sm:col-span-2" : undefined}>
       <dt className="text-xs font-bold uppercase tracking-wider text-fmuted">{label}</dt>
       <dd className="mt-1 font-medium text-fink">{children}</dd>
     </div>

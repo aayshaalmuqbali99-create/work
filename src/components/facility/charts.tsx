@@ -176,3 +176,42 @@ export function KpiTile({ label, value, tone = "default", icon }: { label: strin
     </div>
   );
 }
+
+/** Two series per row (e.g. maintenance and cleaning per floor), with legend and value labels in ink. */
+export function PairedBars({ rows, labels, empty }: { rows: { key: string; label: string; a: number; b: number }[]; labels: [string, string]; empty: string }) {
+  const [hover, setHover] = useState<string | null>(null);
+  const max = Math.max(1, ...rows.flatMap((r) => [r.a, r.b]));
+  if (rows.length === 0) return <p className="py-8 text-center text-sm text-fmuted">{empty}</p>;
+  return (
+    <div>
+      <ul className="mb-4 flex flex-wrap gap-5 text-sm text-fink">
+        {labels.map((l, i) => (
+          <li key={l} className="flex items-center gap-2"><span className="size-3 rounded-[3px]" style={{ background: SERIES[i] }} aria-hidden="true" />{l}</li>
+        ))}
+      </ul>
+      <ul className="space-y-3">
+        {rows.map((r, n) => (
+          <li key={r.key} className="grid grid-cols-[minmax(0,7rem)_1fr] items-center gap-3 sm:grid-cols-[minmax(0,10rem)_1fr]" onMouseEnter={() => setHover(r.key)} onMouseLeave={() => setHover(null)}>
+            <span className="truncate text-sm text-fink" title={r.label}>{r.label}</span>
+            <span className="space-y-1">
+              {([r.a, r.b] as const).map((v, i) => (
+                <span key={i} className="flex items-center gap-2" title={`${labels[i]}: ${v}`}>
+                  <span className="relative h-2.5 flex-1 overflow-hidden rounded-[4px] bg-lav-50">
+                    <motion.span
+                      className="absolute inset-y-0 start-0 rounded-[4px]"
+                      style={{ background: SERIES[i], opacity: hover && hover !== r.key ? 0.45 : 1 }}
+                      initial={{ width: 0 }}
+                      animate={{ width: `${(v / max) * 100}%` }}
+                      transition={{ duration: 0.6, delay: n * 0.03, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  </span>
+                  <span className="w-8 text-end text-xs font-semibold tabular-nums text-fink">{v}</span>
+                </span>
+              ))}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

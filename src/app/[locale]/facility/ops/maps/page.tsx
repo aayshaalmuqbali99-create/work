@@ -12,8 +12,8 @@ export default async function MapsAdminPage() {
   await requireFacPage("config.manage");
   const [t, locale] = await Promise.all([getTranslations("Fac"), getLocale()]);
   const [floors, maps] = await Promise.all([
-    db.facFloor.findMany({ orderBy: { sortOrder: "asc" }, include: { building: true } }),
-    db.facFloorMap.findMany({ orderBy: { createdAt: "desc" }, include: { floor: true, _count: { select: { markers: true } } } }),
+    db.facFloor.findMany({ where: { archivedAt: null }, orderBy: { sortOrder: "asc" }, include: { building: true, wingLinks: { include: { wing: true } } } }),
+    db.facFloorMap.findMany({ orderBy: { createdAt: "desc" }, include: { floor: true, wing: true, _count: { select: { markers: true } } } }),
   ]);
   const c = (k: string) => t(`Ops.config.${k}` as "Ops.config.code");
   return (
@@ -22,7 +22,7 @@ export default async function MapsAdminPage() {
         <h1 className="text-3xl font-extrabold tracking-tight text-fink">{c("mapsTitle")}</h1>
         <p className="mt-2 max-w-3xl text-fmuted">{c("mapsHelp")}</p>
       </div>
-      <MapUpload floors={floors.map((f) => ({ id: f.id, label: `${f.code} · ${pickName(f, locale)}` }))} />
+      <MapUpload floors={floors.map((f) => ({ id: f.id, label: `${f.code} · ${pickName(f, locale)}`, wings: f.wingLinks.map((l) => ({ id: l.wingId, label: pickName(l.wing, locale) })) }))} />
       {maps.length === 0 ? (
         <EmptyState icon={<MapIcon className="size-7" />} title={c("noMaps")} text={`${t("Map.comingTitle")} — ${t("Map.comingText")}`} />
       ) : (
@@ -34,7 +34,7 @@ export default async function MapsAdminPage() {
                 <img src={`/api/facility/maps/${m.id}/image`} alt="" className="aspect-[4/3] w-full bg-lav-50 object-contain" />
                 <div className="p-4">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-lg font-extrabold text-deep" dir="ltr">{m.floor.code}</span>
+                    <span className="font-mono text-lg font-extrabold text-deep" dir="ltr">{m.floor.code}{m.wing && <span className="ms-2 font-sans text-xs font-semibold text-fmuted">{pickName(m.wing, locale)}</span>}</span>
                     <span className={cn("rounded-full px-2.5 py-0.5 text-xs font-bold", m.status === "PUBLISHED" ? "bg-[#E8F9EF] text-[#1B6B3E]" : "bg-lav-50 text-deep")}>{m.status === "PUBLISHED" ? c("published") : c("draft")}</span>
                   </div>
                   <p className="mt-1 font-semibold text-fink">{m.title || pickName(m.floor, locale)}</p>

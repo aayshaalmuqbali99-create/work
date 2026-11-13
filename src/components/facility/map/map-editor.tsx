@@ -9,17 +9,19 @@ import { deleteMapAction, saveMarkersAction, setMapStatusAction } from "@/featur
 import { FloorMapViewer, type MapMarker } from "./floor-map-viewer";
 import { fhBtn, fhInput } from "../ui";
 
-type EditMarker = { id: string; kind: "POINT" | "ZONE"; areaId: string | null; labelEn: string; labelAr: string; x: number; y: number; points: [number, number][] | null; color: string };
+type EditMarker = { id: string; kind: "POINT" | "ZONE"; areaId: string | null; locationId: string | null; labelEn: string; labelAr: string; x: number; y: number; points: [number, number][] | null; color: string };
 const COLORS = ["#2D13EA", "#FF7800", "#17A598", "#9C94FF", "#1D8FC4", "#E04F2E"];
 
 /** Floor-plan editor: place markers, draw zones, link them to configured areas, preview, publish. */
 export function MapEditor({
   map,
   areas,
+  locations,
   initial,
 }: {
   map: { id: string; width: number; height: number; status: "DRAFT" | "PUBLISHED" };
   areas: { id: string; label: string; en: string; ar: string }[];
+  locations: { id: string; areaId: string | null; label: string; en: string; ar: string }[];
   initial: EditMarker[];
 }) {
   const t = useTranslations("Fac");
@@ -39,9 +41,9 @@ export function MapEditor({
     setMarkers((ms) => ms.map((m) => (m.id === id ? { ...m, ...patch } : m)));
     setDirty(true);
   };
-  const add = (m: Omit<EditMarker, "id" | "labelEn" | "labelAr" | "areaId" | "color">) => {
+  const add = (m: Omit<EditMarker, "id" | "labelEn" | "labelAr" | "areaId" | "locationId" | "color">) => {
     const id = `new-${Math.random().toString(36).slice(2, 10)}`;
-    setMarkers((ms) => [...ms, { ...m, id, labelEn: "", labelAr: "", areaId: null, color: COLORS[ms.length % COLORS.length] }]);
+    setMarkers((ms) => [...ms, { ...m, id, labelEn: "", labelAr: "", areaId: null, locationId: null, color: COLORS[ms.length % COLORS.length] }]);
     setSel(id);
     setDirty(true);
   };
@@ -73,7 +75,7 @@ export function MapEditor({
     });
 
   const viewMarkers: MapMarker[] = markers.map((m) => ({
-    id: m.id, kind: m.kind, x: m.x, y: m.y, points: m.points, color: m.color, areaId: m.areaId,
+    id: m.id, kind: m.kind, x: m.x, y: m.y, points: m.points, color: m.color, areaId: m.areaId, locationId: m.locationId,
     label: (locale === "ar" ? m.labelAr || m.labelEn : m.labelEn || m.labelAr) || areas.find((a) => a.id === m.areaId)?.label || "•",
   }));
 
@@ -143,6 +145,21 @@ export function MapEditor({
                 >
                   <option value="">—</option>
                   {areas.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
+                </select>
+              </div>
+              <div>
+                <label htmlFor="mk-loc" className="mb-1 block text-sm font-semibold">{c("linkedLocation")}</label>
+                <select
+                  id="mk-loc"
+                  value={selected.locationId ?? ""}
+                  onChange={(e) => {
+                    const l = locations.find((x) => x.id === e.target.value);
+                    update(selected.id, { locationId: l?.id ?? null, areaId: l?.areaId ?? selected.areaId, labelEn: selected.labelEn || l?.en || "", labelAr: selected.labelAr || l?.ar || "" });
+                  }}
+                  className={`${fhInput} text-sm`}
+                >
+                  <option value="">—</option>
+                  {locations.filter((l) => !selected.areaId || !l.areaId || l.areaId === selected.areaId).map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
                 </select>
               </div>
               <div>

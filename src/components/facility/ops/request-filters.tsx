@@ -11,7 +11,7 @@ import { fhInput } from "../ui";
 type Opt = { value: string; label: string };
 
 /** Filter bar: every change is reflected in the URL (shareable, back-button friendly). */
-export function RequestFilterBar({ options, exportHref }: { options: Record<"status" | "service" | "priority" | "floor" | "team" | "category", Opt[]>; exportHref: string }) {
+export function RequestFilterBar({ options, exportHref }: { options: Record<"status" | "service" | "priority" | "floor" | "wing" | "area" | "team" | "category", Opt[]>; exportHref: string }) {
   const t = useTranslations("Fac.Ops.filters");
   const sp = useSearchParams();
   const router = useRouter();
@@ -41,12 +41,12 @@ export function RequestFilterBar({ options, exportHref }: { options: Record<"sta
   const active = [...sp.keys()].some((k) => k !== "page");
   return (
     <div className={cn("rounded-[22px] border border-fline bg-white p-3 transition", pending && "opacity-70")}>
-      <div className="grid gap-2 md:grid-cols-[2fr_repeat(3,1fr)] xl:grid-cols-[2fr_repeat(6,1fr)]">
-        <div className="relative">
+      <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-[2fr_repeat(8,minmax(0,1fr))]">
+        <div className="relative sm:col-span-2 md:col-span-4 xl:col-span-1">
           <Search className="pointer-events-none absolute start-3.5 top-1/2 size-4 -translate-y-1/2 text-fmuted" aria-hidden="true" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder={t("search")} aria-label={t("search")} className={cn(fhInput, "py-2.5 ps-10 text-sm")} />
         </div>
-        {(["status", "service", "priority", "floor", "team", "category"] as const).map(sel)}
+        {(["status", "service", "priority", "floor", "wing", "area", "team", "category"] as const).map(sel)}
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-2">
         {(["open", "overdue"] as const).map((k) => (

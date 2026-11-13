@@ -61,7 +61,9 @@ export async function findRoute(tx: Tx | typeof db, r: { service: FacService; ca
 export type CreateInput = {
   service: FacService;
   floorId: string | null;
+  wingId: string | null;
   areaId: string | null;
+  locationId: string | null;
   otherLocation: string;
   detail: Record<string, string>;
   issueId: string | null;
@@ -79,34 +81,52 @@ export class RequestInputError extends Error {}
 export async function createRequest(user: FacUserSession, input: CreateInput, opts: { isSample?: boolean; createdAt?: Date } = {}) {
   const settings = await getSettings();
   return db.$transaction(async (tx) => {
-    // Re-validate the location and issue against the live configuration.
-    const floor = input.floorId ? await tx.facFloor.findFirst({ where: { id: input.floorId, active: true }, include: { building: true, wing: true } }) : null;
+    // Re-validate the whole location against the live configuration (active, not archived).
+    const live = { active: true, archivedAt: null };
+    const floor = input.floorId
+      ? await tx.facFloor.findFirst({ where: { id: input.floorId, ...live }, include: { building: true, wingLinks: { where: { active: true, wing: live }, include: { wing: true } } } })
+      : null;
     if (input.floorId && !floor) throw new RequestInputError("floor");
-    const area = input.areaId ? await tx.facArea.findFirst({ where: { id: input.areaId, floorId: floor?.id ?? "-", active: true } }) : null;
+    const wingLink = input.wingId ? floor?.wingLinks.find((l) => l.wingId === input.wingId) : null;
+    if (input.wingId && !wingLink) throw new RequestInputError("wing");
+    const wing = wingLink?.wing ?? null;
+    const area = input.areaId ? await tx.facArea.findFirst({ where: { id: input.areaId, floorId: floor?.id ?? "-", ...live } }) : null;
     if (input.areaId && !area) throw new RequestInputError("area");
+    if (area && wing && area.wingId && area.wingId !== wing.id) throw new RequestInputError("area");
+    if (floor && !area) throw new RequestInputError("area");
+    const location = input.locationId ? await tx.facLocation.findFirst({ where: { id: input.locationId, floorId: floor?.id ?? "-", ...live } }) : null;
+    if (input.locationId && (!location || (location.areaId && location.areaId !== area?.id))) throw new RequestInputError("location");
     if ((!area || area.isOther) && input.otherLocation.trim().length < 5) throw new RequestInputError("location");
     const issue = input.issueId ? await tx.facIssue.findFirst({ where: { id: input.issueId, active: true, category: { service: input.service, active: true } } }) : null;
     if (input.issueId && !issue) throw new RequestInputError("issue");
     if (!issue && input.issueOther.trim().length < 3) throw new RequestInputError("issue");
 
-    // Only keep detail fields this area asks for (or free "other").
+    // Only keep detail fields this area asks for, plus the free description ("other").
     const allowed = new Set([...(area?.fields ?? []), "other"]);
     const detail = Object.fromEntries(Object.entries(input.detail).filter(([k, v]) => allowed.has(k) && v.trim()).map(([k, v]) => [k, v.trim().slice(0, 120)]));
     if (input.otherLocation.trim()) detail.other = input.otherLocation.trim().slice(0, 300);
 
+    // Snapshot of the location as text: kept on the request even if the configuration is renamed or archived later.
+    const L = {
+      en: { office: "Office", room: "Room", parkingSpace: "Space", column: "Column", entrance: "Entrance" },
+      ar: { office: "مكتب", room: "غرفة", parkingSpace: "موقف", column: "عمود", entrance: "مدخل" },
+    } as const;
     const detailText = (lang: "en" | "ar") => {
       const parts: string[] = [];
-      if (detail.room) parts.push(lang === "ar" ? `غرفة ${detail.room}` : `Room ${detail.room}`);
+      if (location) parts.push([lang === "ar" ? location.nameAr || location.nameEn : location.nameEn || location.nameAr, location.code].filter(Boolean).join(" "));
+      if (detail.office) parts.push(`${L[lang].office} ${detail.office}`);
+      if (detail.room) parts.push(`${L[lang].room} ${detail.room}`);
       if (detail.meetingRoom) parts.push(detail.meetingRoom);
-      if (detail.parkingSpace) parts.push(lang === "ar" ? `موقف ${detail.parkingSpace}` : `Space ${detail.parkingSpace}`);
-      if (detail.column) parts.push(lang === "ar" ? `عمود ${detail.column}` : `Column ${detail.column}`);
+      if (detail.parkingSpace) parts.push(`${L[lang].parkingSpace} ${detail.parkingSpace}`);
+      if (detail.column) parts.push(`${L[lang].column} ${detail.column}`);
       if (detail.elevator) parts.push(detail.elevator);
+      if (detail.entrance) parts.push(`${L[lang].entrance} ${detail.entrance}`);
       if (detail.landmark) parts.push(detail.landmark);
       if (detail.other) parts.push(detail.other);
       return parts;
     };
-    const locationLabelEn = locationLabel([floor?.building.nameEn, floor?.wing?.nameEn, floor?.nameEn, area && !area.isOther ? area.nameEn : null, ...detailText("en")]);
-    const locationLabelAr = locationLabel([floor?.building.nameAr, floor?.wing?.nameAr, floor?.nameAr, area && !area.isOther ? area.nameAr : null, ...detailText("ar")]);
+    const locationLabelEn = locationLabel([floor?.building.nameEn, floor?.nameEn, wing?.nameEn, area && !area.isOther ? area.nameEn : null, ...detailText("en")]);
+    const locationLabelAr = locationLabel([floor?.building.nameAr, floor?.nameAr, wing?.nameAr, area && !area.isOther ? area.nameAr : null, ...detailText("ar")]);
 
     const createdAt = opts.createdAt ?? new Date();
     const priority: FacPriority = input.safetyFlag && input.priority !== "EMERGENCY" ? "HIGH" : input.priority;
@@ -129,7 +149,9 @@ export async function createRequest(user: FacUserSession, input: CreateInput, op
         issueOther: issue ? "" : input.issueOther.trim().slice(0, 200),
         buildingId: floor?.buildingId ?? null,
         floorId: floor?.id ?? null,
+        wingId: wing?.id ?? null,
         areaId: area?.id ?? null,
+        locationId: location?.id ?? null,
         locationLabelEn,
         locationLabelAr,
         locationDetail: detail,

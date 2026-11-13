@@ -11,6 +11,7 @@ import { TRANSITIONS, canTransition } from "@/features/facility/domain/status";
 import { REFERENCE_RE } from "@/features/facility/domain/reference";
 import { can } from "@/features/facility/domain/permissions";
 import { formatDate, pickName, relativeTime } from "@/features/facility/format";
+import { exactLocationParts } from "@/features/facility/location-text";
 import { Timeline } from "@/components/facility/timeline";
 import { PhotoGrid } from "@/components/facility/photo-grid";
 import { ManagePanel } from "@/components/facility/ops/manage-panel";
@@ -70,8 +71,11 @@ export default async function OpsRequestPage({ params }: { params: Promise<{ ref
             <dl className="mt-6 grid gap-x-6 gap-y-3 border-t border-fline pt-5 sm:grid-cols-2">
               <Row label={t("Ops.table.service")}>{t(`Service.${r.service}`)}</Row>
               <Row label={t("Detail.category")}>{r.category ? pickName(r.category, locale) : t("Common.other")}</Row>
+              <Row label={t("Ops.table.building")}>{r.building ? pickName(r.building, locale) : "—"}</Row>
               <Row label={t("Ops.table.floor")}>{r.floor ? `${r.floor.code} · ${pickName(r.floor, locale)}` : t("Wizard.notListedFloor")}</Row>
+              <Row label={t("Ops.table.wing")}>{r.wing ? pickName(r.wing, locale) : "—"}</Row>
               <Row label={t("Ops.table.area")}>{r.area ? pickName(r.area, locale) : "—"}</Row>
+              <Row label={t("Ops.table.location")} wide>{exactLocationParts(r, locale, (k) => t(k as "Fields.room")).join(" · ") || "—"}</Row>
               <Row label={t("Detail.submitted")}>{formatDate(r.createdAt, locale, true)}</Row>
               <Row label={t("Ops.table.team")}>{r.team ? pickName(r.team, locale) : t("Ops.table.unassigned")}</Row>
             </dl>
@@ -122,9 +126,9 @@ export default async function OpsRequestPage({ params }: { params: Promise<{ ref
   );
 }
 
-function Row({ label, children }: { label: string; children: React.ReactNode }) {
+function Row({ label, children, wide }: { label: string; children: React.ReactNode; wide?: boolean }) {
   return (
-    <div>
+    <div className={wide ? "sm:col-span-2" : undefined}>
       <dt className="text-xs font-bold uppercase tracking-wider text-fmuted">{label}</dt>
       <dd className="mt-0.5 text-sm text-fink">{children}</dd>
     </div>

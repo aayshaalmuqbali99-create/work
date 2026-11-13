@@ -17,7 +17,11 @@ export default async function GuidePage({ params }: { params: Promise<{ locale: 
   const t = await getTranslations("Fac");
   const [categories, floors] = await Promise.all([
     db.facCategory.findMany({ where: { active: true }, orderBy: { sortOrder: "asc" }, include: { issues: { where: { active: true }, orderBy: { sortOrder: "asc" } } } }),
-    db.facFloor.findMany({ where: { active: true, building: { active: true } }, orderBy: [{ sortOrder: "asc" }], include: { areas: { where: { active: true }, orderBy: { sortOrder: "asc" } } } }),
+    db.facFloor.findMany({
+      where: { active: true, archivedAt: null, building: { active: true } },
+      orderBy: [{ sortOrder: "asc" }],
+      include: { areas: { where: { active: true, archivedAt: null }, orderBy: { sortOrder: "asc" } }, wingLinks: { where: { active: true, wing: { active: true, archivedAt: null } }, include: { wing: true } } },
+    }),
   ]);
   return (
     <div className="bg-[linear-gradient(180deg,#F6F5FF_0,#ffffff_420px)] px-5 pb-10 pt-32 sm:px-8">
@@ -61,11 +65,14 @@ export default async function GuidePage({ params }: { params: Promise<{ locale: 
         <section className="mt-14 rounded-[28px] border border-fline bg-white p-6 shadow-soft">
           <h2 className="flex items-center gap-2 text-xl font-extrabold text-fink"><MapPin className="size-5 text-deep" aria-hidden="true" /> {t("Guide.areasTitle")}</h2>
           <p className="mt-2 text-sm text-fmuted">{t("Guide.areasText")}</p>
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {floors.map((f) => (
               <div key={f.id}>
-                <p className="font-mono text-2xl font-extrabold text-deep" dir="ltr">{f.code}</p>
-                <p className="text-sm text-fmuted">{pickName(f, locale)}</p>
+                <p className="flex items-center gap-2">
+                  <span className="font-mono text-2xl font-extrabold text-deep" dir="ltr">{f.code}</span>
+                  {f.verification === "PROVISIONAL" && <span className="rounded-full bg-[#FFF8E0] px-2 py-0.5 text-[11px] font-bold text-[#6B4E00] ring-1 ring-[#FFE59A]">{t("Guide.provisional")}</span>}
+                </p>
+                <p className="text-sm text-fmuted">{pickName(f, locale)}{f.wingLinks.length > 0 && ` · ${f.wingLinks.map((l) => pickName(l.wing, locale)).join(" / ")}`}</p>
                 <ul className="mt-3 space-y-2">
                   {f.areas.map((a) => (
                     <li key={a.id} className="flex items-center gap-2 text-sm font-medium text-fink">

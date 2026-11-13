@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { requireFacPage } from "@/features/facility/server/guard";
 import { getAnalytics, type Range } from "@/features/facility/server/analytics";
 import { durationLabel, pickName } from "@/features/facility/format";
-import { BarList, KpiTile, SplitBar, TrendChart } from "@/components/facility/charts";
+import { BarList, KpiTile, PairedBars, SplitBar, TrendChart } from "@/components/facility/charts";
 import { fhCard } from "@/components/facility/ui";
 
 const RANGES: Range[] = ["30", "90", "365", "all"];
@@ -52,6 +52,22 @@ export default async function AnalyticsPage({ searchParams }: { searchParams: Pr
           {a.total === 0 ? <p className="text-sm text-fmuted">{noData}</p> : <SplitBar parts={[{ label: t("Service.MAINTENANCE"), value: a.service.MAINTENANCE }, { label: t("Service.CLEANING"), value: a.service.CLEANING }]} />}
           <h2 className="mb-5 mt-8 font-extrabold text-fink">{t("Ops.analytics.basements")}</h2>
           <BarList empty={noData} total={a.total || undefined} items={a.basements.map((b) => ({ key: b.key, label: b.key, value: b.value }))} />
+        </section>
+        <section className={`${card} lg:col-span-2`}>
+          <h2 className="mb-5 font-extrabold text-fink">{t("Ops.analytics.byFloorService")}</h2>
+          <PairedBars
+            empty={noData}
+            labels={[t("Ops.analytics.maintenanceByFloor"), t("Ops.analytics.cleaningByFloor")]}
+            rows={a.floorService.map((f) => ({ key: f.key, label: f.label ? `${f.key} · ${pickName(f.label, locale)}` : t("Wizard.notListedFloor"), a: f.MAINTENANCE, b: f.CLEANING }))}
+          />
+        </section>
+        <section className={card}>
+          <h2 className="mb-5 font-extrabold text-fink">{t("Ops.analytics.byWing")}</h2>
+          <BarList empty={noData} total={a.total || undefined} items={a.byWing.map((x) => ({ key: x.key, label: x.label ? label(x) : t("Ops.analytics.noWing"), value: x.value }))} />
+        </section>
+        <section className={card}>
+          <h2 className="mb-5 font-extrabold text-fink">{t("Ops.analytics.byArea")}</h2>
+          <BarList empty={noData} total={a.total || undefined} items={a.byAreaKind.slice(0, 12).map((x) => ({ key: x.key, label: label(x), value: x.value }))} />
         </section>
         <section className={card}>
           <h2 className="mb-5 font-extrabold text-fink">{t("Ops.analytics.byFloor")}</h2>

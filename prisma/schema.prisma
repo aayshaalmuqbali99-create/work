@@ -322,6 +322,12 @@ enum FacEmailStatus {
   FAILED
 }
 
+/// Location records are CONFIRMED (verified against the building) or PROVISIONAL (proposed until the official map is confirmed).
+enum FacVerification {
+  CONFIRMED
+  PROVISIONAL
+}
+
 enum FacAttachmentKind {
   REPORT // photo added by the employee
   COMPLETION // photo added by Facility Operations / contractor when work is done
@@ -378,71 +384,143 @@ model FacBuilding {
 }
 
 model FacWing {
-  id         String      @id @default(cuid())
-  buildingId String
-  building   FacBuilding @relation(fields: [buildingId], references: [id], onDelete: Cascade)
-  code       String
-  nameEn     String
-  nameAr     String
-  sortOrder  Int         @default(0)
-  active     Boolean     @default(true)
-  floors     FacFloor[]
+  id           String          @id @default(cuid())
+  buildingId   String
+  building     FacBuilding     @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  code         String
+  nameEn       String
+  nameAr       String
+  sortOrder    Int             @default(0)
+  active       Boolean         @default(true)
+  verification FacVerification @default(CONFIRMED)
+  archivedAt   DateTime?
+  floorLinks   FacFloorWing[]
+  areas        FacArea[]
+  locations    FacLocation[]
+  requests     FacRequest[]
+  maps         FacFloorMap[]
 
   @@unique([buildingId, code])
 }
 
+/// Which wings exist on which floor (many-to-many). A floor without links has no wing step.
+model FacFloorWing {
+  id           String          @id @default(cuid())
+  floorId      String
+  floor        FacFloor        @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  wingId       String
+  wing         FacWing         @relation(fields: [wingId], references: [id], onDelete: Cascade)
+  verification FacVerification @default(CONFIRMED)
+  sortOrder    Int             @default(0)
+  active       Boolean         @default(true)
+
+  @@unique([floorId, wingId])
+}
+
+/// Reusable library of area types (Office, Meeting Room, Parking Area…). Areas reference it by key.
+model FacAreaCategory {
+  id            String    @id @default(cuid())
+  /// Stable identifier used by areas and by problem rules (FacIssue.areaKinds).
+  key           String    @unique
+  nameEn        String
+  nameAr        String
+  icon          String    @default("map-pin")
+  /// Location detail fields suggested when an area of this type is created.
+  defaultFields String[]
+  sortOrder     Int       @default(0)
+  active        Boolean   @default(true)
+  archivedAt    DateTime?
+  areas         FacArea[]
+}
+
 model FacFloor {
-  id         String        @id @default(cuid())
-  buildingId String
-  building   FacBuilding   @relation(fields: [buildingId], references: [id], onDelete: Cascade)
-  /// Null when the level is shared by the whole building (e.g. basements).
-  wingId     String?
-  wing       FacWing?      @relation(fields: [wingId], references: [id], onDelete: SetNull)
-  code       String // e.g. B1, G, M, 1
-  nameEn     String
-  nameAr     String
+  id           String          @id @default(cuid())
+  buildingId   String
+  building     FacBuilding     @relation(fields: [buildingId], references: [id], onDelete: Cascade)
+  code         String // e.g. B1, G, M, 1
+  nameEn       String
+  nameAr       String
   /// Vertical order: negative for basements.
-  level      Int           @default(0)
-  sortOrder  Int           @default(0)
-  active     Boolean       @default(true)
-  areas      FacArea[]
-  maps       FacFloorMap[]
-  requests   FacRequest[]
+  level        Int             @default(0)
+  sortOrder    Int             @default(0)
+  active       Boolean         @default(true)
+  verification FacVerification @default(CONFIRMED)
+  archivedAt   DateTime?
+  wingLinks    FacFloorWing[]
+  locations    FacLocation[]
+  areas        FacArea[]
+  maps         FacFloorMap[]
+  requests     FacRequest[]
 
   @@unique([buildingId, code])
 }
 
 model FacArea {
-  id          String         @id @default(cuid())
-  floorId     String
-  floor       FacFloor       @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  id           String          @id @default(cuid())
+  floorId      String
+  floor        FacFloor        @relation(fields: [floorId], references: [id], onDelete: Cascade)
   /// Optional parent (zone → area → sub-area).
-  parentId    String?
-  parent      FacArea?       @relation("AreaTree", fields: [parentId], references: [id], onDelete: SetNull)
-  children    FacArea[]      @relation("AreaTree")
-  /// Drives which issues are offered: PARKING, MEETING_ROOMS, RESTROOMS, PHARMACY, CLINIC, EVENT_AREA, OFFICE, PANTRY, CORRIDOR, ELEVATOR_LOBBY, OTHER…
-  kind        String
-  nameEn      String
-  nameAr      String
-  descEn      String         @default("")
-  descAr      String         @default("")
+  parentId     String?
+  parent       FacArea?        @relation("AreaTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children     FacArea[]       @relation("AreaTree")
+  /// Area category key (FacAreaCategory.key). Drives which problems are offered.
+  kind         String
+  category     FacAreaCategory @relation(fields: [kind], references: [key], onUpdate: Cascade, onDelete: Restrict)
+  /// Null = shared by every wing of the floor (or the floor has no wings).
+  wingId       String?
+  wing         FacWing?        @relation(fields: [wingId], references: [id], onDelete: SetNull)
+  nameEn       String
+  nameAr       String
+  descEn       String          @default("")
+  descAr       String          @default("")
   /// "Other / not listed": the employee describes the location in free text.
-  isOther     Boolean        @default(false)
-  /// Extra location fields asked for this area: room, meetingRoom, parkingSpace, column, elevator, landmark.
-  fields      String[]
+  isOther      Boolean         @default(false)
+  /// Extra location fields asked for this area: office, room, meetingRoom, parkingSpace, column, elevator, entrance, landmark.
+  fields       String[]
   /// Shown when the facility scope is limited (e.g. clinic and pharmacy: non-clinical only).
-  scopeNoteEn String         @default("")
-  scopeNoteAr String         @default("")
+  scopeNoteEn  String          @default("")
+  scopeNoteAr  String          @default("")
   /// Free metadata (room numbers, column ranges…) — never shown as fact unless entered by an administrator.
-  meta        Json           @default("{}")
+  meta         Json            @default("{}")
   /// Random token printed in the location QR code (reveals nothing about the location).
-  qrToken     String         @unique @default(cuid())
-  sortOrder   Int            @default(0)
-  active      Boolean        @default(true)
-  markers     FacMapMarker[]
-  requests    FacRequest[]
+  qrToken      String          @unique @default(cuid())
+  sortOrder    Int             @default(0)
+  active       Boolean         @default(true)
+  verification FacVerification @default(CONFIRMED)
+  archivedAt   DateTime?
+  locations    FacLocation[]
+  markers      FacMapMarker[]
+  requests     FacRequest[]
 
   @@index([floorId, sortOrder])
+}
+
+/// A specific, administrator-defined location: room, office, meeting room, parking section, elevator, entrance, landmark…
+/// Floor-wide items (elevators, entrances, landmarks) have no area.
+model FacLocation {
+  id           String          @id @default(cuid())
+  floorId      String
+  floor        FacFloor        @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  wingId       String?
+  wing         FacWing?        @relation(fields: [wingId], references: [id], onDelete: SetNull)
+  areaId       String?
+  area         FacArea?        @relation(fields: [areaId], references: [id], onDelete: SetNull)
+  /// ROOM, OFFICE, MEETING_ROOM, PARKING_SECTION, ELEVATOR, ENTRANCE, LANDMARK, COLUMN
+  kind         String
+  /// Number or short identifier shown on site (e.g. "12", "P-A", "Lift 3").
+  code         String          @default("")
+  nameEn       String          @default("")
+  nameAr       String          @default("")
+  verification FacVerification @default(CONFIRMED)
+  qrToken      String          @unique @default(cuid())
+  sortOrder    Int             @default(0)
+  active       Boolean         @default(true)
+  archivedAt   DateTime?
+  requests     FacRequest[]
+  markers      FacMapMarker[]
+
+  @@index([floorId, kind])
+  @@index([areaId])
 }
 
 // ---- Service catalogue ----
@@ -553,6 +631,8 @@ model FacSettings {
   /// Verified emergency contact text shown in the safety warning. Empty until provided by Facility Operations.
   emergencyContactEn String   @default("")
   emergencyContactAr String   @default("")
+  /// Data upgrades applied by the seed (each runs once, so later administrator edits are never overwritten).
+  seedVersion        Int      @default(0)
   updatedAt          DateTime @updatedAt
 }
 
@@ -592,8 +672,12 @@ model FacRequest {
   building          FacBuilding?      @relation(fields: [buildingId], references: [id], onDelete: SetNull)
   floorId           String?
   floor             FacFloor?         @relation(fields: [floorId], references: [id], onDelete: SetNull)
+  wingId            String?
+  wing              FacWing?          @relation(fields: [wingId], references: [id], onDelete: SetNull)
   areaId            String?
   area              FacArea?          @relation(fields: [areaId], references: [id], onDelete: SetNull)
+  locationId        String?
+  location          FacLocation?      @relation(fields: [locationId], references: [id], onDelete: SetNull)
   /// Snapshot of the location as text (kept even if the configuration changes later).
   locationLabelEn   String            @default("")
   locationLabelAr   String            @default("")
@@ -626,6 +710,8 @@ model FacRequest {
   @@index([status, createdAt])
   @@index([teamId, status])
   @@index([floorId])
+  @@index([wingId])
+  @@index([areaId])
 }
 
 model FacRequestEvent {
@@ -713,6 +799,9 @@ model FacFloorMap {
   id          String         @id @default(cuid())
   floorId     String
   floor       FacFloor       @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  /// Optional: a plan covering only one wing of the floor.
+  wingId      String?
+  wing        FacWing?       @relation(fields: [wingId], references: [id], onDelete: SetNull)
   title       String         @default("")
   /// Storage key under facmaps/… (raster image or validated SVG), served through the authorised map route.
   storageKey  String
@@ -729,21 +818,23 @@ model FacFloorMap {
 }
 
 model FacMapMarker {
-  id      String      @id @default(cuid())
-  mapId   String
-  map     FacFloorMap @relation(fields: [mapId], references: [id], onDelete: Cascade)
-  areaId  String?
-  area    FacArea?    @relation(fields: [areaId], references: [id], onDelete: SetNull)
+  id         String       @id @default(cuid())
+  mapId      String
+  map        FacFloorMap  @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  areaId     String?
+  area       FacArea?     @relation(fields: [areaId], references: [id], onDelete: SetNull)
+  locationId String?
+  location   FacLocation? @relation(fields: [locationId], references: [id], onDelete: SetNull)
   /// POINT or ZONE
-  kind    String      @default("POINT")
-  labelEn String      @default("")
-  labelAr String      @default("")
+  kind       String       @default("POINT")
+  labelEn    String       @default("")
+  labelAr    String       @default("")
   /// Position as a fraction of the map size (0…1), independent of the image resolution.
-  x       Float
-  y       Float
+  x          Float
+  y          Float
   /// ZONE outline: [[x,y], …] as fractions (0…1).
-  points  Json?
-  color   String      @default("#2D13EA")
+  points     Json?
+  color      String       @default("#2D13EA")
 }
 
 model FacAudit {

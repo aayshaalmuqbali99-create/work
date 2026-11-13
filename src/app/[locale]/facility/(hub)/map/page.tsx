@@ -20,11 +20,11 @@ export default async function MapPage({ params }: { params: Promise<{ locale: st
   const t = await getTranslations("Fac");
   const maps = await db.facFloorMap.findMany({
     where: { status: "PUBLISHED", floor: { active: true } },
-    include: { floor: true, markers: { include: { area: { select: { active: true } } } } },
+    include: { floor: true, wing: true, markers: { include: { area: { select: { active: true, archivedAt: true } }, location: { select: { active: true, archivedAt: true } } } } },
     orderBy: [{ floor: { sortOrder: "asc" } }, { publishedAt: "desc" }],
   });
   // one published map per floor (most recent)
-  const perFloor = maps.filter((m, i) => maps.findIndex((x) => x.floorId === m.floorId) === i);
+  const perFloor = maps.filter((m, i) => maps.findIndex((x) => x.floorId === m.floorId && x.wingId === m.wingId) === i);
   return (
     <div className="bg-[linear-gradient(180deg,#F6F5FF_0,#ffffff_420px)] px-5 pb-10 pt-32 sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -43,7 +43,7 @@ export default async function MapPage({ params }: { params: Promise<{ locale: st
               maps={perFloor.map((m) => ({
                 id: m.id,
                 floorCode: m.floor.code,
-                floorName: pickName(m.floor, locale),
+                floorName: [pickName(m.floor, locale), m.wing ? pickName(m.wing, locale) : null].filter(Boolean).join(" · "),
                 width: m.width,
                 height: m.height,
                 markers: m.markers.map(
@@ -55,7 +55,8 @@ export default async function MapPage({ params }: { params: Promise<{ locale: st
                     points: (k.points as [number, number][] | null) ?? null,
                     label: (locale === "ar" ? k.labelAr || k.labelEn : k.labelEn || k.labelAr) || "•",
                     color: k.color,
-                    areaId: k.area?.active ? k.areaId : null,
+                    areaId: k.area?.active && !k.area.archivedAt ? k.areaId : null,
+                    locationId: k.location?.active && !k.location.archivedAt ? k.locationId : null,
                   }),
                 ),
               }))}

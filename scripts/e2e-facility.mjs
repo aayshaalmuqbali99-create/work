@@ -90,70 +90,168 @@ await step("employee: cannot open Facility Operations", async () => {
   await ctx.close();
 });
 
-await step("employee: B1 parking areas and B2 options are configuration-driven; categories adapt", async () => {
-  const ctx = await browser.newContext();
-  const page = await login(ctx, "employee@facility-hub.test");
-  await page.goto(`${BASE}/en/facility/request?service=MAINTENANCE`, { timeout: T });
+// helpers for the one-page request form
+const optionLabels = async (page, sel) => (await page.locator(`${sel} option`).allInnerTexts()).map((x) => x.trim()).filter((x) => x && x !== "Choose…");
+const startForm = async (page, service) => {
+  await page.goto(`${BASE}/en/facility/request${service ? `?service=${service}` : ""}`, { timeout: T });
   await page.evaluate(() => localStorage.clear());
   await page.reload();
-  await page.getByRole("radio", { name: /B1/ }).click();
-  for (const a of ["Parking Area", "Meeting Rooms", "Restrooms", "Pharmacy", "Clinic", "Central Event Area", "Other"]) {
-    await page.getByRole("radio", { name: new RegExp(`^${a}`) }).waitFor();
+};
+
+await step("locations: B1 has 7 areas, B2/B3 Parking + Other; Ground and upper floors use wings; floor change resets area; Other needs a description", async () => {
+  const ctx = await browser.newContext();
+  const page = await login(ctx, "employee@facility-hub.test");
+  await startForm(page, "MAINTENANCE");
+  const floors = await optionLabels(page, "#fh-floor");
+  for (const f of ["Basement 1 (B1)", "Basement 2 (B2)", "Basement 3 (B3)", "Ground Floor", "Mezzanine", "Floor 1", "Floor 6", "My floor isn't listed"]) assert.ok(floors.includes(f), f);
+  // 1: B1
+  await page.selectOption("#fh-floor", { label: "Basement 1 (B1)" });
+  assert.equal(await page.locator("#fh-wing").count(), 0, "basements have no wing");
+  assert.deepEqual(await optionLabels(page, "#fh-area"), ["Parking Area", "Meeting Rooms", "Restrooms", "Pharmacy", "Clinic", "Central Event Area", "Other"]);
+  await page.selectOption("#fh-area", { label: "Meeting Rooms" });
+  // 6 + 2: change floor resets the area; B2 = Parking + Other
+  await page.selectOption("#fh-floor", { label: "Basement 2 (B2)" });
+  assert.equal(await page.inputValue("#fh-area"), "", "area reset after floor change");
+  assert.deepEqual(await optionLabels(page, "#fh-area"), ["Parking Area", "Other"]);
+  // 3: B3
+  await page.selectOption("#fh-floor", { label: "Basement 3 (B3)" });
+  assert.deepEqual(await optionLabels(page, "#fh-area"), ["Parking Area", "Other"]);
+  // 8: parking problems adapt; exact spot field
+  await page.selectOption("#fh-area", { label: "Parking Area" });
+  await page.locator("#fh-exact").waitFor();
+  const parkingIssues = await optionLabels(page, "#fh-issue");
+  assert.ok(parkingIssues.includes("Drainage problems") && parkingIssues.includes("Ventilation problems"));
+  // 4 + 5: ground floor shows the wing selector, then its areas
+  await page.selectOption("#fh-floor", { label: "Ground Floor" });
+  assert.deepEqual(await optionLabels(page, "#fh-wing"), ["Sun Wing", "Moon Wing", "I'm not sure"]);
+  assert.equal(await page.locator("#fh-area").count(), 0, "area waits for the wing");
+  await page.selectOption("#fh-wing", { label: "Sun Wing" });
+  const ground = await optionLabels(page, "#fh-area");
+  for (const a of ["Reception", "Offices", "Meeting Rooms", "Restrooms", "Corridors", "Elevators / Lift Lobby", "Staircases", "Waiting Areas", "Other"]) assert.ok(ground.includes(a), a);
+  await page.getByText("Areas on this floor are still being confirmed").waitFor();
+  await page.selectOption("#fh-floor", { label: "Mezzanine" });
+  await page.selectOption("#fh-wing", { label: "I'm not sure" });
+  assert.ok(!(await optionLabels(page, "#fh-area")).includes("Reception"), "mezzanine has no reception");
+  // 7: Other requires a description
+  await page.selectOption("#fh-floor", { label: "Basement 2 (B2)" });
+  await page.selectOption("#fh-area", { label: "Other" });
+  await page.getByRole("button", { name: "Send report" }).click();
+  await page.getByText("Please describe where it is").waitFor();
+  await ctx.close();
+});
+let roomReference = "";
+await step("admin location changes reach employees; full location is stored; ops filters by wing; archive hides but keeps history", async () => {
+  // remove leftovers of earlier runs (records without requests are deleted, others archived)
+  for (const model of [testDb.facLocation, testDb.facArea]) {
+    await model.deleteMany({ where: { nameEn: { startsWith: "E2E " }, requests: { none: {} } } });
+    await model.updateMany({ where: { nameEn: { startsWith: "E2E " }, archivedAt: null }, data: { archivedAt: new Date() } });
   }
-  await page.getByRole("radio", { name: /B2/ }).click();
-  const b2 = await page.locator('[role=radiogroup][aria-label="Area"] [role=radio]').allInnerTexts();
-  assert.deepEqual(b2.map((x) => x.split("\n")[0].trim()), ["Parking Area", "Other"]);
-  await page.getByRole("radio", { name: /^Parking Area/ }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("radio", { name: "Drainage problems" }).waitFor();
-  await page.getByRole("button", { name: "Back" }).click();
-  await page.getByRole("radio", { name: /B1/ }).click();
-  await page.getByRole("radio", { name: /^Restrooms/ }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("radio", { name: "Blocked drains" }).waitFor();
-  assert.equal(await page.getByRole("radio", { name: "Drainage problems" }).count(), 0, "B2/B3-only problem hidden on B1 restrooms");
+  const ctx = await browser.newContext();
+  const admin = await login(ctx, "admin@facility-hub.test");
+  await admin.goto(`${BASE}/en/facility/ops/locations`, { timeout: T });
+  await admin.locator('nav[aria-label="Floors"] a').filter({ hasText: /^2/ }).click();
+  await admin.waitForURL(/floor=/, { timeout: T });
+  // specific location: Meeting room 12 in Floor 2 · Sun Wing · Meeting Rooms
+  await admin.getByRole("button", { name: "Add location" }).click();
+  await admin.selectOption("#cf-location-new-kind", { label: "Meeting room" });
+  await admin.fill("#cf-location-new-code", "12");
+  await admin.fill("#cf-location-new-nameEn", "E2E Innovation Room");
+  await admin.fill("#cf-location-new-nameAr", "قاعة الابتكار التجريبية");
+  await admin.selectOption("#cf-location-new-areaId", { label: "Meeting Rooms" });
+  await admin.selectOption("#cf-location-new-wingId", { label: "Sun Wing" });
+  await admin.locator("form", { has: admin.locator("#cf-location-new-kind") }).getByRole("button", { name: "Save" }).click();
+  await admin.getByRole("cell", { name: "E2E Innovation Room" }).waitFor({ timeout: T });
+  // new area on Floor 2
+  await admin.getByRole("button", { name: "Add area", exact: true }).click();
+  await admin.selectOption("#cf-area-new-kind", { label: "Common Area" });
+  await admin.fill("#cf-area-new-nameEn", "E2E Lounge");
+  await admin.fill("#cf-area-new-nameAr", "استراحة الاختبار");
+  await admin.locator("form", { has: admin.locator("#cf-area-new-kind") }).getByRole("button", { name: "Save" }).click();
+  await admin.getByText("E2E Lounge").first().waitFor({ timeout: T });
+
+  const emp = await login(await browser.newContext(), "employee@facility-hub.test");
+  await startForm(emp, "MAINTENANCE");
+  await emp.selectOption("#fh-floor", { label: "Floor 2" });
+  await emp.selectOption("#fh-wing", { label: "Sun Wing" });
+  assert.ok((await optionLabels(emp, "#fh-area")).includes("E2E Lounge"), "admin-added area visible");
+  await emp.selectOption("#fh-area", { label: "Meeting Rooms" });
+  await emp.selectOption("#fh-room", { label: "E2E Innovation Room 12" });
+  await emp.getByText("Floor 2 → Sun Wing → Meeting Rooms → E2E Innovation Room 12").waitFor();
+  await emp.selectOption("#fh-issue", { label: "Air conditioning" });
+  await emp.fill("#fh-desc", "[e2e] The room is warm during afternoon meetings.");
+  await emp.getByRole("button", { name: "Send report" }).click();
+  await emp.getByText("Thank You for Letting Us Know!").waitFor({ timeout: T });
+  roomReference = (await emp.locator("p.font-mono").first().innerText()).trim();
+  await emp.getByRole("link", { name: "Track my request" }).click();
+  await emp.waitForURL(new RegExp(roomReference), { timeout: T });
+  await emp.getByText("Sun Wing").first().waitFor();
+  await emp.getByText("E2E Innovation Room 12").first().waitFor();
+
+  // stored relations
+  const stored = await testDb.facRequest.findUnique({ where: { reference: roomReference }, include: { floor: true, wing: true, area: true, location: true, building: true } });
+  assert.equal(stored.floor.code, "2");
+  assert.equal(stored.wing.code, "SUN");
+  assert.equal(stored.area.kind, "MEETING_ROOMS");
+  assert.equal(stored.location.code, "12");
+  assert.ok(stored.building);
+
+  // ops: filter by wing and area
+  await admin.goto(`${BASE}/en/facility/ops/requests`, { timeout: T });
+  await admin.getByLabel("Wing").selectOption({ label: "Sun Wing" });
+  await admin.waitForURL(/wing=/, { timeout: T });
+  await admin.getByRole("link", { name: roomReference }).waitFor({ timeout: T });
+  await admin.getByLabel("Area").selectOption({ label: "Meeting Room" });
+  await admin.waitForURL(/area=kind/, { timeout: T });
+  await admin.getByRole("link", { name: roomReference }).waitFor({ timeout: T });
+
+  // archive both test records: hidden from employees, history kept on the request
+  await admin.goto(`${BASE}/en/facility/ops/locations`, { timeout: T });
+  await admin.locator('nav[aria-label="Floors"] a').filter({ hasText: /^2/ }).click();
+  await admin.waitForURL(/floor=/, { timeout: T });
+  await admin.getByRole("row").filter({ hasText: "E2E Lounge" }).getByRole("button", { name: "Archive" }).click();
+  await admin.getByRole("row").filter({ hasText: "E2E Lounge" }).waitFor({ state: "detached", timeout: T });
+  await admin.getByRole("row").filter({ hasText: "E2E Innovation Room" }).getByRole("button", { name: "Archive" }).click();
+  await admin.getByRole("row").filter({ hasText: "E2E Innovation Room" }).waitFor({ state: "detached", timeout: T });
+  await startForm(emp, "MAINTENANCE");
+  await emp.selectOption("#fh-floor", { label: "Floor 2" });
+  await emp.selectOption("#fh-wing", { label: "Sun Wing" });
+  assert.ok(!(await optionLabels(emp, "#fh-area")).includes("E2E Lounge"), "archived area hidden");
+  await emp.selectOption("#fh-area", { label: "Meeting Rooms" });
+  assert.equal(await emp.locator("#fh-room").count(), 0, "archived room hidden");
+  await emp.goto(`${BASE}/en/facility/requests/${roomReference}`, { timeout: T });
+  await emp.getByText("E2E Innovation Room 12").first().waitFor();
   await ctx.close();
 });
 
-await step("employee: full maintenance request with photo, safety warning and language switch keeps the draft", async () => {
+await step("employee: one-page request with photo, safety warning; language switch keeps what was typed", async () => {
   const ctx = await browser.newContext();
   const page = await login(ctx, "employee@facility-hub.test");
-  await page.goto(`${BASE}/en/facility/request`, { timeout: T });
-  await page.evaluate(() => localStorage.clear());
-  await page.reload();
-  await page.getByRole("radio", { name: /Maintenance Request/ }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("radio", { name: /B1/ }).click();
-  await page.getByRole("radio", { name: /^Parking Area/ }).click();
-  await page.fill("#fh-column", "C-14");
-  await page.fill("#fh-parkingSpace", "112");
+  await startForm(page);
+  await page.getByRole("radio", { name: "Maintenance" }).click();
+  await page.selectOption("#fh-floor", { label: "Basement 1 (B1)" });
+  await page.selectOption("#fh-area", { label: "Parking Area" });
+  await page.fill("#fh-exact", "Space 112, column C-14");
   await page.waitForTimeout(700); // draft autosave
-  await page.evaluate(() => window.scrollTo(0, 0)); // the header hides while scrolling down
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(400);
-  // switch language mid-way: the draft must survive
   await page.getByRole("button", { name: /Language: العربية/ }).click();
   await page.waitForURL(/\/ar\/facility\/request/, { timeout: T });
-  await page.getByText("استعدنا طلبك غير المكتمل.").waitFor({ timeout: T });
-  assert.equal(await page.inputValue("#fh-column"), "C-14");
-  await page.evaluate(() => window.scrollTo(0, 0)); // the header hides while scrolling down
+  await page.locator("#fh-exact").waitFor({ timeout: T });
+  assert.equal(await page.inputValue("#fh-exact"), "Space 112, column C-14", "typed text survives the language switch");
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(400);
   await page.getByRole("button", { name: /: English$/ }).click();
   await page.waitForURL(/\/en\/facility\/request/, { timeout: T });
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByRole("radio", { name: "Lighting failure" }).click();
-  await page.getByRole("button", { name: "Continue" }).click();
+  await page.locator("#fh-issue").waitFor({ timeout: T });
+  await page.selectOption("#fh-issue", { label: "Lighting failure" });
   await page.fill("#fh-desc", "[e2e] There is smoke near the light fitting above column C-14.");
   await page.getByRole("alert").filter({ hasText: "This may be an emergency" }).waitFor();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByText("This may be an emergency").waitFor(); // blocked until acknowledged
-  await page.getByLabel(/I've contacted security/).check();
+  await page.getByRole("button", { name: "Send report" }).click();
+  await page.getByText("Please complete the highlighted fields.").waitFor(); // blocked until acknowledged
   await page.fill("#fh-desc", "[e2e] Two ceiling lights are flickering above column C-14.");
-  await page.fill("#fh-phone", "+968 9000 0000");
-  await page.getByRole("button", { name: "Continue" }).click();
+  await page.getByText("This may be an emergency").waitFor({ state: "detached", timeout: T });
   await page.locator('input[type=file][multiple]').setInputFiles(png);
-  await page.locator("ul img").first().waitFor();
-  await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByText("Review and send").waitFor();
+  await page.locator('img[src^="blob:"]').first().waitFor();
   await page.getByRole("button", { name: "Send report" }).click();
   await page.getByText("Thank You for Letting Us Know!").waitFor({ timeout: T });
   await page.getByText("Your report has been successfully received by Facility Operations.", { exact: false }).waitFor();
@@ -162,6 +260,7 @@ await step("employee: full maintenance request with photo, safety warning and la
   await page.getByRole("link", { name: "Track my request" }).click();
   await page.waitForURL(new RegExp(reference), { timeout: T });
   await page.getByRole("heading", { name: "Lighting failure" }).waitFor();
+  await page.getByText("Space 112, column C-14").first().waitFor();
   const src = await page.locator('img[src^="/api/facility/attachments/"]').first().getAttribute("src");
   const photo = await page.request.get(`${BASE}${src}`);
   assert.equal(photo.status(), 200, "photo served through the authorised route");
@@ -293,7 +392,8 @@ await step("QR: scanning a location code opens the wizard with that location (to
   await page.goto(`${BASE}/facility/q/${area.qrToken}`, { timeout: T });
   await page.waitForURL(/\/facility\/request\?area=.+&from=qr/, { timeout: T });
   await page.getByText(/Location filled in from the QR code/).waitFor({ timeout: T });
-  await page.getByText("B1 · Central Event Area").waitFor();
+  await page.getByText("B1 → Central Event Area").first().waitFor();
+  assert.equal(await page.inputValue("#fh-floor") !== "", true, "floor preselected and still editable");
   const bad = await page.goto(`${BASE}/en/facility/q/notarealtoken123`, { timeout: T });
   assert.equal(bad.status(), 404);
   await ctx.close();

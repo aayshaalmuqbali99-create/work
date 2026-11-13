@@ -2,7 +2,6 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { AlertTriangle } from "lucide-react";
 import { db } from "@/lib/db";
 import { requireFacPage } from "@/features/facility/server/guard";
-import { AREA_KINDS } from "@/features/facility/domain/location";
 import { ActiveDot, ConfigTable } from "@/components/facility/ops/config-table";
 import { CategoryIcon, ICON_NAMES } from "@/components/facility/icons";
 import { pickName } from "@/features/facility/format";
@@ -11,10 +10,14 @@ export default async function CategoriesPage() {
   await requireFacPage("config.manage");
   const [t, locale] = await Promise.all([getTranslations("Fac"), getLocale()]);
   const categories = await db.facCategory.findMany({ orderBy: [{ service: "asc" }, { sortOrder: "asc" }], include: { issues: { orderBy: { sortOrder: "asc" } } } });
-  const areaKinds = [...new Set([...AREA_KINDS, ...(await db.facArea.findMany({ select: { kind: true }, distinct: ["kind"] })).map((a) => a.kind)])];
+  const library = await db.facAreaCategory.findMany({ where: { archivedAt: null }, orderBy: { sortOrder: "asc" } });
+  const areaKinds = library.map((x) => x.key);
   const c = (k: string) => t(`Ops.config.${k}` as "Ops.config.code");
   const act = (a: boolean) => <ActiveDot active={a} label={a ? t("Common.active") : t("Common.inactive")} />;
-  const kindLabel = (k: string) => (t.has(`AreaKind.${k}`) ? t(`AreaKind.${k}` as "AreaKind.OTHER") : k);
+  const kindLabel = (k: string) => {
+    const x = library.find((l) => l.key === k);
+    return x ? pickName(x, locale) : k;
+  };
   return (
     <div className="mx-auto max-w-7xl space-y-8">
       <div>

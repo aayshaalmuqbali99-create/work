@@ -5,16 +5,20 @@ import type { FacUserSession } from "./session";
 
 /** Everything the request wizard needs to build its dynamic choices (active items only). */
 export async function getWizardConfig() {
-  const [buildings, categories] = await Promise.all([
+  const live = { active: true, archivedAt: null };
+  const [buildings, categories, areaCategories] = await Promise.all([
     db.facBuilding.findMany({
       where: { active: true },
       orderBy: { sortOrder: "asc" },
       include: {
-        wings: { where: { active: true }, orderBy: { sortOrder: "asc" } },
         floors: {
-          where: { active: true },
+          where: live,
           orderBy: [{ sortOrder: "asc" }, { level: "desc" }],
-          include: { areas: { where: { active: true }, orderBy: { sortOrder: "asc" } } },
+          include: {
+            wingLinks: { where: { active: true, wing: live }, orderBy: { sortOrder: "asc" }, include: { wing: true } },
+            areas: { where: live, orderBy: { sortOrder: "asc" } },
+            locations: { where: live, orderBy: [{ sortOrder: "asc" }, { code: "asc" }] },
+          },
         },
       },
     }),
@@ -23,17 +27,20 @@ export async function getWizardConfig() {
       orderBy: { sortOrder: "asc" },
       include: { issues: { where: { active: true }, orderBy: { sortOrder: "asc" } } },
     }),
+    db.facAreaCategory.findMany({ select: { key: true, icon: true, nameEn: true, nameAr: true } }),
   ]);
   return {
+    areaCategories,
     buildings: buildings.map((b) => ({
       id: b.id, code: b.code, nameEn: b.nameEn, nameAr: b.nameAr,
-      wings: b.wings.map((w) => ({ id: w.id, code: w.code, nameEn: w.nameEn, nameAr: w.nameAr })),
       floors: b.floors.map((f) => ({
-        id: f.id, code: f.code, nameEn: f.nameEn, nameAr: f.nameAr, level: f.level, wingId: f.wingId,
+        id: f.id, code: f.code, nameEn: f.nameEn, nameAr: f.nameAr, level: f.level, provisional: f.verification === "PROVISIONAL",
+        wings: f.wingLinks.map((l) => ({ id: l.wing.id, code: l.wing.code, nameEn: l.wing.nameEn, nameAr: l.wing.nameAr, provisional: l.verification === "PROVISIONAL" })),
         areas: f.areas.map((a) => ({
-          id: a.id, parentId: a.parentId, kind: a.kind, nameEn: a.nameEn, nameAr: a.nameAr, descEn: a.descEn, descAr: a.descAr,
-          isOther: a.isOther, fields: a.fields, scopeNoteEn: a.scopeNoteEn, scopeNoteAr: a.scopeNoteAr,
+          id: a.id, parentId: a.parentId, wingId: a.wingId, kind: a.kind, nameEn: a.nameEn, nameAr: a.nameAr, descEn: a.descEn, descAr: a.descAr,
+          isOther: a.isOther, fields: a.fields, scopeNoteEn: a.scopeNoteEn, scopeNoteAr: a.scopeNoteAr, provisional: a.verification === "PROVISIONAL",
         })),
+        locations: f.locations.map((l) => ({ id: l.id, areaId: l.areaId, wingId: l.wingId, kind: l.kind, code: l.code, nameEn: l.nameEn, nameAr: l.nameAr })),
       })),
     })),
     categories: categories.map((c) => ({
@@ -54,8 +61,11 @@ export function visibleWhere(user: FacUserSession): Prisma.FacRequestWhereInput 
 const detailInclude = {
   category: true,
   issue: true,
+  building: true,
   floor: true,
+  wing: true,
   area: true,
+  location: true,
   team: true,
   attachments: { orderBy: { createdAt: "asc" } },
   events: { orderBy: { createdAt: "asc" } },

@@ -20,7 +20,7 @@ export type FieldDef = {
   nullable?: boolean;
 };
 
-export type ConfigRow = { id: string; values: Record<string, unknown>; cells: React.ReactNode[]; inactive?: boolean };
+export type ConfigRow = { id: string; values: Record<string, unknown>; cells: React.ReactNode[]; inactive?: boolean; extra?: React.ReactNode };
 
 /**
  * Generic, accessible list editor for configuration: inline edit form per row, add, reorder, delete.
@@ -101,6 +101,7 @@ export function ConfigTable({
                   <td className="whitespace-nowrap px-4 py-2 text-end">
                     <div className="flex justify-end gap-1">
                       {rowActions?.(r)}
+                      {r.extra}
                       {canMove && (
                         <>
                           <IconBtn label={t("moveUp")} disabled={pending || i === 0} onClick={() => act(() => moveConfigAction(entity, r.id, -1))}><ArrowUp className="size-4" /></IconBtn>
@@ -254,6 +255,14 @@ export function ActiveDot({ active, label }: { active: boolean; label: string })
   return (
     <span className="inline-flex items-center gap-1.5 text-xs font-semibold">
       <span className={cn("size-2 rounded-full", active ? "bg-fgreen" : "bg-zinc-300")} aria-hidden="true" /> {label}
+    </span>
+  );
+}
+
+export function VerificationBadge({ provisional, label }: { provisional: boolean; label: string }) {
+  return (
+    <span className={cn("inline-flex whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-bold ring-1", provisional ? "bg-[#FFF8E0] text-[#6B4E00] ring-[#FFE59A]" : "bg-[#E8F9EF] text-[#1B6B3E] ring-[#B9EBCD]")}>
+      {label}
     </span>
   );
 }

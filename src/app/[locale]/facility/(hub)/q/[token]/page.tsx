@@ -9,7 +9,10 @@ export default async function QrPage({ params }: { params: Promise<{ token: stri
   const { token } = await params;
   await requireFacPage("request.create", `/facility/q/${token}`);
   if (!/^[a-z0-9]{10,40}$/i.test(token)) notFound();
-  const area = await db.facArea.findFirst({ where: { qrToken: token, active: true, floor: { active: true } }, select: { id: true } });
-  if (!area) notFound();
-  redirect({ href: { pathname: "/facility/request", query: { area: area.id, from: "qr" } }, locale: await getLocale() });
+  const live = { active: true, archivedAt: null };
+  const area = await db.facArea.findFirst({ where: { qrToken: token, ...live, floor: live }, select: { id: true } });
+  const location = area ? null : await db.facLocation.findFirst({ where: { qrToken: token, ...live, floor: live }, select: { id: true, areaId: true } });
+  if (!area && !location) notFound();
+  const query: Record<string, string> = location ? (location.areaId ? { location: location.id, from: "qr" } : { from: "qr" }) : { area: area!.id, from: "qr" };
+  redirect({ href: { pathname: "/facility/request", query }, locale: await getLocale() });
 }

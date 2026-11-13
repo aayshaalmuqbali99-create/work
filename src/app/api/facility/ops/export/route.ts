@@ -17,11 +17,11 @@ export async function GET(req: NextRequest) {
   const user = await getFacUser();
   if (!user || !can(user.role, "ops.view")) return new Response("Forbidden", { status: 403 });
   const f = Object.fromEntries(req.nextUrl.searchParams);
-  const rows = await db.facRequest.findMany({ where: filtersToWhere(user, f), orderBy: { createdAt: "desc" }, take: 10000, include: { category: true, issue: true, floor: true, area: true, team: true } });
-  const head = ["Reference", "Status", "Priority", "Service", "Category", "Problem", "Floor", "Area", "Location", "Employee", "Email", "Phone", "Department", "Team", "Team type", "Submitted", "Response due", "Resolution due", "First response", "Resolved", "Closed", "Rating", "Sample"];
+  const rows = await db.facRequest.findMany({ where: filtersToWhere(user, f), orderBy: { createdAt: "desc" }, take: 10000, include: { category: true, issue: true, building: true, floor: true, wing: true, area: true, location: true, team: true } });
+  const head = ["Reference", "Status", "Priority", "Service", "Category", "Problem", "Building", "Floor", "Wing", "Area", "Area type", "Specific location", "Location details", "Full location", "Employee", "Email", "Phone", "Department", "Team", "Team type", "Submitted", "Response due", "Resolution due", "First response", "Resolved", "Closed", "Rating", "Sample"];
   const lines = rows.map((r) =>
     [
-      r.reference, r.status, r.priority, r.service, r.category?.nameEn, r.issue?.nameEn ?? r.issueOther, r.floor?.code, r.area?.nameEn, r.locationLabelEn,
+      r.reference, r.status, r.priority, r.service, r.category?.nameEn, r.issue?.nameEn ?? r.issueOther, r.building?.nameEn, r.floor?.code, r.wing?.nameEn, r.area?.nameEn, r.area?.kind, r.location ? [r.location.nameEn, r.location.code].filter(Boolean).join(" ") : "", Object.entries((r.locationDetail ?? {}) as Record<string, string>).map(([k, v]) => `${k}: ${v}`).join("; "), r.locationLabelEn,
       r.employeeName, r.employeeEmail, r.contactPhone, r.department, r.team?.nameEn, r.team?.kind, r.createdAt, r.responseDueAt, r.resolutionDueAt,
       r.firstResponseAt, r.resolvedAt, r.closedAt, r.rating, r.isSample ? "yes" : "",
     ].map(cell).join(","),

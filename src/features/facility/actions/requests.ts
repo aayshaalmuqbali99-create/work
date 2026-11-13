@@ -22,7 +22,9 @@ const deliverSoon = () => after(() => processOutbox().catch((e) => console.error
 const payloadSchema = z.object({
   service: z.enum(["MAINTENANCE", "CLEANING"]),
   floorId: z.string().max(40).nullable(),
+  wingId: z.string().max(40).nullable().default(null),
   areaId: z.string().max(40).nullable(),
+  locationId: z.string().max(40).nullable().default(null),
   otherLocation: z.string().max(300).default(""),
   detail: z.record(z.string().max(30), z.string().max(120)).default({}),
   issueId: z.string().max(40).nullable(),

@@ -17,40 +17,17 @@ import { hash } from "@node-rs/argon2";
 import { addBusinessMinutes, type BusinessCalendar } from "../src/features/facility/domain/sla";
 import { formatReference } from "../src/features/facility/domain/reference";
 import PREVIOUS_TEMPLATES from "./facility-templates-v1.json";
+import { BASEMENT_AREAS, basementFields, seedAreaCategories, upgradeLocationsV2 } from "./seed-locations";
 
 type Db = PrismaClient;
 
-const PARKING_FIELDS = ["parkingSpace", "column", "elevator", "landmark"];
 const CLINICAL_SCOPE_EN = "Facility maintenance and general non-clinical cleaning only. Medical equipment, medication, clinical services and specialised medical cleaning are outside Facility Operations scope unless explicitly approved.";
 const CLINICAL_SCOPE_AR = "صيانة المرافق والنظافة العامة غير السريرية فقط. الأجهزة الطبية والأدوية والخدمات السريرية والتنظيف الطبي المتخصص خارج نطاق عمليات المرافق ما لم تتم الموافقة عليها صراحة.";
 
 const FLOORS = [
-  {
-    code: "B1", nameEn: "Basement 1 (B1)", nameAr: "الطابق السفلي الأول (B1)", level: -1,
-    areas: [
-      { kind: "PARKING", nameEn: "Parking Area", nameAr: "منطقة المواقف", fields: PARKING_FIELDS },
-      { kind: "MEETING_ROOMS", nameEn: "Meeting Rooms", nameAr: "قاعات الاجتماعات", fields: ["meetingRoom", "landmark"] },
-      { kind: "RESTROOMS", nameEn: "Restrooms", nameAr: "دورات المياه", fields: ["landmark"] },
-      { kind: "PHARMACY", nameEn: "Pharmacy", nameAr: "الصيدلية", fields: ["landmark"], scope: true },
-      { kind: "CLINIC", nameEn: "Clinic", nameAr: "العيادة", fields: ["room", "landmark"], scope: true },
-      { kind: "EVENT_AREA", nameEn: "Central Event Area", nameAr: "منطقة الفعاليات المركزية", fields: ["landmark"], descEn: "Located in the middle of B1.", descAr: "تقع في منتصف الطابق B1." },
-      { kind: "OTHER", nameEn: "Other", nameAr: "أخرى", fields: ["landmark"], isOther: true },
-    ],
-  },
-  {
-    code: "B2", nameEn: "Basement 2 (B2)", nameAr: "الطابق السفلي الثاني (B2)", level: -2,
-    areas: [
-      { kind: "PARKING", nameEn: "Parking Area", nameAr: "منطقة المواقف", fields: PARKING_FIELDS },
-      { kind: "OTHER", nameEn: "Other", nameAr: "أخرى", fields: ["landmark"], isOther: true },
-    ],
-  },
-  {
-    code: "B3", nameEn: "Basement 3 (B3)", nameAr: "الطابق السفلي الثالث (B3)", level: -3,
-    areas: [
-      { kind: "PARKING", nameEn: "Parking Area", nameAr: "منطقة المواقف", fields: PARKING_FIELDS },
-      { kind: "OTHER", nameEn: "Other", nameAr: "أخرى", fields: ["landmark"], isOther: true },
-    ],
-  },
+  { code: "B1", nameEn: "Basement 1 (B1)", nameAr: "الطابق السفلي الأول (B1)", level: -1 },
+  { code: "B2", nameEn: "Basement 2 (B2)", nameAr: "الطابق السفلي الثاني (B2)", level: -2 },
+  { code: "B3", nameEn: "Basement 3 (B3)", nameAr: "الطابق السفلي الثالث (B3)", level: -3 },
 ] as const;
 
 type IssueSeed = { en: string; ar: string; kinds?: string[]; floors?: string[]; p?: FacPriority; safety?: boolean };
@@ -227,6 +204,9 @@ const TEMPLATES: { key: string; subjectEn: string; subjectAr: string; bodyEn: st
 ];
 
 export async function seedFacility(db: Db) {
+  // ---- Area category library (must exist before areas reference it) ----
+  await seedAreaCategories(db);
+
   // ---- Building, wings, verified basements ----
   const building = await db.facBuilding.upsert({
     where: { code: "HQ" },
@@ -243,11 +223,10 @@ export async function seedFacility(db: Db) {
       create: { buildingId: building.id, code: f.code, nameEn: f.nameEn, nameAr: f.nameAr, level: f.level, sortOrder: 10 + fi },
     });
     if ((await db.facArea.count({ where: { floorId: floor.id } })) === 0) {
-      for (const [ai, a] of f.areas.entries()) {
-        const x = a as { kind: string; nameEn: string; nameAr: string; fields: readonly string[]; isOther?: boolean; scope?: boolean; descEn?: string; descAr?: string };
+      for (const [ai, x] of BASEMENT_AREAS[f.code].entries()) {
         await db.facArea.create({
           data: {
-            floorId: floor.id, kind: x.kind, nameEn: x.nameEn, nameAr: x.nameAr, fields: [...x.fields], isOther: !!x.isOther, sortOrder: ai,
+            floorId: floor.id, kind: x.kind, nameEn: x.nameEn, nameAr: x.nameAr, fields: basementFields(x.kind), isOther: !!x.isOther, sortOrder: ai,
             descEn: x.descEn ?? "", descAr: x.descAr ?? "",
             scopeNoteEn: x.scope ? CLINICAL_SCOPE_EN : "", scopeNoteAr: x.scope ? CLINICAL_SCOPE_AR : "",
           },
@@ -271,6 +250,9 @@ export async function seedFacility(db: Db) {
       }
     }
   }
+
+  // ---- Location system v2: provisional ground / mezzanine / upper floors, wing links, new area types ----
+  if (await upgradeLocationsV2(db)) console.log("Facility Hub: location system upgraded (seed version 2).");
 
   for (const t of TEMPLATES) {
     const existing = await db.facEmailTemplate.findUnique({ where: { key: t.key } });

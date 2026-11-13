@@ -124,7 +124,12 @@
     "parkingSpacePh": "e.g. 112",
     "columnPh": "e.g. C-14",
     "elevatorPh": "e.g. Elevator 3",
-    "landmarkPh": "e.g. near the ramp"
+    "landmarkPh": "e.g. near the ramp",
+    "office": "Office number",
+    "officePh": "e.g. 3-104",
+    "entrance": "Nearby entrance",
+    "entrancePh": "e.g. Main entrance",
+    "spaceShort": "Space"
   },
   "Wizard": {
     "title": "New request",
@@ -197,7 +202,25 @@
     "descriptionShort": "Please write at least 10 characters.",
     "phoneInvalid": "Enter a valid phone number.",
     "noAreas": "No areas are configured for this floor yet. Choose \"Other\" or another floor.",
-    "noIssues": "No predefined problems for this area. Describe it under \"Something else\"."
+    "noIssues": "No predefined problems for this area. Describe it under \"Something else\".",
+    "searchLabel": "Search for a location",
+    "searchPh": "Try “parking”, “meeting room” or “B2”",
+    "searchNoResults": "No matching locations. Choose the floor below, or Other.",
+    "basements": "Basements",
+    "upperFloors": "Ground and upper floors",
+    "wingTitle": "Which wing?",
+    "wingUnsure": "I'm not sure",
+    "chooseWing": "Choose a wing, or “I'm not sure”.",
+    "specificLocation": "Specific location",
+    "specificLocationHelp": "Optional. Pick it from the list if you see it.",
+    "specificSearch": "Search rooms and sections",
+    "noneOfThese": "None of these",
+    "locationDescription": "Additional location description",
+    "locationDescriptionPh": "Anything that helps the team find the exact spot",
+    "locationDescriptionRequired": "Please describe where it is (at least 5 characters).",
+    "provisionalNote": "Areas on this floor are being confirmed with the official building map. If you can't find your location, choose Other and describe it.",
+    "summaryLabel": "Your location",
+    "summaryEmpty": "Choose a floor to begin"
   },
   "Safety": {
     "title": "This may be an emergency",
@@ -272,7 +295,12 @@
       "PHOTO": "Photo added"
     },
     "notFound": "Request not found",
-    "commentThanks": "Thank you for letting us know."
+    "commentThanks": "Thank you for letting us know.",
+    "building": "Building",
+    "wing": "Wing",
+    "area": "Area",
+    "exactLocation": "Exact location",
+    "floor": "Floor"
   },
   "Guide": {
     "title": "Services Guide",
@@ -282,7 +310,8 @@
     "notCoveredItems": "Computers and laptops · Network and Wi-Fi · Software and accounts · Audio-visual and meeting-room technology · Medical equipment, medication and clinical services",
     "how": "How a request progresses",
     "areasTitle": "Configured locations",
-    "areasText": "Only locations confirmed by Facility Operations are listed. Use \"Other\" when your location isn't listed yet."
+    "areasText": "Locations marked provisional are still being confirmed with the official building map. Use “Other” when your location isn't listed yet.",
+    "provisional": "Provisional"
   },
   "Map": {
     "title": "Building Map",
@@ -355,7 +384,7 @@
       "dashboard": "Dashboard",
       "requests": "Requests",
       "analytics": "Analytics",
-      "locations": "Locations",
+      "locations": "Building & locations",
       "categories": "Categories",
       "teams": "Teams & Contractors",
       "routing": "Routing rules",
@@ -413,7 +442,10 @@
       "unassigned": "Unassigned",
       "overdue": "Overdue",
       "dueIn": "Due {time}",
-      "noSla": "No target"
+      "noSla": "No target",
+      "building": "Building",
+      "wing": "Wing",
+      "location": "Exact location"
     },
     "filters": {
       "search": "Reference, employee or description",
@@ -427,7 +459,9 @@
       "onlyOpen": "Open only",
       "export": "Export CSV",
       "results": "{count, plural, one {# request} other {# requests}}",
-      "clear": "Clear"
+      "clear": "Clear",
+      "wing": "Wing",
+      "area": "Area"
     },
     "detail": {
       "manage": "Manage request",
@@ -472,7 +506,7 @@
       "byTeam": "Requests by team / contractor",
       "avgResolution": "Average resolution time",
       "slaCompliance": "SLA compliance",
-      "recurring": "Recurring issues",
+      "recurring": "Recurring problems by location",
       "recurringHint": "Same problem at the same area, 2 or more times in the period",
       "monthly": "Monthly trend",
       "noData": "No data for this period yet.",
@@ -480,11 +514,17 @@
       "resolved": "Resolved",
       "times": "{count}×",
       "compliance": "{pct}% met",
-      "basedOn": "Based on {count} resolved requests with a target"
+      "basedOn": "Based on {count} resolved requests with a target",
+      "maintenanceByFloor": "Maintenance requests by floor",
+      "cleaningByFloor": "Cleaning requests by floor",
+      "byFloorService": "Maintenance and cleaning by floor",
+      "byWing": "Requests by wing (Sun / Moon)",
+      "byArea": "Requests by area type",
+      "noWing": "No wing"
     },
     "config": {
-      "locationsTitle": "Locations",
-      "locationsHelp": "Building → Wing → Floor → Area. Only verified locations should be added. Employees see active items only.",
+      "locationsTitle": "Building & Location Management",
+      "locationsHelp": "Building → Floor → Wing → Area → Specific location. Employees only see active, non-archived items. Mark anything not yet checked against the official building map as provisional.",
       "buildings": "Buildings",
       "wings": "Wings",
       "floors": "Floors",
@@ -583,7 +623,7 @@
       "publish": "Publish",
       "unpublish": "Unpublish",
       "editMap": "Edit markers",
-      "preview": "Preview",
+      "preview": "Preview employee flow",
       "editor": "Editor",
       "addPoint": "Add marker",
       "addZone": "Draw zone",
@@ -615,22 +655,54 @@
       "when": "When",
       "who": "Who",
       "action": "Action",
-      "entity": "Item"
+      "entity": "Item",
+      "verification": "Status",
+      "CONFIRMED": "Confirmed",
+      "PROVISIONAL": "Provisional",
+      "archive": "Archive",
+      "restore": "Restore",
+      "archivedCount": "Archived ({count})",
+      "wingsOnFloor": "Wings on this floor",
+      "wingOfArea": "Wing",
+      "sharedAllWings": "All wings (shared)",
+      "areaLibrary": "Area category library",
+      "areaLibraryHelp": "Reusable area types for every floor and building. A floor shows only the areas assigned to it.",
+      "addAreaCategory": "Add area type",
+      "defaultFields": "Suggested detail fields",
+      "specificLocations": "Specific locations",
+      "specificHelp": "Rooms, offices, meeting rooms, parking sections, elevators, entrances, landmarks and columns. Leave the area empty for floor-wide items such as elevators and entrances.",
+      "addLocation": "Add location",
+      "locationKind": "Type",
+      "locCode": "Number / code",
+      "previewTitle": "Employee location preview",
+      "previewNote": "This is exactly what employees see in the request form. Nothing is submitted from this preview.",
+      "provisionalBanner": "{count, plural, one {# floor is} other {# floors are}} provisional and await confirmation from the official building map.",
+      "floorTabs": "Choose a floor to manage its areas and locations",
+      "mapWing": "Wing (optional)",
+      "linkedLocation": "Linked specific location",
+      "allFloors": "Floors"
     },
     "intro": "All employee reports in one place, for clear visibility, smooth team coordination and timely resolution."
   },
   "AreaKind": {
     "PARKING": "Parking",
-    "MEETING_ROOMS": "Meeting rooms",
+    "MEETING_ROOMS": "Meeting room",
     "RESTROOMS": "Restrooms",
     "PHARMACY": "Pharmacy",
     "CLINIC": "Clinic",
     "EVENT_AREA": "Event area",
-    "OFFICE": "Offices",
-    "PANTRY": "Pantry",
+    "OFFICE": "Office / workstation",
+    "PANTRY": "Pantry / kitchen",
     "CORRIDOR": "Corridor",
-    "ELEVATOR_LOBBY": "Elevator lobby",
-    "OTHER": "Other"
+    "ELEVATOR_LOBBY": "Elevator / lift lobby",
+    "OTHER": "Other",
+    "STAIRCASE": "Staircase",
+    "ENTRANCE": "Building entrance",
+    "RECEPTION": "Reception",
+    "WAITING_AREA": "Waiting area",
+    "PARKING_GATE": "Parking gate / barrier",
+    "COMMON_AREA": "Common area",
+    "UTILITY_ROOM": "Service / utility room"
   },
   "Days": {
     "0": "Sun",
@@ -652,5 +724,42 @@
     "doneReopen": "The request has been reopened. Facility Operations will follow up.",
     "expired": "This link has expired or has already been used.",
     "view": "Open the request"
+  },
+  "LocationKind": {
+    "ROOM": "Room",
+    "OFFICE": "Office",
+    "MEETING_ROOM": "Meeting room",
+    "PARKING_SECTION": "Parking section",
+    "ELEVATOR": "Elevator",
+    "ENTRANCE": "Entrance",
+    "LANDMARK": "Landmark",
+    "COLUMN": "Column"
+  },
+  "Simple": {
+    "title": "Report an issue",
+    "subtitle": "Four quick questions. Photos help the team a lot.",
+    "typeTitle": "What type of request?",
+    "whereTitle": "Where is it?",
+    "floor": "Floor",
+    "wing": "Wing",
+    "area": "Area",
+    "room": "Room / section (optional)",
+    "choose": "Choose…",
+    "exact": "Exact spot (optional)",
+    "exactRequired": "Where exactly?",
+    "exactPh": "e.g. space 112 near column 15, or room 104",
+    "problemTitle": "What's the problem?",
+    "problem": "Problem",
+    "somethingElse": "Something else",
+    "otherProblem": "Describe the problem in a few words",
+    "describeTitle": "Describe it",
+    "photosTitle": "Add photos",
+    "photosHint": "Up to {max} photos ({size} MB each). Take one now or choose from your phone.",
+    "send": "Send report",
+    "sending": "Sending…",
+    "clear": "Clear form",
+    "floorNotListed": "My floor isn't listed",
+    "provisional": "Areas on this floor are still being confirmed. If yours isn't listed, choose Other.",
+    "fixErrors": "Please complete the highlighted fields."
   }
 }

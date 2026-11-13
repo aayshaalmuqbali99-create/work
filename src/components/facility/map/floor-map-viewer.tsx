@@ -14,6 +14,7 @@ export type MapMarker = {
   label: string;
   color: string;
   areaId: string | null;
+  locationId?: string | null;
 };
 
 type View = { s: number; x: number; y: number };

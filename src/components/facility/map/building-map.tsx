@@ -41,8 +41,8 @@ export function BuildingMap({ maps }: { maps: PublishedMap[] }) {
               <motion.div key={sel.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="rounded-[24px] border border-fline bg-white p-5 shadow-soft">
                 <p className="text-xs font-bold uppercase tracking-wider text-fmuted">{t("selected")}</p>
                 <p className="mt-1 flex items-center gap-2 text-xl font-extrabold text-fink"><MapPin className="size-5 text-deep" aria-hidden="true" /> {sel.label}</p>
-                {sel.areaId && (
-                  <Link href={{ pathname: "/facility/request", query: { area: sel.areaId, from: "map" } }} className={cn(fhBtn.accent, "mt-5 w-full")}>
+                {(sel.areaId || sel.locationId) && (
+                  <Link href={{ pathname: "/facility/request", query: sel.locationId ? { location: sel.locationId, from: "map" } : { area: sel.areaId!, from: "map" } }} className={cn(fhBtn.accent, "mt-5 w-full")}>
                     {t("reportHere")}
                   </Link>
                 )}

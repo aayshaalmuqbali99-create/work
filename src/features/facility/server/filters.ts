@@ -5,7 +5,7 @@ import { REFERENCE_RE } from "../domain/reference";
 import type { FacUserSession } from "./session";
 import { visibleWhere } from "./queries";
 
-export type RequestFilters = { q?: string; status?: string; service?: string; priority?: string; floor?: string; team?: string; category?: string; overdue?: string; open?: string; page?: string };
+export type RequestFilters = { q?: string; status?: string; service?: string; priority?: string; floor?: string; wing?: string; area?: string; team?: string; category?: string; overdue?: string; open?: string; page?: string };
 
 /** Turn URL filters into a Prisma where clause (always combined with the user's visibility). */
 export function filtersToWhere(user: FacUserSession, f: RequestFilters): Prisma.FacRequestWhereInput {
@@ -22,6 +22,8 @@ export function filtersToWhere(user: FacUserSession, f: RequestFilters): Prisma.
   if (f.service === "MAINTENANCE" || f.service === "CLEANING") and.push({ service: f.service as FacService });
   if (f.priority && ["LOW", "MEDIUM", "HIGH", "EMERGENCY"].includes(f.priority)) and.push({ priority: f.priority as FacPriority });
   if (f.floor) and.push({ floorId: f.floor === "none" ? null : f.floor });
+  if (f.wing) and.push({ wingId: f.wing === "none" ? null : f.wing });
+  if (f.area) and.push(f.area.startsWith("kind:") ? { area: { kind: f.area.slice(5) } } : { areaId: f.area });
   if (f.team) and.push({ teamId: f.team === "none" ? null : f.team });
   if (f.category) and.push({ categoryId: f.category });
   if (f.open === "1" || f.overdue === "1") and.push({ status: { notIn: [...FINISHED] } });

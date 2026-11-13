@@ -24,8 +24,8 @@ infrastructure (database connection, file storage, rate limiting).
 | Area | Where | Notes |
 |---|---|---|
 | Homepage | `src/app/[locale]/facility/(hub)/page.tsx` | Real building video (muted, loop, `playsInline`, poster, paused off-screen, pause button, reduced-motion → real photo), service cards, quick access (incl. in-app QR scanner), recent requests, real building photography, safety notice |
-| Request wizard | `src/components/facility/wizard/request-wizard.tsx` | 6 steps: service → location → problem → details → photos → review. Draft auto-saved per user (survives reloads and language switching), animated progress, per-step validation with focus management, live safety detection, camera capture on mobile |
-| Location model | `FacBuilding → FacWing → FacFloor → FacArea (nestable)` + per-area detail fields | Entirely database-driven. Initial data = verified basements only |
+| Request form | `src/components/facility/wizard/simple-request-form.tsx` | One simple page: type → where (floor → wing only if the floor has wings → area → optional room/section → exact spot) → problem + description → photos (camera or gallery) → send. Draft auto-saved per user (survives reloads and language switching), inline validation, live safety warning |
+| Location model | `FacBuilding → FacFloor ⇄ FacWing (FacFloorWing) → FacArea → FacLocation`, area types from the `FacAreaCategory` library | Entirely database-driven, each record CONFIRMED or PROVISIONAL, archivable (never deleted). Requests store building, floor, wing, area and specific location plus a text snapshot |
 | Categories | `FacCategory → FacIssue` with `areaKinds` + `floorCodes` | Problems offered depend on the selected area and floor; "Other" areas show all problems |
 | My Requests | `/facility/requests` | Search by reference, status/category filters, open/finished tabs, progress bars |
 | Request detail | `/facility/requests/[ref]` | Milestones, animated timeline (public events only), photos, comments, confirm / reopen / cancel, star rating |
@@ -39,13 +39,27 @@ infrastructure (database connection, file storage, rate limiting).
 | Map editor | `/facility/ops/maps/[id]` | Upload PNG/JPG/WebP or approved SVG per floor, place markers, draw zones, link to areas, bilingual labels, colours, preview, publish / unpublish, delete |
 | QR codes | `/facility/ops/qr` | Printable sheet + SVG download per area; codes contain a random token only; regenerate to revoke |
 
+### Building & Location Management (`/facility/ops/locations`)
+Buildings, wings, floors (with the wings that exist on each floor), per-floor areas (shared by all wings or tied to one), specific
+locations (rooms, offices, meeting rooms, parking sections, elevators, entrances, landmarks, columns), the reusable area-type
+library, confirmed/provisional status, archive/restore, reordering, and a preview of the employee location selection.
+Floor plans can be attached to a floor and optionally a wing; markers link to areas and specific locations. QR codes exist for
+every area and specific location.
+
+### Locations awaiting confirmation from the official building map
+Seeded as **PROVISIONAL** (shown to employees with a "being confirmed" note, marked in the dashboard):
+- Ground Floor, Mezzanine, Floors 1–6 and their suggested areas (Reception, Offices, Meeting Rooms, Restrooms, Pantry / Kitchen,
+  Corridors, Elevators / Lift Lobby, Staircases, Waiting Areas, Other).
+- Which of the Sun / Moon wings exist on each of those floors (both are linked provisionally to every upper floor), and which
+  areas belong to which wing (all are currently shared by both wings).
+- No room numbers, parking sections, elevator labels, entrances or coordinates are configured yet.
+
 ### Verified initial configuration (seed)
-- **B1**: Parking Area, Meeting Rooms, Restrooms, Pharmacy, Clinic, Central Event Area (described as "in the middle of B1"), Other.
+- **B1** (CONFIRMED): Parking Area, Meeting Rooms, Restrooms, Pharmacy, Clinic, Central Event Area (in the middle of B1), Other.
   Pharmacy and Clinic carry a scope note: non-clinical facility work only.
 - **B2**: Parking Area, Other. **B3**: Parking Area, Other.
-- Sun and Moon wings exist as configurable wings; no floors are assigned to them yet.
-- No room numbers, coordinates, upper floors or contractual SLAs are invented. Ground, Mezzanine and upper floors are added in
-  *Locations* once verified.
+- Seed versions are recorded in `FacSettings.seedVersion`; each data upgrade runs once, so later administrator edits are never overwritten.
+- No room numbers, coordinates or contractual SLAs are invented.
 
 ### Statuses and rules
 `SUBMITTED, UNDER_REVIEW, ASSIGNED, IN_PROGRESS, ON_HOLD, RESOLVED, CLOSED, REOPENED, CANCELLED, REJECTED` — transitions in

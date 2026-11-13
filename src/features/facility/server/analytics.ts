@@ -27,10 +27,11 @@ export async function getAnalytics(range: Range) {
     select: {
       id: true, service: true, status: true, createdAt: true, resolvedAt: true, resolutionDueAt: true, issueId: true, areaId: true, issueOther: true,
       floor: { select: { code: true, nameEn: true, nameAr: true, sortOrder: true } },
+      wing: { select: { id: true, nameEn: true, nameAr: true } },
       category: { select: { id: true, nameEn: true, nameAr: true } },
       team: { select: { id: true, nameEn: true, nameAr: true, kind: true } },
       issue: { select: { nameEn: true, nameAr: true } },
-      area: { select: { nameEn: true, nameAr: true } },
+      area: { select: { nameEn: true, nameAr: true, kind: true, category: { select: { nameEn: true, nameAr: true } } } },
     },
   });
   const count = <K extends string>(fn: (r: (typeof rows)[number]) => K | null) => {
@@ -46,6 +47,16 @@ export async function getAnalytics(range: Range) {
   const byCategory = count((r) => (r.category ? (named.set(`c:${r.category.id}`, r.category), `c:${r.category.id}`) : "c:?"));
   const byTeam = count((r) => (r.team ? (named.set(`t:${r.team.id}`, r.team), `t:${r.team.id}`) : "t:?"));
   const byService = count((r) => r.service);
+  const byWing = count((r) => (r.wing ? (named.set(`w:${r.wing.id}`, r.wing), `w:${r.wing.id}`) : "w:?"));
+  const byAreaKind = count((r) => (r.area ? (named.set(`k:${r.area.kind}`, r.area.category), `k:${r.area.kind}`) : null));
+  // maintenance vs cleaning per floor, in building order
+  const floorService = new Map<string, { key: string; label: { nameEn: string; nameAr: string } | null; order: number; MAINTENANCE: number; CLEANING: number }>();
+  for (const r of rows) {
+    const key = r.floor?.code ?? "?";
+    const cur = floorService.get(key) ?? { key, label: r.floor ? { nameEn: r.floor.nameEn, nameAr: r.floor.nameAr } : null, order: r.floor?.sortOrder ?? 9999, MAINTENANCE: 0, CLEANING: 0 };
+    cur[r.service]++;
+    floorService.set(key, cur);
+  }
 
   const resolved = rows.filter((r) => r.resolvedAt);
   const avgResolutionMin = resolved.length ? resolved.reduce((a, r) => a + (r.resolvedAt!.getTime() - r.createdAt.getTime()), 0) / resolved.length / 60_000 : null;
@@ -93,6 +104,9 @@ export async function getAnalytics(range: Range) {
     byFloor: [...byFloor].map(([k, v]) => ({ key: k, label: label(k), value: v })).sort((a, b) => b.value - a.value),
     byCategory: [...byCategory].map(([k, v]) => ({ key: k, label: label(k), value: v })).sort((a, b) => b.value - a.value),
     byTeam: [...byTeam].map(([k, v]) => ({ key: k, label: label(k), value: v })).sort((a, b) => b.value - a.value),
+    floorService: [...floorService.values()].sort((a, b) => a.order - b.order),
+    byWing: [...byWing].map(([k, v]) => ({ key: k, label: label(k), value: v })).sort((a, b) => b.value - a.value),
+    byAreaKind: [...byAreaKind].map(([k, v]) => ({ key: k, label: label(k), value: v })).sort((a, b) => b.value - a.value),
     basements: ["B1", "B2", "B3"].map((c) => ({ key: c, value: byFloor.get(`f:${c}`) ?? 0 })),
     service: { MAINTENANCE: byService.get("MAINTENANCE") ?? 0, CLEANING: byService.get("CLEANING") ?? 0 },
     avgResolutionMin,
