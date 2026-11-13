@@ -28,6 +28,13 @@ export default async function middleware(req: NextRequest) {
   if (facility) {
     const rest = facility[2] ?? "";
     const needsUser = /^\/(request|requests|map|ops|q)(\/|$)/.test(rest);
+    const employeePage = /^\/(request|requests|map|q)(\/|$)/.test(rest);
+    // open access: employee pages get a private guest identity instead of the sign-in page (the dashboard still needs sign-in)
+    if (employeePage && !req.cookies.has(FAC_SESSION_COOKIE) && process.env.FAC_OPEN_ACCESS === "true") {
+      const url = new URL("/api/facility/guest", req.url);
+      url.searchParams.set("next", `/${facility[1]}/facility${rest}${search}`);
+      return NextResponse.redirect(url);
+    }
     if (needsUser && !req.cookies.has(FAC_SESSION_COOKIE)) {
       const url = new URL(`/${facility[1]}/facility/login`, req.url);
       url.searchParams.set("next", `/facility${rest}${search}`);

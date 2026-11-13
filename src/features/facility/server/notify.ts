@@ -9,6 +9,9 @@ export type EmailVars = Partial<Record<"name" | "reference" | "location" | "stat
 export type EmailAction = { label: string; url: string; tone: "primary" | "secondary" };
 
 /** Which transport delivers e-mail. "log" (default) records e-mails in the outbox only — safe for development. */
+/** Guest identities (open access) have no mailbox. */
+export const GUEST_DOMAIN = "@guest.facility-hub.local";
+
 export const emailTransport = () => (process.env.EMAIL_TRANSPORT === "graph" ? "graph" : "log");
 
 function layout(locale: string, subject: string, bodyText: string, actions: EmailAction[]) {
@@ -46,7 +49,7 @@ export async function enqueueEmail(
   tx: Tx,
   opts: { to: string; templateKey: string; locale: string; vars: EmailVars; requestId?: string; actions?: EmailAction[] },
 ) {
-  if (!opts.to) return;
+  if (!opts.to || opts.to.endsWith(GUEST_DOMAIN)) return;
   const tpl = await tx.facEmailTemplate.findUnique({ where: { key: opts.templateKey } });
   if (!tpl || !tpl.active) return;
   const ar = opts.locale === "ar";

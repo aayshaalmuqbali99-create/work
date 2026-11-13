@@ -21,9 +21,9 @@ export type FacUserSession = {
   locale: string;
 };
 
-export async function createFacSession(userId: string) {
+export async function createFacSession(userId: string, hours = SESSION_HOURS) {
   const token = randomBytes(32).toString("base64url");
-  const expiresAt = new Date(Date.now() + SESSION_HOURS * 36e5);
+  const expiresAt = new Date(Date.now() + hours * 36e5);
   const { ip, userAgent } = await clientInfo();
   await db.facSession.create({ data: { id: hashToken(token), userId, expiresAt, ip, userAgent } });
   (await cookies()).set(FAC_SESSION_COOKIE, token, {

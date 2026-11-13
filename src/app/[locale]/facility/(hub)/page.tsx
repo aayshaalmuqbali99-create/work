@@ -8,6 +8,7 @@ import { QrScanButton } from "@/components/facility/qr-scanner";
 import { MaintenanceIllustration, CleaningIllustration } from "@/components/facility/illustrations";
 import { EmptyState, StatusChip, fhBtn, Spark } from "@/components/facility/ui";
 import { getFacUser } from "@/features/facility/server/session";
+import { openAccess } from "@/features/facility/server/config-flags";
 import { myRecentRequests } from "@/features/facility/server/queries";
 import { formatDate, pickName } from "@/features/facility/format";
 import { progressOf } from "@/features/facility/domain/status";
@@ -17,6 +18,7 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
   setRequestLocale(locale);
   const [t, user] = await Promise.all([getTranslations("Fac"), getFacUser()]);
   const recent = user ? await myRecentRequests(user.id) : [];
+  const open = openAccess();
   const Arrow = locale === "ar" ? ArrowLeft : ArrowRight;
   const videoSrc = process.env.FAC_HERO_VIDEO_URL || "/facility/hero.mp4";
 
@@ -147,8 +149,8 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
           {!user ? (
             <EmptyState
               icon={<Inbox className="size-7" />}
-              title={t("Home.signInPrompt")}
-              action={<Link href="/facility/login" className={fhBtn.primary}>{t("Nav.signIn")}</Link>}
+              title={open ? t("Home.recentEmpty") : t("Home.signInPrompt")}
+              action={open ? <Link href="/facility/request" className={fhBtn.primary}>{t("Home.report")}</Link> : <Link href="/facility/login" className={fhBtn.primary}>{t("Nav.signIn")}</Link>}
             />
           ) : recent.length === 0 ? (
             <EmptyState
