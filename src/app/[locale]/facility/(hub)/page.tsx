@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ClipboardList, Map as Map
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { QrScanButton } from "@/components/facility/qr-scanner";
+import { ServiceScene } from "@/components/facility/service-scene";
 import { EmptyState, StatusChip, fhBtn, Spark } from "@/components/facility/ui";
 import { getFacUser } from "@/features/facility/server/session";
 import { openAccess } from "@/features/facility/server/config-flags";
@@ -35,9 +36,13 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
         {/* readability overlay: Deep Sea tint, strongest behind the text */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_6_70/0.55)_0%,rgb(16_6_70/0.2)_38%,rgb(16_6_70/0.6)_70%,rgb(16_6_70/0.88)_100%)]" aria-hidden="true" />
         <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-32 pt-32 sm:px-8 sm:pb-40">
-          <p className="fh-rise flex items-center gap-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-white/85">
-            <Spark /> {t("Home.eyebrow")}
-          </p>
+          <div className="fh-rise flex w-fit items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5 backdrop-blur-md">
+            <Spark />
+            <div className="leading-tight">
+              <p className="font-arabic text-base font-bold" lang="ar" dir="rtl">عمليات وصيانة المرافق</p>
+              <p className="text-xs font-semibold tracking-wide text-white/85" lang="en" dir="ltr">Facility Operations &amp; Maintenance</p>
+            </div>
+          </div>
           <h1 id="fh-hero-title" className="fh-rise fh-d1 mt-5 max-w-4xl text-hero font-extrabold tracking-tight">
             {t("Home.title")}
           </h1>
@@ -72,18 +77,16 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
         <div className="mt-8 grid gap-5 md:grid-cols-2">
           {(
             [
-              { key: "maintenance", service: "MAINTENANCE", emoji: "🛠️", tile: "bg-lav-100", chip: "bg-deep text-white" },
-              { key: "cleaning", service: "CLEANING", emoji: "🧹", tile: "bg-[#FFEBD9]", chip: "bg-gold text-fink" },
+              { key: "maintenance", service: "MAINTENANCE", tile: "bg-[linear-gradient(145deg,#ECEAFF,#F8F7FF)]", chip: "bg-deep text-white" },
+              { key: "cleaning", service: "CLEANING", tile: "bg-[linear-gradient(145deg,#FFEAD8,#FFF8F1)]", chip: "bg-gold text-fink" },
             ] as const
-          ).map(({ key, service, emoji, tile, chip }) => (
+          ).map(({ key, service, tile, chip }) => (
             <Link
               key={key}
               href={{ pathname: "/facility/request", query: { service } }}
               className="group flex items-start gap-5 rounded-[28px] border border-fline bg-white p-6 shadow-soft transition duration-300 ease-out hover:-translate-y-1 hover:border-lav-200 hover:shadow-lift sm:p-7"
             >
-              <span className={cn("grid size-20 shrink-0 place-items-center rounded-[24px] text-[44px] leading-none transition duration-300 group-hover:scale-105 sm:size-24 sm:text-[52px]", tile)} aria-hidden="true">
-                {emoji}
-              </span>
+              <ServiceScene kind={key} className={cn("size-24 shrink-0 rounded-[26px] transition duration-300 group-hover:scale-105 sm:size-28", tile)} />
               <div className="min-w-0 flex-1">
                 <span className={cn("inline-block rounded-full px-3 py-1 text-xs font-bold", chip)}>{t(`Service.${service}`)}</span>
                 <h3 className="mt-2 text-2xl font-extrabold text-fink">{t(`Home.${key}Title`)}</h3>

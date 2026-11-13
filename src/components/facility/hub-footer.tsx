@@ -26,7 +26,11 @@ export async function HubFooter() {
             <span className="h-8 w-px bg-white/30" aria-hidden="true" />
             <span className="text-lg font-bold">{t("Brand.name")}</span>
           </div>
-          <p className="mt-5 max-w-md text-sm leading-relaxed text-white/80">{t("Footer.about")}</p>
+          <div className="mt-5 leading-tight">
+            <p className="font-bold" lang="ar" dir="rtl">عمليات وصيانة المرافق</p>
+            <p className="text-sm font-semibold text-gold" lang="en" dir="ltr">Facility Operations &amp; Maintenance</p>
+          </div>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-white/80">{t("Footer.about")}</p>
         </div>
         <nav aria-label={t("Footer.platform")}>
           <h2 className="text-sm font-bold text-gold">{t("Footer.platform")}</h2>

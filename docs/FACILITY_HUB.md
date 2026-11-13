@@ -161,3 +161,7 @@ Colours follow the 2024 Omantel Brand Guidelines (Deep Sea `#2D13EA` / Gold Moun
 secondaries as accents; tertiaries only for small details; no black backgrounds; no arrow-shaped "spark" layouts). The
 logotypes in `public/brand/omantel/` were extracted unaltered from the guidelines PDF (`docs/omantel-brand-guidelines.pdf`):
 bilingual logotype for the Arabic interface, Latin logotype for English, and the official white reverse versions on Deep Sea.
+
+## Third-party assets
+
+- `public/facility/3d/*.webp`: Microsoft Fluent Emoji 3D (MIT licence, via `@lobehub/fluent-emoji-3d`), used for the animated maintenance/cleaning scenes.

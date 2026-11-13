@@ -6,6 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { AlertTriangle, Camera, CheckCircle2, ImagePlus, Loader2, Send, X } from "lucide-react";
 import type { FacPriority, FacService } from "@prisma/client";
 import { Link } from "@/i18n/navigation";
+import { ServiceIcon } from "@/components/facility/service-scene";
 import { cn } from "@/lib/utils";
 import type { WizardConfig } from "@/features/facility/server/queries";
 import { submitRequestAction } from "@/features/facility/actions/requests";
@@ -332,7 +333,6 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact }: 
         <div role="radiogroup" aria-label={t("Simple.typeTitle")} className="grid grid-cols-2 gap-3" data-invalid={!!errors.service} tabIndex={errors.service ? -1 : undefined}>
           {(["MAINTENANCE", "CLEANING"] as FacService[]).map((s) => {
             const on = f.service === s;
-            const emoji = s === "MAINTENANCE" ? "🛠️" : "🧹";
             return (
               <button
                 key={s}
@@ -342,7 +342,7 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact }: 
                 onClick={() => patch({ service: s, issueId: "" })}
                 className={cn("flex min-h-20 items-center justify-center gap-3 rounded-[20px] border-2 px-4 text-lg font-bold transition", on ? "border-deep bg-deep text-white" : "border-fline bg-white text-fink hover:border-lav-200")}
               >
-                <span className="text-3xl leading-none" aria-hidden="true">{emoji}</span> {t(`Service.${s}`)}
+                <ServiceIcon kind={s === "MAINTENANCE" ? "maintenance" : "cleaning"} className="size-9" /> {t(`Service.${s}`)}
               </button>
             );
           })}

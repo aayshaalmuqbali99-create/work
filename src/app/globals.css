@@ -182,3 +182,20 @@ html[dir="rtl"] .ls-marquee { animation-name: ls-marquee-rtl; }
 @keyframes fh-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
 .fh-zoom { animation: fh-zoom 14s cubic-bezier(0.22, 1, 0.36, 1) both; }
 @media (prefers-reduced-motion: reduce) { .fh-zoom { animation: none; } }
+
+/* 3D service scenes (home page cards). */
+@keyframes fh-spin { to { transform: rotate(360deg); } }
+@keyframes fh-tighten { 0%, 100% { transform: rotate(0deg); } 40% { transform: rotate(-24deg); } 55% { transform: rotate(-24deg); } }
+@keyframes fh-bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-7%) rotate(4deg); } }
+@keyframes fh-bubble { 0% { transform: translateY(30%) scale(.7); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(-80%) scale(1); opacity: 0; } }
+@keyframes fh-twinkle { 0%, 100% { transform: scale(.75) rotate(0deg); opacity: .55; } 50% { transform: scale(1.05) rotate(12deg); opacity: 1; } }
+.fh-a-spin { animation: fh-spin 9s linear infinite; }
+.fh-a-spin-rev { animation: fh-spin 6s linear infinite reverse; }
+.fh-a-tighten { animation: fh-tighten 2.8s cubic-bezier(.45,0,.2,1) infinite; transform-origin: 78% 22%; }
+.fh-a-bob { animation: fh-bob 3.2s ease-in-out infinite; }
+.fh-a-rise { animation: fh-bubble 3.6s ease-out infinite; }
+.fh-a-twinkle { animation: fh-twinkle 2.4s ease-in-out infinite; }
+.fh-delay-2 { animation-delay: 1.8s; }
+@media (prefers-reduced-motion: reduce) {
+  .fh-scene * { animation: none !important; opacity: 1 !important; }
+}
