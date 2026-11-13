@@ -1,11 +1,9 @@
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ClipboardList, HeartHandshake, Map as MapIcon, QrCode, ShieldAlert, Inbox, Sparkles, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ClipboardList, Map as MapIcon, QrCode, ShieldAlert, Inbox } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { HeroVideo } from "@/components/facility/hero-video";
 import { QrScanButton } from "@/components/facility/qr-scanner";
-import { MaintenanceIllustration, CleaningIllustration } from "@/components/facility/illustrations";
 import { EmptyState, StatusChip, fhBtn, Spark } from "@/components/facility/ui";
 import { getFacUser } from "@/features/facility/server/session";
 import { openAccess } from "@/features/facility/server/config-flags";
@@ -20,21 +18,23 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
   const recent = user ? await myRecentRequests(user.id) : [];
   const open = openAccess();
   const Arrow = locale === "ar" ? ArrowLeft : ArrowRight;
-  const videoSrc = process.env.FAC_HERO_VIDEO_URL || "/facility/hero.mp4";
 
   return (
     <>
       {/* ---------- Cinematic hero ---------- */}
-      <section className="relative isolate flex min-h-[100svh] items-end overflow-hidden bg-deep text-white" aria-labelledby="fh-hero-title">
-        <HeroVideo
-          src={videoSrc}
-          poster="/facility/hero-poster.webp"
-          still="/facility/building-night.webp"
-          labels={{ pause: t("Home.pauseVideo"), play: t("Home.playVideo") }}
+      <section className="relative isolate flex min-h-[86svh] items-end overflow-hidden bg-deep text-white" aria-labelledby="fh-hero-title">
+        <Image
+          src="/facility/building-night.webp"
+          alt=""
+          fill
+          priority
+          quality={92}
+          sizes="100vw"
+          className="fh-zoom object-cover object-[50%_45%]"
         />
         {/* readability overlay: Deep Sea tint, strongest behind the text */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_6_70/0.55)_0%,rgb(16_6_70/0.15)_35%,rgb(16_6_70/0.55)_70%,rgb(16_6_70/0.85)_100%)]" aria-hidden="true" />
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-36 pt-32 sm:px-8 sm:pb-44">
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgb(16_6_70/0.55)_0%,rgb(16_6_70/0.2)_38%,rgb(16_6_70/0.6)_70%,rgb(16_6_70/0.88)_100%)]" aria-hidden="true" />
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-32 pt-32 sm:px-8 sm:pb-40">
           <p className="fh-rise flex items-center gap-2.5 text-sm font-semibold uppercase tracking-[0.18em] text-white/85">
             <Spark /> {t("Home.eyebrow")}
           </p>
@@ -64,37 +64,34 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
       </section>
 
       {/* ---------- Service cards ---------- */}
-      <section id="services" className="relative mx-auto max-w-7xl scroll-mt-24 px-5 pt-10 sm:px-8" aria-labelledby="fh-services-title">
+      <section id="services" className="relative mx-auto max-w-7xl scroll-mt-24 px-5 pt-8 sm:px-8" aria-labelledby="fh-services-title">
         <div className="max-w-2xl">
           <h2 id="fh-services-title" className="text-title font-extrabold tracking-tight text-fink">{t("Home.servicesTitle")}</h2>
           <p className="mt-3 text-lg text-fmuted">{t("Home.servicesSubtitle")}</p>
         </div>
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-8 grid gap-5 md:grid-cols-2">
           {(
             [
-              { key: "maintenance", service: "MAINTENANCE", Illus: MaintenanceIllustration, tone: "from-[#EEF0FF] via-[#F3F1FF] to-white", chip: "bg-deep text-white" },
-              { key: "cleaning", service: "CLEANING", Illus: CleaningIllustration, tone: "from-[#F4F1FF] via-[#FFF6EE] to-white", chip: "bg-gold text-fink" },
+              { key: "maintenance", service: "MAINTENANCE", emoji: "🛠️", tile: "bg-lav-100", chip: "bg-deep text-white" },
+              { key: "cleaning", service: "CLEANING", emoji: "🧹", tile: "bg-[#FFEBD9]", chip: "bg-gold text-fink" },
             ] as const
-          ).map(({ key, service, Illus, tone, chip }) => (
+          ).map(({ key, service, emoji, tile, chip }) => (
             <Link
               key={key}
               href={{ pathname: "/facility/request", query: { service } }}
-              className={cn(
-                "group relative flex min-h-[340px] flex-col overflow-hidden rounded-[32px] border border-fline bg-gradient-to-br p-7 shadow-soft transition duration-300 ease-out hover:-translate-y-1.5 hover:shadow-lift focus-visible:-translate-y-1.5 sm:p-9",
-                tone,
-              )}
+              className="group flex items-start gap-5 rounded-[28px] border border-fline bg-white p-6 shadow-soft transition duration-300 ease-out hover:-translate-y-1 hover:border-lav-200 hover:shadow-lift sm:p-7"
             >
-              <div className="pointer-events-none absolute -end-6 -top-4 w-56 transition duration-500 group-hover:-translate-y-2 group-hover:scale-105 sm:w-72 rtl:-scale-x-100">
-                <Illus className="w-full" />
-              </div>
-              <span className={cn("relative w-fit rounded-full px-3 py-1 text-xs font-bold", chip)}>{t(`Service.${service}`)}</span>
-              <div className="relative mt-auto max-w-sm pt-28 sm:pt-24">
-                <h3 className="text-2xl font-extrabold text-fink sm:text-3xl">{t(`Home.${key}Title`)}</h3>
-                <p className="mt-3 leading-relaxed text-fmuted">{t(`Home.${key}Text`)}</p>
-                <p className="mt-4 text-sm font-medium text-deep/80">{t(`Home.${key}Tags`)}</p>
-                <span className="mt-7 inline-flex items-center gap-2 font-bold text-deep">
+              <span className={cn("grid size-20 shrink-0 place-items-center rounded-[24px] text-[44px] leading-none transition duration-300 group-hover:scale-105 sm:size-24 sm:text-[52px]", tile)} aria-hidden="true">
+                {emoji}
+              </span>
+              <div className="min-w-0 flex-1">
+                <span className={cn("inline-block rounded-full px-3 py-1 text-xs font-bold", chip)}>{t(`Service.${service}`)}</span>
+                <h3 className="mt-2 text-2xl font-extrabold text-fink">{t(`Home.${key}Title`)}</h3>
+                <p className="mt-2 leading-relaxed text-fmuted">{t(`Home.${key}Text`)}</p>
+                <p className="mt-3 text-sm font-medium text-deep/80">{t(`Home.${key}Tags`)}</p>
+                <span className="mt-5 inline-flex items-center gap-2 font-bold text-deep">
                   {t(`Home.${key}Cta`)}
-                  <span className="grid size-9 place-items-center rounded-full bg-deep text-white transition duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
+                  <span className="grid size-8 place-items-center rounded-full bg-deep text-white transition duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
                     <Arrow className="size-4" aria-hidden="true" />
                   </span>
                 </span>
@@ -105,7 +102,7 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
       </section>
 
       {/* ---------- Quick access ---------- */}
-      <section className="mx-auto mt-20 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-quick-title">
+      <section className="mx-auto mt-14 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-quick-title">
         <h2 id="fh-quick-title" className="text-xl font-extrabold text-fink">{t("Home.quickTitle")}</h2>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           {(
@@ -136,7 +133,7 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
       </section>
 
       {/* ---------- My recent requests ---------- */}
-      <section className="mx-auto mt-20 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-recent-title">
+      <section className="mx-auto mt-14 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-recent-title">
         <div className="flex items-end justify-between gap-4">
           <h2 id="fh-recent-title" className="text-xl font-extrabold text-fink">{t("Home.recentTitle")}</h2>
           {user && recent.length > 0 && (
@@ -182,7 +179,7 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
       </section>
 
       {/* ---------- The building (real photography) ---------- */}
-      <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-building-title">
+      <section className="mx-auto mt-20 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-building-title">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div>
             <p className="flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-deep"><Spark /> {t("Home.bridgeEyebrow")}</p>
@@ -221,30 +218,8 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      {/* ---------- Shared values ---------- */}
-      <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-values-title">
-        <div className="relative overflow-hidden rounded-[32px] bg-deep px-6 py-10 text-white sm:px-10 sm:py-12">
-          <div className="pointer-events-none absolute -end-20 -top-24 size-72 rounded-full bg-lav/30 blur-3xl" aria-hidden="true" />
-          <h2 id="fh-values-title" className="relative max-w-3xl text-title font-extrabold tracking-tight">{t("Home.valuesTitle")}</h2>
-          <ul className="relative mt-8 grid gap-3 sm:grid-cols-3">
-            {(["value1", "value2", "value3"] as const).map((k, i) => {
-              const Icon = [HeartHandshake, Zap, Sparkles][i];
-              return (
-                <li key={k} className="flex items-center gap-3 rounded-[22px] bg-white/10 px-5 py-4 backdrop-blur">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-gold text-fink"><Icon className="size-5" aria-hidden="true" /></span>
-                  <span className="font-semibold">{t(`Home.${k}`)}</span>
-                </li>
-              );
-            })}
-          </ul>
-          <Link href="/facility/request" className={cn(fhBtn.accent, "relative mt-8")}>
-            {t("Home.report")} <Arrow className="size-4" aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
-
       {/* ---------- Safety ---------- */}
-      <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-safety-title">
+      <section className="mx-auto mt-16 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-safety-title">
         <div className="flex flex-col gap-5 rounded-[28px] border border-[#FFD3A8] bg-[#FFF6EE] p-6 sm:flex-row sm:items-center sm:p-8">
           <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-gold text-fink"><ShieldAlert className="size-7" aria-hidden="true" /></span>
           <div>

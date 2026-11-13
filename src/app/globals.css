@@ -177,3 +177,8 @@ html[dir="rtl"] .ls-marquee { animation-name: ls-marquee-rtl; }
 @media print {
   .fh-noprint { display: none !important; }
 }
+
+/* Slow, subtle push-in on the hero photo (disabled for reduced motion). */
+@keyframes fh-zoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+.fh-zoom { animation: fh-zoom 14s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@media (prefers-reduced-motion: reduce) { .fh-zoom { animation: none; } }

@@ -60,14 +60,14 @@ writeFileSync(svgMap, '<svg xmlns="http://www.w3.org/2000/svg" width="1200" heig
 const browser = await chromium.launch();
 let reference = "";
 
-await step("anonymous: homepage renders in Arabic (RTL) and English with video hero", async () => {
+await step("anonymous: homepage renders in Arabic (RTL) and English with photo hero", async () => {
   const ctx = await browser.newContext();
   const page = await ctx.newPage();
   watch(page, "anon");
   await page.goto(`${BASE}/ar/facility`, { timeout: T });
   assert.equal(await page.getAttribute("html", "dir"), "rtl");
   await page.getByRole("heading", { level: 1, name: "بيئة عملك، أولويتنا." }).waitFor();
-  assert.ok(await page.locator("video[autoplay][muted][loop][playsinline]").count(), "hero video");
+  assert.ok(await page.locator("section[aria-labelledby=fh-hero-title] img").count(), "hero photo");
   await page.goto(`${BASE}/en/facility`, { timeout: T });
   assert.equal(await page.getAttribute("html", "dir"), "ltr");
   await page.getByRole("heading", { level: 1, name: "Your Workplace, Our Priority." }).waitFor();
