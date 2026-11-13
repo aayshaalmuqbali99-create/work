@@ -356,6 +356,13 @@ export function RequestWizard({
         </ol>
       </div>
 
+      {preset.source && d.areaId && !restored && (
+        <p className="mb-6 flex items-center gap-2 rounded-2xl bg-[#E9FBF8] px-4 py-3 text-sm font-medium text-[#0D6B63]">
+          <MapPin className="size-4 shrink-0" aria-hidden="true" />
+          <span>{preset.source === "qr" ? t("Wizard.fromQr") : t("Wizard.fromMap")} <strong>{[floor?.code, area ? pickName(area, locale) : ""].filter(Boolean).join(" · ")}</strong></span>
+        </p>
+      )}
+
       {restored && (
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-lav-50 px-4 py-3 text-sm">
           <span className="flex items-center gap-2 text-deep"><Info className="size-4" aria-hidden="true" /> {t("Wizard.draftRestored")}</span>
@@ -414,11 +421,6 @@ export function RequestWizard({
           {step === "location" && (
             <>
               <StepHeading id="fh-step-title" ref={headingRef} title={t("Wizard.locationTitle")} help={t("Wizard.locationHelp")} />
-              {preset.source && d.areaId && (
-                <p className="mb-5 flex items-center gap-2 rounded-2xl bg-[#E9FBF8] px-4 py-3 text-sm font-medium text-[#0D6B63]">
-                  <MapPin className="size-4" aria-hidden="true" /> {preset.source === "qr" ? t("Wizard.fromQr") : t("Wizard.fromMap")}
-                </p>
-              )}
               {config.buildings.length > 1 && (
                 <div className="mb-6">
                   <p className="mb-2 text-sm font-semibold">{t("Wizard.building")}</p>

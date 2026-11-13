@@ -33,7 +33,7 @@ export function PhotoGrid({ photos }: { photos: { id: string; width: number; hei
             onClick={() => setOpen(null)}
             onKeyDown={(e) => e.key === "Escape" && setOpen(null)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            { }
             <motion.img initial={{ scale: 0.95 }} animate={{ scale: 1 }} src={`/api/facility/attachments/${open}`} alt="" className="max-h-[85vh] max-w-full rounded-2xl object-contain" />
             <button autoFocus type="button" onClick={() => setOpen(null)} className="absolute end-4 top-4 grid size-11 place-items-center rounded-full bg-white text-fink" aria-label={t("close")}>
               <X className="size-5" />

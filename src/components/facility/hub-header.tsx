@@ -108,18 +108,18 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
       >
         <Link href="/facility" className="flex shrink-0 items-center gap-3 rounded-xl p-1.5" aria-label={tb("full")}>
           <OmantelLogo locale={locale} reverse={dark} height={locale === "ar" ? 34 : 18} priority />
-          <span className={cn("h-7 w-px", dark ? "bg-white/40" : "bg-fline")} aria-hidden="true" />
-          <span className={cn("whitespace-nowrap text-[15px] font-bold tracking-tight", dark ? "text-white" : "text-deep")}>{tb("name")}</span>
+          <span className={cn("hidden h-7 w-px min-[440px]:block", dark ? "bg-white/40" : "bg-fline")} aria-hidden="true" />
+          <span className={cn("hidden whitespace-nowrap text-[15px] font-bold tracking-tight min-[440px]:inline", dark ? "text-white" : "text-deep")}>{tb("name")}</span>
         </Link>
 
-        <nav className="ms-4 hidden flex-1 items-center gap-1 lg:flex" aria-label={t("menu")}>
+        <nav className="ms-4 hidden flex-1 items-center gap-0.5 xl:flex" aria-label={t("menu")}>
           {NAV.map((n) => (
             <Link
               key={n.href}
               href={n.href}
               aria-current={active(n.href) ? "page" : undefined}
               className={cn(
-                "relative rounded-full px-3.5 py-2 text-sm font-semibold transition",
+                "relative whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold transition",
                 dark ? "text-white/85 hover:text-white hover:bg-white/10" : "text-fmuted hover:text-deep hover:bg-lav-50",
                 active(n.href) && (dark ? "text-white" : "text-deep"),
               )}
@@ -130,7 +130,7 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
           ))}
         </nav>
 
-        <div className="ms-auto flex items-center gap-1">
+        <div className="ms-auto flex shrink-0 items-center gap-1">
           <span className="hidden sm:block"><FacLanguageSwitch dark={dark} /></span>
           {user && (
             <div className="relative" data-fh-panel>
@@ -223,7 +223,7 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
           </Link>
           <button
             type="button"
-            className={cn("grid size-10 place-items-center rounded-full lg:hidden", dark ? "text-white hover:bg-white/15" : "text-deep hover:bg-lav-50")}
+            className={cn("grid size-10 place-items-center rounded-full xl:hidden", dark ? "text-white hover:bg-white/15" : "text-deep hover:bg-lav-50")}
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             aria-controls="fh-mobile-nav"
@@ -242,7 +242,7 @@ export function HubHeader({ user, notifications }: { user: HeaderUser; notificat
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-w-7xl rounded-[22px] border border-fline bg-white p-3 shadow-lift lg:hidden"
+            className="mx-auto mt-2 max-w-7xl rounded-[22px] border border-fline bg-white p-3 shadow-lift xl:hidden"
             aria-label={t("menu")}
           >
             {NAV.map((n) => (

@@ -4,6 +4,11 @@ Scientific & engineering equipment marketplace (Oman → GCC). Arabic (RTL, defa
 
 > Status: showcase + control panel — see `DEVELOPMENT_PLAN.md` and `DEVELOPMENT_STATUS.md`.
 
+## Omantel Facility Hub
+Facility maintenance & cleaning requests with a Facility Operations command center — `/ar/facility`, `/en/facility`,
+operations at `/ar/facility/ops`. Full guide, roles, sample accounts and the production integration checklist:
+**[docs/FACILITY_HUB.md](docs/FACILITY_HUB.md)**.
+
 ## Requirements
 - Node.js 22+
 - npm 10+

@@ -53,6 +53,18 @@ _Last updated: 2026-11-08_
     Arabic deployment guide `docs/DEPLOYMENT.md`. Standalone server tested end to end; Docker image itself not
     built here (no Docker daemon in this environment).
 
+- Omantel Facility Hub (2026-11-13) — see `docs/FACILITY_HUB.md`:
+  - Separate facility platform at `/[locale]/facility` with its own users, sessions, roles (Employee, Contractor, Agent, Admin) and audit log.
+  - Employee: cinematic homepage with the real building video/photos, 6-step request wizard (draft autosave, live safety
+    warning, photo capture), My Requests, request detail with timeline / confirm / reopen / cancel / rating, services guide,
+    building map (empty state until a plan is published), QR scan.
+  - Facility Operations: KPI dashboard, filterable request table with bulk assign and CSV export, request management
+    (status rules, assignment, priority + SLA recalculation, escalation, internal notes, completion photos), analytics,
+    configuration of locations, categories/problems, teams/contractors, routing rules, SLA/business calendar/holidays,
+    e-mail templates + outbox, floor-plan upload with marker/zone editor and publishing, QR codes, users and roles.
+  - Verified B1/B2/B3 seed; sample data flagged and removable. Entra ID SSO and Microsoft Graph e-mail ready (env-configured).
+  - Verified: unit tests (`npm test`), Playwright end-to-end (`npm run test:e2e`), lint, typecheck, production build.
+
 ## In progress
 - Phase 2 (part 2): shadcn/ui base components (button, input, card, dialog), full design-system page.
 - Open questions in `DEVELOPMENT_PLAN.md` §4 (hosting, storage, seller name, item 26/82, email).

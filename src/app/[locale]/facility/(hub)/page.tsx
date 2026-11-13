@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ClipboardList, Map as MapIcon, QrCode, ShieldAlert, Inbox } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
