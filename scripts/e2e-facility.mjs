@@ -66,11 +66,15 @@ await step("anonymous: homepage renders in Arabic (RTL) and English with video h
   watch(page, "anon");
   await page.goto(`${BASE}/ar/facility`, { timeout: T });
   assert.equal(await page.getAttribute("html", "dir"), "rtl");
-  await page.getByRole("heading", { level: 1, name: "بيئة عمل أفضل تبدأ من هنا" }).waitFor();
+  await page.getByRole("heading", { level: 1, name: "بيئة عملك، أولويتنا." }).waitFor();
   assert.ok(await page.locator("video[autoplay][muted][loop][playsinline]").count(), "hero video");
   await page.goto(`${BASE}/en/facility`, { timeout: T });
   assert.equal(await page.getAttribute("html", "dir"), "ltr");
-  await page.getByRole("heading", { level: 1, name: "A Better Workplace Starts Here" }).waitFor();
+  await page.getByRole("heading", { level: 1, name: "Your Workplace, Our Priority." }).waitFor();
+  await page.getByText("Together, We Make Every Space Better.").waitFor();
+  await page.getByText("Let us know when something in the building needs maintenance attention.").waitFor();
+  await page.getByText("Help us keep our shared spaces clean, comfortable, and welcoming.").waitFor();
+  await page.getByRole("link", { name: "My Requests", exact: true }).first().waitFor();
   await page.goto(`${BASE}/en/facility/request`, { timeout: T });
   assert.match(page.url(), /\/facility\/login\?next=/, "wizard requires sign-in");
   await ctx.close();
@@ -149,12 +153,13 @@ await step("employee: full maintenance request with photo, safety warning and la
   await page.locator('input[type=file][multiple]').setInputFiles(png);
   await page.locator("ul img").first().waitFor();
   await page.getByRole("button", { name: "Continue" }).click();
-  await page.getByText("Review and submit").waitFor();
-  await page.getByRole("button", { name: "Submit request" }).click();
-  await page.getByText("Request submitted").waitFor({ timeout: T });
+  await page.getByText("Review and send").waitFor();
+  await page.getByRole("button", { name: "Send report" }).click();
+  await page.getByText("Thank You for Letting Us Know!").waitFor({ timeout: T });
+  await page.getByText("Your report has been successfully received by Facility Operations.", { exact: false }).waitFor();
   reference = (await page.locator("p.font-mono").first().innerText()).trim();
   assert.match(reference, /^FAC-\d{4}-\d{6}$/);
-  await page.getByRole("link", { name: "Track this request" }).click();
+  await page.getByRole("link", { name: "Track my request" }).click();
   await page.waitForURL(new RegExp(reference), { timeout: T });
   await page.getByRole("heading", { name: "Lighting failure" }).waitFor();
   const src = await page.locator('img[src^="/api/facility/attachments/"]').first().getAttribute("src");
@@ -209,7 +214,7 @@ await step("employee: sees public updates only, confirms the fix and rates", asy
   await page.getByRole("heading", { name: "How did we do?" }).waitFor({ timeout: T });
   await page.getByRole("radio", { name: "5 of 5" }).click();
   await page.getByRole("button", { name: "Send feedback" }).click();
-  await page.getByText("Thank you for your feedback.").waitFor({ timeout: T });
+  await page.getByText("Thank you. Your feedback helps us keep our workplace at its best.").waitFor({ timeout: T });
   await page.getByText("Closed").first().waitFor();
   await ctx.close();
 });
@@ -234,6 +239,7 @@ await step("admin: every configuration page loads; QR opens the wizard with the 
   }
   await page.goto(`${BASE}/en/facility/ops/emails`, { timeout: T });
   await page.getByText(`Facility Request Resolved – ${reference}`).first().waitFor();
+  await page.getByText(`Thank You for Letting Us Know – ${reference}`).first().waitFor();
   // QR: read the token of B1 Parking from the downloadable SVG link's area and follow the scan URL
   await page.goto(`${BASE}/en/facility/ops/qr`, { timeout: T });
   const href = await page.locator('a[href^="/api/facility/qr/"]').first().getAttribute("href");

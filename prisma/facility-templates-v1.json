@@ -1,0 +1,65 @@
+[
+  {
+    "key": "ASSIGNED",
+    "subjectEn": "Facility Request Assigned – {{reference}}",
+    "subjectAr": "تم إسناد طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nYour request has been assigned to {{team}}.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nتم إسناد طلبك إلى {{team}}.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  },
+  {
+    "key": "CLOSED",
+    "subjectEn": "Facility Request Closed – {{reference}}",
+    "subjectAr": "تم إغلاق طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nYour request has been closed. Thank you for using Omantel Facility Hub.\n\nReference: {{reference}}\nLocation: {{location}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nتم إغلاق طلبك. شكرًا لاستخدامك مركز مرافق عُمانتل.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  },
+  {
+    "key": "ESCALATED",
+    "subjectEn": "Escalated Facility Request – {{reference}}",
+    "subjectAr": "تصعيد طلب مرافق – {{reference}}",
+    "bodyEn": "Request {{reference}} has been escalated.\n\nReason: {{comment}}\nLocation: {{location}}\nStatus: {{status}}",
+    "bodyAr": "تم تصعيد الطلب {{reference}}.\n\nالسبب: {{comment}}\nالموقع: {{location}}\nالحالة: {{status}}"
+  },
+  {
+    "key": "INFO_REQUIRED",
+    "subjectEn": "More Information Needed – {{reference}}",
+    "subjectAr": "مطلوب معلومات إضافية – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nFacility Operations needs more information to continue with your request.\n\n{{comment}}\n\nReference: {{reference}}\nLocation: {{location}}\n\nPlease reply by adding a comment to the request.\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nتحتاج عمليات المرافق إلى معلومات إضافية لمتابعة طلبك.\n\n{{comment}}\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\n\nيرجى الرد بإضافة تعليق على الطلب.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  },
+  {
+    "key": "IN_PROGRESS",
+    "subjectEn": "Work Started on Your Facility Request – {{reference}}",
+    "subjectAr": "بدء العمل على طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nWork has started on your request.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\n{{comment}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nبدأ العمل على طلبك.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\n{{comment}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  },
+  {
+    "key": "OVERDUE",
+    "subjectEn": "Overdue Facility Request – {{reference}}",
+    "subjectAr": "طلب مرافق متأخر – {{reference}}",
+    "bodyEn": "The resolution target for request {{reference}} has passed.\n\nLocation: {{location}}\nStatus: {{status}}",
+    "bodyAr": "انقضى موعد الحل المستهدف للطلب {{reference}}.\n\nالموقع: {{location}}\nالحالة: {{status}}"
+  },
+  {
+    "key": "REOPENED",
+    "subjectEn": "Facility Request Reopened – {{reference}}",
+    "subjectAr": "تمت إعادة فتح طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nYour request has been reopened and Facility Operations will follow up.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nتمت إعادة فتح طلبك وستتابعه عمليات المرافق.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  },
+  {
+    "key": "RESOLVED",
+    "subjectEn": "Facility Request Resolved – {{reference}}",
+    "subjectAr": "تم حل طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nWe are pleased to inform you that your reported facility issue has been resolved.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nThank you for helping us maintain a safe, clean, and comfortable workplace.\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nيسعدنا إبلاغك بأنه تم حل مشكلة المرافق التي أبلغت عنها.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nشكرًا لمساعدتنا في الحفاظ على بيئة عمل آمنة ونظيفة ومريحة.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  },
+  {
+    "key": "SUBMITTED",
+    "subjectEn": "Facility Request Received – {{reference}}",
+    "subjectAr": "تم استلام طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nThank you for submitting your request through Omantel Facility Hub.\n\nYour request has been received by Facility Operations.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nWe will keep you updated on its progress.\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nشكرًا لتقديم طلبك عبر مركز مرافق عُمانتل.\n\nتم استلام طلبك من قبل عمليات المرافق.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nسنُبقيك على اطلاع بمستجدات طلبك.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
+  }
+]

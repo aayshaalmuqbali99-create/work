@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ClipboardList, Map as MapIcon, QrCode, ShieldAlert, Inbox } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpen, ChevronDown, ClipboardList, HeartHandshake, Map as MapIcon, QrCode, ShieldAlert, Inbox, Sparkles, Zap } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { HeroVideo } from "@/components/facility/hero-video";
@@ -39,8 +39,11 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
           <h1 id="fh-hero-title" className="fh-rise fh-d1 mt-5 max-w-4xl text-hero font-extrabold tracking-tight">
             {t("Home.title")}
           </h1>
-          <p className="fh-rise fh-d2 mt-6 max-w-xl text-lg leading-relaxed text-white/85 sm:text-xl">{t("Home.description")}</p>
-          <div className="fh-rise fh-d3 mt-9 flex flex-wrap gap-3">
+          <p className="fh-rise fh-d2 mt-4 max-w-3xl text-2xl font-bold text-white sm:text-3xl">
+            <span className="bg-[linear-gradient(transparent_62%,rgb(255_120_0/0.55)_62%)] box-decoration-clone px-1">{t("Home.subtitle")}</span>
+          </p>
+          <p className="fh-rise fh-d2 mt-6 max-w-2xl text-lg leading-relaxed text-white/85">{t("Home.description")}</p>
+          <div className="fh-rise fh-d3 mt-8 flex flex-wrap gap-3">
             <Link href="/facility/request" className={cn(fhBtn.accent, "min-h-13 px-7 text-base")}>
               {t("Home.report")} <Arrow className="size-4" aria-hidden="true" />
             </Link>
@@ -180,9 +183,11 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
       <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-building-title">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.2fr]">
           <div>
-            <h2 id="fh-building-title" className="text-title font-extrabold tracking-tight text-fink">{t("Home.buildingTitle")}</h2>
+            <p className="flex items-center gap-2.5 text-sm font-bold uppercase tracking-[0.14em] text-deep"><Spark /> {t("Home.bridgeEyebrow")}</p>
+            <h2 id="fh-building-title" className="mt-3 text-title font-extrabold tracking-tight text-fink">{t("Home.buildingTitle")}</h2>
             <p className="mt-4 text-lg leading-relaxed text-fmuted">{t("Home.buildingText")}</p>
-            <ol className="mt-8 space-y-5">
+            <h3 className="mt-8 text-sm font-bold uppercase tracking-[0.14em] text-fmuted">{t("Home.stepsTitle")}</h3>
+            <ol className="mt-4 space-y-5">
               {[1, 2, 3].map((n) => (
                 <li key={n} className="flex gap-4">
                   <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-deep text-sm font-bold text-white">{n}</span>
@@ -211,6 +216,28 @@ export default async function FacilityHome({ params }: { params: Promise<{ local
               <Image src="/facility/workspace-carpet.webp" alt="" fill sizes="12vw" className="object-cover" />
             </figure>
           </div>
+        </div>
+      </section>
+
+      {/* ---------- Shared values ---------- */}
+      <section className="mx-auto mt-24 max-w-7xl px-5 sm:px-8" aria-labelledby="fh-values-title">
+        <div className="relative overflow-hidden rounded-[32px] bg-deep px-6 py-10 text-white sm:px-10 sm:py-12">
+          <div className="pointer-events-none absolute -end-20 -top-24 size-72 rounded-full bg-lav/30 blur-3xl" aria-hidden="true" />
+          <h2 id="fh-values-title" className="relative max-w-3xl text-title font-extrabold tracking-tight">{t("Home.valuesTitle")}</h2>
+          <ul className="relative mt-8 grid gap-3 sm:grid-cols-3">
+            {(["value1", "value2", "value3"] as const).map((k, i) => {
+              const Icon = [HeartHandshake, Zap, Sparkles][i];
+              return (
+                <li key={k} className="flex items-center gap-3 rounded-[22px] bg-white/10 px-5 py-4 backdrop-blur">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-2xl bg-gold text-fink"><Icon className="size-5" aria-hidden="true" /></span>
+                  <span className="font-semibold">{t(`Home.${k}`)}</span>
+                </li>
+              );
+            })}
+          </ul>
+          <Link href="/facility/request" className={cn(fhBtn.accent, "relative mt-8")}>
+            {t("Home.report")} <Arrow className="size-4" aria-hidden="true" />
+          </Link>
         </div>
       </section>
 

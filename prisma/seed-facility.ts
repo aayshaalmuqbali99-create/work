@@ -16,6 +16,7 @@ import { PrismaClient, type FacPriority, type FacService, type FacStatus } from 
 import { hash } from "@node-rs/argon2";
 import { addBusinessMinutes, type BusinessCalendar } from "../src/features/facility/domain/sla";
 import { formatReference } from "../src/features/facility/domain/reference";
+import PREVIOUS_TEMPLATES from "./facility-templates-v1.json";
 
 type Db = PrismaClient;
 
@@ -161,68 +162,68 @@ const CATEGORIES: CategorySeed[] = [
 
 const TEMPLATES: { key: string; subjectEn: string; subjectAr: string; bodyEn: string; bodyAr: string }[] = [
   {
-    key: "SUBMITTED",
-    subjectEn: "Facility Request Received – {{reference}}",
-    subjectAr: "تم استلام طلب المرافق – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nThank you for submitting your request through Omantel Facility Hub.\n\nYour request has been received by Facility Operations.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nWe will keep you updated on its progress.\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nشكرًا لتقديم طلبك عبر مركز مرافق عُمانتل.\n\nتم استلام طلبك من قبل عمليات المرافق.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nسنُبقيك على اطلاع بمستجدات طلبك.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "SUBMITTED",
+    "subjectEn": "Thank You for Letting Us Know – {{reference}}",
+    "subjectAr": "شكرًا لإبلاغنا – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nThank you for letting us know. Your report has been successfully received by Facility Operations.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nYour feedback helps us respond faster. We will keep you updated on its progress.\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nشكرًا لإبلاغنا. تم استلام بلاغك بنجاح من قبل عمليات المرافق.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nملاحظاتك تساعدنا على الاستجابة بشكل أسرع، وسنُبقيك على اطلاع بمستجدات طلبك.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "ASSIGNED",
-    subjectEn: "Facility Request Assigned – {{reference}}",
-    subjectAr: "تم إسناد طلب المرافق – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nYour request has been assigned to {{team}}.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nتم إسناد طلبك إلى {{team}}.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "ASSIGNED",
+    "subjectEn": "Your Facility Request Is Being Handled – {{reference}}",
+    "subjectAr": "طلبك قيد المعالجة – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nYour request has been assigned to {{team}}, who will take care of it.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nتم إسناد طلبك إلى {{team}} للعناية به.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "IN_PROGRESS",
-    subjectEn: "Work Started on Your Facility Request – {{reference}}",
-    subjectAr: "بدء العمل على طلب المرافق – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nWork has started on your request.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\n{{comment}}\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nبدأ العمل على طلبك.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\n{{comment}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "IN_PROGRESS",
+    "subjectEn": "Work Has Started on Your Request – {{reference}}",
+    "subjectAr": "بدأ العمل على طلبك – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nGood news: work has started on your request.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\n{{comment}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nيسعدنا إبلاغك بأن العمل على طلبك قد بدأ.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\n{{comment}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "INFO_REQUIRED",
-    subjectEn: "More Information Needed – {{reference}}",
-    subjectAr: "مطلوب معلومات إضافية – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nFacility Operations needs more information to continue with your request.\n\n{{comment}}\n\nReference: {{reference}}\nLocation: {{location}}\n\nPlease reply by adding a comment to the request.\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nتحتاج عمليات المرافق إلى معلومات إضافية لمتابعة طلبك.\n\n{{comment}}\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\n\nيرجى الرد بإضافة تعليق على الطلب.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "INFO_REQUIRED",
+    "subjectEn": "A Little More Information, Please – {{reference}}",
+    "subjectAr": "نحتاج إلى بعض المعلومات الإضافية – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nTo help us respond as quickly as possible, Facility Operations would appreciate a little more information about your request.\n\n{{comment}}\n\nReference: {{reference}}\nLocation: {{location}}\n\nYou can reply by adding a comment to the request.\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nلمساعدتنا على الاستجابة بأسرع وقت، تحتاج عمليات المرافق إلى بعض المعلومات الإضافية حول طلبك.\n\n{{comment}}\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\n\nيمكنك الرد بإضافة تعليق على الطلب.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "RESOLVED",
-    subjectEn: "Facility Request Resolved – {{reference}}",
-    subjectAr: "تم حل طلب المرافق – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nWe are pleased to inform you that your reported facility issue has been resolved.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nThank you for helping us maintain a safe, clean, and comfortable workplace.\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nيسعدنا إبلاغك بأنه تم حل مشكلة المرافق التي أبلغت عنها.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nشكرًا لمساعدتنا في الحفاظ على بيئة عمل آمنة ونظيفة ومريحة.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "RESOLVED",
+    "subjectEn": "Facility Request Resolved – {{reference}}",
+    "subjectAr": "تم حل طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nWe are pleased to inform you that your reported facility issue has been resolved.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nThank you for helping us maintain a safe, clean, and comfortable workplace. Please let us know if everything is as it should be.\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nيسعدنا إبلاغك بأنه تم حل الملاحظة التي أبلغت عنها.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nشكرًا لمساعدتنا في الحفاظ على بيئة عمل آمنة ونظيفة ومريحة. أخبرنا إن كان كل شيء على ما يرام.\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "REOPENED",
-    subjectEn: "Facility Request Reopened – {{reference}}",
-    subjectAr: "تمت إعادة فتح طلب المرافق – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nYour request has been reopened and Facility Operations will follow up.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nتمت إعادة فتح طلبك وستتابعه عمليات المرافق.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "REOPENED",
+    "subjectEn": "We're Following Up on Your Request – {{reference}}",
+    "subjectAr": "نتابع طلبك من جديد – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nThank you for letting us know. Your request has been reopened and Facility Operations will follow up.\n\nReference: {{reference}}\nLocation: {{location}}\nStatus: {{status}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nشكرًا لإبلاغنا. تمت إعادة فتح طلبك وستتابعه عمليات المرافق.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\nالحالة: {{status}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "CLOSED",
-    subjectEn: "Facility Request Closed – {{reference}}",
-    subjectAr: "تم إغلاق طلب المرافق – {{reference}}",
-    bodyEn: "Dear {{name}},\n\nYour request has been closed. Thank you for using Omantel Facility Hub.\n\nReference: {{reference}}\nLocation: {{location}}\n\nBest regards,\nFacility Operations Team\nOmantel",
-    bodyAr: "عزيزي/عزيزتي {{name}}،\n\nتم إغلاق طلبك. شكرًا لاستخدامك مركز مرافق عُمانتل.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل",
+    "key": "CLOSED",
+    "subjectEn": "Facility Request Closed – {{reference}}",
+    "subjectAr": "تم إغلاق طلب المرافق – {{reference}}",
+    "bodyEn": "Dear {{name}},\n\nYour request has been closed. Thank you for using Omantel Facility Hub. Together, we keep our workplace at its best.\n\nReference: {{reference}}\nLocation: {{location}}\n\nBest regards,\nFacility Operations Team\nOmantel",
+    "bodyAr": "عزيزي/عزيزتي {{name}}،\n\nتم إغلاق طلبك. شكرًا لاستخدامك مركز مرافق عُمانتل. معًا، نحافظ على بيئة عملنا في أفضل حال.\n\nالرقم المرجعي: {{reference}}\nالموقع: {{location}}\n\nمع أطيب التحيات،\nفريق عمليات المرافق\nعُمانتل"
   },
   {
-    key: "OVERDUE",
-    subjectEn: "Overdue Facility Request – {{reference}}",
-    subjectAr: "طلب مرافق متأخر – {{reference}}",
-    bodyEn: "The resolution target for request {{reference}} has passed.\n\nLocation: {{location}}\nStatus: {{status}}",
-    bodyAr: "انقضى موعد الحل المستهدف للطلب {{reference}}.\n\nالموقع: {{location}}\nالحالة: {{status}}",
+    "key": "OVERDUE",
+    "subjectEn": "Overdue Facility Request – {{reference}}",
+    "subjectAr": "طلب مرافق متأخر – {{reference}}",
+    "bodyEn": "The resolution target for request {{reference}} has passed.\n\nLocation: {{location}}\nStatus: {{status}}",
+    "bodyAr": "انقضى موعد الحل المستهدف للطلب {{reference}}.\n\nالموقع: {{location}}\nالحالة: {{status}}"
   },
   {
-    key: "ESCALATED",
-    subjectEn: "Escalated Facility Request – {{reference}}",
-    subjectAr: "تصعيد طلب مرافق – {{reference}}",
-    bodyEn: "Request {{reference}} has been escalated.\n\nReason: {{comment}}\nLocation: {{location}}\nStatus: {{status}}",
-    bodyAr: "تم تصعيد الطلب {{reference}}.\n\nالسبب: {{comment}}\nالموقع: {{location}}\nالحالة: {{status}}",
-  },
+    "key": "ESCALATED",
+    "subjectEn": "Escalated Facility Request – {{reference}}",
+    "subjectAr": "تصعيد طلب مرافق – {{reference}}",
+    "bodyEn": "Request {{reference}} has been escalated.\n\nReason: {{comment}}\nLocation: {{location}}\nStatus: {{status}}",
+    "bodyAr": "تم تصعيد الطلب {{reference}}.\n\nالسبب: {{comment}}\nالموقع: {{location}}\nالحالة: {{status}}"
+  }
 ];
 
 export async function seedFacility(db: Db) {
@@ -271,7 +272,16 @@ export async function seedFacility(db: Db) {
     }
   }
 
-  for (const t of TEMPLATES) await db.facEmailTemplate.upsert({ where: { key: t.key }, update: {}, create: t });
+  for (const t of TEMPLATES) {
+    const existing = await db.facEmailTemplate.findUnique({ where: { key: t.key } });
+    if (!existing) await db.facEmailTemplate.create({ data: t });
+    else {
+      // Upgrade only templates that still hold the previous default wording; administrator edits are kept.
+      const prev = PREVIOUS_TEMPLATES.find((p) => p.key === t.key);
+      const untouched = prev && (["subjectEn", "subjectAr", "bodyEn", "bodyAr"] as const).every((f) => existing[f] === prev[f]);
+      if (untouched) await db.facEmailTemplate.update({ where: { key: t.key }, data: t });
+    }
+  }
   await db.facSettings.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } });
   // SLA rows exist for every priority; targets stay empty (no target) unless sample data is loaded.
   for (const p of ["LOW", "MEDIUM", "HIGH", "EMERGENCY"] as FacPriority[]) {

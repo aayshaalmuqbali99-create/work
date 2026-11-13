@@ -101,7 +101,7 @@ export function RequestActions({
         <textarea id="fh-comment" rows={3} value={comment} onChange={(e) => setComment(e.target.value)} placeholder={t("Detail.commentPh")} className={cn(fhInput, "mt-3")} maxLength={2000} />
         <button
           disabled={pending || comment.trim().length < 2}
-          onClick={() => run(async () => { const r = await employeeCommentAction(reference, comment); if (r.ok) setComment(""); return r; })}
+          onClick={() => run(async () => { const r = await employeeCommentAction(reference, comment); if (r.ok) setComment(""); return r; }, t("Detail.commentThanks"))}
           className={cn(fhBtn.primary, "mt-3")}
         >
           {pending ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4 rtl:-scale-x-100" aria-hidden="true" />} {t("Detail.send")}

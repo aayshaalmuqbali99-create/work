@@ -1,7 +1,13 @@
 # Omantel Facility Hub
 
-Internal platform for **facility maintenance and cleaning requests** in Omantel buildings, with a separate
-**Facility Operations command center**. It is not an IT helpdesk: computers, network, software and
+Internal **communication bridge between employees and Facility Operations** for maintenance and cleaning in Omantel
+buildings, with a separate **Facility Operations command center**.
+
+**Purpose and tone.** Facility Operations already performs regular inspections, maintenance follow-ups and cleaning
+supervision. Facility Hub does not exist because of shortcomings; it gives employees one clear, convenient place to share
+what they notice, so the information reaches the right team quickly and can be coordinated and resolved on time. All
+employee-facing text is written in that positive, collaborative tone ("Your Workplace, Our Priority.", "Thank you for
+letting us know.", "Your feedback helps us respond faster."). Keep it that way when editing texts or e-mail templates. It is not an IT helpdesk: computers, network, software and
 audio-visual equipment are explicitly out of scope (stated in the wizard, the guide and the footer).
 
 - Employee experience: `/ar/facility` (Arabic, RTL, default) and `/en/facility` (English, LTR)

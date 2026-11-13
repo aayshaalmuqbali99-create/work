@@ -46,6 +46,7 @@ export default async function OpsDashboard() {
         <div>
           <p className="text-sm font-semibold text-deep">{t("Ops.commandCenter")}</p>
           <h1 className="text-3xl font-extrabold tracking-tight text-fink">{t("Ops.nav.dashboard")}</h1>
+          <p className="mt-1 max-w-2xl text-fmuted">{t("Ops.intro")}</p>
         </div>
         {hasSample > 0 && can(user.role, "config.manage") && <PurgeSampleButton />}
       </div>
