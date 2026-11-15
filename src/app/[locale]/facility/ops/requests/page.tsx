@@ -81,7 +81,7 @@ export default async function OpsRequestsPage({ searchParams }: { searchParams: 
                       <Link href={`/facility/ops/requests/${r.reference}`} className="font-mono font-semibold text-deep hover:underline" dir="ltr">{r.reference}</Link>
                       {r.isSample && <span className="ms-2"><SampleTag label={t("Common.sample")} /></span>}
                     </td>
-                    <td className="max-w-40 px-3 py-3"><span className="block truncate">{r.employeeName}</span>{r.employeeNo && <span className="block truncate font-mono text-xs text-fmuted" dir="ltr">{r.employeeNo}</span>}</td>
+                    <td className="max-w-40 px-3 py-3"><span className="block truncate">{r.employeeName}</span>{r.isVisitor ? <span className="mt-0.5 inline-block rounded-full bg-gold px-2 py-0.5 text-[11px] font-bold text-fink">{t("Requester.visitor")}</span> : r.employeeNo && <span className="block truncate font-mono text-xs text-fmuted" dir="ltr">{r.employeeNo}</span>}</td>
                     <td className="px-3 py-3">{t(`Service.${r.service}`)}</td>
                     <td className="max-w-48 px-3 py-3">
                       <span className="block truncate font-medium">{r.issue ? pickName(r.issue, locale) : r.issueOther}</span>

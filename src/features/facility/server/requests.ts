@@ -75,6 +75,7 @@ export type CreateInput = {
   /** Requester details typed on the form (required for guest visitors). */
   name?: string;
   employeeNo?: string;
+  visitor?: boolean;
   safetyFlag: boolean;
   photos: { key: string; width: number; height: number }[];
 };
@@ -144,9 +145,10 @@ export async function createRequest(user: FacUserSession, input: CreateInput, op
         employeeId: user.id,
         employeeName: (input.name || user.name).trim().slice(0, 120),
         employeeEmail: user.email,
-        contactPhone: input.phone.trim().slice(0, 40),
+        contactPhone: input.phone.replace(/[\s()-]/g, "").slice(0, 40),
         department: (input.department || user.department).trim().slice(0, 120),
-        employeeNo: (input.employeeNo ?? "").trim().slice(0, 30),
+        employeeNo: input.visitor ? "" : (input.employeeNo ?? "").trim().slice(0, 30),
+        isVisitor: !!input.visitor,
         service: input.service,
         categoryId: issue?.categoryId ?? null,
         issueId: issue?.id ?? null,

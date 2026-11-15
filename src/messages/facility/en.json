@@ -481,7 +481,7 @@
       "internal": "Internal note (not visible to the employee)",
       "public": "Visible to the employee",
       "completionPhoto": "Upload completion photo",
-      "employee": "Employee",
+      "employee": "Requester",
       "contact": "Contact",
       "sla": "SLA",
       "response": "Response due",
@@ -772,10 +772,21 @@
     "unit": "Unit / department",
     "unitPh": "e.g. Human Resources",
     "required": "This field is required",
-    "detailsMissing": "Please complete your details: name, employee number and unit."
+    "detailsMissing": "Please complete your details: name, employee number and unit.",
+    "whoAreYou": "You are:",
+    "employee": "Omantel employee",
+    "visitor": "Visitor",
+    "phone": "Phone number",
+    "phonePh": "e.g. 9xxxxxxx",
+    "phoneInvalid": "Enter a valid phone number",
+    "org": "Organisation / company (optional)",
+    "orgPh": "e.g. Company name"
   },
   "Requester": {
     "employeeNo": "Employee no.",
-    "unit": "Unit"
+    "unit": "Unit",
+    "visitor": "Visitor",
+    "phone": "Phone",
+    "org": "Organisation"
   }
 }

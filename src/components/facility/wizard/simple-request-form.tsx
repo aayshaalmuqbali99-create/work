@@ -23,9 +23,9 @@ export type WizardPreset = { service?: FacService; areaId?: string; locationId?:
 
 export type LocationValue = { buildingId: string | null; floorId: string; wingId: string; areaId: string; locationId: string; exact: string };
 
-type Form = LocationValue & { service: FacService | null; issueId: string; issueOther: string; description: string; safetyAck: boolean; name: string; employeeNo: string; unit: string };
+type Form = LocationValue & { service: FacService | null; issueId: string; issueOther: string; description: string; safetyAck: boolean; name: string; employeeNo: string; unit: string; visitor: boolean; phone: string; org: string };
 
-export type Requester = { name: string; employeeNo: string; unit: string };
+export type Requester = { name: string; employeeNo: string; unit: string; visitor: boolean; phone: string; org: string };
 
 /** Resolve the location selection against the configuration (shared with the admin preview). */
 export function resolveLocation(config: WizardConfig, v: LocationValue) {
@@ -150,7 +150,7 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
   const reduce = useReducedMotion();
   const key = `fh-simple:${userId}`;
   const empty = useMemo<Form>(
-    () => ({ service: preset.service ?? null, buildingId: config.buildings[0]?.id ?? null, floorId: "", wingId: "", areaId: "", locationId: "", exact: "", issueId: "", issueOther: "", description: "", safetyAck: false, name: requester.name, employeeNo: requester.employeeNo, unit: requester.unit }),
+    () => ({ service: preset.service ?? null, buildingId: config.buildings[0]?.id ?? null, floorId: "", wingId: "", areaId: "", locationId: "", exact: "", issueId: "", issueOther: "", description: "", safetyAck: false, name: requester.name, employeeNo: requester.employeeNo, unit: requester.unit, visitor: requester.visitor, phone: requester.phone, org: requester.org }),
     [config.buildings, preset.service, requester],
   );
   const [f, setF] = useState<Form>(empty);
@@ -176,7 +176,7 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
     if (hit) {
       const wingId = loc?.l?.wingId ?? hit.a!.wingId ?? (hit.fl.wings.length ? WING_UNSURE : "");
       setF((x) => ({ ...(draft ?? x), service: preset.service ?? draft?.service ?? x.service, buildingId: hit.b.id, floorId: hit.fl.id, wingId, areaId: hit.a!.id, locationId: loc?.l?.id ?? "" }));
-    } else if (draft) setF({ ...empty, ...draft, service: preset.service ?? draft.service, name: draft.name || empty.name, employeeNo: draft.employeeNo || empty.employeeNo, unit: draft.unit || empty.unit });
+    } else if (draft) setF({ ...empty, ...draft, service: preset.service ?? draft.service, name: draft.name || empty.name, employeeNo: draft.employeeNo || empty.employeeNo, unit: draft.unit || empty.unit, visitor: draft.visitor ?? empty.visitor, phone: draft.phone || empty.phone, org: draft.org || empty.org });
     ready.current = true;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -239,9 +239,14 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
     if (f.description.trim().length < 10) e.description = t("Wizard.descriptionShort");
     if (safety && !f.safetyAck) e.safety = t("Safety.title");
     if (f.name.trim().length < 2) e.name = t("Simple.required");
-    if (!f.employeeNo.trim()) e.employeeNo = t("Simple.required");
-    else if (!/^[\w\-/ ]+$/.test(f.employeeNo.trim())) e.employeeNo = t("Simple.employeeNoInvalid");
-    if (f.unit.trim().length < 2) e.unit = t("Simple.required");
+    if (f.visitor) {
+      if (!f.phone.trim()) e.phone = t("Simple.required");
+      else if (!/^[+\d\s()-]+$/.test(f.phone.trim()) || f.phone.replace(/\D/g, "").length < 7) e.phone = t("Simple.phoneInvalid");
+    } else {
+      if (!f.employeeNo.trim()) e.employeeNo = t("Simple.required");
+      else if (!/^[\w\-/ ]+$/.test(f.employeeNo.trim())) e.employeeNo = t("Simple.employeeNoInvalid");
+      if (f.unit.trim().length < 2) e.unit = t("Simple.required");
+    }
     setErrors(e);
     if (Object.keys(e).length) {
       requestAnimationFrame(() => document.querySelector<HTMLElement>("[aria-invalid=true], [data-invalid=true]")?.focus());
@@ -265,10 +270,11 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
           issueOther: f.issueId === OTHER_ISSUE ? f.issueOther : "",
           description: f.description,
           priority,
-          phone: "",
-          department: f.unit.trim(),
+          phone: f.visitor ? f.phone.trim() : "",
+          department: f.visitor ? f.org.trim() : f.unit.trim(),
           name: f.name.trim(),
-          employeeNo: f.employeeNo.trim(),
+          employeeNo: f.visitor ? "" : f.employeeNo.trim(),
+          visitor: f.visitor,
           safetyAcknowledged: f.safetyAck,
         }),
       );
@@ -287,7 +293,7 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
           res.error === "uploadTooLarge" ? t("Common.uploadTooLarge", { size: MAX_PHOTO_MB })
           : res.error === "uploadBadType" ? t("Common.uploadBadType")
           : res.error === "tooMany" ? t("Common.tooMany")
-          : res.error === "invalid" && res.fields && ("name" in res.fields || "employeeNo" in res.fields || "department" in res.fields) ? t("Simple.detailsMissing")
+          : res.error === "invalid" && res.fields && ("name" in res.fields || "employeeNo" in res.fields || "department" in res.fields || "phone" in res.fields) ? t("Simple.detailsMissing")
           : res.error === "invalid" ? t("Common.invalid")
           : t("Common.error"),
         );
@@ -309,7 +315,7 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
         </div>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
           <Link href={`/facility/requests/${done}`} className={fhBtn.primary}>{t("Wizard.viewRequest")}</Link>
-          <button type="button" className={fhBtn.secondary} onClick={() => { setDone(null); setF({ ...empty, name: f.name, employeeNo: f.employeeNo, unit: f.unit }); setPhotos([]); }}>{t("Wizard.newRequest")}</button>
+          <button type="button" className={fhBtn.secondary} onClick={() => { setDone(null); setF({ ...empty, name: f.name, employeeNo: f.employeeNo, unit: f.unit, visitor: f.visitor, phone: f.phone, org: f.org }); setPhotos([]); }}>{t("Wizard.newRequest")}</button>
         </div>
       </motion.div>
     );
@@ -452,22 +458,52 @@ export function SimpleRequestForm({ config, userId, preset, emergencyContact, re
       <section className={section}>
         {heading(5, t("Simple.detailsTitle"))}
         <p className="-mt-2 mb-4 text-sm text-fmuted">{t("Simple.detailsHint")}</p>
+        <div role="radiogroup" aria-label={t("Simple.whoAreYou")} className="mb-5 grid grid-cols-2 gap-2 rounded-[18px] bg-lav-50 p-1.5">
+          {([false, true] as const).map((v) => (
+            <button
+              key={String(v)}
+              type="button"
+              role="radio"
+              aria-checked={f.visitor === v}
+              onClick={() => patch({ visitor: v })}
+              className={cn("min-h-11 rounded-[14px] px-3 text-sm font-bold transition", f.visitor === v ? "bg-white text-deep shadow-soft" : "text-fmuted hover:text-fink")}
+            >
+              {v ? t("Simple.visitor") : t("Simple.employee")}
+            </button>
+          ))}
+        </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label htmlFor="fh-name" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.name")}</label>
             <input id="fh-name" value={f.name} onChange={(e) => patch({ name: e.target.value })} autoComplete="name" className={fhInput} maxLength={120} aria-invalid={!!errors.name} aria-describedby="fh-name-err" />
             <FieldError id="fh-name-err" message={errors.name} />
           </div>
-          <div>
-            <label htmlFor="fh-empno" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.employeeNo")}</label>
-            <input id="fh-empno" value={f.employeeNo} onChange={(e) => patch({ employeeNo: e.target.value })} inputMode="text" dir="ltr" className={cn(fhInput, "text-start")} maxLength={30} placeholder={t("Simple.employeeNoPh")} aria-invalid={!!errors.employeeNo} aria-describedby="fh-empno-err" />
-            <FieldError id="fh-empno-err" message={errors.employeeNo} />
-          </div>
-          <div>
-            <label htmlFor="fh-unit" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.unit")}</label>
-            <input id="fh-unit" value={f.unit} onChange={(e) => patch({ unit: e.target.value })} autoComplete="organization-title" className={fhInput} maxLength={120} placeholder={t("Simple.unitPh")} aria-invalid={!!errors.unit} aria-describedby="fh-unit-err" />
-            <FieldError id="fh-unit-err" message={errors.unit} />
-          </div>
+          {f.visitor ? (
+            <>
+              <div>
+                <label htmlFor="fh-phone" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.phone")}</label>
+                <input id="fh-phone" type="tel" value={f.phone} onChange={(e) => patch({ phone: e.target.value })} autoComplete="tel" inputMode="tel" dir="ltr" className={cn(fhInput, "text-start")} maxLength={40} placeholder={t("Simple.phonePh")} aria-invalid={!!errors.phone} aria-describedby="fh-phone-err" />
+                <FieldError id="fh-phone-err" message={errors.phone} />
+              </div>
+              <div>
+                <label htmlFor="fh-org" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.org")}</label>
+                <input id="fh-org" value={f.org} onChange={(e) => patch({ org: e.target.value })} autoComplete="organization" className={fhInput} maxLength={120} placeholder={t("Simple.orgPh")} />
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <label htmlFor="fh-empno" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.employeeNo")}</label>
+                <input id="fh-empno" value={f.employeeNo} onChange={(e) => patch({ employeeNo: e.target.value })} inputMode="text" dir="ltr" className={cn(fhInput, "text-start")} maxLength={30} placeholder={t("Simple.employeeNoPh")} aria-invalid={!!errors.employeeNo} aria-describedby="fh-empno-err" />
+                <FieldError id="fh-empno-err" message={errors.employeeNo} />
+              </div>
+              <div>
+                <label htmlFor="fh-unit" className="mb-1.5 block text-sm font-bold text-fink">{t("Simple.unit")}</label>
+                <input id="fh-unit" value={f.unit} onChange={(e) => patch({ unit: e.target.value })} autoComplete="organization-title" className={fhInput} maxLength={120} placeholder={t("Simple.unitPh")} aria-invalid={!!errors.unit} aria-describedby="fh-unit-err" />
+                <FieldError id="fh-unit-err" message={errors.unit} />
+              </div>
+            </>
+          )}
         </div>
       </section>
 

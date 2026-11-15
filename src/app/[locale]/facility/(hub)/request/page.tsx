@@ -26,11 +26,20 @@ export default async function NewRequestPage({
     getWizardConfig(),
     getSettings(),
     getTranslations("Fac"),
-    db.facUser.findUnique({ where: { id: user.id }, select: { name: true, email: true, employeeNo: true, department: true } }),
+    db.facUser.findUnique({ where: { id: user.id }, select: { name: true, email: true, employeeNo: true, department: true, phone: true } }),
   ]);
+  const last = await db.facRequest.findFirst({ where: { employeeId: user.id }, orderBy: { createdAt: "desc" }, select: { isVisitor: true, department: true, contactPhone: true } });
   // a guest who has never sent a request still carries the placeholder "Guest xxxx" name: start empty
   const fresh = !!me && isGuestEmail(me.email) && !me.employeeNo;
-  const requester = { name: fresh ? "" : (me?.name ?? ""), employeeNo: me?.employeeNo ?? "", unit: me?.department ?? "" };
+  const fresh2 = fresh && !me?.phone;
+  const requester = {
+    name: fresh2 ? "" : (me?.name ?? ""),
+    employeeNo: me?.employeeNo ?? "",
+    unit: me?.department ?? "",
+    visitor: !!last?.isVisitor,
+    phone: me?.phone ?? "",
+    org: last?.isVisitor ? last.department : "",
+  };
   const preset: WizardPreset = {
     service: sp.service === "MAINTENANCE" || sp.service === "CLEANING" ? sp.service : undefined,
     areaId: typeof sp.area === "string" && sp.area.length < 40 ? sp.area : undefined,

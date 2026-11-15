@@ -664,6 +664,8 @@ model FacRequest {
   contactPhone      String            @default("")
   department        String            @default("")
   employeeNo        String            @default("")
+  /// Submitted by a visitor (not an Omantel employee): department then holds the visitor's organisation.
+  isVisitor         Boolean           @default(false)
   service           FacService
   categoryId        String?
   category          FacCategory?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)

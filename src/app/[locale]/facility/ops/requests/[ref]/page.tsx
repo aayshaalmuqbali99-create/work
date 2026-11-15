@@ -83,16 +83,34 @@ export default async function OpsRequestPage({ params }: { params: Promise<{ ref
           </section>
           <section className={`${fhCard} p-6`}>
             <h2 className="font-extrabold text-fink">{t("Ops.detail.employee")}</h2>
-            <p className="mt-2 text-lg font-bold text-fink">{r.employeeName}</p>
+            <p className="mt-2 flex flex-wrap items-center gap-2 text-lg font-bold text-fink">
+              {r.employeeName}
+              {r.isVisitor && <span className="rounded-full bg-gold px-2.5 py-0.5 text-xs font-bold text-fink">{t("Requester.visitor")}</span>}
+            </p>
             <dl className="mt-3 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-2xl bg-lav-50 px-3 py-2">
-                <dt className="text-xs font-semibold text-fmuted">{t("Requester.employeeNo")}</dt>
-                <dd className="mt-0.5 font-mono font-bold text-fink" dir="ltr">{r.employeeNo || "—"}</dd>
-              </div>
-              <div className="rounded-2xl bg-lav-50 px-3 py-2">
-                <dt className="text-xs font-semibold text-fmuted">{t("Requester.unit")}</dt>
-                <dd className="mt-0.5 font-bold text-fink">{r.department || "—"}</dd>
-              </div>
+              {r.isVisitor ? (
+                <>
+                  <div className="rounded-2xl bg-lav-50 px-3 py-2">
+                    <dt className="text-xs font-semibold text-fmuted">{t("Requester.phone")}</dt>
+                    <dd className="mt-0.5 font-mono font-bold text-fink" dir="ltr">{r.contactPhone || "—"}</dd>
+                  </div>
+                  <div className="rounded-2xl bg-lav-50 px-3 py-2">
+                    <dt className="text-xs font-semibold text-fmuted">{t("Requester.org")}</dt>
+                    <dd className="mt-0.5 font-bold text-fink">{r.department || "—"}</dd>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="rounded-2xl bg-lav-50 px-3 py-2">
+                    <dt className="text-xs font-semibold text-fmuted">{t("Requester.employeeNo")}</dt>
+                    <dd className="mt-0.5 font-mono font-bold text-fink" dir="ltr">{r.employeeNo || "—"}</dd>
+                  </div>
+                  <div className="rounded-2xl bg-lav-50 px-3 py-2">
+                    <dt className="text-xs font-semibold text-fmuted">{t("Requester.unit")}</dt>
+                    <dd className="mt-0.5 font-bold text-fink">{r.department || "—"}</dd>
+                  </div>
+                </>
+              )}
             </dl>
             <div className="mt-3 flex flex-wrap gap-4 text-sm">
               {!isGuestEmail(r.employeeEmail) && <a href={`mailto:${r.employeeEmail}`} className="inline-flex items-center gap-1.5 text-deep hover:underline" dir="ltr"><Mail className="size-4" /> {r.employeeEmail}</a>}

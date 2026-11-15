@@ -34,6 +34,7 @@ const payloadSchema = z.object({
   phone: z.string().trim().max(40).regex(/^[+\d\s()-]*$/).default(""),
   department: z.string().trim().max(120).default(""),
   name: z.string().trim().max(120).default(""),
+  visitor: z.boolean().default(false),
   employeeNo: z.string().trim().max(30).regex(/^[\w\-/ ]*$/).default(""),
   safetyAcknowledged: z.boolean().default(false),
 });
@@ -59,8 +60,13 @@ export async function submitRequestAction(form: FormData): Promise<ActionResult<
     // requester details: name, employee number and unit are required on the form
     const missing: Record<string, string> = {};
     if (p.name.length < 2) missing.name = "required";
-    if (!p.employeeNo) missing.employeeNo = "required";
-    if (p.department.length < 2) missing.department = "required";
+    if (p.visitor) {
+      // visitors: name + phone (organisation optional)
+      if (p.phone.replace(/\D/g, "").length < 7) missing.phone = "required";
+    } else {
+      if (!p.employeeNo) missing.employeeNo = "required";
+      if (p.department.length < 2) missing.department = "required";
+    }
     if (Object.keys(missing).length) return { ok: false, error: "invalid", fields: missing };
 
     const files = form.getAll("photos").filter((f): f is File => f instanceof File && f.size > 0);
@@ -84,7 +90,10 @@ export async function submitRequestAction(form: FormData): Promise<ActionResult<
     // remember the details for next time (a guest's display name becomes the typed name)
     await db.facUser.update({
       where: { id: user.id },
-      data: { employeeNo: p.employeeNo, department: p.department, ...(isGuestEmail(user.email) ? { name: p.name } : {}) },
+      data: {
+        ...(p.visitor ? { phone: p.phone } : { employeeNo: p.employeeNo, department: p.department }),
+        ...(isGuestEmail(user.email) ? { name: p.name } : {}),
+      },
     });
     await facAudit(user, "request.create", "request", req.id, { reference: req.reference });
     deliverSoon();
