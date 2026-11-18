@@ -79,6 +79,9 @@ management viewers too (and hide it again). Links: the results toolbar and the T
 - Interface texts: `src/messages/ar.json` / `en.json`.
 
 ## Single-file HTML versions (no server)
+**Download:** [`cdp-results.html`](cdp-results.html) — the upload page, ready to use (contains no data). It is not deployed
+on Vercel (`.vercelignore` at the repository root excludes this folder).
+
 ```bash
 npm run build:html                              # dist/cdp-results.html — open it, choose the Excel file
 npm run build:html -- path/to/responses.xlsx    # also dist/cdp-results-report.html — results built in
