@@ -698,6 +698,24 @@
     "openDashboard": "Open results",
     "confirmDelete": "Remove this file from the platform?",
     "delete": "Delete",
-    "refTotal": "Total"
+    "refTotal": "Total",
+    "peopleTitle": "People who helped the team",
+    "peopleNote": "Omantel and Huawei OMS staff named by participants, ranked by how many participants named each person. Different spellings of the same name (Arabic/English) are grouped automatically.",
+    "peopleSummary": "{people} people were named; {repeated} of them by more than one participant.",
+    "peopleVisibility": "Names are visible to authorised users only.",
+    "peopleRestricted": "Names are visible to authorised users only.",
+    "peopleRepeated": "Named more than once",
+    "peopleOnce": "Named once ({n})",
+    "mentionedBy": "named by {n}",
+    "peopleAlsoWritten": "also written",
+    "peopleEdit": "Edit",
+    "peopleRename": "Display name",
+    "peopleMergeInto": "Merge into",
+    "peopleHide": "Not a person — hide",
+    "peopleHiddenToggle": "Hidden entries ({n})",
+    "peopleRestore": "Restore",
+    "peopleMergedN": "{n} merged in",
+    "namesAsWritten": "Name answers as written ({n})",
+    "thanksRestricted": "Answers: {n}. Thanks messages contain names, so they are shown to authorised users only."
   }
 }

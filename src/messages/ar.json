@@ -698,6 +698,24 @@
     "openDashboard": "فتح لوحة النتائج",
     "confirmDelete": "حذف هذا الملف من المنصة؟",
     "delete": "حذف",
-    "refTotal": "الإجمالي"
+    "refTotal": "الإجمالي",
+    "peopleTitle": "الأشخاص الذين ساعدوا الفريق",
+    "peopleNote": "أسماء موظفي عُمانتل وHuawei OMS الذين ذكرهم المشاركون، مرتبة حسب عدد المشاركين الذين ذكروا كل اسم. جُمعت التهجئات المختلفة للاسم نفسه (عربي/إنجليزي) تلقائيًا.",
+    "peopleSummary": "{people} شخصًا ذُكروا بالاسم، منهم {repeated} تكرر ذكرهم من أكثر من مشارك.",
+    "peopleVisibility": "الأسماء مرئية للمستخدمين المصرح لهم فقط.",
+    "peopleRestricted": "الأسماء مرئية فقط للمستخدمين المصرح لهم.",
+    "peopleRepeated": "تكرر ذكرهم",
+    "peopleOnce": "ذُكروا مرة واحدة ({n})",
+    "mentionedBy": "ذكره {n} مشاركين",
+    "peopleAlsoWritten": "كُتب أيضًا",
+    "peopleEdit": "تعديل",
+    "peopleRename": "الاسم المعروض",
+    "peopleMergeInto": "دمج مع",
+    "peopleHide": "ليس اسم شخص — إخفاء",
+    "peopleHiddenToggle": "عناصر مخفية ({n})",
+    "peopleRestore": "استعادة",
+    "peopleMergedN": "مدموج معه {n}",
+    "namesAsWritten": "إجابات حقل الأسماء كما وردت ({n})",
+    "thanksRestricted": "عدد الإجابات: {n}. نصوص الشكر تتضمن أسماء، لذا تظهر للمستخدمين المصرح لهم فقط."
   }
 }

@@ -7,6 +7,7 @@ import { QUESTIONS, SATISFACTION_QUESTIONS, TABS, type TabId } from "@/features/
 import type { DashboardView } from "@/features/cdp/data";
 import { cn } from "@/lib/utils";
 import { CommentsBlock } from "./comments";
+import { PeopleRecognition } from "./people";
 import { QuestionCard } from "./question-card";
 import { ChoiceRows, StackedBar, useFormat, valid } from "./shared";
 
@@ -279,41 +280,49 @@ function Thanks({ view, dept, present }: { view: DashboardView; dept: number | n
       <p className="mt-1 text-sm text-muted">{t("thanksNote")}</p>
 
       <div className="mt-5 space-y-4">
-        <div className="rounded-card border border-line bg-surface p-5">
-          <div className="mb-2 flex items-center gap-2 text-xs"><span className="rounded-full bg-canvas px-2 py-0.5 font-mono text-muted">{nameQ.id}</span></div>
-          <h3 className="whitespace-pre-line font-semibold text-navy" dir="auto">{view.questions[nameQ.id]?.header?.trim() || t("thanksNames")}</h3>
-          {view.missing.includes(nameQ.id) ? (
-            <p className="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-900">{t("missingColumn")}</p>
-          ) : view.names && !present ? (
-            <>
-              <p className="mt-2 text-sm text-muted">{t("namesCount", { n: f.int(names.length) })}</p>
-              <p className="mt-1 inline-flex items-center gap-1.5 rounded-lg bg-amber-50 px-2.5 py-1 text-xs text-amber-900"><Lock className="size-3.5" aria-hidden="true" />{t("originalWarning")}</p>
-              <ul className="mt-3 flex flex-wrap gap-2" data-testid="thanks-names">
-                {names.map((n) => <li key={n.id} className="rounded-full bg-canvas px-3 py-1 text-sm" dir="auto">{n.text}</li>)}
-              </ul>
-            </>
+        {view.missing.includes(nameQ.id) ? (
+          <p className="rounded-xl bg-amber-50 px-3 py-2 text-sm text-amber-900">{nameQ.id}: {t("missingColumn")}</p>
+        ) : (
+          <PeopleRecognition view={view} dept={dept} present={present} />
+        )}
+        {view.names && !present && names.length > 0 && (
+          <details className="rounded-card border border-line bg-surface p-5">
+            <summary className="cursor-pointer text-sm font-semibold text-navy">
+              <span className="me-2 rounded-full bg-canvas px-2 py-0.5 font-mono text-xs text-muted">{nameQ.id}</span>
+              {t("namesAsWritten", { n: f.int(names.length) })}
+            </summary>
+            <p className="mt-2 whitespace-pre-line text-xs text-muted" dir="auto">{view.questions[nameQ.id]?.header?.trim()}</p>
+            <ul className="mt-3 space-y-1.5 text-sm" data-testid="thanks-names">
+              {names.map((n) => <li key={n.id} className="whitespace-pre-line rounded-lg bg-canvas px-3 py-1.5" dir="auto">{n.text}</li>)}
+            </ul>
+          </details>
+        )}
+        {thanks.filter((q) => q.kind === "thanks").map((q) =>
+          view.raw ? (
+            <CommentsBlock
+              key={q.id}
+              q={q}
+              header={view.questions[q.id]?.header ?? null}
+              comments={view.comments}
+              placeholders={view.placeholders[q.id] ?? 0}
+              departments={view.departments}
+              dept={dept}
+              raw={view.raw}
+              present={present}
+              missing={view.missing.includes(q.id)}
+              withThemes={false}
+            />
           ) : (
-            <p className="mt-3 flex items-start gap-2 text-sm text-muted" data-testid="names-locked">
-              <Lock className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
-              {t("namesRestricted", { n: f.int(view.thanksCounts[nameQ.id] ?? 0) })}
-            </p>
-          )}
-        </div>
-        {thanks.filter((q) => q.kind === "thanks").map((q) => (
-          <CommentsBlock
-            key={q.id}
-            q={q}
-            header={view.questions[q.id]?.header ?? null}
-            comments={view.comments}
-            placeholders={view.placeholders[q.id] ?? 0}
-            departments={view.departments}
-            dept={dept}
-            raw={view.raw}
-            present={present}
-            missing={view.missing.includes(q.id)}
-            withThemes={false}
-          />
-        ))}
+            <div key={q.id} id={`q-${q.id}`} className="rounded-card border border-line bg-surface p-5">
+              <div className="mb-2 text-xs"><span className="rounded-full bg-canvas px-2 py-0.5 font-mono text-muted">{q.id}</span></div>
+              <h3 className="whitespace-pre-line font-semibold text-navy" dir="auto">{view.questions[q.id]?.header?.trim() || q.ar}</h3>
+              <p className="mt-2 flex items-start gap-2 text-sm text-muted" data-testid="thanks-locked">
+                <Lock className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+                {t("thanksRestricted", { n: f.int(view.thanksCounts[q.id] ?? 0) })}
+              </p>
+            </div>
+          ),
+        )}
       </div>
     </section>
   );

@@ -118,3 +118,34 @@ test("redact helper", () => {
   assert.equal(redact("شكرا المهندس سالم", dict), "شكرا المهندس [اسم]");
   assert.ok(!redact("call 91234567", dict).includes("91234567"));
 });
+
+import { extractNames, groupPeople, applyRules, skeleton } from "../../src/features/cdp/people";
+
+test("people: names are pulled out of free text and fillers dropped", () => {
+  assert.deepEqual(extractNames("Mr.Test Alpha& Ms. Sample"), ["Test Alpha", "Sample"]);
+  assert.deepEqual(extractNames("سالم من هواوي وليلى الحارثيه من عمانتل"), ["سالم", "ليلى الحارثيه"]);
+  assert.deepEqual(extractNames("Nobody"), []);
+  assert.deepEqual(extractNames("الكل متعاون كفريق واحد"), []);
+  assert.deepEqual(extractNames("Thanks to our team leader (Karim Nadeem) and Mr Rafael for their support during work and training"), ["Karim Nadeem", "Rafael"]);
+  assert.deepEqual(extractNames("work pressure and lack of time"), []);
+});
+
+test("people: spellings across scripts are grouped and counted once per respondent", () => {
+  assert.equal(skeleton("Huda"), skeleton("هدى"));
+  assert.equal(skeleton("Pradeep"), skeleton("براديب"));
+  assert.equal(skeleton("Ibrahim"), skeleton("ابراهيم"));
+  const people = groupPeople([
+    { row: 1, d: 0, text: "Karim Nadeem\nهدى" },
+    { row: 2, d: 0, text: "كريم نديم / Huda / Huda" },
+    { row: 3, d: 1, text: "Kareem" },
+    { row: 4, d: 1, text: "Rafael" },
+  ]);
+  const karim = people.find((p) => p.label.startsWith("Karim"))!;
+  assert.equal(karim.mentions, 3);
+  assert.deepEqual(karim.depts, { 0: 2, 1: 1 });
+  assert.equal(people.find((p) => p.label === "Huda" || p.label === "هدى")!.mentions, 2);
+  const rafael = people.find((p) => p.label === "Rafael")!;
+  const merged = applyRules(people, [{ key: rafael.key, mergeInto: karim.key, label: null, hidden: false }]);
+  assert.equal(merged.find((p) => p.key === karim.key)!.mentions, 4);
+  assert.equal(applyRules(people, [{ key: rafael.key, mergeInto: null, label: null, hidden: true }]).find((p) => p.key === rafael.key)!.hidden, true);
+});

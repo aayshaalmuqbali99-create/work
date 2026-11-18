@@ -67,7 +67,7 @@ export function CdpReport({ view, dept, generated }: { view: DashboardView; dept
             {QUESTIONS.filter((q) => q.tab === tb.id && ["satisfaction", "rating", "challenge"].includes(q.kind)).map((q) => (
               <QuestionCard key={q.id} q={q} header={view.questions[q.id]?.header ?? null} counts={counts[q.id]} missing={view.missing.includes(q.id)} highlight={q.kind === "satisfaction"} />
             ))}
-            {QUESTIONS.filter((q) => q.tab === tb.id && (q.kind === "text" || q.kind === "thanks")).map((q) => {
+            {QUESTIONS.filter((q) => q.tab === tb.id && q.kind === "text").map((q) => {
               const list = view.comments.filter((c) => c.q === q.id && (dept === null || c.d === dept));
               const themeCounts = THEMES.map((th) => ({ th, n: list.filter((c) => c.themes.includes(th.id)).length })).filter((x) => x.n).sort((a, b) => b.n - a.n);
               return (
@@ -96,7 +96,17 @@ export function CdpReport({ view, dept, generated }: { view: DashboardView; dept
               );
             })}
             {tb.id === "huawei" && (
-              <p className="text-sm text-muted">{t("namesRestricted", { n: f.int(view.thanksCounts.AU ?? 0) })}</p>
+              <article className="break-inside-avoid rounded-card border border-amber-200 p-4 text-sm">
+                <h3 className="font-semibold text-navy">{t("thanksTitle")}</h3>
+                <p className="text-muted">{t("thanksNote")}</p>
+                <p className="mt-2">{t("peopleSummary", { people: f.int(view.peopleSummary.people), repeated: f.int(view.peopleSummary.repeated) })}</p>
+                <ul className="mt-1 text-muted">
+                  {QUESTIONS.filter((q) => q.thanks).map((q) => (
+                    <li key={q.id}>{q.id}: {locale === "ar" ? q.ar : q.en} — {f.int(view.thanksCounts[q.id] ?? 0)}</li>
+                  ))}
+                </ul>
+                <p className="mt-1 text-xs text-muted">{t("peopleRestricted")}</p>
+              </article>
             )}
           </div>
         </section>

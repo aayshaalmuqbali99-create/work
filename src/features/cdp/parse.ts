@@ -199,11 +199,15 @@ export function importWorkbook(data: Uint8Array): { dataset: Dataset; report: Im
   // Names used ONLY to remove identifying details from comments; never stored.
   const auCol = mapped.AU?.column ? colIndex(mapped.AU.column) : null;
   const nameSources: string[] = [];
+  const corpus: string[] = headers.map((h) => h ?? "");
+  // Ordinary-language corpus: the recommendation questions (names are rare there), not the thanks answers.
+  const textCols = QUESTIONS.filter((q) => q.kind === "text" && mapped[q.id].column).map((q) => colIndex(mapped[q.id].column!));
   for (const r of body) {
     for (const i of identity) nameSources.push(r[i] ?? "");
     if (auCol !== null) nameSources.push(r[auCol] ?? "");
+    for (const i of textCols) corpus.push(r[i] ?? "");
   }
-  const dict = buildNameDictionary(nameSources, departments.map((d) => d.name));
+  const dict = buildNameDictionary(nameSources, departments.map((d) => d.name), corpus);
 
   const unknown = new Map<string, number>();
   const responses: Dataset["responses"] = [];

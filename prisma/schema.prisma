@@ -304,3 +304,14 @@ model SurveyThemeTag {
   updatedById String?
   updatedAt   DateTime @updatedAt
 }
+
+/// Corrections to the automatic grouping of "people who supported you" names (merge, rename, hide).
+/// Keyed by the spelling-independent group key, so they carry over to newer files.
+model SurveyNameRule {
+  key         String   @id
+  mergeInto   String?
+  label       String?
+  hidden      Boolean  @default(false)
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}

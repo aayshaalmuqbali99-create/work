@@ -99,7 +99,9 @@ const log = (...a) => console.log('✔', ...a);
 
   // tab content: open huawei; admin sees names and original toggle
   await page.click('#tab-huawei');
-  await page.locator('[data-testid=thanks-names]').waitFor();
+  await page.locator('[data-testid=people-repeated]').waitFor();
+  const repeatedNames = await page.textContent('[data-testid=people-repeated]');
+  assert.ok(repeatedNames.includes('Test Alpha'), repeatedNames);
   assert.ok((await page.textContent('[data-testid=thanks-names]')).includes('Test Alpha'));
   await page.click('#tab-general');
   const at = page.locator('#q-AT');
@@ -160,7 +162,8 @@ const log = (...a) => console.log('✔', ...a);
   assert.ok(await v.locator('[data-testid=dept-chart] button').nth(3).isDisabled(), 'small dept should be locked');
   assert.equal(await v.locator('a:has-text("رفع ملف البيانات")').count(), 0);
   await v.click('#tab-huawei');
-  await v.locator('[data-testid=names-locked]').waitFor();
+  await v.locator('[data-testid=people-locked]').waitFor();
+  assert.equal(await v.locator('[data-testid=thanks-locked]').count(), 2);
   // viewer cannot reach admin pages
   await v.goto(B + '/ar/admin/cdp');
   assert.match(v.url(), /\/ar\/cdp/);

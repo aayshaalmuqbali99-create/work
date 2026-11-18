@@ -29,8 +29,18 @@ keeps the reference layout, the column at the expected letter is used and flagge
   Redaction is best-effort; management sees only the redacted text.
 - Original comments and the “names of people who provided support” (AU) are sent by the server only to Admins and
   users with **CDP original data**. Presentation mode and the PDF export never show them, whoever is signed in.
+- Thanks & recognition messages (AV, AW) name people, so management sees only their counts.
 - Departments with fewer than 5 responses (`MIN_GROUP_SIZE`) appear in the distribution and overall results, but
   cannot be filtered on their own and their comments carry no department label for management users.
+
+## People who helped the team
+In the Huawei OMS tab, under Thanks & recognition: the people named in the “who supported you” answers (AU),
+ranked by how many **different** participants named them, with “named more than once” listed first. Names are
+pulled out of the free text (titles, “from Huawei/Omantel”, “all the team”… are dropped) and spellings of the same
+person are grouped across Arabic and English by a consonant skeleton (e.g. عازب / Azib, ابراهيم المعمري /
+Ibrahim AlMamari). Authorised users can **merge** two entries, **rename** one or **hide** an entry that is not a
+person (pencil icon); corrections are stored in the database (`SurveyNameRule`) and carry over to newer files.
+Management users and the PDF export see only how many people were named and how many were named more than once.
 
 ## Editing definitions and texts
 - Questions, tab order, header match phrases, theme keywords, answer synonyms, “no comment” words, privacy

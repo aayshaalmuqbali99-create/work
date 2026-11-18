@@ -29,17 +29,47 @@ const bare = (w: string) => {
   return /[؀-ۿ]/.test(n) && n.length > 4 ? n.replace(ARABIC_PREFIX, "") : n;
 };
 
-export function buildNameDictionary(sources: string[], extraCommon: string[] = []) {
+export function buildNameDictionary(sources: string[], extraCommon: string[] = [], corpus: string[] = []) {
   const extra = new Set(extraCommon.flatMap((s) => tokens(s, true)));
+  // "Names of people who supported you" is often answered with whole sentences. A word only counts as a name when
+  // it is not used as an ordinary word elsewhere: Latin words must be capitalised in the name answers and never
+  // written in lower case in any answer; Arabic words must not appear in the general comments (corpus).
+  const lowerLatin = new Set<string>();
+  const corpusArabic = new Map<string, number>();
+  for (const s of corpus)
+    for (const raw of s.split(/[^\p{L}\p{M}]+/u)) {
+      if (!raw) continue;
+      if (/^[a-z]/.test(raw)) lowerLatin.add(raw.toLowerCase());
+      else if (/[؀-ۿ]/.test(raw)) {
+        const b = bare(raw);
+        corpusArabic.set(b, (corpusArabic.get(b) ?? 0) + 1);
+      }
+    }
   const dict = new Set<string>();
   for (const s of sources)
-    for (const w of normalize(s).split(/[\s,،;\/&+\-]+/)) {
-      if (w.length < 3 || /\d/.test(w) || COMMON.has(w) || extra.has(w)) continue;
+    for (const raw of s.split(/[^\p{L}\p{M}]+/u)) {
+      const w = normalize(raw);
+      if (w.length < 3 || COMMON.has(w) || extra.has(w)) continue;
+      if (/[؀-ۿ]/.test(raw)) {
+        if (corpusArabic.has(bare(raw)) && !ARABIC_NAMES.has(bare(raw))) continue;
+      } else if (!/^[A-Z]/.test(raw) || lowerLatin.has(w) || COMMON_EN.has(w)) continue;
       dict.add(w);
       dict.add(bare(w));
     }
   return dict;
 }
+
+/** Common Arabic given names that are not also everyday words (e.g. علي/على, سعيد, حسن are left out). */
+const ARABIC_NAMES = new Set(
+  "محمد احمد عبدالله عبدالرحمن عبدالعزيز عبدالناصر عبدالملك عبدالحكيم ابراهيم يوسف سالم سليمان حمد حمود خلفان ناصر سيف مسلم هلال راشد سلطان مبارك عيسي موسي ماجد طلال حسين بدر فيصل ياسر طارق وليد منصور خميس زايد مازن هيثم عمار اسامه انور فاطمه مريم عايشه زينب شيخه ريم اسماء خديجه بثينه"
+    .split(" ")
+    .map((w) => bare(w)),
+);
+
+/** Capitalised English words that are rarely names (start of a sentence etc.). */
+const COMMON_EN = new Set(
+  "all thanks thank everyone team teams the they their them this that there these those both every most many some our we you your he she his her him who whom which what when where why how and also very much more most best great good excellent special mr mrs ms eng engineer engineers dr sir madam manager supervisor management omantel huawei oms nfo noc operation operations facility facilities network fiber fibre power transmission mobile core it hr cdp cdpt ojt agiops support helped help team's members member staff colleagues colleague no none nothing not yes na nil department section unit group area region muscat oman sohar salalah nizwa sur ibri buraimi".split(" "),
+);
 
 const EMAIL = /[\w.+-]+@[\w-]+(\.[\w-]+)+/g;
 const NUMBER = /(\+?\d[\d\s-]{5,}\d)|\b\d{4,}\b/g;
@@ -64,7 +94,7 @@ export function redact(text: string, dict: Set<string>) {
         return label + trail;
       }
       afterTitle = 0;
-      if (n.length >= 3 && (dict.has(n) || dict.has(bare(part)))) return label + trail;
+      if (n.length >= 3 && (dict.has(n) || dict.has(bare(part)) || ARABIC_NAMES.has(bare(part)) || /^عبد\S{3,}$/.test(n))) return label + trail;
       return part;
     })
     .join("")

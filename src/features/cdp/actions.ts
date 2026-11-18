@@ -92,3 +92,22 @@ export async function setCommentThemesAction(key: string, themes: string[] | nul
   revalidatePath("/[locale]/cdp", "layout");
   return { ok: true, at: Date.now() };
 }
+
+/** Correct the list of people who supported participants (authorised users only). Pass null to undo. */
+export async function setNameRuleAction(key: string, rule: { mergeInto?: string | null; label?: string | null; hidden?: boolean } | null): Promise<UploadState> {
+  const me = await requireUser("VIEWER");
+  if (!(await getUserCdpRaw(me))) return { ok: false, message: "forbidden" };
+  const validKey = (k: unknown) => typeof k === "string" && k.length <= 120 && /^[a-z]*\|[a-z]*$/.test(k);
+  if (!validKey(key)) return { ok: false, message: "notFound" };
+  if (rule === null) {
+    await db.surveyNameRule.deleteMany({ where: { key } });
+  } else {
+    const mergeInto = rule.mergeInto && validKey(rule.mergeInto) && rule.mergeInto !== key ? rule.mergeInto : null;
+    const label = typeof rule.label === "string" && rule.label.trim() ? rule.label.trim().slice(0, 120) : null;
+    const data = { mergeInto, label, hidden: !!rule.hidden, updatedById: me.id };
+    await db.surveyNameRule.upsert({ where: { key }, create: { key, ...data }, update: data });
+  }
+  await audit({ userId: me.id, action: "cdp.names", entity: "surveyName", entityId: key, after: rule ?? { reset: true } });
+  revalidatePath("/[locale]/cdp", "layout");
+  return { ok: true, at: Date.now() };
+}

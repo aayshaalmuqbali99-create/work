@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import type { SessionUser } from "@/lib/auth/session";
 import { CLOSED_KINDS, MIN_GROUP_SIZE, QUESTIONS, THEMES } from "./config";
 import { aggregate, type Counts, type Dataset, type ImportReport } from "./parse";
-
+import { applyRules, groupPeople, type PersonView } from "./people";
 
 export async function getUserCdpRaw(user: SessionUser) {
   if (user.role === "ADMIN") return true;
@@ -33,6 +33,10 @@ export type DashboardView = {
   placeholders: Record<string, number>;
   thanksCounts: Record<string, number>;
   names: { id: string; d: number; text: string }[] | null; // null = not authorised
+  /** People who supported participants, most-named first — authorised users only. */
+  people: PersonView[] | null;
+  /** What management may see about them: how many people were named, and how many by more than one participant. */
+  peopleSummary: { people: number; repeated: number };
   raw: boolean;
   minGroup: number;
   missing: string[];
@@ -62,7 +66,11 @@ export async function getDashboard(user: SessionUser, opts: { management?: boole
   const tagMap = new Map(tags.map((t) => [t.key, t.themes]));
   const validThemes = new Set(THEMES.map((t) => t.id));
   const comments: CommentView[] = ds.texts
-    .filter((t) => QUESTIONS.find((q) => q.id === t.q)?.kind !== "names")
+    // Thanks messages name people, so management sees only their count.
+    .filter((t) => {
+      const kind = QUESTIONS.find((q) => q.id === t.q)?.kind;
+      return kind !== "names" && (raw || kind !== "thanks");
+    })
     .map((t) => {
       const manual = tagMap.get(t.key);
       const hide = !raw && (departments[t.d]?.small ?? false);
@@ -84,7 +92,17 @@ export async function getDashboard(user: SessionUser, opts: { management?: boole
     ? ds.texts.filter((t) => QUESTIONS.find((q) => q.id === t.q)?.kind === "names").map((t) => ({ id: t.id, d: t.d, text: t.raw }))
     : null;
 
+  const nameQ = QUESTIONS.find((q) => q.kind === "names")!.id;
+  const rules = await db.surveyNameRule.findMany();
+  const allPeople = applyRules(
+    groupPeople(ds.texts.filter((t) => t.q === nameQ).map((t) => ({ row: Number(t.id.split("-").pop()), d: t.d, text: t.raw }))),
+    rules,
+  );
+  const visiblePeople = allPeople.filter((p) => !p.hidden);
+
   return {
+    people: raw ? allPeople : null,
+    peopleSummary: { people: visiblePeople.length, repeated: visiblePeople.filter((p) => p.mentions > 1).length },
     meta: { fileName: row.fileName, activatedAt: (row.activatedAt ?? row.createdAt).toISOString(), uploadedBy: row.uploadedBy, total: ds.responses.length },
     departments,
     counts,
