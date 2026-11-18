@@ -11,7 +11,7 @@
 :root{
   --blue:#2D13EA;--orange:#FF7800;--ink:#1F1F29;--ink-2:#4A4A58;--muted:#6B6B7B;--line:#E6E3F3;--line-2:#EFEDF8;
   --bg:#F6F5FD;--lav:#EEEBFF;--white:#fff;
-  --yes:#2D13EA;--some:#A49CFF;--no:#3A3A48;
+  --yes:#15803D;--some:#B4B8C0;--no:#D32F2F;
   --r:16px;--r-sm:10px;--shadow:0 1px 2px rgba(31,31,41,.04),0 6px 18px rgba(45,19,234,.06);--shadow-up:0 2px 4px rgba(31,31,41,.05),0 14px 32px rgba(45,19,234,.12);
   --ease:cubic-bezier(.22,1,.36,1);--fs:16px
 }
@@ -267,19 +267,20 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   else { logo.className += " empty"; logo.textContent = "Omantel logo"; }
 
   // ── stacked bar ──
-  function sbar(c, label, grow, i) {
+  function colorOf(k, challenge) { return challenge ? (k === "y" ? "no" : k === "n" ? "yes" : "some") : k === "y" ? "yes" : k === "p" ? "some" : "no"; }
+  function sbar(c, label, grow, i, challenge) {
     var t = tot(c);
     return '<div class="sbar">' + OPTS.map(function (o) {
       var v = c[o.k];
       if (!v) return "";
       var w = (v / t) * 100;
       var tip = o.label + "|" + nf.format(v) + " of " + nf.format(t) + " responses|" + pct(v, t);
-      return '<span class="s ' + o.k + (grow ? " grow" : "") + '" style="width:' + w + '%;background:var(--' + (o.k === "y" ? "yes" : o.k === "p" ? "some" : "no") + ');--i:' + (i || 0) + '" tabindex="0" role="img" data-tip="' + esc(tip) + '" aria-label="' + esc(label + ": " + o.label + ", " + nf.format(v) + " responses, " + pct(v, t)) + '">' + (w >= 9 ? pct(v, t) : "") + "</span>";
+      return '<span class="s ' + o.k + (grow ? " grow" : "") + '" style="width:' + w + '%;background:var(--' + colorOf(o.k, challenge) + ');--i:' + (i || 0) + '" tabindex="0" role="img" data-tip="' + esc(tip) + '" aria-label="' + esc(label + ": " + o.label + ", " + nf.format(v) + " responses, " + pct(v, t)) + '">' + (w >= 9 ? pct(v, t) : "") + "</span>";
     }).join("") + "</div>";
   }
-  function optRow(c) {
+  function optRow(c, challenge) {
     var t = tot(c);
-    return '<div class="opts">' + OPTS.map(function (o) { return '<div><span class="sw ' + o.k + '" style="display:inline-block;vertical-align:-2px;margin-inline-end:6px"></span>' + o.label + "<b>" + pct(c[o.k], t) + '</b><small>' + nf.format(c[o.k]) + " responses</small></div>"; }).join("") + "</div>";
+    return '<div class="opts">' + OPTS.map(function (o) { return '<div><span class="sw" style="background:var(--' + colorOf(o.k, challenge) + ');display:inline-block;vertical-align:-2px;margin-inline-end:6px"></span>' + o.label + "<b>" + pct(c[o.k], t) + '</b><small>' + nf.format(c[o.k]) + " responses</small></div>"; }).join("") + "</div>";
   }
 
   // ── overview: doughnut ──
@@ -341,7 +342,7 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function qcard(q, feat) {
     var c = q.counts, t = tot(c);
-    return '<div class="q' + (feat ? " feat" : "") + '"><h5>' + esc(feat ? q.title : q.label) + (q.challenge ? '<span class="tag">Yes = faced challenges</span>' : "") + "</h5>" + (feat ? '<p class="qt">' + esc(q.question) + "</p>" : '<p class="qt">' + nf.format(t) + " responses" + (c.blank ? " · " + nf.format(c.blank) + " blank" : "") + "</p>") + sbar(c, feat ? q.title : q.label, false) + optRow(c) + "</div>";
+    return '<div class="q' + (feat ? " feat" : "") + '"><h5>' + esc(feat ? q.title : q.label) + (q.challenge ? '<span class="tag">Yes = faced challenges (red) · No = no challenges (green)</span>' : "") + "</h5>" + (feat ? '<p class="qt">' + esc(q.question) + "</p>" : '<p class="qt">' + nf.format(t) + " responses" + (c.blank ? " · " + nf.format(c.blank) + " blank" : "") + "</p>") + sbar(c, feat ? q.title : q.label, false, 0, q.challenge) + optRow(c, q.challenge) + "</div>";
   }
   function openPanel(id, from) {
     var p = D.programmes.find(function (x) { return x.id === id; });
