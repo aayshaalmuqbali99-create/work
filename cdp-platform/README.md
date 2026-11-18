@@ -97,7 +97,7 @@ npm run build:html -- path/to/responses.xlsx    # also dist/cdp-results-report.h
 ```bash
 node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1   # → dist/cdp-2026-gm-dashboard.html
 ```
-English, presentation-ready: overview doughnut and 100% stacked bars, three findings, question-level detail panels
+English and Arabic (switch in the header, Arabic right-to-left; `?lang=ar` opens it in Arabic), presentation-ready: overview doughnut and 100% stacked bars, three findings, question-level detail panels
 for the four programmes, the proposed management action, presentation mode (full screen). Every number comes from
 one data model computed from the workbook; the build stops if the departments or any programme row do not add up
 to the number of responses. Aggregated counts, plus a **Training Contributors** section: the staff participants identified

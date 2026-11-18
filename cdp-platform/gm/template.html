@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>CDP 2026 Training Evaluation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
 :root{
   --blue:#2D13EA;--orange:#FF7800;--ink:#1F1F29;--ink-2:#4A4A58;--muted:#6B6B7B;--line:#E6E3F3;--line-2:#EFEDF8;
@@ -205,53 +205,64 @@ body.present .row{grid-template-columns:240px 1fr 28px}
 @media (max-width:600px){.hdr h1{font-size:.98rem;line-height:1.25}.hdr p{font-size:.75rem}.hdr .titles{border:0;padding:0}.logo-slot img{height:28px}.hdr{gap:10px}.btn{padding:.5rem .75rem}.big{font-size:2.4rem}.sec-h h2{font-size:1.25rem}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.hdr{position:static}.side,.menu-btn,#pm{display:none}.shell{grid-template-columns:1fr}.card,.q{break-inside:avoid;box-shadow:none}.sbar .s,.sw,circle{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+html[dir=rtl] body{font-family:"IBM Plex Sans Arabic",Inter,"Segoe UI",Tahoma,Arial,sans-serif}
+html[dir=rtl] .side a[aria-current=true]{box-shadow:inset -3px 0 0 var(--blue)}
+html[dir=rtl] .sbar .s,html[dir=rtl] .ranked .bar span{transform-origin:right center}
+html[dir=rtl] .ranked .nm{text-align:right}
+html[dir=rtl] .card-i h3{letter-spacing:0}html[dir=rtl] .qgroup h4,html[dir=rtl] .action h3,html[dir=rtl] .donut-c span{letter-spacing:0}
+html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
+@media (max-width:900px){html[dir=rtl] .side{transform:translateX(105%)}html[dir=rtl] body.nav-open .side{transform:none}}
+#lang{font-weight:700}
+.card-i .big{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.card-i .big small{margin:0}
+.areas li>span:last-child{display:inline-flex;align-items:baseline;gap:8px}.areas small{margin:0}
 </style>
 </head>
 <body>
-<a class="sr" href="#overview">Skip to content</a>
+<a class="sr" href="#overview" data-t="skip">Skip to content</a>
 <header class="hdr">
-  <button class="btn menu-btn" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <button class="btn menu-btn" id="menu" data-t-aria="openNav" aria-label="Open navigation" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   <div class="logo-slot" id="logo"></div>
-  <div class="titles"><h1>CDP 2026 Training Evaluation</h1><p>Employee survey results</p></div>
-  <button class="btn primary" id="pm" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v12H3z"/><path d="M8 20h8M12 16v4"/></svg><span class="pm-label">Presentation Mode</span></button>
+  <div class="titles"><h1 data-t="title">CDP 2026 Training Evaluation</h1><p data-t="subtitle">Employee survey results</p></div>
+  <button class="btn" id="lang" lang="ar">العربية</button>
+  <button class="btn primary" id="pm" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18v12H3z"/><path d="M8 20h8M12 16v4"/></svg><span class="pm-label" data-t="present">Presentation Mode</span></button>
 </header>
 <div class="shell">
   <aside class="side" id="side">
-    <nav aria-label="Sections">
-      <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg>Overview</a>
-      <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>Programme Details</a>
-      <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg>Training Contributors</a>
-      <a href="#priorities" data-nav="priorities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>Improvement Priorities</a>
+    <nav data-t-aria="sections" aria-label="Sections">
+      <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg><span data-t="navOverview">Overview</span></a>
+      <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span data-t="navProgrammes">Programme Details</span></a>
+      <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg><span data-t="navContributors">Training Contributors</span></a>
+      <a href="#priorities" data-nav="priorities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><span data-t="navPriorities">Improvement Priorities</span></a>
     </nav>
     <p class="meta" id="side-meta"></p>
   </aside>
   <main id="main" class="anim">
     <section id="overview" aria-labelledby="ov-h">
-      <div class="sec-h"><h2 id="ov-h">Overview</h2><ul class="legend" aria-label="Answer legend"><li><span class="sw y"></span>Yes</li><li><span class="sw p"></span>To some extent</li><li><span class="sw n"></span>No</li></ul></div>
+      <div class="sec-h"><h2 id="ov-h" data-t="navOverview">Overview</h2><ul class="legend" data-t-aria="legend" aria-label="Answer legend"><li><span class="sw y"></span><span data-t="y">Yes</span></li><li><span class="sw p"></span><span data-t="p">To some extent</span></li><li><span class="sw n"></span><span data-t="n">No</span></li></ul></div>
       <div class="card overview">
-        <div class="ov-left"><h3 class="panel-h">Responses by operational area</h3><p class="panel-sub" id="area-sub"></p><div class="donut-wrap" id="donut"></div><ul class="areas" id="areas"></ul></div>
-        <div class="ov-right"><h3 class="panel-h">Overall satisfaction by programme</h3><p class="panel-sub">Share of responses per answer. Hover, focus or tap a segment for the count; select a programme for question-level results.</p><div class="rows" id="rows"></div></div>
+        <div class="ov-left"><h3 class="panel-h" data-t="areasTitle">Responses by operational area</h3><p class="panel-sub" id="area-sub"></p><div class="donut-wrap" id="donut"></div><ul class="areas" id="areas"></ul></div>
+        <div class="ov-right"><h3 class="panel-h" data-t="satTitle">Overall satisfaction by programme</h3><p class="panel-sub" data-t="satHelp">Share of responses per answer. Hover, focus or tap a segment for the count; select a programme for question-level results.</p><div class="rows" id="rows"></div></div>
       </div>
       <div class="insights" id="insights"></div>
     </section>
     <section id="programmes" aria-labelledby="pg-h">
-      <div class="sec-h"><h2 id="pg-h">Programme Details</h2><p>Select a programme to see results for each question.</p></div>
+      <div class="sec-h"><h2 id="pg-h" data-t="navProgrammes">Programme Details</h2><p data-t="progHelp">Select a programme to see results for each question.</p></div>
       <div class="progs" id="progs"></div>
     </section>
     <section id="contributors" aria-labelledby="rc-h">
-      <div class="sec-h"><h2 id="rc-h">Training Contributors</h2><p id="rc-sub"></p></div>
+      <div class="sec-h"><h2 id="rc-h" data-t="navContributors">Training Contributors</h2><p id="rc-sub"></p></div>
       <div class="card contrib">
         <div class="contrib-intro"><span class="ico people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg></span>
-          <p>Omantel and Huawei OMS staff who contributed to the training process during CDP 2026, as identified by participants. Ranked by the number of participants who named each person.</p></div>
-        <h3 class="panel-h" style="margin-top:22px">Named by more than one participant</h3>
+          <p data-t="contribIntro">Omantel and Huawei OMS staff who contributed to the training process during CDP 2026, as identified by participants. Ranked by the number of participants who named each person.</p></div>
+        <h3 class="panel-h" style="margin-top:22px" data-t="namedMany">Named by more than one participant</h3>
         <ol class="ranked" id="ranked"></ol>
         <h3 class="panel-h" style="margin-top:26px" id="also-h"></h3>
         <ul class="also" id="also"></ul>
       </div>
     </section>
     <section id="priorities" aria-labelledby="pr-h">
-      <div class="sec-h"><h2 id="pr-h">Improvement Priorities</h2></div>
-      <div class="card action"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><div><h3>Proposed management action</h3><p id="action"></p></div></div>
+      <div class="sec-h"><h2 id="pr-h" data-t="navPriorities">Improvement Priorities</h2></div>
+      <div class="card action"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></span><div><h3 data-t="actionTitle">Proposed management action</h3><p id="action"></p></div></div>
       <ul class="prios" id="prios"></ul>
     </section>
     <footer id="footer"></footer>
@@ -265,10 +276,57 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   "use strict";
   var D = window.GM;
   var N = D.source.responses;
-  var OPTS = [{ k: "y", label: "Yes" }, { k: "p", label: "To some extent" }, { k: "n", label: "No" }];
+  var I18N = {
+    en: {
+      skip: "Skip to content", openNav: "Open navigation", title: "CDP 2026 Training Evaluation", subtitle: "Employee survey results",
+      present: "Presentation Mode", exitPresent: "Exit Presentation", sections: "Sections", legend: "Answer legend",
+      navOverview: "Overview", navProgrammes: "Programme Details", navContributors: "Training Contributors", navPriorities: "Improvement Priorities",
+      y: "Yes", p: "To some extent", n: "No",
+      areasTitle: "Responses by operational area", areasSub: "Operational areas, largest first · total {n}", responses: "Responses",
+      satTitle: "Overall satisfaction by programme", satHelp: "Share of responses per answer. Hover, focus or tap a segment for the count; select a programme for question-level results.",
+      progHelp: "Select a programme to see results for each question.", nResponses: "{n} responses", ofN: "{a} of {b}", ofNResponses: "{a} of {b} responses",
+      openDetails: "open programme details", questionsShown: "{n} questions · overall satisfaction shown", viewDetails: "View details",
+      contribIntro: "Omantel and Huawei OMS staff who contributed to the training process during CDP 2026, as identified by participants. Ranked by the number of participants who named each person.",
+      contribSub: "{a} contributors identified by {b} participants", namedMany: "Named by more than one participant", namedOnce: "Named by one participant ({n})",
+      participant: "participant", participants: "participants",
+      actionTitle: "Proposed management action", back: "Back to Overview", qlevel: "Question-level results · {n} responses",
+      overallSat: "Overall satisfaction", keyQs: "Key questions", otherQs: "Other questions", qs: "Questions", blank: "{n} blank",
+      challengeTag: "Yes = faced challenges (red) · No = no challenges (green)", respondentsLead: "{a} of {b} respondents ({c}) {t}",
+      footer: "Source: CDP 2026 employee survey. {ex} excluded. {area} accounted for {pct} of responses.", oneTest: "One test submission", nTests: "{n} test submissions",
+      areasAria: "Responses by operational area"
+    },
+    ar: {
+      skip: "انتقل إلى المحتوى", openNav: "فتح القائمة", title: "تقييم التدريب CDP 2026", subtitle: "نتائج استبيان الموظفين",
+      present: "وضع العرض", exitPresent: "إنهاء العرض", sections: "الأقسام", legend: "دليل الإجابات",
+      navOverview: "نظرة عامة", navProgrammes: "تفاصيل البرامج", navContributors: "المساهمون في التدريب", navPriorities: "أولويات التحسين",
+      y: "نعم", p: "إلى حد ما", n: "لا",
+      areasTitle: "الردود حسب المجال التشغيلي", areasSub: "المجالات التشغيلية من الأكبر · الإجمالي {n}", responses: "ردًا",
+      satTitle: "الرضا العام حسب البرنامج", satHelp: "نسبة الردود لكل إجابة. مرّر المؤشر أو انقر على أي جزء لمعرفة العدد، واختر البرنامج لعرض نتائج الأسئلة.",
+      progHelp: "اختر برنامجًا لعرض نتائج كل سؤال.", nResponses: "{n} ردًا", ofN: "{a} من {b}", ofNResponses: "{a} من {b} ردًا",
+      openDetails: "فتح تفاصيل البرنامج", questionsShown: "{n} أسئلة · مع الرضا العام", viewDetails: "عرض التفاصيل",
+      contribIntro: "موظفو عُمانتل وفريق Huawei OMS الذين ساهموا في عملية التدريب خلال CDP 2026 كما حددهم المشاركون، مرتبون حسب عدد المشاركين الذين ذكروا كل شخص.",
+      contribSub: "{a} مساهمًا حددهم {b} مشاركًا", namedMany: "ذكرهم أكثر من مشارك", namedOnce: "ذكرهم مشارك واحد ({n})",
+      participant: "مشارك", participants: "مشاركين",
+      actionTitle: "الإجراء الإداري المقترح", back: "العودة إلى النظرة العامة", qlevel: "نتائج الأسئلة · {n} ردًا",
+      overallSat: "الرضا العام", keyQs: "أسئلة رئيسية", otherQs: "أسئلة أخرى", qs: "الأسئلة", blank: "{n} فارغة",
+      challengeTag: "نعم = واجه تحديات (أحمر) · لا = لم يواجه (أخضر)", respondentsLead: "{a} من {b} مشاركًا ({c}) {t}",
+      footer: "المصدر: استبيان موظفي CDP 2026. تم استبعاد {ex}. استحوذ مجال {area} على {pct} من الردود.", oneTest: "رد تجريبي واحد", twoTests: "ردّين تجريبيين", nTests: "{n} ردود تجريبية",
+      areasAria: "الردود حسب المجال التشغيلي"
+    }
+  };
+  var AREA_AR = { "network and facilities operations": "عمليات الشبكات والمرافق", "facility operation": "تشغيل المرافق", electrotechnical: "الأعمال الكهروتقنية", "physical security": "الأمن المادي" };
+  var LANG = "en";
+  try { LANG = new URLSearchParams(location.search).get("lang") || localStorage.getItem("gm-lang") || "en"; } catch (e) {}
+  if (LANG !== "ar") LANG = "en";
+  function t(k, v) { var s = (I18N[LANG][k] || I18N.en[k] || k); return v ? s.replace(/\{(\w+)\}/g, function (_, x) { return v[x] != null ? v[x] : ""; }) : s; }
+  function L(o, f) { return LANG === "ar" && o[f + "Ar"] ? o[f + "Ar"] : o[f]; }
+  function area(name) { return LANG === "ar" ? AREA_AR[name.trim().toLowerCase()] || name : name; }
+  var OPTS = [{ k: "y" }, { k: "p" }, { k: "n" }];
+  function OL(o) { return t(o.k); }
   var AREA_COLORS = ["#2D13EA", "#7A6BFF", "#A49CFF", "#3A3A48", "#C9C3FF"];
-  var nf = new Intl.NumberFormat("en-GB");
-  var pf = new Intl.NumberFormat("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  var nf, pf;
+  function setFormats() { var tag = LANG === "ar" ? "ar-OM-u-nu-latn" : "en-GB"; nf = new Intl.NumberFormat(tag); pf = new Intl.NumberFormat(tag, { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+  setFormats();
   function pct(part, whole) { return whole ? pf.format(Math.round((part / whole) * 1000) / 10) + "%" : "—"; }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function tot(c) { return c.y + c.p + c.n; }
@@ -295,67 +353,80 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   // ── stacked bar ──
   function colorOf(k, challenge) { return challenge ? (k === "y" ? "no" : k === "n" ? "yes" : "some") : k === "y" ? "yes" : k === "p" ? "some" : "no"; }
   function sbar(c, label, grow, i, challenge) {
-    var t = tot(c);
+    var tt = tot(c);
     return '<div class="sbar">' + OPTS.map(function (o) {
       var v = c[o.k];
       if (!v) return "";
-      var w = (v / t) * 100;
-      var tip = o.label + "|" + nf.format(v) + " of " + nf.format(t) + " responses|" + pct(v, t);
-      return '<span class="s ' + o.k + (grow ? " grow" : "") + '" style="width:' + w + '%;background:var(--' + colorOf(o.k, challenge) + ');--i:' + (i || 0) + '" tabindex="0" role="img" data-tip="' + esc(tip) + '" aria-label="' + esc(label + ": " + o.label + ", " + nf.format(v) + " responses, " + pct(v, t)) + '">' + (w >= 9 ? pct(v, t) : "") + "</span>";
+      var w = (v / tt) * 100;
+      var tip = OL(o) + "|" + t("ofNResponses", { a: nf.format(v), b: nf.format(tt) }) + "|" + pct(v, tt);
+      return '<span class="s ' + o.k + (grow ? " grow" : "") + '" style="width:' + w + '%;background:var(--' + colorOf(o.k, challenge) + ');--i:' + (i || 0) + '" tabindex="0" role="img" data-tip="' + esc(tip) + '" aria-label="' + esc(label + ": " + OL(o) + ", " + t("nResponses", { n: nf.format(v) }) + ", " + pct(v, tt)) + '">' + (w >= 9 ? pct(v, tt) : "") + "</span>";
     }).join("") + "</div>";
   }
   function optRow(c, challenge) {
-    var t = tot(c);
-    return '<div class="opts">' + OPTS.map(function (o) { return '<div><span class="sw" style="background:var(--' + colorOf(o.k, challenge) + ');display:inline-block;vertical-align:-2px;margin-inline-end:6px"></span>' + o.label + "<b>" + pct(c[o.k], t) + '</b><small>' + nf.format(c[o.k]) + " responses</small></div>"; }).join("") + "</div>";
+    var tt = tot(c);
+    return '<div class="opts">' + OPTS.map(function (o) { return '<div><span class="sw" style="background:var(--' + colorOf(o.k, challenge) + ');display:inline-block;vertical-align:-2px;margin-inline-end:6px"></span>' + OL(o) + "<b>" + pct(c[o.k], tt) + '</b><small>' + t("nResponses", { n: nf.format(c[o.k]) }) + "</small></div>"; }).join("") + "</div>";
   }
 
-  // ── overview: doughnut ──
   var depts = D.departments.slice().sort(function (a, b) { return b.count - a.count; });
-  var r = 15.9155, off = 0, segs = "";
-  depts.forEach(function (d, i) {
-    var len = (d.count / N) * 100;
-    segs += '<circle class="seg" r="' + r + '" cx="21" cy="21" fill="none" stroke="' + AREA_COLORS[i % AREA_COLORS.length] + '" stroke-width="6" stroke-dasharray="' + len + " " + (100 - len) + '" stroke-dashoffset="' + -off + '" style="--i:' + i + '" tabindex="0" role="img" data-tip="' + esc(d.name + "|" + nf.format(d.count) + " responses|" + pct(d.count, N)) + '" aria-label="' + esc(d.name + ": " + nf.format(d.count) + " responses, " + pct(d.count, N)) + '"></circle>';
-    off += len;
-  });
-  $("donut").innerHTML = '<svg viewBox="0 0 42 42" aria-label="Responses by operational area"><circle r="' + r + '" cx="21" cy="21" fill="none" stroke="#EFEDF8" stroke-width="6"></circle>' + segs + '</svg><div class="donut-c"><b>' + nf.format(N) + "</b><span>Responses</span></div>";
-  $("areas").innerHTML = depts.map(function (d, i) { return '<li><span class="sw" style="background:' + AREA_COLORS[i % AREA_COLORS.length] + '"></span><span>' + esc(d.name) + "</span><span><b>" + nf.format(d.count) + "</b><small>" + pct(d.count, N) + "</small></span></li>"; }).join("");
-  $("area-sub").textContent = "Operational areas, largest first · total " + nf.format(N);
+  function render() {
+    setFormats();
+    document.documentElement.lang = LANG;
+    document.documentElement.dir = LANG === "ar" ? "rtl" : "ltr";
+    document.title = t("title");
+    document.querySelectorAll("[data-t]").forEach(function (el) { el.textContent = t(el.getAttribute("data-t")); });
+    document.querySelectorAll("[data-t-aria]").forEach(function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-t-aria"))); });
+    var lb = $("lang"); lb.textContent = LANG === "ar" ? "English" : "العربية"; lb.lang = LANG === "ar" ? "en" : "ar";
+    pm.querySelector(".pm-label").textContent = document.body.classList.contains("present") ? t("exitPresent") : t("present");
 
-  // ── overview: programme rows ──
-  $("rows").innerHTML = D.programmes.map(function (p, i) {
-    var c = p.satisfaction, t = tot(c);
-    return '<div class="row" data-open="' + p.id + '"><button class="row-name" data-open="' + p.id + '" aria-label="' + esc(p.title + " — open programme details") + '">' + esc(p.title) + "<small>" + nf.format(t) + " responses</small></button>" + sbar(c, p.title, true, i) + '<span class="expand" aria-hidden="true">' + svg("expand") + '</span><div class="row-vals">' + OPTS.map(function (o) { return o.label + " <b>" + pct(c[o.k], t) + "</b> (" + nf.format(c[o.k]) + ")"; }).join(" · ") + "</div></div>";
-  }).join("");
+    // overview: doughnut
+    var r = 15.9155, off = 0, segs = "";
+    depts.forEach(function (d, i) {
+      var len = (d.count / N) * 100, nm = area(d.name);
+      segs += '<circle class="seg" r="' + r + '" cx="21" cy="21" fill="none" stroke="' + AREA_COLORS[i % AREA_COLORS.length] + '" stroke-width="6" stroke-dasharray="' + len + " " + (100 - len) + '" stroke-dashoffset="' + -off + '" style="--i:' + i + '" tabindex="0" role="img" data-tip="' + esc(nm + "|" + t("nResponses", { n: nf.format(d.count) }) + "|" + pct(d.count, N)) + '" aria-label="' + esc(nm + ": " + t("nResponses", { n: nf.format(d.count) }) + ", " + pct(d.count, N)) + '"></circle>';
+      off += len;
+    });
+    $("donut").innerHTML = '<svg viewBox="0 0 42 42" aria-label="' + esc(t("areasAria")) + '"><circle r="' + r + '" cx="21" cy="21" fill="none" stroke="#EFEDF8" stroke-width="6"></circle>' + segs + '</svg><div class="donut-c"><b>' + nf.format(N) + "</b><span>" + esc(t("responses")) + "</span></div>";
+    $("areas").innerHTML = depts.map(function (d, i) { return '<li><span class="sw" style="background:' + AREA_COLORS[i % AREA_COLORS.length] + '"></span><span>' + esc(area(d.name)) + "</span><span><b>" + nf.format(d.count) + "</b><small>" + pct(d.count, N) + "</small></span></li>"; }).join("");
+    $("area-sub").textContent = t("areasSub", { n: nf.format(N) });
 
-  // ── insights ──
-  $("insights").innerHTML = D.insights.map(function (x, i) {
-    return '<button class="card card-i rise" style="--i:' + i + '" data-open="' + x.programme + '"><span class="top"><span class="ico">' + svg(x.icon) + '</span><span class="expand">' + svg("expand") + "</span></span><h3>" + esc(x.title) + '</h3><span class="big">' + pct(x.count, N) + "<small>" + nf.format(x.count) + " of " + nf.format(N) + "</small></span><p>" + esc(pct(x.count, N) + " (" + nf.format(x.count) + " of " + nf.format(N) + ") " + x.text) + "</p></button>";
-  }).join("");
+    // overview: programme rows
+    $("rows").innerHTML = D.programmes.map(function (p, i) {
+      var c = p.satisfaction, tt = tot(c), ti = L(p, "title");
+      return '<div class="row" data-open="' + p.id + '"><button class="row-name" data-open="' + p.id + '" aria-label="' + esc(ti + " — " + t("openDetails")) + '">' + esc(ti) + "<small>" + t("nResponses", { n: nf.format(tt) }) + "</small></button>" + sbar(c, ti, true, i) + '<span class="expand" aria-hidden="true">' + svg("expand") + '</span><div class="row-vals">' + OPTS.map(function (o) { return OL(o) + " <b>" + pct(c[o.k], tt) + "</b> (" + nf.format(c[o.k]) + ")"; }).join(" · ") + "</div></div>";
+    }).join("");
 
-  // ── programme cards ──
-  $("progs").innerHTML = D.programmes.map(function (p, i) {
-    var nq = p.featured.length + p.questions.length + 1;
-    return '<button class="card prog rise" style="--i:' + i + '" data-open="' + p.id + '"><span class="top"><h3>' + esc(p.title) + '</h3><span class="expand">' + svg("expand") + '</span></span><p class="head"><b>' + pct(p.headline.count, N) + "</b> (" + nf.format(p.headline.count) + " of " + nf.format(N) + ") " + esc(p.headline.text) + "</p>" + sbar(p.satisfaction, p.title + " overall satisfaction", false) + '<span class="foot"><span>' + nq + " questions · overall satisfaction shown</span><span>View details</span></span></button>";
-  }).join("");
+    // insights
+    $("insights").innerHTML = D.insights.map(function (x, i) {
+      var of = t("ofN", { a: nf.format(x.count), b: nf.format(N) });
+      return '<button class="card card-i rise" style="--i:' + i + '" data-open="' + x.programme + '"><span class="top"><span class="ico">' + svg(x.icon) + '</span><span class="expand">' + svg("expand") + "</span></span><h3>" + esc(L(x, "title")) + '</h3><span class="big"><span>' + pct(x.count, N) + "</span><small>" + of + "</small></span><p>" + esc(pct(x.count, N) + " (" + of + ") " + L(x, "text")) + "</p></button>";
+    }).join("");
 
-  // ── training contributors (ranked, most named first) ──
-  var R = D.recognition, ppl = R.people;
-  var rep = ppl.filter(function (p) { return p.count > 1; }), once = ppl.filter(function (p) { return p.count === 1; });
-  var maxC = rep.length ? rep[0].count : 1;
-  $("rc-sub").textContent = nf.format(ppl.length) + " contributors identified by " + nf.format(R.respondents) + " participants";
-  $("ranked").innerHTML = rep.map(function (p, i) {
-    return '<li><span class="rk">' + (i + 1) + '</span><span class="nm" title="' + esc(p.name) + '">' + esc(p.name) + '</span><span class="ct"><b>' + nf.format(p.count) + "</b>" + (p.count === 1 ? "participant" : "participants") + "</span>" + '<span class="bar"><span class="grow" style="width:' + (p.count / maxC) * 100 + "%;--i:" + Math.min(i, 8) + '"></span></span></li>';
-  }).join("");
-  $("also-h").textContent = "Named by one participant (" + nf.format(once.length) + ")";
-  $("also").innerHTML = once.map(function (p) { return '<li dir="auto">' + esc(p.name) + "</li>"; }).join("");
+    // programme cards
+    $("progs").innerHTML = D.programmes.map(function (p, i) {
+      var nq = p.featured.length + p.questions.length + 1, ti = L(p, "title");
+      return '<button class="card prog rise" style="--i:' + i + '" data-open="' + p.id + '"><span class="top"><h3>' + esc(ti) + '</h3><span class="expand">' + svg("expand") + '</span></span><p class="head"><b>' + pct(p.headline.count, N) + "</b> (" + t("ofN", { a: nf.format(p.headline.count), b: nf.format(N) }) + ") " + esc(L(p.headline, "text")) + "</p>" + sbar(p.satisfaction, ti, false) + '<span class="foot"><span>' + t("questionsShown", { n: nq }) + "</span><span>" + t("viewDetails") + "</span></span></button>";
+    }).join("");
 
-  // ── priorities & footer ──
-  $("action").textContent = D.action;
-  $("prios").innerHTML = D.insights.map(function (x) { return "<li><b>" + pct(x.count, N) + "</b>" + esc(x.title) + " — " + nf.format(x.count) + " of " + nf.format(N) + "</li>"; }).join("");
-  var top = depts[0];
-  var ex = D.source.excludedTests;
-  $("footer").textContent = "Source: CDP 2026 employee survey. " + (ex === 1 ? "One test submission" : ex + " test submissions") + " excluded. " + top.name + " accounted for " + pct(top.count, N) + " of responses.";
-  $("side-meta").textContent = nf.format(N) + " responses · " + D.source.fileName;
+    // training contributors (ranked, most named first)
+    var R = D.recognition, ppl = R.people;
+    var rep = ppl.filter(function (p) { return p.count > 1; }), once = ppl.filter(function (p) { return p.count === 1; });
+    var maxC = rep.length ? rep[0].count : 1;
+    $("rc-sub").textContent = t("contribSub", { a: nf.format(ppl.length), b: nf.format(R.respondents) });
+    $("ranked").innerHTML = rep.map(function (p, i) {
+      return '<li><span class="rk">' + nf.format(i + 1) + '</span><span class="nm" title="' + esc(p.name) + '">' + esc(p.name) + '</span><span class="ct"><b>' + nf.format(p.count) + "</b>" + t(p.count === 1 ? "participant" : "participants") + "</span>" + '<span class="bar"><span class="grow" style="width:' + (p.count / maxC) * 100 + "%;--i:" + Math.min(i, 8) + '"></span></span></li>';
+    }).join("");
+    $("also-h").textContent = t("namedOnce", { n: nf.format(once.length) });
+    $("also").innerHTML = once.map(function (p) { return '<li dir="auto">' + esc(p.name) + "</li>"; }).join("");
+
+    // priorities & footer
+    $("action").textContent = L(D, "action");
+    $("prios").innerHTML = D.insights.map(function (x) { return "<li><b>" + pct(x.count, N) + "</b>" + esc(L(x, "title")) + " — " + t("ofN", { a: nf.format(x.count), b: nf.format(N) }) + "</li>"; }).join("");
+    var top = depts[0], ex = D.source.excludedTests;
+    $("footer").textContent = t("footer", { ex: ex === 1 ? t("oneTest") : ex === 2 && LANG === "ar" ? t("twoTests") : t("nTests", { n: ex }), area: area(top.name), pct: pct(top.count, N) });
+    $("side-meta").textContent = t("nResponses", { n: nf.format(N) }) + " · " + D.source.fileName;
+  }
+  var pm = $("pm");
+  render();
 
   // ── tooltip (hover, keyboard focus, tap) ──
   var tip = $("tip");
@@ -378,21 +449,26 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   var overlay = $("overlay"), panel = $("dpanel"), opener = null;
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   function qcard(q, feat) {
-    var c = q.counts, t = tot(c);
-    return '<div class="q' + (feat ? " feat" : "") + '"><h5>' + esc(feat ? q.title : q.label) + (q.challenge ? '<span class="tag">Yes = faced challenges (red) · No = no challenges (green)</span>' : "") + "</h5>" + (feat ? '<p class="qt">' + esc(q.question) + "</p>" : '<p class="qt">' + nf.format(t) + " responses" + (c.blank ? " · " + nf.format(c.blank) + " blank" : "") + "</p>") + sbar(c, feat ? q.title : q.label, false, 0, q.challenge) + optRow(c, q.challenge) + "</div>";
+    var c = q.counts, tt = tot(c), head = feat ? L(q, "title") : L(q, "label");
+    return '<div class="q' + (feat ? " feat" : "") + '"><h5>' + esc(head) + (q.challenge ? '<span class="tag">' + esc(t("challengeTag")) + "</span>" : "") + "</h5>" + (feat ? '<p class="qt">' + esc(L(q, "question")) + "</p>" : '<p class="qt">' + t("nResponses", { n: nf.format(tt) }) + (c.blank ? " · " + t("blank", { n: nf.format(c.blank) }) : "") + "</p>") + sbar(c, head, false, 0, q.challenge) + optRow(c, q.challenge) + "</div>";
+  }
+  var openId = null;
+  function panelHtml(p) {
+    var ht = L(p.headline, "text"), cnt = p.headline.count;
+    var lead = p.id === "ojt" ? t("respondentsLead", { a: nf.format(cnt), b: nf.format(N), c: pct(cnt, N), t: ht }) : pct(cnt, N) + " (" + t("ofN", { a: nf.format(cnt), b: nf.format(N) }) + ") " + ht;
+    return '<div class="d-top"><button class="btn" id="back">' + svg("back") + esc(t("back")) + '</button><ul class="legend"><li><span class="sw y"></span>' + t("y") + '</li><li><span class="sw p"></span>' + t("p") + '</li><li><span class="sw n"></span>' + t("n") + "</li></ul></div>" +
+      '<h2 id="d-title">' + esc(L(p, "title")) + '</h2><p style="color:var(--muted);margin:4px 0 18px">' + t("qlevel", { n: nf.format(N) }) + "</p>" +
+      '<div class="callout"><span class="big">' + pct(cnt, N) + "</span><p>" + esc(lead) + "</p></div>" +
+      '<div class="qgroup"><h4>' + t("overallSat") + "</h4>" + qcard({ label: p.satisfactionQuestion, labelAr: p.satisfactionQuestionAr, counts: p.satisfaction }, false) + "</div>" +
+      (p.featured.length ? '<div class="qgroup"><h4>' + t("keyQs") + '</h4><div class="qs">' + p.featured.map(function (q) { return qcard(q, true); }).join("") + "</div></div>" : "") +
+      '<div class="qgroup"><h4>' + t(p.featured.length ? "otherQs" : "qs") + '</h4><div class="qs">' + p.questions.map(function (q) { return qcard(q, false); }).join("") + "</div></div>";
   }
   function openPanel(id, from) {
     var p = D.programmes.find(function (x) { return x.id === id; });
     if (!p) return;
     opener = from || null;
-    var lead = id === "ojt" ? nf.format(p.headline.count) + " of " + nf.format(N) + " respondents (" + pct(p.headline.count, N) + ") " + p.headline.text : pct(p.headline.count, N) + " (" + nf.format(p.headline.count) + " of " + nf.format(N) + ") " + p.headline.text;
-    panel.innerHTML =
-      '<div class="d-top"><button class="btn" id="back">' + svg("back") + 'Back to Overview</button><ul class="legend"><li><span class="sw y"></span>Yes</li><li><span class="sw p"></span>To some extent</li><li><span class="sw n"></span>No</li></ul></div>' +
-      '<h2 id="d-title">' + esc(p.title) + '</h2><p style="color:var(--muted);margin:4px 0 18px">Question-level results · ' + nf.format(N) + " responses</p>" +
-      '<div class="callout"><span class="big">' + pct(p.headline.count, N) + "</span><p>" + esc(lead) + "</p></div>" +
-      '<div class="qgroup"><h4>Overall satisfaction</h4>' + qcard({ label: p.satisfactionQuestion, counts: p.satisfaction }, false) + "</div>" +
-      (p.featured.length ? '<div class="qgroup"><h4>Key questions</h4><div class="qs">' + p.featured.map(function (q) { return qcard(q, true); }).join("") + "</div></div>" : "") +
-      '<div class="qgroup"><h4>' + (p.featured.length ? "Other questions" : "Questions") + '</h4><div class="qs">' + p.questions.map(function (q) { return qcard(q, false); }).join("") + "</div></div>";
+    openId = id;
+    panel.innerHTML = panelHtml(p);
     var b = from ? from.getBoundingClientRect() : null;
     if (b) { panel.style.setProperty("--ox", (b.left + b.width / 2 - Math.max(0, (innerWidth - Math.min(1080, innerWidth - 32)) / 2)) + "px"); panel.style.setProperty("--oy", (b.top + b.height / 2) + "px"); }
     overlay.classList.remove("anim-out");
@@ -407,6 +483,7 @@ body.present .row{grid-template-columns:240px 1fr 28px}
     if (!overlay.classList.contains("open")) return;
     hideTip();
     var done = function () {
+      openId = null;
       overlay.classList.remove("open", "anim-out", "anim-in");
       document.body.style.overflow = "";
       $("main").removeAttribute("aria-hidden");
@@ -454,12 +531,11 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   links.forEach(function (a) { a.addEventListener("click", function () { document.body.classList.remove("nav-open"); menu.setAttribute("aria-expanded", "false"); }); });
 
   // ── presentation mode ──
-  var pm = $("pm");
   function setPresent(on) {
     document.body.classList.toggle("present", on);
     document.documentElement.classList.toggle("present-root", on);
     pm.setAttribute("aria-pressed", String(on));
-    pm.querySelector(".pm-label").textContent = on ? "Exit Presentation" : "Presentation Mode";
+    pm.querySelector(".pm-label").textContent = on ? t("exitPresent") : t("present");
   }
   pm.addEventListener("click", function () {
     var on = !document.body.classList.contains("present");
@@ -469,6 +545,15 @@ body.present .row{grid-template-columns:240px 1fr 28px}
     if (!on && document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
   });
   // Escape (e.g. closing a detail panel) also leaves browser full screen; presentation mode stays on until the button is pressed.
+
+  // ── language (English / Arabic) ──
+  $("lang").addEventListener("click", function () {
+    LANG = LANG === "ar" ? "en" : "ar";
+    try { localStorage.setItem("gm-lang", LANG); } catch (e) {}
+    $("main").classList.remove("anim");
+    render();
+    if (openId) { var p = D.programmes.find(function (x) { return x.id === openId; }); panel.innerHTML = panelHtml(p); $("back").addEventListener("click", closePanel); }
+  });
 
   // ── deep link ──
   var m = location.hash.match(/^#programme-(\w+)/);

@@ -8,32 +8,36 @@ import { QUESTIONS, CLOSED_KINDS, type TabId } from "../src/features/cdp/config"
 import { extractNames, groupPeople } from "../src/features/cdp/people";
 
 type Opt = "y" | "p" | "n";
-const PROGRAMMES: { id: TabId; title: string; featured: { id: string; title: string }[] }[] = [
-  { id: "general", title: "CDP Overall", featured: [] },
-  { id: "cdpt", title: "CDP-T Online Courses", featured: [] },
+const PROGRAMMES: { id: TabId; title: string; titleAr: string; featured: { id: string; title: string; titleAr: string }[] }[] = [
+  { id: "general", title: "CDP Overall", titleAr: "برنامج CDP بشكل عام", featured: [] },
+  { id: "cdpt", title: "CDP-T Online Courses", titleAr: "الدورات الإلكترونية CDP‑T", featured: [] },
   {
     id: "ojt",
     title: "On-the-Job Training",
+    titleAr: "التدريب أثناء العمل",
     featured: [
-      { id: "V", title: "Planned training delivery" },
-      { id: "X", title: "Opportunities for hands-on practice" },
-      { id: "Y", title: "Accuracy of recorded progress in AGIOPS" },
+      { id: "V", title: "Planned training delivery", titleAr: "تقديم التدريب المخطط له" },
+      { id: "X", title: "Opportunities for hands-on practice", titleAr: "فرص التطبيق العملي" },
+      { id: "Y", title: "Accuracy of recorded progress in AGIOPS", titleAr: "دقة التقدم المسجل في AGIOPS" },
     ],
   },
-  { id: "huawei", title: "Huawei OMS Support", featured: [] },
+  { id: "huawei", title: "Huawei OMS Support", titleAr: "دعم فريق Huawei OMS", featured: [] },
 ];
 
 /** Findings: which question and which answer(s) are counted. Text uses {pct}, {count}, {total}. */
 const INSIGHTS = [
-  { id: "delivery", title: "Programme Delivery", icon: "layers", programme: "general", q: "G", opts: ["n"] as Opt[], text: "reported that programme delivery lacked clarity and structure." },
-  { id: "transfer", title: "Learning Transfer", icon: "transfer", programme: "cdpt", q: "O", opts: ["n"] as Opt[], text: "reported that they could not apply what they learned from the online courses at work." },
-  { id: "practical", title: "Practical Training", icon: "tool", programme: "ojt", q: "AB", opts: ["y"] as Opt[], text: "reported challenges during on-the-job training." },
+  { id: "delivery", title: "Programme Delivery", titleAr: "تنفيذ البرنامج", icon: "layers", programme: "general", q: "G", opts: ["n"] as Opt[],
+    text: "reported that programme delivery lacked clarity and structure.", textAr: "أفادوا بأن تنفيذ البرنامج افتقر إلى الوضوح والتنظيم." },
+  { id: "transfer", title: "Learning Transfer", titleAr: "تطبيق التعلّم", icon: "transfer", programme: "cdpt", q: "O", opts: ["n"] as Opt[],
+    text: "reported that they could not apply what they learned from the online courses at work.", textAr: "أفادوا بأنهم لم يتمكنوا من تطبيق ما تعلموه من الدورات الإلكترونية في عملهم." },
+  { id: "practical", title: "Practical Training", titleAr: "التدريب العملي", icon: "tool", programme: "ojt", q: "AB", opts: ["y"] as Opt[],
+    text: "reported challenges during on-the-job training.", textAr: "أفادوا بمواجهة تحديات أثناء التدريب أثناء العمل." },
 ];
-const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string }> = {
-  general: { q: "G", opts: ["n"], text: "said programme delivery lacked clarity and structure." },
-  cdpt: { q: "O", opts: ["n"], text: "could not apply what they learned from the online courses at work." },
-  ojt: { q: "AB", opts: ["y"], text: "reported challenges." },
-  huawei: { q: "AO", opts: ["y"], text: "were satisfied overall with the support provided by the Huawei OMS team." },
+const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string; textAr: string }> = {
+  general: { q: "G", opts: ["n"], text: "said programme delivery lacked clarity and structure.", textAr: "أفادوا بأن تنفيذ البرنامج افتقر إلى الوضوح والتنظيم." },
+  cdpt: { q: "O", opts: ["n"], text: "could not apply what they learned from the online courses at work.", textAr: "لم يتمكنوا من تطبيق ما تعلموه من الدورات الإلكترونية في عملهم." },
+  ojt: { q: "AB", opts: ["y"], text: "reported challenges.", textAr: "أفادوا بمواجهة تحديات." },
+  huawei: { q: "AO", opts: ["y"], text: "were satisfied overall with the support provided by the Huawei OMS team.", textAr: "راضون بشكل عام عن الدعم المقدم من فريق Huawei OMS." },
 };
 
 (globalThis as unknown as { GM_DATA: unknown }).GM_DATA = (data: Uint8Array, fileName: string, excludedTests: number) => {
@@ -54,13 +58,18 @@ const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string }> = {
       return {
         id: p.id,
         title: p.title,
+        titleAr: p.titleAr,
         satisfactionQuestion: sat.en,
+        satisfactionQuestionAr: sat.ar,
         satisfaction: c3(all[sat.id]),
-        headline: { count: sum(h.q, h.opts), text: h.text },
-        featured: p.featured.map((f) => ({ ...f, question: QUESTIONS.find((q) => q.id === f.id)!.en, counts: c3(all[f.id]) })),
+        headline: { count: sum(h.q, h.opts), text: h.text, textAr: h.textAr },
+        featured: p.featured.map((f) => {
+          const q = QUESTIONS.find((x) => x.id === f.id)!;
+          return { ...f, question: q.en, questionAr: q.ar, counts: c3(all[f.id]) };
+        }),
         questions: qs
           .filter((q) => q.kind !== "satisfaction" && !p.featured.some((f) => f.id === q.id))
-          .map((q) => ({ id: q.id, label: q.en, challenge: q.kind === "challenge", counts: c3(all[q.id]) })),
+          .map((q) => ({ id: q.id, label: q.en, labelAr: q.ar, challenge: q.kind === "challenge", counts: c3(all[q.id]) })),
       };
     }),
     insights: INSIGHTS.map((i) => ({ ...i, count: sum(i.q, i.opts) })),
@@ -81,5 +90,6 @@ const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string }> = {
       };
     })(),
     action: "Assign a programme lead to align training with job requirements, schedule supervised practice and verify training delivery against AGIOPS records.",
+    actionAr: "تعيين مسؤول للبرنامج لمواءمة التدريب مع متطلبات الوظائف، وجدولة تطبيق عملي بإشراف، والتحقق من تنفيذ التدريب مقارنةً بسجلات AGIOPS.",
   };
 };
