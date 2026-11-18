@@ -34,7 +34,7 @@ const data = JSON.parse(JSON.stringify(sandbox.GM_DATA(new Uint8Array(readFileSy
 
 // Optional name corrections for the recognition list (kept outside the repository: it contains names).
 //   --names corrections.json   { "merge": { "Aaisha": "Aisha almaqbali" }, "rename": { "Azib": "Azib (Huawei OMS)" }, "hide": ["Ibrahim"] }
-// "merge" adds the first entry's mentions to the second (a participant who wrote both spellings would be counted twice).
+// "merge" joins the first entry into the second; a participant who wrote both spellings is counted once.
 const namesFile = opt("names", null);
 if (namesFile) {
   const fix = JSON.parse(readFileSync(namesFile, "utf8"));
@@ -43,7 +43,8 @@ if (namesFile) {
   for (const [from, to] of Object.entries(fix.merge ?? {})) {
     const a = find(from), b = find(to);
     if (!a || !b) { console.warn(`  name merge skipped (not found): ${from} → ${to}`); continue; }
-    b.count += a.count;
+    b.rows = [...new Set([...(b.rows ?? []), ...(a.rows ?? [])])];
+    b.count = b.rows.length;
     list.splice(list.indexOf(a), 1);
   }
   for (const [from, to] of Object.entries(fix.rename ?? {})) { const a = find(from); if (a) a.name = to; else console.warn(`  rename skipped: ${from}`); }
@@ -51,6 +52,9 @@ if (namesFile) {
   list.sort((x, y) => y.count - x.count || x.name.localeCompare(y.name));
   console.log(`Name corrections applied from ${path.basename(namesFile)}`);
 }
+
+// Row numbers were only needed to merge without double counting: never written to the page.
+for (const p of data.recognition.people) delete p.rows;
 
 // Integrity checks: departments and every programme row must add up to the number of responses.
 const N = data.source.responses;
