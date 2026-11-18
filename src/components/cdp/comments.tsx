@@ -106,7 +106,7 @@ export function CommentsBlock({
                     >
                       <span className="truncate text-ink">{locale === "ar" ? th.ar : th.en}</span>
                       <span className="h-2.5 overflow-hidden rounded-full bg-line" aria-hidden="true">
-                        <span className="block h-full rounded-full bg-teal print:[print-color-adjust:exact]" style={{ width: `${(th.count / max) * 100}%` }} />
+                        <span className="block h-full rounded-full bg-navy print:[print-color-adjust:exact]" style={{ width: `${(th.count / max) * 100}%` }} />
                       </span>
                       <span className="tabular-nums text-muted">
                         {f.int(th.count)} <span className="text-xs">({f.pct(th.count, inScope.length)})</span>
@@ -129,7 +129,7 @@ export function CommentsBlock({
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder={t("searchPlaceholder")}
-                    className="w-full rounded-full border border-line bg-surface py-2 pe-3 ps-9 text-sm outline-none focus:border-teal"
+                    className="w-full rounded-full border border-line bg-surface py-2 pe-3 ps-9 text-sm outline-none focus:border-navy"
                   />
                 </label>
                 {raw && !present && (
@@ -147,7 +147,7 @@ export function CommentsBlock({
               {theme && (
                 <p className="mt-2 text-xs text-muted">
                   {t("filteredByTheme", { theme: label(theme) })}{" "}
-                  <button type="button" className="font-medium text-teal underline" onClick={() => setTheme(null)}>{t("clear")}</button>
+                  <button type="button" className="font-medium text-navy underline" onClick={() => setTheme(null)}>{t("clear")}</button>
                 </p>
               )}
               {original && (
@@ -163,7 +163,7 @@ export function CommentsBlock({
               </ul>
               {shown.length === 0 && <p className="py-3 text-sm text-muted">{t("noMatches")}</p>}
               {shown.length > limit && (
-                <button type="button" onClick={() => setLimit((l) => l + PAGE * 3)} className="mt-2 text-sm font-medium text-teal underline">
+                <button type="button" onClick={() => setLimit((l) => l + PAGE * 3)} className="mt-2 text-sm font-medium text-navy underline">
                   {t("showMore", { n: f.int(shown.length - limit) })}
                 </button>
               )}
@@ -199,7 +199,7 @@ function CommentItem({ c, original, dept, canEdit, label }: { c: CommentView; or
         ))}
         {c.manual && <span className="text-muted">· {t("manualThemes")}</span>}
         {canEdit && !editing && (
-          <button type="button" onClick={() => setEditing(true)} className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-teal hover:bg-canvas">
+          <button type="button" onClick={() => setEditing(true)} className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-navy hover:bg-canvas">
             <Pencil className="size-3" aria-hidden="true" />
             {t("editThemes")}
           </button>
@@ -211,7 +211,7 @@ function CommentItem({ c, original, dept, canEdit, label }: { c: CommentView; or
           <div className="flex flex-wrap gap-2">
             {THEMES.map((th) => (
               <label key={th.id} className="inline-flex items-center gap-1.5 text-sm">
-                <input type="checkbox" className="size-4 accent-teal" checked={sel.includes(th.id)} onChange={(e) => setSel((s) => (e.target.checked ? [...s, th.id] : s.filter((x) => x !== th.id)))} />
+                <input type="checkbox" className="size-4 accent-navy" checked={sel.includes(th.id)} onChange={(e) => setSel((s) => (e.target.checked ? [...s, th.id] : s.filter((x) => x !== th.id)))} />
                 {label(th.id)}
               </label>
             ))}

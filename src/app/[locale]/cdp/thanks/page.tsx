@@ -25,7 +25,7 @@ export default async function ThanksBoardPage({ params }: { params: Promise<{ lo
       <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 py-16 text-center">
         <Lock className="mx-auto size-10 text-muted" aria-hidden="true" />
         <p className="mt-3 font-semibold text-navy">{t("boardNotPublished")}</p>
-        <Link href="/cdp" className="mt-4 inline-block text-teal underline">{t("backToResults")}</Link>
+        <Link href="/cdp" className="mt-4 inline-block text-navy underline">{t("backToResults")}</Link>
       </main>
     );
   return <ThanksBoardView board={board} />;

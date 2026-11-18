@@ -85,7 +85,7 @@ export function CdpDashboard({ view, initial, adminBar }: Props) {
 
       {/* 1. Total responses */}
       <section aria-labelledby="total-title" className="relative overflow-hidden rounded-card bg-navy px-6 py-7 text-white sm:px-10 sm:py-9">
-        <div className="absolute -end-10 -top-16 size-56 rounded-full bg-teal/30 blur-2xl" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-1.5 bg-teal" aria-hidden="true" />
         <h2 id="total-title" className="relative text-base font-medium text-white/80 sm:text-lg">
           {t("totalTitle")}
           <span className="block text-sm text-white/60 sm:ms-2 sm:inline" lang={locale === "ar" ? "en" : "ar"}><span className="hidden sm:inline">| </span>{t("totalTitleOther")}</span>
@@ -99,7 +99,7 @@ export function CdpDashboard({ view, initial, adminBar }: Props) {
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <h2 id="dept-title" className="flex items-center gap-2 text-lg font-bold text-navy sm:text-xl">
-              <Users className="size-5 text-teal" aria-hidden="true" />
+              <Users className="size-5 text-navy" aria-hidden="true" />
               {t("deptTitle")}
             </h2>
             <p className="mt-1 text-sm text-muted">{t("deptNote")}</p>
@@ -143,7 +143,7 @@ export function CdpDashboard({ view, initial, adminBar }: Props) {
       </section>
 
       {/* Filter bar */}
-      <div className="sticky top-0 z-20 -mx-4 border-y border-line bg-canvas/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-card sm:border print:static print:border-0">
+      <div className="sticky top-0 z-20 -mx-4 border-y border-line bg-surface/95 px-4 py-3 backdrop-blur sm:mx-0 sm:rounded-card sm:border print:static print:border-0">
         <div className="flex flex-wrap items-center gap-3">
           <label htmlFor="dept-filter" className="flex items-center gap-2 text-sm font-semibold text-navy">
             <Filter className="size-4" aria-hidden="true" />
@@ -167,7 +167,7 @@ export function CdpDashboard({ view, initial, adminBar }: Props) {
             {dept !== null && <span className="text-muted"> / {f.int(view.meta.total)}</span>}
           </p>
           {dept !== null && (
-            <button type="button" onClick={() => setDept(null)} className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-teal hover:bg-surface">
+            <button type="button" onClick={() => setDept(null)} className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-medium text-navy hover:bg-surface">
               <RotateCcw className="size-4" aria-hidden="true" />
               {t("resetFilter")}
             </button>
@@ -189,7 +189,7 @@ export function CdpDashboard({ view, initial, adminBar }: Props) {
                 data-testid={`sat-${q.id}`}
                 className={cn("rounded-card border bg-surface p-5 text-start transition hover:border-teal hover:shadow-md", tab === q.tab ? "border-teal/50" : "border-line")}
               >
-                <p className="text-sm font-semibold text-teal">{tabLabel(q.tab)}</p>
+                <p className="text-sm font-semibold text-navy">{tabLabel(q.tab)}</p>
                 <p className="mt-1 line-clamp-2 text-sm text-muted">{locale === "ar" ? q.ar : q.en}</p>
                 {c && valid(c) > 0 ? (
                   <div className="mt-4 space-y-3">

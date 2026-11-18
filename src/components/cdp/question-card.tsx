@@ -11,7 +11,7 @@ export function QuestionText({ q, header }: { q: QuestionDef; header: string | n
   const locale = useLocale();
   // Shown exactly as written in the file (line breaks kept, extra spaces removed).
   const text = header ? header.replace(/\r\n?/g, "\n").split("\n").map((l) => l.replace(/\s+/g, " ").trim()).filter(Boolean).join("\n") : locale === "ar" ? q.ar : q.en;
-  return <h3 className="whitespace-pre-line text-base font-semibold leading-relaxed text-navy sm:text-lg" dir="auto">{text}</h3>;
+  return <h3 className="whitespace-pre-line text-base font-semibold leading-relaxed text-ink sm:text-lg" dir="auto">{text}</h3>;
 }
 
 export function QuestionCard({
@@ -39,7 +39,7 @@ export function QuestionCard({
       )}
     >
       <div className="mb-3 flex flex-wrap items-center gap-2 text-xs">
-        {highlight && <span className="rounded-full bg-teal px-2.5 py-0.5 font-semibold text-white">{t("satisfactionBadge")}</span>}
+        {highlight && <span className="rounded-full bg-navy px-2.5 py-0.5 font-semibold text-white">{t("satisfactionBadge")}</span>}
         {q.kind === "challenge" && (
           <span className="inline-flex items-center gap-1 rounded-full bg-orange-50 px-2.5 py-0.5 font-semibold text-orange-800 ring-1 ring-orange-200">
             <AlertTriangle className="size-3.5" aria-hidden="true" />

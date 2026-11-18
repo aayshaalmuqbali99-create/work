@@ -12,6 +12,7 @@ const EXAMPLES = 4;
 
 export function CdpReport({ view, dept, generated }: { view: DashboardView; dept: number | null; generated: string }) {
   const t = useTranslations("Cdp");
+  const tb = useTranslations("Brand");
   const locale = useLocale();
   const f = useFormat();
   const counts = view.counts[dept === null ? "all" : String(dept)] ?? {};
@@ -33,7 +34,7 @@ export function CdpReport({ view, dept, generated }: { view: DashboardView; dept
       </div>
 
       <header className="border-b-4 border-teal pb-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-teal" lang="en" dir="ltr">Omantel | CDP Programme Evaluation 2026</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-navy" lang="en" dir="ltr">Omantel | CDP Programme Evaluation 2026</p>
         <h1 className="mt-1 text-2xl font-bold text-navy">{t("reportTitle")}</h1>
         <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-1 text-sm sm:grid-cols-4" data-testid="report-meta">
           <div><dt className="text-muted">{t("filterLabel")}</dt><dd className="font-semibold text-ink">{deptName}</dd></div>
@@ -42,6 +43,7 @@ export function CdpReport({ view, dept, generated }: { view: DashboardView; dept
           <div><dt className="text-muted">{t("sourceFile")}</dt><dd className="break-all font-semibold text-ink" dir="ltr">{view.meta.fileName}</dd></div>
         </dl>
         <p className="mt-2 text-xs text-muted">{t("reportPrivacy")} · {t("generatedAt", { date: f.date(generated) })}</p>
+        <p className="mt-1 text-xs font-bold text-navy" lang="en" dir="ltr">{tb("omantelTagline")}</p>
       </header>
 
       <section className="mt-6 break-inside-avoid">

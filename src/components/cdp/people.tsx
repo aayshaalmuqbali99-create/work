@@ -58,7 +58,7 @@ export function PeopleRecognition({ view, dept, present }: { view: DashboardView
 
       {repeated.length > 0 && (
         <>
-          <h4 className="mt-5 flex items-center gap-2 font-semibold text-navy"><Repeat className="size-4 text-teal" aria-hidden="true" />{t("peopleRepeated")}</h4>
+          <h4 className="mt-5 flex items-center gap-2 font-semibold text-navy"><Repeat className="size-4 text-navy" aria-hidden="true" />{t("peopleRepeated")}</h4>
           <ol className="mt-3 space-y-2" data-testid="people-repeated">
             {repeated.map((p, i) => (
               <PersonRow key={p.key} p={p} n={p.n} rank={i + 1} max={max} canEdit={canEdit} targets={targets} />
@@ -81,7 +81,7 @@ export function PeopleRecognition({ view, dept, present }: { view: DashboardView
 
       {canEdit && hidden.length > 0 && (
         <div className="mt-5 text-sm">
-          <button type="button" className="text-teal underline" onClick={() => setShowHidden((v) => !v)}>{t("peopleHiddenToggle", { n: f.int(hidden.length) })}</button>
+          <button type="button" className="text-navy underline" onClick={() => setShowHidden((v) => !v)}>{t("peopleHiddenToggle", { n: f.int(hidden.length) })}</button>
           {showHidden && (
             <ul className="mt-2 flex flex-wrap gap-2">
               {hidden.map((p) => <HiddenChip key={p.key} p={p} />)}
@@ -131,7 +131,7 @@ function PersonRow({ p, n, rank, max, canEdit, targets }: { p: PersonView; n: nu
         <span className="flex items-center gap-2 whitespace-nowrap text-sm">
           <strong className="tabular-nums text-navy">{t("mentionedBy", { n: f.int(n) })}</strong>
           {canEdit && (
-            <button type="button" onClick={() => setEditing((v) => !v)} className="rounded-full p-1.5 text-teal hover:bg-surface" aria-label={t("peopleEdit")} title={t("peopleEdit")}>
+            <button type="button" onClick={() => setEditing((v) => !v)} className="rounded-full p-1.5 text-navy hover:bg-surface" aria-label={t("peopleEdit")} title={t("peopleEdit")}>
               <Pencil className="size-3.5" aria-hidden="true" />
             </button>
           )}
@@ -150,7 +150,7 @@ function PersonChip({ p, canEdit, targets }: { p: PersonView; canEdit: boolean; 
       <span className="inline-flex items-center gap-1.5">
         <span dir="auto">{p.label}</span>
         {canEdit && (
-          <button type="button" onClick={() => setEditing((v) => !v)} className="rounded-full p-1 text-teal hover:bg-surface" aria-label={t("peopleEdit")} title={t("peopleEdit")}>
+          <button type="button" onClick={() => setEditing((v) => !v)} className="rounded-full p-1 text-navy hover:bg-surface" aria-label={t("peopleEdit")} title={t("peopleEdit")}>
             <Pencil className="size-3" aria-hidden="true" />
           </button>
         )}
@@ -206,7 +206,7 @@ function HiddenChip({ p }: { p: PersonView }) {
   return (
     <li className="inline-flex items-center gap-1.5 rounded-full bg-zinc-100 px-3 py-1 text-zinc-600">
       <span dir="auto">{p.label}</span>
-      <button type="button" disabled={pending} onClick={() => run(p.key, null)} className="rounded-full p-0.5 text-teal" aria-label={t("peopleRestore")} title={t("peopleRestore")}>
+      <button type="button" disabled={pending} onClick={() => run(p.key, null)} className="rounded-full p-0.5 text-navy" aria-label={t("peopleRestore")} title={t("peopleRestore")}>
         <Undo2 className="size-3.5" aria-hidden="true" />
       </button>
     </li>

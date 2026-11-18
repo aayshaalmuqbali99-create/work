@@ -14,6 +14,7 @@ const MEDAL = ["bg-amber-400 text-navy", "bg-slate-300 text-navy", "bg-orange-30
 
 export function ThanksBoardView({ board }: { board: ThanksBoard }) {
   const t = useTranslations("Cdp");
+  const tb = useTranslations("Brand");
   const f = useFormat();
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -54,8 +55,7 @@ export function ThanksBoardView({ board }: { board: ThanksBoard }) {
       </div>
 
       <section className="relative overflow-hidden rounded-card bg-navy px-6 py-10 text-center text-white sm:px-12 sm:py-14 print:rounded-none print:[print-color-adjust:exact]">
-        <div className="absolute -start-16 -top-16 size-64 rounded-full bg-teal/30 blur-3xl" aria-hidden="true" />
-        <div className="absolute -bottom-20 -end-10 size-64 rounded-full bg-amber-400/20 blur-3xl" aria-hidden="true" />
+        <div className="absolute inset-x-0 bottom-0 h-1.5 bg-teal print:[print-color-adjust:exact]" aria-hidden="true" />
         <Heart className="relative mx-auto size-10 text-amber-300" aria-hidden="true" />
         <p className="relative mt-3 text-xs font-semibold uppercase tracking-[0.2em] text-amber-200" lang="en" dir="ltr">Omantel | CDP Programme Evaluation 2026</p>
         <h1 className="relative mt-2 text-3xl font-bold sm:text-5xl">{t("boardTitle")}</h1>
@@ -97,6 +97,7 @@ export function ThanksBoardView({ board }: { board: ThanksBoard }) {
       <p className="mt-10 border-t border-line pt-4 text-center text-sm text-muted">
         {t("boardFooter")} · {t("dataUpdated")}: {f.date(board.activatedAt)}
       </p>
+      <p className="mt-2 text-center text-lg font-bold text-navy" lang="en" dir="ltr">{tb("omantelTagline")}</p>
     </main>
   );
 }

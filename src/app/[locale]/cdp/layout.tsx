@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { omantelLogo } from "@/lib/brand-logo";
+import { brandFontCss } from "@/lib/brand-fonts";
+import { OmantelLogo } from "@/components/layout/omantel-logo";
 import { LogOut } from "lucide-react";
 import { getSiteContent } from "@/features/site/data";
 import { getCurrentUser } from "@/lib/auth/session";
@@ -18,19 +20,22 @@ export default async function CdpLayout({ children }: { children: React.ReactNod
   const t = await getTranslations("Cdp");
   const { site } = await getSiteContent();
   const user = await getCurrentUser();
-  const logo = site.brand.partnerLogoUrl;
+  const fontCss = brandFontCss();
+  const logo = omantelLogo(await getLocale(), site.brand.partnerLogoUrl);
   return (
-    <div className="flex min-h-dvh flex-col bg-canvas">
+    // Omantel Brand Guidelines 2024 apply to the CDP platform only (scoped by .omantel-brand in globals.css).
+    <div className="omantel-brand flex min-h-dvh flex-col bg-surface">
+      {fontCss ? <style dangerouslySetInnerHTML={{ __html: fontCss }} /> : null}
       <header className="cdp-chrome border-b border-line bg-surface print:hidden">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-3 px-4 py-3 sm:px-6">
           {logo ? (
-            <Image src={logo} alt="Omantel" width={140} height={69} className="h-10 w-auto object-contain sm:h-12" priority />
+            <OmantelLogo src={logo.src} className="h-10 sm:h-12" />
           ) : (
             <span className="text-xl font-bold text-navy">Omantel</span>
           )}
           <span className="hidden h-10 w-px bg-line sm:block" aria-hidden="true" />
           <div className="order-last min-w-0 basis-full sm:order-none sm:basis-auto sm:flex-1">
-            <p className="text-xs font-semibold uppercase tracking-wide text-teal rtl:text-end sm:rtl:text-start" lang="en" dir="ltr">Omantel | CDP Programme Evaluation 2026</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-navy rtl:text-end sm:rtl:text-start" lang="en" dir="ltr">Omantel | CDP Programme Evaluation 2026</p>
             <p className="truncate text-sm font-medium text-navy sm:text-base">{t("platformName")}</p>
           </div>
           <div className="ms-auto flex items-center gap-2">

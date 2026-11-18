@@ -55,7 +55,7 @@ export default async function CdpPage({
           />
         ) : (
           <div className="rounded-card border border-dashed border-line bg-surface p-10 text-center">
-            <FileSpreadsheet className="mx-auto size-10 text-teal" aria-hidden="true" />
+            <FileSpreadsheet className="mx-auto size-10 text-navy" aria-hidden="true" />
             <p className="mt-3 font-semibold text-navy">{t("noData")}</p>
             <p className="mt-1 text-sm text-muted">{isAdmin ? t("noDataAdmin") : t("noDataViewer")}</p>
             {isAdmin && <div className="mt-4 flex justify-center">{adminBar}</div>}

@@ -66,3 +66,17 @@ SHOTS=/tmp/cdp-invalid ADMIN_PASSWORD=... npm run test:cdp:e2e   # browser test 
 ```
 `tests/cdp/fixtures/cdp-synthetic-135.xlsx` is **synthetic** (invented names/comments) built to the reference
 counts. Upload the real `(1-137)` file once and check the reference panel shows every count as matching.
+
+## Omantel Brand Guidelines 2024 (CDP platform only)
+The CDP pages (`/cdp`, `/cdp/report`, `/cdp/thanks` and the CDP data page in the control panel) follow the Omantel
+Brand Guidelines 2024. The rest of the site (Omantel Assets) keeps its own design. The brand is scoped by the
+`.omantel-brand` class in `src/app/globals.css`:
+- Colours: Deep Sea `#2D13EA` dominant, Gold Mountains `#FF7800` highlights, white surfaces, Dishdasha `#1D1D1D`
+  text; secondary/tertiary colours for charts and states. Orange never carries white text (contrast).
+- Charts: Yes / To some extent / No = Deep Sea / Omani Sky / Gold Mountains; challenge questions = Gold Mountains /
+  Oman Exotic / Silver.
+- Type: FS Alvar (English) and FS Albert (Arabic), Light / Regular / Bold. Licensed files go in
+  `public/fonts/omantel/` (see the README there); until then Inter / IBM Plex Sans Arabic are used.
+- Logo: official files go in `public/brand/omantel/` (English, bilingual, optional reversed versions; see the README).
+  Until then the Omantel logo set in Website → Brand is used, shown untouched.
+- Tagline “Imagine to Life.” in the CDP footer, PDF report and thanks board.
