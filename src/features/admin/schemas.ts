@@ -76,6 +76,7 @@ export function fieldErrors(error: z.ZodError): Record<string, string> {
 export const newUserSchema = z.object({
   name: z.string().trim().min(1, "required").max(120, "tooLong"),
   email: z.string().trim().toLowerCase().email("invalidEmail").max(200, "tooLong"),
-  role: z.enum(["ADMIN", "EDITOR"]),
+  role: z.enum(["ADMIN", "EDITOR", "VIEWER"]),
+  cdpRaw: z.preprocess((v) => v === "on" || v === "true", z.boolean()).default(false),
   password: z.string().min(12, "passwordRules").max(200, "tooLong"),
 });

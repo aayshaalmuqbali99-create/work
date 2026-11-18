@@ -15,6 +15,13 @@ datasource db {
 enum Role {
   ADMIN // full access, manages users
   EDITOR // edits devices, categories, stock and prices
+  VIEWER // management: CDP results dashboard only (aggregated results)
+}
+
+enum SurveyStatus {
+  PENDING // uploaded and validated, waiting for an admin to publish it
+  ACTIVE // the dataset shown on the results dashboard (at most one)
+  ARCHIVED // replaced by a newer file
 }
 
 enum DeviceStatus {
@@ -68,6 +75,8 @@ model User {
   passwordHash String
   role         Role       @default(EDITOR)
   active       Boolean    @default(true)
+  /// May read original CDP survey comments and the names in "thanks & recognition". Admins always may.
+  cdpRaw       Boolean    @default(false)
   lastLoginAt  DateTime?
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
@@ -265,4 +274,52 @@ model AssetRequest {
   updatedAt    DateTime      @updatedAt
 
   @@index([status, createdAt])
+}
+
+/// One uploaded CDP Programme Evaluation workbook, parsed and validated.
+/// Respondent names, e-mails and employee numbers are dropped during import and never stored;
+/// the original file is not kept.
+model SurveyDataset {
+  id           String       @id @default(cuid())
+  status       SurveyStatus @default(PENDING)
+  fileName     String
+  fileSize     Int
+  rowCount     Int
+  /// Validation report shown before publishing (mapping, warnings, reference checks).
+  report       Json
+  /// Parsed responses: departments, answers per question, comments (original + redacted).
+  data         Json
+  uploadedById String?
+  uploadedBy   String       @default("")
+  activatedAt  DateTime?
+  createdAt    DateTime     @default(now())
+
+  @@index([status, createdAt])
+}
+
+/// Manual theme tags for a comment, keyed by a hash of question + normalised text so they carry over to newer files.
+model SurveyThemeTag {
+  key         String   @id
+  themes      String[]
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}
+
+/// Corrections to the automatic grouping of "people who supported you" names (merge, rename, hide).
+/// Keyed by the spelling-independent group key, so they carry over to newer files.
+model SurveyNameRule {
+  key         String   @id
+  mergeInto   String?
+  label       String?
+  hidden      Boolean  @default(false)
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}
+
+/// Small settings of the CDP results platform (e.g. whether the thanks board is shown to every signed-in user).
+model SurveySetting {
+  key         String   @id
+  value       Json
+  updatedById String?
+  updatedAt   DateTime @updatedAt
 }

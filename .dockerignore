@@ -6,4 +6,3 @@ uploads
 .env.*
 !.env.example
 *.log
-cdp-platform

@@ -9,7 +9,7 @@ import { AdminNav } from "@/components/admin/admin-nav";
 import { LanguageSwitcher } from "@/components/layout/language-switcher";
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
-  const user = await requirePageUser();
+  const user = await requirePageUser({ allowViewer: true });
   const t = await getTranslations("Admin");
   const tb = await getTranslations("Brand");
   const reviewCount = await db.device.count({ where: { status: "REVIEW", deletedAt: null } });
@@ -21,7 +21,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
             {tb("name")} <span className="text-sm font-medium text-white/60">· {t("title")}</span>
           </Link>
         </div>
-        <Suspense><AdminNav reviewCount={reviewCount} isAdmin={user.role === "ADMIN"} /></Suspense>
+        <Suspense><AdminNav reviewCount={reviewCount} role={user.role} /></Suspense>
         <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4 text-sm lg:mt-auto lg:flex-col lg:items-stretch">
           <p className="truncate text-white/70">{user.name}</p>
           <Link href="/" className="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-white/70 hover:bg-white/5 hover:text-white">
