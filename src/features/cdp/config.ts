@@ -191,17 +191,18 @@ export const THEMES: { id: string; ar: string; en: string; keywords: string[] }[
 
 /**
  * Reference counts of "Copy of Omantel – CDP Programme Evaluation 2026(1-137).xlsx".
+ * Responses 1 and 2 were test submissions and are not in the file, so it holds 135 responses (IDs 3–137).
  * Every import is compared with these; differences are shown in the upload report (they are expected for newer files).
  */
 export const REFERENCE = {
-  fileLabel: "Omantel – CDP Programme Evaluation 2026 (1-137)",
-  total: 137,
-  departments: { "Network and Facilities Operations": 102, "Facility Operation": 19, Electrotechnical: 13, "Physical Security": 3 } as Record<string, number>,
+  fileLabel: "Omantel – CDP Programme Evaluation 2026 (1-137), 135 responses",
+  total: 135,
+  departments: { "Network and Facilities Operations": 100, "Facility Operation": 19, Electrotechnical: 13, "Physical Security": 3 } as Record<string, number>,
   satisfaction: {
-    AQ: { y: 34, p: 46, n: 57 },
-    AR: { y: 38, p: 42, n: 57 },
-    AS: { y: 38, p: 45, n: 54 },
-    AO: { y: 49, p: 44, n: 44 },
+    AQ: { y: 33, p: 45, n: 57 },
+    AR: { y: 37, p: 41, n: 57 },
+    AS: { y: 38, p: 43, n: 54 },
+    AO: { y: 48, p: 43, n: 44 },
   } as Record<string, { y: number; p: number; n: number }>,
 };
 

@@ -6,6 +6,7 @@
 |---|---|---|
 | `/ar/cdp` · `/en/cdp` | any signed-in user (Viewer, Editor, Admin) | results dashboard |
 | `/ar/cdp/report?dept=N` | same | printable management export (Print → Save as PDF) |
+| `/ar/cdp/thanks` | authorised users; everyone once an admin publishes it | thanks & recognition board |
 | `/ar/admin/cdp` | Admin | upload, validate and publish the Excel file |
 | `/ar/admin/users` | Admin | add **Viewer (management)** accounts; grant **CDP original data** |
 
@@ -13,7 +14,7 @@
 1. Control panel → **CDP evaluation data** → choose the `.xlsx` → **Upload & validate**.
 2. The file is read from `Sheet1` and checked: header row, department column, every question matched by its
    **header text** (spaces and line breaks cleaned; Arabic or English, any order), unrecognised answers, blanks,
-   and the reference counts of the `(1-137)` file. Missing columns are listed as warnings; a missing department
+   and the reference counts of the `(1-137)` file (135 responses — 1 and 2 were test submissions and were removed). Missing columns are listed as warnings; a missing department
    column or no satisfaction questions block publishing.
 3. The dashboard keeps showing the current file until you press **Publish**. Older files stay listed (Previous)
    and can be republished.
@@ -42,6 +43,13 @@ Ibrahim AlMamari). Authorised users can **merge** two entries, **rename** one or
 person (pencil icon); corrections are stored in the database (`SurveyNameRule`) and carry over to newer files.
 Management users and the PDF export see only how many people were named and how many were named more than once.
 
+## Thanks & recognition board — `/ar/cdp/thanks`
+A page made for the meeting screen or printing: “thank you to everyone who helped their colleagues develop during
+CDP 2026”, with the people named by more than one participant as ranked cards (top three highlighted) and everyone
+else named once in a “thank you also to” wall. It uses the same corrected list as above (merges, renames, hidden
+entries). Visible to authorised users; an admin can press **Publish the board to all platform users** to show it to
+management viewers too (and hide it again). Links: the results toolbar and the Thanks & recognition section.
+
 ## Editing definitions and texts
 - Questions, tab order, header match phrases, theme keywords, answer synonyms, “no comment” words, privacy
   threshold and reference counts: `src/features/cdp/config.ts`.
@@ -55,5 +63,5 @@ npm run test:cdp            # parser, mapping, counts, redaction (synthetic fixt
 npm run cdp:fixture -- --invalid /tmp/cdp-invalid    # rebuild fixture + broken variants
 SHOTS=/tmp/cdp-invalid ADMIN_PASSWORD=... npm run test:cdp:e2e   # browser test against `npm start`, empty CDP data
 ```
-`tests/cdp/fixtures/cdp-synthetic-137.xlsx` is **synthetic** (invented names/comments) built to the reference
+`tests/cdp/fixtures/cdp-synthetic-135.xlsx` is **synthetic** (invented names/comments) built to the reference
 counts. Upload the real `(1-137)` file once and check the reference panel shows every count as matching.

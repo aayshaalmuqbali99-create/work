@@ -1,7 +1,7 @@
 """Build a SYNTHETIC test workbook shaped like the Microsoft Forms export of the CDP evaluation.
 
 It is NOT real survey data. It only reproduces the structure (Sheet1, columns A–AX, bilingual headers
-with line breaks and extra spaces) and the reference counts of the (1-137) file, so the import and the
+with line breaks and extra spaces) and the reference counts of the (1-137) file (135 responses; 1 and 2 were tests), so the import and the
 dashboard can be tested without the real responses. Names and comments are invented.
 
     python3 scripts/make_cdp_fixture.py tests/cdp/fixtures
@@ -64,10 +64,10 @@ Q = [
     ("AW", "Message of thanks and appreciation", "رسائل الشكر والتقدير"),
 ]
 OPEN = {"AP", "AT", "AU", "AV", "AW"}
-SAT = {"AQ": (34, 46, 57), "AR": (38, 42, 57), "AS": (38, 45, 54), "AO": (49, 44, 44)}
-DEPTS = [("Network and Facilities Operations", 102), ("Facility Operation", 19), ("Electrotechnical", 13), ("Physical Security", 3)]
+SAT = {"AQ": (33, 45, 57), "AR": (37, 41, 57), "AS": (38, 43, 54), "AO": (48, 43, 44)}
+DEPTS = [("Network and Facilities Operations", 100), ("Facility Operation", 19), ("Electrotechnical", 13), ("Physical Security", 3)]
 LABEL = {"y": "Yes - نعم", "p": "To some extent - إلى حد ما", "n": "No - لا"}
-N = 137
+N = 135
 
 def col_idx(letters):
     n = 0
@@ -144,7 +144,7 @@ for r in range(N):
             v = random.choices(["y", "p", "n"], weights=[4, 3, 3])[0]
             ws.cell(row=row, column=c, value=LABEL[v])
 
-path = out_dir / "cdp-synthetic-137.xlsx"
+path = out_dir / "cdp-synthetic-135.xlsx"
 wb.save(path)
 print(path)
 

@@ -6,12 +6,12 @@ import { importWorkbook, aggregate, parseAnswer, mapColumns, detectThemes } from
 import { QUESTIONS, REFERENCE, TABS } from "../../src/features/cdp/config";
 import { buildNameDictionary, redact } from "../../src/features/cdp/redact";
 
-const fixture = readFileSync(path.join(__dirname, "fixtures/cdp-synthetic-137.xlsx"));
+const fixture = readFileSync(path.join(__dirname, "fixtures/cdp-synthetic-135.xlsx"));
 const { dataset, report } = importWorkbook(new Uint8Array(fixture));
 
-test("reads 137 responses from Sheet1 with no blocking errors", () => {
+test("reads 135 responses from Sheet1 with no blocking errors", () => {
   assert.equal(report.sheetName, "Sheet1");
-  assert.equal(dataset.responses.length, 137);
+  assert.equal(dataset.responses.length, 135);
   assert.deepEqual(report.errors, []);
 });
 
@@ -38,15 +38,15 @@ test("department filter changes counts and sums back to the total", () => {
   const sums = dataset.departments.map((_, i) => aggregate(dataset, [i]).AQ);
   const y = sums.reduce((s, c) => s + c.y, 0);
   const totalAnswered = sums.reduce((s, c) => s + c.y + c.p + c.n + c.blank + c.invalid, 0);
-  assert.equal(y, 34);
-  assert.equal(totalAnswered, 137);
+  assert.equal(y, 33);
+  assert.equal(totalAnswered, 135);
   assert.equal(sums[3].y + sums[3].p + sums[3].n, 3);
 });
 
 test("blank answers are counted separately", () => {
   const f = aggregate(dataset, null).F;
   assert.ok(f.blank > 0);
-  assert.equal(f.y + f.p + f.n + f.blank + f.invalid, 137);
+  assert.equal(f.y + f.p + f.n + f.blank + f.invalid, 135);
 });
 
 test("respondent names and e-mails are dropped and never stored", () => {

@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const assert = require('assert');
 const B = 'http://localhost:3000';
 const SHOTS = process.env.SHOTS || require('os').tmpdir();
-const FIX = require('path').join(__dirname, 'fixtures/cdp-synthetic-137.xlsx');
+const FIX = require('path').join(__dirname, 'fixtures/cdp-synthetic-135.xlsx');
 const log = (...a) => console.log('✔', ...a);
 
 (async () => {
@@ -55,22 +55,22 @@ const log = (...a) => console.log('✔', ...a);
 
   // dashboard
   await page.goto(B + '/ar/cdp');
-  assert.equal(await page.textContent('[data-testid=total-responses]'), '137');
+  assert.equal(await page.textContent('[data-testid=total-responses]'), '135');
   const depts = await page.locator('[data-testid=dept-chart] li').allInnerTexts();
   const flat = depts.map((d) => d.replace(/\s+/g, ' '));
   console.log(flat);
-  assert.ok(flat[0].includes('Network and Facilities Operations') && flat[0].includes('102') && flat[0].includes('74.5%'));
+  assert.ok(flat[0].includes('Network and Facilities Operations') && flat[0].includes('100') && flat[0].includes('74.1%'));
   assert.ok(flat[1].includes('Facility Operation') && flat[1].includes('19'));
   assert.ok(flat[2].includes('Electrotechnical') && flat[2].includes('13'));
   assert.ok(flat[3].includes('Physical Security') && flat[3].includes('3') && flat[3].includes('2.2%'));
   const sat = async (id) => (await page.locator(`[data-testid=sat-${id}] dd`).allInnerTexts()).map((s) => s.replace(/\s+/g, ' '));
-  const exp = { AQ: [34, 46, 57], AR: [38, 42, 57], AS: [38, 45, 54], AO: [49, 44, 44] };
+  const exp = { AQ: [33, 45, 57], AR: [37, 41, 57], AS: [38, 43, 54], AO: [48, 43, 44] };
   for (const [q, [y, p, n]] of Object.entries(exp)) {
     const v = await sat(q);
     assert.ok(v[0].includes(`(${y})`) && v[1].includes(`(${p})`) && v[2].includes(`(${n})`), q + ' ' + v);
   }
   console.log('AQ', await sat('AQ'));
-  log('137, departments and 4 satisfaction cards match');
+  log('135, departments and 4 satisfaction cards match');
   await page.screenshot({ path: SHOTS + '/dashboard-ar.png', fullPage: false });
 
   // tab order and question placement
@@ -94,7 +94,7 @@ const log = (...a) => console.log('✔', ...a);
   assert.match(page.url(), /dept=1/);
   console.log('Facility Operation AQ', filtered);
   await page.selectOption('#dept-filter', '');
-  assert.match(await page.textContent('[data-testid=in-view]'), /137/);
+  assert.match(await page.textContent('[data-testid=in-view]'), /135/);
   log('filter updates counts; reset to all');
 
   // tab content: open huawei; admin sees names and original toggle
@@ -171,7 +171,7 @@ const log = (...a) => console.log('✔', ...a);
   assert.match(v.url(), /\/ar\/cdp/);
   // small dept via URL is ignored
   await v.goto(B + '/ar/cdp?dept=3');
-  assert.match(await v.textContent('[data-testid=in-view]'), /137/);
+  assert.match(await v.textContent('[data-testid=in-view]'), /135/);
   log('viewer: no raw data in HTML, small department locked, admin pages blocked');
 
   // management PDF export
@@ -179,7 +179,7 @@ const log = (...a) => console.log('✔', ...a);
   const rhtml = await v.content();
   for (const secret of ['Test Alpha', 'Respondent Fake', 'respondent001@example.com', '99123456', 'Demo Charlie']) assert.ok(!rhtml.includes(secret), 'report leaks ' + secret);
   const meta = await v.textContent('[data-testid=report-meta]');
-  assert.ok(meta.includes('Network and Facilities Operations') && meta.includes('102') && meta.includes('cdp-synthetic-137.xlsx'));
+  assert.ok(meta.includes('Network and Facilities Operations') && meta.includes('100') && meta.includes('cdp-synthetic-135.xlsx'));
   await v.emulateMedia({ media: 'print' });
   await v.pdf({ path: SHOTS + '/report-ar.pdf', format: 'A4', printBackground: true });
   // admin's export is also management-level
@@ -216,7 +216,7 @@ const log = (...a) => console.log('✔', ...a);
   log('missing column notice + blank count shown');
   // restore the full file
   await page.goto(B + '/ar/admin/cdp');
-  const prev = page.locator('[data-testid=dataset]').filter({ hasText: 'cdp-synthetic-137.xlsx' }).first();
+  const prev = page.locator('[data-testid=dataset]').filter({ hasText: 'cdp-synthetic-135.xlsx' }).first();
   if (!(await prev.evaluate((e) => e.open))) await prev.locator(':scope > summary').click();
   page.once('dialog', (d) => d.accept());
   await prev.locator('button:has-text("نشر")').click();

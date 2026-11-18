@@ -315,3 +315,11 @@ model SurveyNameRule {
   updatedById String?
   updatedAt   DateTime @updatedAt
 }
+
+/// Small settings of the CDP results platform (e.g. whether the thanks board is shown to every signed-in user).
+model SurveySetting {
+  key         String   @id
+  value       Json
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}

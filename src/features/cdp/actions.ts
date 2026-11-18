@@ -111,3 +111,17 @@ export async function setNameRuleAction(key: string, rule: { mergeInto?: string 
   revalidatePath("/[locale]/cdp", "layout");
   return { ok: true, at: Date.now() };
 }
+
+/** Show the thanks board to every signed-in user (management included), or to authorised users only. Admins only. */
+export async function setThanksBoardPublicAction(isPublic: boolean): Promise<UploadState> {
+  const me = await requireUser("ADMIN");
+  const value = !!isPublic;
+  await db.surveySetting.upsert({
+    where: { key: "thanksBoardPublic" },
+    create: { key: "thanksBoardPublic", value, updatedById: me.id },
+    update: { value, updatedById: me.id },
+  });
+  await audit({ userId: me.id, action: "cdp.thanks_board", entity: "surveySetting", entityId: "thanksBoardPublic", after: { public: value } });
+  revalidatePath("/[locale]/cdp", "layout");
+  return { ok: true, at: Date.now() };
+}

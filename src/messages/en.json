@@ -716,6 +716,22 @@
     "peopleRestore": "Restore",
     "peopleMergedN": "{n} merged in",
     "namesAsWritten": "Name answers as written ({n})",
-    "thanksRestricted": "Answers: {n}. Thanks messages contain names, so they are shown to authorised users only."
+    "thanksRestricted": "Answers: {n}. Thanks messages contain names, so they are shown to authorised users only.",
+    "boardTitle": "Thanks & Recognition Board",
+    "boardIntro": "Thank you to everyone who helped and supported their colleagues on their development journey during the CDP 2026 programme — from Omantel and the Huawei OMS team.",
+    "boardBasis": "Based on what {n} participants wrote in the programme evaluation",
+    "boardFeatured": "Most named by colleagues",
+    "boardFeaturedNote": "People named by more than one participant as supporting their development.",
+    "boardMentions": "named by {n} colleagues",
+    "boardAlsoThanks": "Thank you also to",
+    "boardFooter": "Omantel · Career Development Programme 2026",
+    "boardPublic": "Published to all platform users",
+    "boardPrivate": "Visible to authorised users only",
+    "boardPublish": "Publish the board to all platform users",
+    "boardUnpublish": "Hide the board from non-authorised users",
+    "boardConfirmPublish": "Publish the thanks board to every platform user? Names will be visible to management too.",
+    "boardNotPublished": "The thanks board has not been published yet.",
+    "boardOpen": "Open the thanks & recognition board",
+    "backToResults": "Back to results"
   }
 }

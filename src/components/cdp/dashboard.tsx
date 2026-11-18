@@ -2,10 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Award, FileDown, Filter, Lock, MonitorPlay, RotateCcw, Users, X } from "lucide-react";
+import { Award, FileDown, Heart, Filter, Lock, MonitorPlay, RotateCcw, Users, X } from "lucide-react";
 import { QUESTIONS, SATISFACTION_QUESTIONS, TABS, type TabId } from "@/features/cdp/config";
 import type { DashboardView } from "@/features/cdp/data";
 import { cn } from "@/lib/utils";
+import { Link } from "@/i18n/navigation";
 import { CommentsBlock } from "./comments";
 import { PeopleRecognition } from "./people";
 import { QuestionCard } from "./question-card";
@@ -67,6 +68,12 @@ export function CdpDashboard({ view, initial, adminBar }: Props) {
           <FileDown className="size-4" aria-hidden="true" />
           {t("exportPdf")}
         </a>
+        {view.thanksBoard && (
+          <Link href="/cdp/thanks" className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-medium text-navy hover:border-amber-500">
+            <Heart className="size-4 text-amber-600" aria-hidden="true" />
+            {t("boardTitle")}
+          </Link>
+        )}
         {!present && adminBar}
       </div>
 
@@ -278,6 +285,12 @@ function Thanks({ view, dept, present }: { view: DashboardView; dept: number | n
         {t("thanksTitle")}
       </h2>
       <p className="mt-1 text-sm text-muted">{t("thanksNote")}</p>
+      {view.thanksBoard && (
+        <Link href="/cdp/thanks" className="mt-4 inline-flex items-center gap-2 rounded-full bg-amber-500 px-5 py-2.5 text-sm font-semibold text-navy shadow-sm hover:bg-amber-400" data-testid="board-link">
+          <Heart className="size-4" aria-hidden="true" />
+          {t("boardOpen")}
+        </Link>
+      )}
 
       <div className="mt-5 space-y-4">
         {view.missing.includes(nameQ.id) ? (
