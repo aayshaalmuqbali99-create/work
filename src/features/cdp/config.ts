@@ -154,6 +154,14 @@ export const SATISFACTION_QUESTIONS = QUESTIONS.filter((q) => q.kind === "satisf
 /** Department / operational area column. */
 export const DEPARTMENT_MATCH = ["department", "operational area", "operational domain", "section", "division", "القسم", "المجال التشغيلي", "الدائره"];
 
+/**
+ * Display names for departments whose name in the Excel file should read differently on the platform.
+ * Key = name as written in the file (spaces/case ignored), value = name shown everywhere (dashboard, filter, PDF).
+ */
+export const DEPARTMENT_LABELS: Record<string, string> = {
+  Electrotechnical: "Electromechanical",
+};
+
 /** Columns that identify the respondent. They are never stored. */
 export const IDENTITY_MATCH = ["name", "email", "e-mail", "employee id", "employee number", "staff id", "staff number", "الاسم", "البريد", "الرقم الوظيفي"];
 /** Columns of a Microsoft Forms export that are not questions; dropped on import. */

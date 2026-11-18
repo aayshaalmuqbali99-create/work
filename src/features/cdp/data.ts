@@ -1,9 +1,14 @@
 import "server-only";
 import { db } from "@/lib/db";
 import type { SessionUser } from "@/lib/auth/session";
-import { CLOSED_KINDS, MIN_GROUP_SIZE, QUESTIONS, THEMES } from "./config";
+import { CLOSED_KINDS, DEPARTMENT_LABELS, MIN_GROUP_SIZE, QUESTIONS, THEMES } from "./config";
+import { normalize } from "./text";
 import { aggregate, type Counts, type Dataset, type ImportReport } from "./parse";
 import { applyRules, extractNames, groupPeople, type PersonView } from "./people";
+
+const LABELS = new Map(Object.entries(DEPARTMENT_LABELS).map(([k, v]) => [normalize(k), v]));
+/** Department name as shown on the platform (see DEPARTMENT_LABELS). */
+export const departmentLabel = (name: string) => LABELS.get(normalize(name)) ?? name;
 
 export async function getUserCdpRaw(user: SessionUser) {
   if (user.role === "ADMIN") return true;
@@ -57,7 +62,7 @@ export async function getDashboard(user: SessionUser, opts: { management?: boole
 
   const departments = ds.departments.map((d) => {
     const small = d.count < MIN_GROUP_SIZE;
-    return { name: d.name || "—", count: d.count, small, selectable: raw || !small };
+    return { name: departmentLabel(d.name) || "—", count: d.count, small, selectable: raw || !small };
   });
   const counts: DashboardView["counts"] = { all: aggregate(ds, null) };
   departments.forEach((d, i) => {

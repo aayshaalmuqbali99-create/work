@@ -51,6 +51,7 @@ entries). Visible to authorised users; an admin can press **Publish the board to
 management viewers too (and hide it again). Links: the results toolbar and the Thanks & recognition section.
 
 ## Editing definitions and texts
+- Department display names (e.g. Electrotechnical in the file → Electromechanical on screen): `DEPARTMENT_LABELS` in `src/features/cdp/config.ts`.
 - Questions, tab order, header match phrases, theme keywords, answer synonyms, “no comment” words, privacy
   threshold and reference counts: `src/features/cdp/config.ts`.
 - Interface texts: `src/messages/ar.json` / `en.json` → `"Cdp"`.
