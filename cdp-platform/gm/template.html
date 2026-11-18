@@ -359,7 +359,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
       sgCount: "عرض {a} من {b} اقتراحًا", sgMore: "عرض المزيد ({n})", sgOther: "موضوعات أخرى", sgNone: "لا توجد اقتراحات مطابقة."
     }
   };
-  var AREA_AR = { "network and facilities operations": "عمليات الشبكات والمرافق", "facility operation": "تشغيل المرافق", electrotechnical: "الأعمال الكهروتقنية", "physical security": "الأمن المادي" };
+  var AREA_AR = { "network and facilities operations": "عمليات الشبكات والمرافق", "facility operation": "تشغيل المرافق", electrotechnical: "الأعمال الكهروميكانيكية", electromechanical: "الأعمال الكهروميكانيكية", "physical security": "الأمن المادي" };
   var LANG = "en";
   try { LANG = new URLSearchParams(location.search).get("lang") || localStorage.getItem("gm-lang") || "en"; } catch (e) {}
   if (LANG !== "ar") LANG = "en";

@@ -4,7 +4,7 @@
  * their training, with how many participants named each. No respondent names, comments or individual responses.
  */
 import { importWorkbook, aggregate, type Counts } from "../src/features/cdp/parse";
-import { QUESTIONS, CLOSED_KINDS, THEMES, type TabId } from "../src/features/cdp/config";
+import { QUESTIONS, CLOSED_KINDS, THEMES, DEPARTMENT_LABELS, type TabId } from "../src/features/cdp/config";
 import { normalize } from "../src/features/cdp/text";
 import { extractNames, groupPeople } from "../src/features/cdp/people";
 
@@ -51,7 +51,11 @@ const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string; textAr: 
   return {
     title: "CDP 2026 Training Evaluation",
     source: { fileName, responses: total, excludedTests },
-    departments: dataset.departments.map((d) => ({ name: d.name, count: d.count })),
+    // Display names from DEPARTMENT_LABELS (e.g. "Electrotechnical" in the file is shown as "Electromechanical").
+    departments: dataset.departments.map((d) => {
+      const label = Object.entries(DEPARTMENT_LABELS).find(([k]) => normalize(k) === normalize(d.name))?.[1];
+      return { name: label ?? d.name, count: d.count };
+    }),
     programmes: PROGRAMMES.map((p) => {
       const qs = QUESTIONS.filter((q) => q.tab === p.id && CLOSED_KINDS.includes(q.kind));
       const sat = qs.find((q) => q.kind === "satisfaction")!;
