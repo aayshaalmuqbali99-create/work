@@ -1,0 +1,110 @@
+import "server-only";
+import { db } from "@/lib/db";
+import type { SessionUser } from "@/lib/auth/session";
+import { CLOSED_KINDS, MIN_GROUP_SIZE, QUESTIONS, THEMES } from "./config";
+import { aggregate, type Counts, type Dataset, type ImportReport } from "./parse";
+
+
+export async function getUserCdpRaw(user: SessionUser) {
+  if (user.role === "ADMIN") return true;
+  const row = await db.user.findUnique({ where: { id: user.id }, select: { cdpRaw: true } });
+  return !!row?.cdpRaw;
+}
+
+export type CommentView = {
+  id: string;
+  key: string;
+  q: string;
+  /** Department index, or -1 when hidden (small department) / not specified. */
+  d: number;
+  text: string; // identifying details removed (management view)
+  raw?: string; // original — only present for authorised users
+  themes: string[];
+  manual: boolean;
+};
+
+export type DashboardView = {
+  meta: { fileName: string; activatedAt: string; uploadedBy: string; total: number };
+  departments: { name: string; count: number; small: boolean; selectable: boolean }[];
+  /** Counts per closed question; "all" plus one entry per selectable department index. */
+  counts: Record<string, Record<string, Counts>>;
+  questions: Record<string, { header: string | null; column: string | null; matchedBy: string | null }>;
+  comments: CommentView[];
+  placeholders: Record<string, number>;
+  thanksCounts: Record<string, number>;
+  names: { id: string; d: number; text: string }[] | null; // null = not authorised
+  raw: boolean;
+  minGroup: number;
+  missing: string[];
+};
+
+/**
+ * Builds exactly what the signed-in user may see. Everything is computed on the server:
+ * management users never receive original comments, supporter names or per-department results of small departments.
+ */
+export async function getDashboard(user: SessionUser, opts: { management?: boolean } = {}): Promise<DashboardView | null> {
+  const row = await db.surveyDataset.findFirst({ where: { status: "ACTIVE" }, orderBy: { activatedAt: "desc" } });
+  if (!row) return null;
+  const ds = row.data as unknown as Dataset;
+  // The management export is always built at management level, whoever asks for it.
+  const raw = opts.management ? false : await getUserCdpRaw(user);
+
+  const departments = ds.departments.map((d) => {
+    const small = d.count < MIN_GROUP_SIZE;
+    return { name: d.name || "—", count: d.count, small, selectable: raw || !small };
+  });
+  const counts: DashboardView["counts"] = { all: aggregate(ds, null) };
+  departments.forEach((d, i) => {
+    if (d.selectable) counts[String(i)] = aggregate(ds, [i]);
+  });
+
+  const tags = await db.surveyThemeTag.findMany({ where: { key: { in: ds.texts.map((t) => t.key) } } });
+  const tagMap = new Map(tags.map((t) => [t.key, t.themes]));
+  const validThemes = new Set(THEMES.map((t) => t.id));
+  const comments: CommentView[] = ds.texts
+    .filter((t) => QUESTIONS.find((q) => q.id === t.q)?.kind !== "names")
+    .map((t) => {
+      const manual = tagMap.get(t.key);
+      const hide = !raw && (departments[t.d]?.small ?? false);
+      return {
+        id: t.id,
+        key: t.key,
+        q: t.q,
+        d: hide ? -1 : t.d,
+        text: t.red,
+        ...(raw ? { raw: t.raw } : {}),
+        themes: (manual ?? t.auto).filter((x) => validThemes.has(x)),
+        manual: !!manual,
+      };
+    });
+
+  const thanksCounts: Record<string, number> = {};
+  for (const t of ds.texts) thanksCounts[t.q] = (thanksCounts[t.q] ?? 0) + 1;
+  const names = raw
+    ? ds.texts.filter((t) => QUESTIONS.find((q) => q.id === t.q)?.kind === "names").map((t) => ({ id: t.id, d: t.d, text: t.raw }))
+    : null;
+
+  return {
+    meta: { fileName: row.fileName, activatedAt: (row.activatedAt ?? row.createdAt).toISOString(), uploadedBy: row.uploadedBy, total: ds.responses.length },
+    departments,
+    counts,
+    questions: ds.questions,
+    comments,
+    placeholders: ds.placeholders,
+    thanksCounts,
+    names,
+    raw,
+    minGroup: MIN_GROUP_SIZE,
+    missing: QUESTIONS.filter((q) => !ds.questions[q.id]?.column).map((q) => q.id),
+  };
+}
+
+export async function listDatasets() {
+  return db.surveyDataset.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 20,
+    select: { id: true, status: true, fileName: true, fileSize: true, rowCount: true, report: true, uploadedBy: true, activatedAt: true, createdAt: true },
+  }) as Promise<{ id: string; status: string; fileName: string; fileSize: number; rowCount: number; report: ImportReport; uploadedBy: string; activatedAt: Date | null; createdAt: Date }[]>;
+}
+
+export const closedQuestionIds = QUESTIONS.filter((q) => CLOSED_KINDS.includes(q.kind)).map((q) => q.id);

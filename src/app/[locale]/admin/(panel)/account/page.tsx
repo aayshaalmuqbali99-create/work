@@ -7,7 +7,7 @@ import { Card } from "@/components/admin/ui";
 export default async function AccountPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const user = await requirePageUser();
+  const user = await requirePageUser({ allowViewer: true });
   const t = await getTranslations("Admin");
   return (
     <div className="space-y-5">

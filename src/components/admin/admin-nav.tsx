@@ -2,7 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { ClipboardCheck, Cpu, History, Inbox, LayoutDashboard, Palette, UserCog, Users } from "lucide-react";
+import { BarChart3, ClipboardCheck, Cpu, FileSpreadsheet, History, Inbox, LayoutDashboard, Palette, UserCog, Users } from "lucide-react";
+import type { Role } from "@prisma/client";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
@@ -12,18 +13,21 @@ const items = [
   { href: "/admin/devices?status=REVIEW", key: "navReview", icon: ClipboardCheck },
   { href: "/admin/requests", key: "navRequests", icon: Inbox },
   { href: "/admin/activity", key: "navActivity", icon: History },
+  { href: "/cdp", key: "navCdp", icon: BarChart3, viewer: true },
+  { href: "/admin/cdp", key: "navCdpData", icon: FileSpreadsheet, adminOnly: true },
   { href: "/admin/site", key: "navSite", icon: Palette, adminOnly: true },
   { href: "/admin/users", key: "navUsers", icon: Users, adminOnly: true },
-  { href: "/admin/account", key: "navAccount", icon: UserCog },
+  { href: "/admin/account", key: "navAccount", icon: UserCog, viewer: true },
 ] as const;
 
-export function AdminNav({ reviewCount, isAdmin }: { reviewCount: number; isAdmin: boolean }) {
+export function AdminNav({ reviewCount, role }: { reviewCount: number; role: Role }) {
+  const isAdmin = role === "ADMIN";
   const t = useTranslations("Admin");
   const pathname = usePathname();
   const isReview = useSearchParams().get("status") === "REVIEW";
   return (
     <nav aria-label={t("title")} className="flex gap-1 overflow-x-auto lg:flex-col">
-      {items.filter((i) => isAdmin || !("adminOnly" in i)).map(({ href, key, icon: Icon, ...rest }) => {
+      {items.filter((i) => (role === "VIEWER" ? "viewer" in i : isAdmin || !("adminOnly" in i))).map(({ href, key, icon: Icon, ...rest }) => {
         const base = href.split("?")[0];
         const active =
           "exact" in rest
@@ -32,7 +36,9 @@ export function AdminNav({ reviewCount, isAdmin }: { reviewCount: number; isAdmi
               ? pathname === base && isReview
               : key === "navDevices"
                 ? pathname.startsWith(base) && !isReview
-                : pathname.startsWith(base);
+                : base === "/cdp"
+                  ? pathname === base
+                  : pathname.startsWith(base);
         return (
           <Link
             key={href}

@@ -4,7 +4,7 @@ import { startTransition, useActionState, useState, useTransition } from "react"
 import { useTranslations } from "next-intl";
 import { KeyRound, UserPlus } from "lucide-react";
 import type { Role } from "@prisma/client";
-import { createUserAction, resetUserPasswordAction, setUserActiveAction, setUserRoleAction } from "@/features/admin/user-actions";
+import { createUserAction, resetUserPasswordAction, setUserActiveAction, setUserCdpRawAction, setUserRoleAction } from "@/features/admin/user-actions";
 import type { FormState } from "@/features/admin/schemas";
 import { btnDanger, btnPrimary, btnSecondary, Field, inputCls } from "./ui";
 
@@ -32,8 +32,13 @@ export function NewUserForm() {
         <select id="u-role" name="role" defaultValue="EDITOR" className={inputCls}>
           <option value="EDITOR">{t("role_EDITOR")}</option>
           <option value="ADMIN">{t("role_ADMIN")}</option>
+          <option value="VIEWER">{t("role_VIEWER")}</option>
         </select>
       </Field>
+      <label className="flex items-start gap-2 text-sm text-navy md:col-span-2">
+        <input type="checkbox" name="cdpRaw" className="mt-1 size-4 accent-teal" />
+        <span>{t("cdpRawLabel")}<span className="block text-xs text-muted">{t("cdpRawHelp")}</span></span>
+      </label>
       <Field label={t("tempPassword")} htmlFor="u-password" help={t("tempPasswordHelp")} error={err("password")}>
         <input id="u-password" name="password" type="text" required minLength={12} autoComplete="off" dir="ltr" className={`${inputCls} font-mono`} aria-invalid={!!err("password")} />
       </Field>
@@ -45,7 +50,7 @@ export function NewUserForm() {
   );
 }
 
-export function UserRowActions({ id, role, active, isSelf }: { id: string; role: Role; active: boolean; isSelf: boolean }) {
+export function UserRowActions({ id, role, active, cdpRaw, isSelf }: { id: string; role: Role; active: boolean; cdpRaw: boolean; isSelf: boolean }) {
   const t = useTranslations("Admin");
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -60,9 +65,21 @@ export function UserRowActions({ id, role, active, isSelf }: { id: string; role:
   return (
     <div className="space-y-2">
       <div className="flex flex-wrap gap-1.5">
-        <button type="button" disabled={pending} className={btnSecondary} onClick={() => run(() => setUserRoleAction(id, role === "ADMIN" ? "EDITOR" : "ADMIN"))}>
-          {role === "ADMIN" ? t("makeEditor") : t("makeAdmin")}
-        </button>
+        <select
+          aria-label={t("role")}
+          value={role}
+          disabled={pending}
+          onChange={(e) => run(() => setUserRoleAction(id, e.target.value as Role))}
+          className="rounded-full border border-line bg-surface px-3 py-2 text-sm text-navy"
+        >
+          {(["ADMIN", "EDITOR", "VIEWER"] as const).map((r) => <option key={r} value={r}>{t(`role_${r}`)}</option>)}
+        </select>
+        {role !== "ADMIN" && (
+          <label className="inline-flex items-center gap-2 rounded-full border border-line px-3 py-2 text-sm text-navy">
+            <input type="checkbox" checked={cdpRaw} disabled={pending} onChange={(e) => run(() => setUserCdpRawAction(id, e.target.checked))} className="size-4 accent-teal" />
+            {t("cdpRawShort")}
+          </label>
+        )}
         {active ? (
           <button type="button" disabled={pending} className={btnDanger} onClick={() => window.confirm(t("confirmDisable")) && run(() => setUserActiveAction(id, false))}>{t("disable")}</button>
         ) : (
