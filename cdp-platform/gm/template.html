@@ -123,9 +123,9 @@ section{margin-bottom:40px}
 .prios{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .prios li{padding:14px 16px;border-radius:12px;background:var(--white);border:1px solid var(--line);font-size:.9rem;color:var(--ink-2)}
 .prios b{display:block;color:var(--ink);font-size:1.4rem}
-.thanks{padding:28px}
-.thanks-intro{display:flex;gap:16px;align-items:center}.thanks-intro p{margin:0;font-size:1.05rem;color:var(--ink-2)}
-.ico.heart{background:#FFF1E5;color:var(--orange);width:52px;height:52px;flex-shrink:0}
+.contrib{padding:28px}
+.contrib-intro{display:flex;gap:16px;align-items:center}.contrib-intro p{margin:0;font-size:1.05rem;color:var(--ink-2)}
+.ico.people{background:var(--lav);color:var(--blue);width:52px;height:52px;flex-shrink:0}
 .ranked{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 24px}
 .ranked li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:center;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
 .ranked .rk{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--lav);color:var(--blue);font-weight:800;font-variant-numeric:tabular-nums}
@@ -220,7 +220,7 @@ body.present .row{grid-template-columns:240px 1fr 28px}
     <nav aria-label="Sections">
       <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg>Overview</a>
       <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>Programme Details</a>
-      <a href="#recognition" data-nav="recognition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg>Recognition</a>
+      <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg>Training Contributors</a>
       <a href="#priorities" data-nav="priorities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>Improvement Priorities</a>
     </nav>
     <p class="meta" id="side-meta"></p>
@@ -238,12 +238,12 @@ body.present .row{grid-template-columns:240px 1fr 28px}
       <div class="sec-h"><h2 id="pg-h">Programme Details</h2><p>Select a programme to see results for each question.</p></div>
       <div class="progs" id="progs"></div>
     </section>
-    <section id="recognition" aria-labelledby="rc-h">
-      <div class="sec-h"><h2 id="rc-h">Thank You — Colleagues Who Supported Training</h2><p id="rc-sub"></p></div>
-      <div class="card thanks">
-        <div class="thanks-intro"><span class="ico heart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg></span>
-          <p>Omantel and Huawei OMS colleagues named by participants as having supported their training and development during CDP 2026, ranked from most to least mentioned.</p></div>
-        <h3 class="panel-h" style="margin-top:22px">Most mentioned</h3>
+    <section id="contributors" aria-labelledby="rc-h">
+      <div class="sec-h"><h2 id="rc-h">Training Contributors</h2><p id="rc-sub"></p></div>
+      <div class="card contrib">
+        <div class="contrib-intro"><span class="ico people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg></span>
+          <p>Omantel and Huawei OMS staff who contributed to the training process during CDP 2026, as identified by participants. Ranked by the number of participants who named each person.</p></div>
+        <h3 class="panel-h" style="margin-top:22px">Named by more than one participant</h3>
         <ol class="ranked" id="ranked"></ol>
         <h3 class="panel-h" style="margin-top:26px" id="also-h"></h3>
         <ul class="also" id="also"></ul>
@@ -338,15 +338,15 @@ body.present .row{grid-template-columns:240px 1fr 28px}
     return '<button class="card prog rise" style="--i:' + i + '" data-open="' + p.id + '"><span class="top"><h3>' + esc(p.title) + '</h3><span class="expand">' + svg("expand") + '</span></span><p class="head"><b>' + pct(p.headline.count, N) + "</b> (" + nf.format(p.headline.count) + " of " + nf.format(N) + ") " + esc(p.headline.text) + "</p>" + sbar(p.satisfaction, p.title + " overall satisfaction", false) + '<span class="foot"><span>' + nq + " questions · overall satisfaction shown</span><span>View details</span></span></button>";
   }).join("");
 
-  // ── recognition (ranked, most mentioned first) ──
+  // ── training contributors (ranked, most named first) ──
   var R = D.recognition, ppl = R.people;
   var rep = ppl.filter(function (p) { return p.count > 1; }), once = ppl.filter(function (p) { return p.count === 1; });
   var maxC = rep.length ? rep[0].count : 1;
-  $("rc-sub").textContent = nf.format(ppl.length) + " people named by " + nf.format(R.respondents) + " participants";
+  $("rc-sub").textContent = nf.format(ppl.length) + " contributors identified by " + nf.format(R.respondents) + " participants";
   $("ranked").innerHTML = rep.map(function (p, i) {
-    return '<li><span class="rk">' + (i + 1) + '</span><span class="nm" title="' + esc(p.name) + '">' + esc(p.name) + '</span><span class="ct"><b>' + nf.format(p.count) + "</b>mentions</span>" + '<span class="bar"><span class="grow" style="width:' + (p.count / maxC) * 100 + "%;--i:" + Math.min(i, 8) + '"></span></span></li>';
+    return '<li><span class="rk">' + (i + 1) + '</span><span class="nm" title="' + esc(p.name) + '">' + esc(p.name) + '</span><span class="ct"><b>' + nf.format(p.count) + "</b>" + (p.count === 1 ? "participant" : "participants") + "</span>" + '<span class="bar"><span class="grow" style="width:' + (p.count / maxC) * 100 + "%;--i:" + Math.min(i, 8) + '"></span></span></li>';
   }).join("");
-  $("also-h").textContent = "Also thanked (" + nf.format(once.length) + ")";
+  $("also-h").textContent = "Named by one participant (" + nf.format(once.length) + ")";
   $("also").innerHTML = once.map(function (p) { return '<li dir="auto">' + esc(p.name) + "</li>"; }).join("");
 
   // ── priorities & footer ──
@@ -445,7 +445,7 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   var io = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === en.target.id ? "true" : "false"); }); });
   }, { rootMargin: "-30% 0px -60% 0px" });
-  ["overview", "programmes", "recognition", "priorities"].forEach(function (id) { io.observe($(id)); });
+  ["overview", "programmes", "contributors", "priorities"].forEach(function (id) { io.observe($(id)); });
   function markNav(id) { links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === id ? "true" : "false"); }); }
   addEventListener("scroll", function () { if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) markNav("priorities"); }, { passive: true });
   links.forEach(function (a) { a.addEventListener("click", function () { setTimeout(function () { markNav(a.dataset.nav); }, 700); }); });
