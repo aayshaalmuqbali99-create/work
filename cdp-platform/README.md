@@ -100,7 +100,11 @@ node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1   # → 
 English, presentation-ready: overview doughnut and 100% stacked bars, three findings, question-level detail panels
 for the four programmes, the proposed management action, presentation mode (full screen). Every number comes from
 one data model computed from the workbook; the build stops if the departments or any programme row do not add up
-to the number of responses. Aggregated counts only — no names, comments or individual responses.
+to the number of responses. Aggregated counts, plus a **Recognition** section: the colleagues participants thanked
+for supporting their training, ranked by number of mentions (no respondent names, comments or individual responses —
+the file does contain the thanked names, so share it accordingly). Spellings of the same person are grouped
+automatically; confirm remaining duplicates with `--names corrections.json`
+(`{"merge": {"Aaisha": "Aisha almaqbali"}, "rename": {}, "hide": []}`), kept outside the repository.
 `--excluded` is the number of test submissions removed from the file (used in the footer). Layout and texts:
 `gm/template.html`; findings and headlines: `gm/data-entry.ts`.
 

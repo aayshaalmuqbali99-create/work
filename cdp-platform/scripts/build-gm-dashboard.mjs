@@ -1,7 +1,7 @@
 // Builds the General Manager dashboard (single self-contained HTML file) from the survey workbook.
-//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--out dist/cdp-2026-gm-dashboard.html]
-// Every number on the page comes from one data model computed here from the workbook (aggregated counts only:
-// no names, comments or individual responses). --excluded is the number of test submissions removed from the file
+//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--out dist/cdp-2026-gm-dashboard.html]
+// Every number on the page comes from one data model computed here from the workbook: aggregated counts, plus the
+// names participants thanked for supporting their training (no respondent names, comments or individual responses). --excluded is the number of test submissions removed from the file
 // (it only feeds the footer sentence).
 import { build } from "esbuild";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
@@ -31,6 +31,26 @@ const sandbox = { TextDecoder, Uint8Array, Intl, Date, console };
 vm.createContext(sandbox);
 vm.runInContext(code, sandbox);
 const data = JSON.parse(JSON.stringify(sandbox.GM_DATA(new Uint8Array(readFileSync(xlsx)), path.basename(xlsx), excluded)));
+
+// Optional name corrections for the recognition list (kept outside the repository: it contains names).
+//   --names corrections.json   { "merge": { "Aaisha": "Aisha almaqbali" }, "rename": { "Azib": "Azib (Huawei OMS)" }, "hide": ["Ibrahim"] }
+// "merge" adds the first entry's mentions to the second (a participant who wrote both spellings would be counted twice).
+const namesFile = opt("names", null);
+if (namesFile) {
+  const fix = JSON.parse(readFileSync(namesFile, "utf8"));
+  const list = data.recognition.people;
+  const find = (n) => list.find((p) => p.name.trim().toLowerCase() === String(n).trim().toLowerCase());
+  for (const [from, to] of Object.entries(fix.merge ?? {})) {
+    const a = find(from), b = find(to);
+    if (!a || !b) { console.warn(`  name merge skipped (not found): ${from} → ${to}`); continue; }
+    b.count += a.count;
+    list.splice(list.indexOf(a), 1);
+  }
+  for (const [from, to] of Object.entries(fix.rename ?? {})) { const a = find(from); if (a) a.name = to; else console.warn(`  rename skipped: ${from}`); }
+  for (const n of fix.hide ?? []) { const a = find(n); if (a) list.splice(list.indexOf(a), 1); else console.warn(`  hide skipped: ${n}`); }
+  list.sort((x, y) => y.count - x.count || x.name.localeCompare(y.name));
+  console.log(`Name corrections applied from ${path.basename(namesFile)}`);
+}
 
 // Integrity checks: departments and every programme row must add up to the number of responses.
 const N = data.source.responses;

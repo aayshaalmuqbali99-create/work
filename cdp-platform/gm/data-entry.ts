@@ -1,9 +1,11 @@
 /**
  * Builds the single data model of the GM dashboard from the survey workbook.
- * Only aggregated counts leave this file: no names, comments or individual responses.
+ * Aggregated counts only, plus (at the owner's request) the names of the people participants thanked for supporting
+ * their training, with how many participants named each. No respondent names, comments or individual responses.
  */
 import { importWorkbook, aggregate, type Counts } from "../src/features/cdp/parse";
 import { QUESTIONS, CLOSED_KINDS, type TabId } from "../src/features/cdp/config";
+import { extractNames, groupPeople } from "../src/features/cdp/people";
 
 type Opt = "y" | "p" | "n";
 const PROGRAMMES: { id: TabId; title: string; featured: { id: string; title: string }[] }[] = [
@@ -62,6 +64,15 @@ const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string }> = {
       };
     }),
     insights: INSIGHTS.map((i) => ({ ...i, count: sum(i.q, i.opts) })),
+    recognition: (() => {
+      const nameQ = QUESTIONS.find((q) => q.kind === "names")!.id;
+      const answers = dataset.texts.filter((t) => t.q === nameQ);
+      const people = groupPeople(answers.map((t) => ({ row: Number(t.id.split("-").pop()), d: t.d, text: t.raw })));
+      return {
+        respondents: answers.filter((t) => extractNames(t.raw).length > 0).length,
+        people: people.map((p) => ({ name: p.label, count: p.mentions })), // most named first
+      };
+    })(),
     action: "Assign a programme lead to align training with job requirements, schedule supervised practice and verify training delivery against AGIOPS records.",
   };
 };
