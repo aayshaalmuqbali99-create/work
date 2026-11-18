@@ -93,6 +93,17 @@ npm run build:html -- path/to/responses.xlsx    # also dist/cdp-results-report.h
   individual responses), comments with identifying details removed, no names of supporters, no thanks messages,
   small departments only within the overall results. Generated files are not committed (`dist/` is ignored).
 
+## General Manager dashboard (single HTML file)
+```bash
+node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1   # → dist/cdp-2026-gm-dashboard.html
+```
+English, presentation-ready: overview doughnut and 100% stacked bars, three findings, question-level detail panels
+for the four programmes, the proposed management action, presentation mode (full screen). Every number comes from
+one data model computed from the workbook; the build stops if the departments or any programme row do not add up
+to the number of responses. Aggregated counts only — no names, comments or individual responses.
+`--excluded` is the number of test submissions removed from the file (used in the footer). Layout and texts:
+`gm/template.html`; findings and headlines: `gm/data-entry.ts`.
+
 ## Tests
 ```bash
 npm test                                             # parser, mapping, counts, redaction, names (synthetic fixture)
