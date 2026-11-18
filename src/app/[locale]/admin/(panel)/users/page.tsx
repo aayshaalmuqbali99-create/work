@@ -12,7 +12,7 @@ export default async function UsersPage({ params }: { params: Promise<{ locale: 
   const me = await requirePageUser();
   if (me.role !== "ADMIN") redirect({ href: "/admin", locale: await getLocale() });
   const t = await getTranslations("Admin");
-  const users = await db.user.findMany({ orderBy: [{ active: "desc" }, { createdAt: "asc" }], select: { id: true, name: true, email: true, role: true, active: true, cdpRaw: true, lastLoginAt: true } });
+  const users = await db.user.findMany({ orderBy: [{ active: "desc" }, { createdAt: "asc" }], select: { id: true, name: true, email: true, role: true, active: true, lastLoginAt: true } });
   const fmt = new Intl.DateTimeFormat(locale === "ar" ? "ar-OM-u-nu-latn" : "en-GB", { dateStyle: "medium", timeStyle: "short" });
   return (
     <div className="space-y-5">
@@ -28,11 +28,10 @@ export default async function UsersPage({ params }: { params: Promise<{ locale: 
                 <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted">
                   <StatusBadge status={u.role === "ADMIN" ? "PUBLISHED" : "DRAFT"} label={t(`role_${u.role}`)} />
                   {!u.active && <StatusBadge status="ARCHIVED" label={t("inactive")} />}
-                  {(u.cdpRaw || u.role === "ADMIN") && <StatusBadge status="REVIEW" label={t("cdpRawShort")} />}
                   <span>{t("lastLogin")}: {u.lastLoginAt ? fmt.format(u.lastLoginAt) : t("never")}</span>
                 </div>
               </div>
-              <UserRowActions id={u.id} role={u.role} active={u.active} cdpRaw={u.cdpRaw} isSelf={u.id === me.id} />
+              <UserRowActions id={u.id} role={u.role} active={u.active} isSelf={u.id === me.id} />
             </li>
           ))}
         </ul>

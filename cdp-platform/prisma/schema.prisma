@@ -1,0 +1,123 @@
+// Omantel | CDP Programme Evaluation 2026 — results platform (standalone database).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN // uploads data, manages users, always sees original comments and names
+  VIEWER // management: aggregated results; original data only when cdpRaw is granted
+}
+
+enum SurveyStatus {
+  PENDING // uploaded and validated, waiting for an admin to publish it
+  ACTIVE // the dataset shown on the results dashboard (at most one)
+  ARCHIVED // replaced by a newer file
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  passwordHash String
+  role         Role       @default(VIEWER)
+  active       Boolean    @default(true)
+  /// May read original survey comments and the names in "thanks & recognition". Admins always may.
+  cdpRaw       Boolean    @default(false)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  sessions     Session[]
+  auditLogs    AuditLog[]
+}
+
+/// Server-side session. Only a SHA-256 hash of the cookie token is stored.
+model Session {
+  id        String   @id // sha256(token)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  ip        String?
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String?
+  before    Json?
+  after     Json?
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+/// Fixed-window rate limiting shared by every server instance (login attempts etc.).
+model RateLimit {
+  key     String   @id
+  count   Int
+  resetAt DateTime
+
+  @@index([resetAt])
+}
+
+/// One uploaded CDP evaluation workbook, parsed and validated.
+/// Respondent names, e-mails and employee numbers are dropped during import and never stored;
+/// the original file is not kept.
+model SurveyDataset {
+  id           String       @id @default(cuid())
+  status       SurveyStatus @default(PENDING)
+  fileName     String
+  fileSize     Int
+  rowCount     Int
+  /// Validation report shown before publishing (mapping, warnings, reference checks).
+  report       Json
+  /// Parsed responses: departments, answers per question, comments (original + redacted).
+  data         Json
+  uploadedById String?
+  uploadedBy   String       @default("")
+  activatedAt  DateTime?
+  createdAt    DateTime     @default(now())
+
+  @@index([status, createdAt])
+}
+
+/// Manual theme tags for a comment, keyed by a hash of question + normalised text so they carry over to newer files.
+model SurveyThemeTag {
+  key         String   @id
+  themes      String[]
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}
+
+/// Corrections to the automatic grouping of "people who supported you" names (merge, rename, hide).
+model SurveyNameRule {
+  key         String   @id
+  mergeInto   String?
+  label       String?
+  hidden      Boolean  @default(false)
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}
+
+/// Small platform settings (e.g. whether the thanks board is shown to every signed-in user).
+model SurveySetting {
+  key         String   @id
+  value       Json
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+}

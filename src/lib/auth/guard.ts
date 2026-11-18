@@ -8,7 +8,7 @@ export class AuthError extends Error {
   }
 }
 
-const RANK: Record<Role, number> = { VIEWER: 0, EDITOR: 1, ADMIN: 2 };
+const RANK: Record<Role, number> = { EDITOR: 1, ADMIN: 2 };
 
 /**
  * Server-side authorisation for every protected operation (pages AND server actions).

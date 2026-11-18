@@ -2,7 +2,6 @@
 
 import { startTransition, useActionState } from "react";
 import { useTranslations } from "next-intl";
-import { useSearchParams } from "next/navigation";
 import { LogIn } from "lucide-react";
 import { loginAction } from "@/features/admin/auth-actions";
 import { btnPrimary, Field, inputCls } from "./ui";
@@ -10,7 +9,6 @@ import { btnPrimary, Field, inputCls } from "./ui";
 export function LoginForm() {
   const t = useTranslations("Admin");
   const [state, action, pending] = useActionState(loginAction, { ok: false });
-  const next = useSearchParams().get("next") ?? "";
   return (
     <form
       className="space-y-4"
@@ -21,7 +19,6 @@ export function LoginForm() {
         startTransition(() => action(data));
       }}
     >
-      <input type="hidden" name="next" value={next} />
       <Field label={t("email")} htmlFor="email">
         <input id="email" name="email" type="email" autoComplete="username" required dir="ltr" className={inputCls} />
       </Field>

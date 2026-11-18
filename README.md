@@ -45,9 +45,6 @@ npm run db:migrate            # after changing prisma/schema.prisma (development
 - **My account**: change password (signs out other sessions).
 - The website updates immediately after each save.
 
-## CDP Programme Evaluation 2026 — results platform
-Internal results dashboard at `/ar/cdp` (sign-in required), upload at `/ar/admin/cdp`. See `docs/CDP_RESULTS.md`.
-
 ## Security notes
 - Passwords hashed with Argon2id; sessions stored server-side (only a SHA-256 of the cookie token is kept),
   httpOnly + SameSite=Lax cookie (+ Secure in production), 7-day expiry.

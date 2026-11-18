@@ -1,0 +1,8 @@
+node_modules/
+.next/
+next-env.d.ts
+.env
+*.tsbuildinfo
+# Licensed brand fonts (supplied by Omantel; not redistributable)
+public/fonts/omantel/*
+!public/fonts/omantel/README.md

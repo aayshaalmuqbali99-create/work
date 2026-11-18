@@ -6,14 +6,10 @@ import { redirect } from "@/i18n/navigation";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/auth/session";
 
-/**
- * For admin pages: redirect to the login page when not signed in.
- * Management viewers (role VIEWER) only have the CDP results and their own account; they are sent to /cdp.
- */
-export const requirePageUser = cache(async (opts?: { allowViewer?: boolean }) => {
+/** For admin pages: redirect to the login page when not signed in. */
+export const requirePageUser = cache(async () => {
   const user = await getCurrentUser();
   if (!user) redirect({ href: "/admin/login", locale: await getLocale() });
-  if (user!.role === "VIEWER" && !opts?.allowViewer) redirect({ href: "/cdp", locale: await getLocale() });
   return user!;
 });
 
