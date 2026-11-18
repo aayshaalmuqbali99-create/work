@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens.
+ * Brand colours are CSS variables so the admin Theme settings (Phase 8) can override them
+ * at runtime without a rebuild. Tailwind utilities (bg-navy, text-teal, …) read these variables.
+ */
+:root {
+  --ls-navy: #102f40;
+  --ls-teal: #167d83;
+  --ls-teal-light: #d6e9e8;
+  --ls-white: #ffffff;
+  --ls-bg: #f4f7f8;
+  --ls-ink: #172b36;
+  --ls-muted: #5f6e75; /* darkened from #75838A to meet WCAG AA on #F4F7F8 */
+  --ls-line: #dde5e8;
+  --ls-radius: 14px;
+}
+
+@theme inline {
+  --color-navy: var(--ls-navy);
+  --color-teal: var(--ls-teal);
+  --color-teal-light: var(--ls-teal-light);
+  --color-surface: var(--ls-white);
+  --color-canvas: var(--ls-bg);
+  --color-ink: var(--ls-ink);
+  --color-muted: var(--ls-muted);
+  --color-line: var(--ls-line);
+
+  --font-sans: var(--font-inter), var(--font-plex-arabic), ui-sans-serif, system-ui, sans-serif;
+  --font-arabic: var(--font-plex-arabic), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: var(--ls-radius);
+
+  /* Type scale (fluid) */
+  --text-display: clamp(2.25rem, 1.4rem + 3.6vw, 4.25rem);
+  --text-display--line-height: 1.08;
+  --text-h2: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+  --text-h2--line-height: 1.2;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; }
+html[dir="rtl"] body { font-family: var(--font-arabic); }
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+}
+/* Arabic needs more line height than Latin text */
+html[dir="rtl"] p { line-height: 1.85; }
+
+:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; border-radius: 6px; }
+
+/* ── CDP results platform ─────────────────────────────────────────────────────── */
+:root {
+  /* Yes / To some extent / No — positive questions */
+  --cdp-yes: #12796f;
+  --cdp-partly: #d99a1e;
+  --cdp-no: #c0392b;
+  /* Challenge questions: "Yes" = a challenge was met, so warm colours mark it and "No" is neutral */
+  --cdp-ch-yes: #b4471a;
+  --cdp-ch-partly: #f0b46b;
+  --cdp-ch-no: #64748b;
+}
+/* Presentation mode: no upload/settings/sign-out controls, larger reading size for the meeting screen */
+html[data-present="on"] .cdp-hide-present { display: none; }
+@media (min-width: 1024px) {
+  .cdp-present { font-size: 1.08rem; }
+  .cdp-present h3 { font-size: 1.2rem; }
+}
+@media print {
+  @page { size: A4; margin: 14mm; }
+  body { background: #fff; }
+  .cdp-report * { box-shadow: none !important; }
+}

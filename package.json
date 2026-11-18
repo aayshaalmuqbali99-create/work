@@ -13,10 +13,7 @@
     "db:seed": "prisma db seed",
     "catalog:build": "python3 scripts/build_catalog.py",
     "postinstall": "prisma generate",
-    "vercel-build": "sh scripts/vercel-build.sh",
-    "test:cdp": "node --import tsx --test tests/cdp/import.test.ts",
-    "test:cdp:e2e": "node tests/cdp/e2e.cjs",
-    "cdp:fixture": "python3 scripts/make_cdp_fixture.py tests/cdp/fixtures"
+    "vercel-build": "sh scripts/vercel-build.sh"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1129.0",
@@ -25,7 +22,6 @@
     "@react-three/drei": "10.7.6",
     "@react-three/fiber": "9.3.0",
     "clsx": "2.1.1",
-    "fflate": "0.8.2",
     "lucide-react": "0.544.0",
     "motion": "12.23.12",
     "next": "15.5.29",

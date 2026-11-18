@@ -37,10 +37,7 @@ export async function loginAction(_prev: FormState, form: FormData): Promise<For
   await createSession(user.id);
   await db.user.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
   await audit({ userId: user.id, action: "auth.login", entity: "user", entityId: user.id });
-  // Only same-site paths of the CDP results platform are accepted as a return address.
-  const next = String(form.get("next") ?? "");
-  const safeNext = /^\/cdp(\/[a-z-]*)?(\?[\w=&%.-]*)?$/.test(next) ? next : null;
-  redirect({ href: user.role === "VIEWER" ? (safeNext ?? "/cdp") : (safeNext ?? "/admin"), locale: await getLocale() });
+  redirect({ href: "/admin", locale: await getLocale() });
   return { ok: true };
 }
 
@@ -52,7 +49,7 @@ export async function logoutAction() {
 }
 
 export async function changePasswordAction(_prev: FormState, form: FormData): Promise<FormState> {
-  const me = await requireUser("VIEWER");
+  const me = await requireUser();
   const parsed = passwordSchema.safeParse({ current: form.get("current"), next: form.get("next"), confirm: form.get("confirm") });
   if (!parsed.success) return { ok: false, fieldErrors: fieldErrors(parsed.error) };
   const limited = await rateLimit(`pw:${me.id}`, 5, 15 * 60_000);
@@ -71,7 +68,7 @@ export async function changePasswordAction(_prev: FormState, form: FormData): Pr
 
 /** Change the display name of the signed-in user (shown in the site header greeting). */
 export async function updateMyNameAction(name: string): Promise<FormState> {
-  const me = await requireUser("VIEWER");
+  const me = await requireUser();
   const clean = String(name ?? "").trim();
   if (clean.length < 2 || clean.length > 120) return { ok: false, message: "required" };
   await db.user.update({ where: { id: me.id }, data: { name: clean } });

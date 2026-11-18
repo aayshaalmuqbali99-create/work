@@ -12,7 +12,7 @@ const PATH = "/[locale]/admin/(panel)/users";
 
 export async function createUserAction(_prev: FormState, form: FormData): Promise<FormState> {
   const me = await requireUser("ADMIN");
-  const parsed = newUserSchema.safeParse({ name: form.get("name"), email: form.get("email"), role: form.get("role"), cdpRaw: form.get("cdpRaw") ?? "", password: form.get("password") });
+  const parsed = newUserSchema.safeParse({ name: form.get("name"), email: form.get("email"), role: form.get("role"), password: form.get("password") });
   if (!parsed.success) return { ok: false, message: "fixErrors", fieldErrors: fieldErrors(parsed.error) };
   const { password, ...rest } = parsed.data;
   if (await db.user.findUnique({ where: { email: rest.email } })) return { ok: false, message: "fixErrors", fieldErrors: { email: "emailTaken" } };
@@ -27,7 +27,7 @@ async function guardTarget(meId: string, targetId: string, next: { role?: Role; 
   if (meId === targetId) return "notSelf";
   const target = await db.user.findUnique({ where: { id: targetId } });
   if (!target) return "notFound";
-  const losesAdmin = target.role === "ADMIN" && target.active && ((next.role !== undefined && next.role !== "ADMIN") || next.active === false);
+  const losesAdmin = target.role === "ADMIN" && target.active && (next.role === "EDITOR" || next.active === false);
   if (losesAdmin && (await db.user.count({ where: { role: "ADMIN", active: true } })) <= 1) return "lastAdmin";
   return null;
 }
@@ -44,7 +44,6 @@ export async function setUserActiveAction(id: string, active: boolean): Promise<
 
 export async function setUserRoleAction(id: string, role: Role): Promise<FormState> {
   const me = await requireUser("ADMIN");
-  if (!["ADMIN", "EDITOR", "VIEWER"].includes(role)) return { ok: false, message: "notFound" };
   const err = await guardTarget(me.id, id, { role });
   if (err) return { ok: false, message: err };
   await db.user.update({ where: { id }, data: { role } });
@@ -63,14 +62,4 @@ export async function resetUserPasswordAction(id: string, password: string): Pro
   ]);
   await audit({ userId: me.id, action: "user.password_reset", entity: "user", entityId: id });
   return { ok: true, message: "resetDone", at: Date.now() };
-}
-
-/** Grant or remove access to original CDP survey comments and the names in "thanks & recognition". */
-export async function setUserCdpRawAction(id: string, cdpRaw: boolean): Promise<FormState> {
-  const me = await requireUser("ADMIN");
-  if (!(await db.user.findUnique({ where: { id } }))) return { ok: false, message: "notFound" };
-  await db.user.update({ where: { id }, data: { cdpRaw: !!cdpRaw } });
-  await audit({ userId: me.id, action: "user.cdp_raw", entity: "user", entityId: id, after: { cdpRaw: !!cdpRaw } });
-  revalidatePath(PATH, "page");
-  return { ok: true, at: Date.now() };
 }

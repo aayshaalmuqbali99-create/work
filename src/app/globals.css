@@ -97,26 +97,3 @@ html[dir="rtl"] .ls-marquee { animation-name: ls-marquee-rtl; }
 @media (prefers-reduced-motion: reduce) {
   .ls-hero-grid, .ls-float, .ls-float-slow, .ls-marquee { animation: none; }
 }
-
-/* ── CDP results platform ─────────────────────────────────────────────────────── */
-:root {
-  /* Yes / To some extent / No — positive questions */
-  --cdp-yes: #12796f;
-  --cdp-partly: #d99a1e;
-  --cdp-no: #c0392b;
-  /* Challenge questions: "Yes" = a challenge was met, so warm colours mark it and "No" is neutral */
-  --cdp-ch-yes: #b4471a;
-  --cdp-ch-partly: #f0b46b;
-  --cdp-ch-no: #64748b;
-}
-/* Presentation mode: no upload/settings/sign-out controls, larger reading size for the meeting screen */
-html[data-present="on"] .cdp-hide-present { display: none; }
-@media (min-width: 1024px) {
-  .cdp-present { font-size: 1.08rem; }
-  .cdp-present h3 { font-size: 1.2rem; }
-}
-@media print {
-  @page { size: A4; margin: 14mm; }
-  body { background: #fff; }
-  .cdp-report * { box-shadow: none !important; }
-}
