@@ -78,6 +78,18 @@ management viewers too (and hide it again). Links: the results toolbar and the T
   Electromechanical): `src/features/cdp/config.ts`.
 - Interface texts: `src/messages/ar.json` / `en.json`.
 
+## Single-file HTML versions (no server)
+```bash
+npm run build:html                              # dist/cdp-results.html — open it, choose the Excel file
+npm run build:html -- path/to/responses.xlsx    # also dist/cdp-results-report.html — results built in
+```
+- **cdp-results.html** — the whole results page in one file. Open it in a browser, choose the `.xlsx`; it is read and
+  calculated on the device (same rules and numbers as the platform) and never sent anywhere. Whoever holds the Excel
+  file already has the original data, so this page shows original comments and the people who helped.
+- **cdp-results-report.html** — a management report with one file's results built in: aggregated counts only (no
+  individual responses), comments with identifying details removed, no names of supporters, no thanks messages,
+  small departments only within the overall results. Generated files are not committed (`dist/` is ignored).
+
 ## Tests
 ```bash
 npm test                                             # parser, mapping, counts, redaction, names (synthetic fixture)

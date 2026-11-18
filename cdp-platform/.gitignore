@@ -3,3 +3,6 @@ node_modules/
 next-env.d.ts
 .env
 *.tsbuildinfo
+
+# single-file HTML builds
+dist/
