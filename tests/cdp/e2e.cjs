@@ -61,7 +61,7 @@ const log = (...a) => console.log('✔', ...a);
   console.log(flat);
   assert.ok(flat[0].includes('Network and Facilities Operations') && flat[0].includes('100') && flat[0].includes('74.1%'));
   assert.ok(flat[1].includes('Facility Operation') && flat[1].includes('19'));
-  assert.ok(flat[2].includes('Electrotechnical') && flat[2].includes('13'));
+  assert.ok(flat[2].includes('Electromechanical') && flat[2].includes('13'));
   assert.ok(flat[3].includes('Physical Security') && flat[3].includes('3') && flat[3].includes('2.2%'));
   const sat = async (id) => (await page.locator(`[data-testid=sat-${id}] dd`).allInnerTexts()).map((s) => s.replace(/\s+/g, ' '));
   const exp = { AQ: [33, 45, 57], AR: [37, 41, 57], AS: [38, 43, 54], AO: [48, 43, 44] };
