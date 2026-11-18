@@ -26,6 +26,29 @@ const EXTRA: Record<Lang, Record<string, string>> = {
     warnings: "تنبيهات الملف",
     namesTitle: "الأشخاص الذين ساعدوا الفريق",
     lang: "English",
+    navSurvey: "الاستبيان",
+    navResults: "النتائج",
+    coverKicker: "استبيان · 2026",
+    coverTitle: "استبيان تقييم برنامج التطوير الوظيفي",
+    coverLead: "استبيان لقياس آراء المشاركين في برنامج التطوير الوظيفي (CDP): وضوح البرنامج وتنظيمه، والدورات الإلكترونية، والتدريب أثناء العمل، ودعم فريق Huawei OMS.",
+    factQuestions: "سؤالًا",
+    factSections: "محاور",
+    factResponses: "مشاركًا",
+    factScale: "مقياس الإجابة",
+    scaleTitle: "كيف أجاب المشاركون",
+    scaleText: "أُجيب عن معظم الأسئلة بثلاثة اختيارات، وعن بعضها بإجابة مفتوحة.",
+    axesTitle: "محاور الاستبيان",
+    axesText: "تبدأ نتائج كل محور بسؤال الرضا العام، ثم بقية أسئلته.",
+    nClosed: "{n} أسئلة اختيار",
+    nOpen: "{n} إجابة مفتوحة",
+    yesShare: "نعم في سؤال الرضا",
+    viewResults: "عرض نتائج الاستبيان",
+    startUpload: "لعرض النتائج، اختر ملف Excel للردود",
+    formTitle: "نموذج الاستبيان",
+    formQ1: "هل كانت أهداف البرنامج واضحة؟",
+    formQ2: "هل كان البرنامج ذا صلة بعملكم؟",
+    resultsTitle: "نتائج الاستبيان",
+    thanksAxis: "الشكر والتقدير",
   },
   en: {
     uploadTitle: "Choose the responses Excel file",
@@ -40,6 +63,29 @@ const EXTRA: Record<Lang, Record<string, string>> = {
     warnings: "File warnings",
     namesTitle: "People who helped the team",
     lang: "العربية",
+    navSurvey: "The survey",
+    navResults: "Results",
+    coverKicker: "Survey · 2026",
+    coverTitle: "Career Development Programme Evaluation Survey",
+    coverLead: "A survey of the participants in the Career Development Programme (CDP): clarity and organisation of the programme, the e-learning courses, on-the-job training, and the support of the Huawei OMS team.",
+    factQuestions: "questions",
+    factSections: "sections",
+    factResponses: "participants",
+    factScale: "answer scale",
+    scaleTitle: "How participants answered",
+    scaleText: "Most questions had three choices; some were open answers.",
+    axesTitle: "Survey sections",
+    axesText: "Each section's results start with its overall satisfaction question, followed by the rest.",
+    nClosed: "{n} choice questions",
+    nOpen: "{n} open answer",
+    yesShare: "Yes on satisfaction",
+    viewResults: "View the survey results",
+    startUpload: "To see the results, choose the responses Excel file",
+    formTitle: "Survey form",
+    formQ1: "Were the programme objectives clear?",
+    formQ2: "Was the programme relevant to your work?",
+    resultsTitle: "Survey results",
+    thanksAxis: "Thanks & recognition",
   },
 };
 
@@ -55,6 +101,7 @@ const S = {
   limit: {} as Record<string, number>,
   busy: false,
   error: "",
+  page: "cover" as "cover" | "results",
 };
 const isReport = !!S.view;
 
@@ -182,13 +229,73 @@ function people() {
     ${once.length ? `<h4>${esc(t("peopleOnce", { n: int(once.length) }))}</h4><ul class="wall">${once.map((p) => `<li dir="auto">${esc(p.label)}</li>`).join("")}</ul>` : ""}</section>`;
 }
 
-// ── page ──────────────────────────────────────────────────────────────────────────
-function uploadPanel() {
-  return `<section class="card upload noprint" id="upload">
-    <h2>${esc(t("uploadTitle"))}</h2><p class="muted">${esc(t("uploadHelp"))}</p>
-    <label class="drop"><input type="file" accept=".xlsx" id="file" hidden><span class="btn primary">${esc(S.busy ? t("reading") : t("choose"))}</span></label>
-    ${S.error ? `<p class="note err" role="alert">${esc(S.error)}</p>` : ""}</section>`;
+function donut(c: Counts, q: QuestionDef, size = 120) {
+  const total = valid(c);
+  const col = q.kind === "challenge" ? COLORS.challenge : COLORS.rating;
+  const r = 15.915; // circumference 100
+  let offset = 25;
+  const arcs = ORDER.map((k) => {
+    const len = total ? (c[k] / total) * 100 : 0;
+    const arc = len ? `<circle r="${r}" cx="21" cy="21" fill="none" stroke="${col[k]}" stroke-width="6" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${offset}"></circle>` : "";
+    offset -= len;
+    return arc;
+  }).join("");
+  return `<svg viewBox="0 0 42 42" width="${size}" height="${size}" class="donut" aria-hidden="true"><circle r="${r}" cx="21" cy="21" fill="none" stroke="var(--line)" stroke-width="6"></circle>${arcs}<text x="21" y="${size >= 100 ? 20 : 23}" text-anchor="middle" class="d-val">${pct(c.y, total)}</text>${size >= 100 ? `<text x="21" y="26.5" text-anchor="middle" class="d-lbl">${esc(label(q, "y"))}</text>` : ""}</svg>`;
 }
+
+const ICONS: Record<string, string> = {
+  general: '<path d="M4 19V9l8-5 8 5v10"/><path d="M9 19v-6h6v6"/>',
+  cdpt: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  ojt: '<circle cx="12" cy="7" r="3"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/>',
+  huawei: '<path d="M7 11l3 3 7-7"/><path d="M20 12a8 8 0 1 1-4-6.9"/>',
+};
+const icon = (id: string) => `<svg viewBox="0 0 24 24" class="ico" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[id] ?? ""}</svg>`;
+
+function surveyForm() {
+  const opt = (k: "y" | "p" | "n", on: boolean) => `<span class="opt${on ? " on" : ""}"><i></i>${esc(t(`answer_${k}`))}</span>`;
+  return `<div class="form-mock" aria-hidden="true"><div class="fm-head"><span></span><span></span><span></span><b>${esc(t("formTitle"))}</b></div>
+    <div class="fm-q"><p>1. ${esc(t("formQ1"))}</p><div>${opt("y", true)}${opt("p", false)}${opt("n", false)}</div></div>
+    <div class="fm-q"><p>2. ${esc(t("formQ2"))}</p><div>${opt("y", false)}${opt("p", true)}${opt("n", false)}</div></div>
+    <div class="fm-q"><p>3. ${esc(L(QUESTIONS.find((q) => q.id === "AT")!))}</p><div class="fm-text"></div></div></div>`;
+}
+
+function cover() {
+  const v = S.view;
+  const fact = (n: string, l: string) => `<div class="fact"><b>${n}</b><span>${esc(l)}</span></div>`;
+  return `<section class="hero">
+    <div class="hero-text">
+      <p class="kicker">📋 ${esc(t("coverKicker"))}</p>
+      <h1>${esc(t("coverTitle"))}</h1>
+      <p class="lead">${esc(t("coverLead"))}</p>
+      <div class="facts">${fact(int(QUESTIONS.length), t("factQuestions"))}${fact(int(TABS.length), t("factSections"))}${v ? fact(int(v.total), t("factResponses")) : ""}</div>
+      <div class="cta">${v ? `<button class="btn primary big" data-act="page" data-v="results">${esc(t("viewResults"))} ${S.lang === "ar" ? "←" : "→"}</button>` : ""}</div>
+    </div>
+    ${surveyForm()}
+  </section>
+  ${!v ? `<section class="card upload" id="upload"><h2>${esc(t("startUpload"))}</h2><p class="muted">${esc(t("uploadHelp"))}</p>
+    <label class="drop"><input type="file" accept=".xlsx" id="file" hidden><span class="btn primary big">${esc(S.busy ? t("reading") : t("choose"))}</span></label>
+    ${S.error ? `<p class="note err" role="alert">${esc(S.error)}</p>` : ""}</section>` : ""}
+  <section class="block"><h2>${esc(t("scaleTitle"))}</h2><p class="muted">${esc(t("scaleText"))}</p>
+    <div class="scale">${ORDER.map((k) => `<span class="pill" style="--c:${COLORS.rating[k]}"><i></i>${esc(t(`answer_${k}`))}</span>`).join("")}<span class="pill open">💬 ${esc(t("openAnswer"))}</span></div></section>
+  <section class="block"><h2>${esc(t("axesTitle"))}</h2><p class="muted">${esc(t("axesText"))}</p>
+    <div class="axes">${TABS.map((tb, i) => {
+      const qs = QUESTIONS.filter((q) => q.tab === tb.id && !q.thanks);
+      const sat = qs.find((q) => q.kind === "satisfaction")!;
+      const c = v?.counts.all?.[sat.id];
+      const nClosed = qs.filter((q) => q.kind !== "text").length;
+      const nOpen = qs.filter((q) => q.kind === "text").length;
+      return `<button class="axis" ${v ? `data-act="tab" data-v="${tb.id}"` : "disabled"}>
+        <span class="axis-top"><span class="axis-n">${i + 1}</span>${icon(tb.id)}</span>
+        <b>${esc(L(tb))}</b>
+        <span class="muted small">${esc(t("nClosed", { n: int(nClosed) }))}${nOpen ? ` · ${esc(t("nOpen", { n: int(nOpen) }))}` : ""}</span>
+        <span class="axis-sat" dir="auto">${esc(L(sat))}</span>
+        ${c && valid(c) ? `<span class="axis-res">${donut(c, sat, 64)}<span><b>${pct(c.y, valid(c))}</b><small>${esc(t("yesShare"))}</small></span></span>` : ""}
+      </button>`;
+    }).join("")}</div>
+    <p class="muted small">🏅 ${esc(t("thanksAxis"))}: ${esc(t("thanksNote"))}</p></section>`;
+}
+
+// ── page ──────────────────────────────────────────────────────────────────────────
 function dashboard() {
   const v = S.view!;
   const counts = v.counts[S.dept === null ? "all" : String(S.dept)] ?? {};
@@ -213,7 +320,7 @@ function dashboard() {
   <section><h2>${esc(t("satisfactionTitle", { dept: deptName }))}</h2><div class="grid sat">${SATISFACTION_QUESTIONS.map((q) => {
     const c = counts[q.id];
     const tb = TABS.find((x) => x.id === q.tab)!;
-    return `<button class="card satcard" data-act="tab" data-v="${q.tab}"><p class="accent">${esc(L(tb))}</p><p class="muted small">${esc(L(q))}</p>${c && valid(c) ? `${bar(c, q, true)}${choices(c, q)}<p class="meta">${esc(t("validAnswers", { n: int(valid(c)) }))}</p>` : `<p class="note">${esc(v.missing.includes(q.id) ? t("missingColumn") : t("noAnswers"))}</p>`}</button>`;
+    return `<button class="card satcard" data-act="tab" data-v="${q.tab}"><p class="accent">${icon(q.tab)} ${esc(L(tb))}</p><p class="muted small">${esc(L(q))}</p>${c && valid(c) ? `<div class="sat-body">${donut(c, q)}<div>${choices(c, q)}<p class="meta">${esc(t("validAnswers", { n: int(valid(c)) }))}</p></div></div>` : `<p class="note">${esc(v.missing.includes(q.id) ? t("missingColumn") : t("noAnswers"))}</p>`}</button>`;
   }).join("")}</div></section>
   <nav class="tabs noprint" role="tablist">${TABS.map((tb, i) => `<button role="tab" aria-selected="${S.tab === tb.id}" data-act="tab" data-v="${tb.id}"><small>${i + 1}</small> ${esc(L(tb))}</button>`).join("")}</nav>
   ${TABS.map(
@@ -233,11 +340,14 @@ function render() {
   document.title = t("metaTitle");
   root.innerHTML = `
   <header class="top"><img src="${(window as unknown as { __LOGO__: string }).__LOGO__}" alt="Omantel" class="logo"><div class="titles"><p class="eyebrow" dir="ltr">Omantel | CDP Programme Evaluation 2026</p><p>${esc(t("platformName"))}</p></div>
+    <nav class="pages noprint"><button data-act="page" data-v="cover" aria-current="${S.page === "cover"}">${esc(t("navSurvey"))}</button><button data-act="page" data-v="results" aria-current="${S.page === "results"}" ${S.view ? "" : "disabled"}>${esc(t("navResults"))}</button></nav>
     <div class="actions noprint"><button class="btn" data-act="lang">${esc(t("lang"))}</button>${S.view ? `<button class="btn" data-act="present">${esc(S.present ? t("exitPresent") : t("present"))}</button><button class="btn" data-act="print">${esc(t("print"))}</button>` : ""}${S.view && !isReport ? `<button class="btn" data-act="reset">${esc(t("otherFile"))}</button>` : ""}</div></header>
   <main>
-    <h1>${esc(t("pageTitle"))}</h1>
-    <p class="badge">${esc(isReport ? t("reportBadge") : S.view ? t("localBadge") : t("pageIntro"))}</p>
-    ${S.view ? dashboard() : uploadPanel()}
+    ${
+      S.page === "results" && S.view
+        ? `<div class="results-head"><h1>${esc(t("resultsTitle"))}</h1><p class="badge">${esc(isReport ? t("reportBadge") : t("localBadge"))}</p></div>${dashboard()}`
+        : cover()
+    }
   </main>`;
 }
 
@@ -253,6 +363,7 @@ async function load(file: File) {
     S.view = buildView(dataset, { management: false, fileName: file.name, updated: new Date(file.lastModified || Date.now()).toISOString(), report });
     S.dept = null;
     S.tab = "general";
+    S.page = "results";
   } catch (e) {
     S.error = e instanceof XlsxError ? t("uploadNotXlsx") : e instanceof ImportError ? t(`issue_${e.issue.code}`) : (e as Error).message;
   }
@@ -276,9 +387,16 @@ document.addEventListener("click", (e) => {
   else if (act === "reset") {
     S.view = null;
     S.error = "";
+    S.page = "cover";
+  } else if (act === "page") {
+    S.page = v === "results" && S.view ? "results" : "cover";
+    render();
+    window.scrollTo({ top: 0 });
+    return;
   } else if (act === "dept") S.dept = v === "" || v === undefined || S.dept === Number(v) ? null : Number(v);
   else if (act === "tab") {
     S.tab = v as TabId;
+    S.page = "results";
     render();
     document.querySelector(".tabs")?.scrollIntoView({ behavior: "smooth", block: "start" });
     return;

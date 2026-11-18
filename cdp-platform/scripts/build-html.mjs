@@ -29,6 +29,7 @@ const logo = "data:image/png;base64," + readFileSync(path.join(root, "public/bra
 const app = await bundle(path.join(root, "html/app.ts"));
 const page = (data) => `<!doctype html>
 <html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap">
 <title>Omantel | CDP Programme Evaluation 2026</title><style>${css}</style></head>
 <body><div id="app"></div><script>window.__LOGO__=${JSON.stringify(logo)};${data ? `window.__CDP_VIEW__=${JSON.stringify(data).replace(/</g, "\\u003c")};` : ""}</script><script>${app.replace(/<\/script/gi, "<\\/script")}</script></body></html>`;
 
