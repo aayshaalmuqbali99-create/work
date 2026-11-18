@@ -102,7 +102,9 @@ for the four programmes, the proposed management action, presentation mode (full
 one data model computed from the workbook; the build stops if the departments or any programme row do not add up
 to the number of responses. Aggregated counts, plus a **Training Contributors** section: the staff participants identified
 as contributing to the training process, ranked by the number of participants who named them (no respondent names, comments or individual responses —
-the file does contain these names, so share it accordingly). Spellings of the same person are grouped
+the file does contain these names, so share it accordingly). An **Employee Suggestions** section lists the employees' own improvement suggestions (open answers, names and
+contact details removed, non-suggestions such as "Thanks" left out) with their themes ranked by frequency, a question
+filter and search. Spellings of the same person are grouped
 automatically; confirm remaining duplicates with `--names corrections.json`
 (`{"merge": {"Aaisha": "Aisha almaqbali"}, "rename": {}, "hide": []}`), kept outside the repository.
 `--excluded` is the number of test submissions removed from the file (used in the footer). Layout and texts:

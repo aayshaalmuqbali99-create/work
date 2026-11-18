@@ -215,6 +215,23 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
 #lang{font-weight:700}
 .card-i .big{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}.card-i .big small{margin:0}
 .areas li>span:last-child{display:inline-flex;align-items:baseline;gap:8px}.areas small{margin:0}
+.sugg{padding:28px}
+.sg-grid{display:grid;grid-template-columns:minmax(260px,.8fr) 1.6fr;gap:28px;margin-top:22px}
+.sg-themes{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.sg-themes button{display:grid;grid-template-columns:1fr auto;gap:4px 10px;width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--white);text-align:start;cursor:pointer;transition:border-color .2s,background .2s}
+.sg-themes button:hover{border-color:#CFC8FB}.sg-themes button[aria-pressed=true]{border-color:var(--blue);background:var(--lav)}
+.sg-themes .nm{font-weight:700}.sg-themes .ct{font-weight:800;font-variant-numeric:tabular-nums}
+.sg-themes .tb{grid-column:1/-1;height:6px;border-radius:99px;background:var(--line-2);overflow:hidden}.sg-themes .tb span{display:block;height:100%;background:var(--blue);border-radius:99px}
+.sg-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.segctl{display:inline-flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.segctl button{border:0;background:none;border-radius:999px;padding:.45rem .9rem;font-weight:600;color:var(--ink-2);cursor:pointer}.segctl button[aria-pressed=true]{background:var(--blue);color:#fff}
+#sg-q{flex:1;min-width:180px;border:1px solid var(--line);border-radius:999px;padding:.6rem 1rem;font:inherit;background:var(--white)}
+.sg-count{margin:12px 0 6px;color:var(--muted);font-size:.9rem}
+.sg-list{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:10px}
+.sg-list li{padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+.sg-list p{margin:0 0 8px;font-size:1rem;line-height:1.6;unicode-bidi:plaintext}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{font-size:.75rem;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--blue);font-weight:600}.chip.src{background:var(--bg);color:var(--muted)}
+@media (max-width:1100px){.sg-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -232,6 +249,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
       <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg><span data-t="navOverview">Overview</span></a>
       <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span data-t="navProgrammes">Programme Details</span></a>
       <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg><span data-t="navContributors">Training Contributors</span></a>
+      <a href="#suggestions" data-nav="suggestions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg><span data-t="navSuggestions">Employee Suggestions</span></a>
       <a href="#priorities" data-nav="priorities"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg><span data-t="navPriorities">Improvement Priorities</span></a>
     </nav>
     <p class="meta" id="side-meta"></p>
@@ -258,6 +276,25 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
         <ol class="ranked" id="ranked"></ol>
         <h3 class="panel-h" style="margin-top:26px" id="also-h"></h3>
         <ul class="also" id="also"></ul>
+      </div>
+    </section>
+    <section id="suggestions" aria-labelledby="sg-h">
+      <div class="sec-h"><h2 id="sg-h" data-t="sgTitle">Employee Suggestions for Improvement</h2><p id="sg-sub"></p></div>
+      <div class="card sugg">
+        <div class="contrib-intro"><span class="ico people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg></span>
+          <p data-t="sgIntro">Suggestions written by employees in the survey, shown as written with names and contact details removed. One suggestion can cover several themes.</p></div>
+        <div class="sg-grid">
+          <div><h3 class="panel-h" data-t="sgThemes">Most common themes</h3><ul class="sg-themes" id="sg-themes"></ul></div>
+          <div>
+            <div class="sg-tools">
+              <div class="segctl" role="group" id="sg-src" data-t-aria="sgSource"></div>
+              <input type="search" id="sg-q" data-t-ph="sgSearch" placeholder="Search suggestions…" data-t-aria="sgSearch" aria-label="Search suggestions">
+            </div>
+            <p class="sg-count" id="sg-count" aria-live="polite"></p>
+            <ul class="sg-list" id="sg-list"></ul>
+            <button class="btn" id="sg-more" hidden></button>
+          </div>
+        </div>
       </div>
     </section>
     <section id="priorities" aria-labelledby="pr-h">
@@ -293,7 +330,11 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
       overallSat: "Overall satisfaction", keyQs: "Key questions", otherQs: "Other questions", qs: "Questions", blank: "{n} blank",
       challengeTag: "Yes = faced challenges (red) · No = no challenges (green)", respondentsLead: "{a} of {b} respondents ({c}) {t}",
       footer: "Source: CDP 2026 employee survey. {ex} excluded. {area} accounted for {pct} of responses.", oneTest: "One test submission", nTests: "{n} test submissions",
-      areasAria: "Responses by operational area"
+      areasAria: "Responses by operational area",
+      navSuggestions: "Employee Suggestions", sgTitle: "Employee Suggestions for Improvement",
+      sgIntro: "Suggestions written by employees in the survey, shown as written with names and contact details removed. One suggestion can cover several themes.",
+      sgSub: "{n} suggestions from employees", sgThemes: "Most common themes", sgSource: "Survey question", sgAll: "All", sgSearch: "Search suggestions…",
+      sgCount: "Showing {a} of {b} suggestions", sgMore: "Show more ({n})", sgOther: "Other topics", sgNone: "No suggestions match."
     },
     ar: {
       skip: "انتقل إلى المحتوى", openNav: "فتح القائمة", title: "تقييم التدريب CDP 2026", subtitle: "نتائج استبيان الموظفين",
@@ -311,7 +352,11 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
       overallSat: "الرضا العام", keyQs: "أسئلة رئيسية", otherQs: "أسئلة أخرى", qs: "الأسئلة", blank: "{n} فارغة",
       challengeTag: "نعم = واجه تحديات (أحمر) · لا = لم يواجه (أخضر)", respondentsLead: "{a} من {b} مشاركًا ({c}) {t}",
       footer: "المصدر: استبيان موظفي CDP 2026. تم استبعاد {ex}. استحوذ مجال {area} على {pct} من الردود.", oneTest: "رد تجريبي واحد", twoTests: "ردّين تجريبيين", nTests: "{n} ردود تجريبية",
-      areasAria: "الردود حسب المجال التشغيلي"
+      areasAria: "الردود حسب المجال التشغيلي",
+      navSuggestions: "اقتراحات الموظفين", sgTitle: "اقتراحات الموظفين للتحسين",
+      sgIntro: "اقتراحات كتبها الموظفون في الاستبيان، معروضة كما كُتبت بعد حذف الأسماء وبيانات التواصل. قد يتناول الاقتراح الواحد أكثر من موضوع.",
+      sgSub: "{n} اقتراحًا من الموظفين", sgThemes: "أكثر الموضوعات تكرارًا", sgSource: "سؤال الاستبيان", sgAll: "الكل", sgSearch: "ابحث في الاقتراحات…",
+      sgCount: "عرض {a} من {b} اقتراحًا", sgMore: "عرض المزيد ({n})", sgOther: "موضوعات أخرى", sgNone: "لا توجد اقتراحات مطابقة."
     }
   };
   var AREA_AR = { "network and facilities operations": "عمليات الشبكات والمرافق", "facility operation": "تشغيل المرافق", electrotechnical: "الأعمال الكهروتقنية", "physical security": "الأمن المادي" };
@@ -418,6 +463,9 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
     $("also-h").textContent = t("namedOnce", { n: nf.format(once.length) });
     $("also").innerHTML = once.map(function (p) { return '<li dir="auto">' + esc(p.name) + "</li>"; }).join("");
 
+    // employee suggestions
+    renderSuggestions();
+
     // priorities & footer
     $("action").textContent = L(D, "action");
     $("prios").innerHTML = D.insights.map(function (x) { return "<li><b>" + pct(x.count, N) + "</b>" + esc(L(x, "title")) + " — " + t("ofN", { a: nf.format(x.count), b: nf.format(N) }) + "</li>"; }).join("");
@@ -425,6 +473,40 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
     $("footer").textContent = t("footer", { ex: ex === 1 ? t("oneTest") : ex === 2 && LANG === "ar" ? t("twoTests") : t("nTests", { n: ex }), area: area(top.name), pct: pct(top.count, N) });
     $("side-meta").textContent = t("nResponses", { n: nf.format(N) }) + " · " + D.source.fileName;
   }
+  // ── employee suggestions: themes (most common first), question filter, search ──
+  var SG = D.suggestions, sgState = { src: "all", theme: null, q: "", limit: 8 };
+  function sgThemeName(id) { if (id === "other") return t("sgOther"); var x = SG.themes.find(function (y) { return y.id === id; }); return x ? (LANG === "ar" ? x.ar : x.en) : id; }
+  function sgMatches(it, ignoreTheme) {
+    if (sgState.src !== "all" && it.sources.indexOf(sgState.src) < 0) return false;
+    if (!ignoreTheme && sgState.theme && (sgState.theme === "other" ? it.themes.length : it.themes.indexOf(sgState.theme) < 0)) return false;
+    if (sgState.q && it.text.toLowerCase().indexOf(sgState.q.toLowerCase()) < 0) return false;
+    return true;
+  }
+  function renderSuggestions() {
+    var pool = SG.items.filter(function (it) { return sgMatches(it, true); });
+    var counts = {};
+    pool.forEach(function (it) { (it.themes.length ? it.themes : ["other"]).forEach(function (th) { counts[th] = (counts[th] || 0) + 1; }); });
+    var ids = Object.keys(counts).sort(function (a, b) { return a === "other" ? 1 : b === "other" ? -1 : counts[b] - counts[a]; });
+    var mx = Math.max.apply(null, ids.map(function (k) { return counts[k]; }).concat([1]));
+    $("sg-sub").textContent = t("sgSub", { n: nf.format(SG.items.length) });
+    $("sg-src").innerHTML = [{ id: "all" }].concat(SG.sources).map(function (x) { return '<button type="button" data-sg-src="' + x.id + '" aria-pressed="' + (sgState.src === x.id) + '">' + esc(x.id === "all" ? t("sgAll") : L(x, "title")) + "</button>"; }).join("");
+    $("sg-themes").innerHTML = ids.map(function (k) { return '<li><button type="button" data-sg-theme="' + k + '" aria-pressed="' + (sgState.theme === k) + '"><span class="nm">' + esc(sgThemeName(k)) + '</span><span class="ct">' + nf.format(counts[k]) + '</span><span class="tb"><span style="width:' + (counts[k] / mx) * 100 + '%"></span></span></button></li>'; }).join("");
+    var shown = SG.items.filter(function (it) { return sgMatches(it, false); });
+    $("sg-count").textContent = t("sgCount", { a: nf.format(Math.min(sgState.limit, shown.length)), b: nf.format(shown.length) });
+    $("sg-list").innerHTML = shown.length ? shown.slice(0, sgState.limit).map(function (it) {
+      return "<li><p>" + esc(it.text) + '</p><div class="chips">' + it.themes.map(function (th) { return '<span class="chip">' + esc(sgThemeName(th)) + "</span>"; }).join("") + it.sources.map(function (sid) { var so = SG.sources.find(function (x) { return x.id === sid; }); return '<span class="chip src">' + esc(L(so, "title")) + "</span>"; }).join("") + "</div></li>";
+    }).join("") : '<li class="muted">' + esc(t("sgNone")) + "</li>";
+    var more = $("sg-more"); more.hidden = shown.length <= sgState.limit; more.textContent = t("sgMore", { n: nf.format(shown.length - sgState.limit) });
+    var ph = $("sg-q"); ph.placeholder = t("sgSearch"); ph.setAttribute("aria-label", t("sgSearch"));
+  }
+  document.addEventListener("click", function (e) {
+    var s1 = e.target.closest("[data-sg-src]"), s2 = e.target.closest("[data-sg-theme]");
+    if (s1) { sgState.src = s1.getAttribute("data-sg-src"); sgState.limit = 8; renderSuggestions(); }
+    else if (s2) { var k = s2.getAttribute("data-sg-theme"); sgState.theme = sgState.theme === k ? null : k; sgState.limit = 8; renderSuggestions(); }
+    else if (e.target.closest("#sg-more")) { sgState.limit += 16; renderSuggestions(); }
+  });
+  $("sg-q").addEventListener("input", function (e) { sgState.q = e.target.value.trim(); sgState.limit = 8; renderSuggestions(); });
+
   var pm = $("pm");
   render();
 
@@ -522,7 +604,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
   var io = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === en.target.id ? "true" : "false"); }); });
   }, { rootMargin: "-30% 0px -60% 0px" });
-  ["overview", "programmes", "contributors", "priorities"].forEach(function (id) { io.observe($(id)); });
+  ["overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { io.observe($(id)); });
   function markNav(id) { links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === id ? "true" : "false"); }); }
   addEventListener("scroll", function () { if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) markNav("priorities"); }, { passive: true });
   links.forEach(function (a) { a.addEventListener("click", function () { setTimeout(function () { markNav(a.dataset.nav); }, 700); }); });

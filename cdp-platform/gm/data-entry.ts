@@ -4,7 +4,8 @@
  * their training, with how many participants named each. No respondent names, comments or individual responses.
  */
 import { importWorkbook, aggregate, type Counts } from "../src/features/cdp/parse";
-import { QUESTIONS, CLOSED_KINDS, type TabId } from "../src/features/cdp/config";
+import { QUESTIONS, CLOSED_KINDS, THEMES, type TabId } from "../src/features/cdp/config";
+import { normalize } from "../src/features/cdp/text";
 import { extractNames, groupPeople } from "../src/features/cdp/people";
 
 type Opt = "y" | "p" | "n";
@@ -87,6 +88,36 @@ const HEADLINES: Record<string, { q: string; opts: Opt[]; text: string; textAr: 
       return {
         respondents: answers.filter((t) => extractNames(t.raw).length > 0).length,
         people: people.map((p) => ({ name: p.label, count: p.mentions, rows: rowsOf.get(p.key) ?? [] })), // most named first
+      };
+    })(),
+    suggestions: (() => {
+      // Employees' own improvement suggestions (open answers), with names, numbers and e-mails removed.
+      // Answers that are not suggestions are left out; the same text written by one employee in both questions is shown once.
+      const NOT_SUGGESTION = new Set(["everything", "thanks", "thank you", "شكرا", "شكرًا", "nl", "yes", "no", "كلها جيده", "كلها جيدة", "nothing", "لا شيء"].map(normalize));
+      const SOURCES = [
+        { id: "AT", title: "Improving the CDP programme", titleAr: "تحسين برنامج التطوير الوظيفي" },
+        { id: "AP", title: "Training requests & Huawei OMS support", titleAr: "الطلبات التدريبية ودعم Huawei OMS" },
+      ];
+      const items: { text: string; sources: string[]; themes: string[] }[] = [];
+      const seen = new Map<string, number>();
+      for (const t of dataset.texts) {
+        if (!SOURCES.some((x) => x.id === t.q)) continue;
+        const clean = t.red.replace(/\s+/g, " ").trim();
+        const n = normalize(clean.replace(/\[(name|اسم|#|•)\]/g, ""));
+        if (!n || NOT_SUGGESTION.has(n)) continue;
+        const key = t.id.split("-").pop() + "|" + n; // same employee, same text
+        if (seen.has(key)) {
+          const it = items[seen.get(key)!];
+          if (!it.sources.includes(t.q)) it.sources.push(t.q);
+          continue;
+        }
+        seen.set(key, items.length);
+        items.push({ text: clean, sources: [t.q], themes: t.auto });
+      }
+      return {
+        sources: SOURCES,
+        themes: THEMES.map((x) => ({ id: x.id, en: x.en, ar: x.ar })),
+        items,
       };
     })(),
     action: "Assign a programme lead to align training with job requirements, schedule supervised practice and verify training delivery against AGIOPS records.",
