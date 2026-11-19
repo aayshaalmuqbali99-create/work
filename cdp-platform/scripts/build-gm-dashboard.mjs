@@ -1,5 +1,5 @@
 // Builds the General Manager dashboard (single self-contained HTML file) from the survey workbook.
-//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--out dist/cdp-2026-gm-dashboard.html]
+//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--courses gm/cdpt-courses.json] [--out dist/cdp-2026-gm-dashboard.html]
 // Every number on the page comes from one data model computed here from the workbook: aggregated counts, plus the
 // names participants thanked for supporting their training (no respondent names, comments or individual responses). --excluded is the number of test submissions removed from the file
 // (it only feeds the footer sentence).
@@ -55,6 +55,22 @@ if (namesFile) {
 
 // Row numbers were only needed to merge without double counting: never written to the page.
 for (const p of data.recognition.people) delete p.rows;
+
+// CDP-T courses by domain (from the course list, not the survey): gm/cdpt-courses.json, or --courses file.json
+const coursesFile = path.resolve(opt("courses", path.join(root, "gm/cdpt-courses.json")));
+try {
+  const c = JSON.parse(readFileSync(coursesFile, "utf8"));
+  const sum = c.domains.reduce((s, d) => s + d.count, 0);
+  console.log(`CDP-T courses: ${sum} in ${c.domains.length} domains`);
+  if (c.total !== undefined && c.total !== sum) {
+    console.error(`CDP-T courses: domains add up to ${sum}, not the stated total ${c.total} — not writing the dashboard.`);
+    process.exit(1);
+  }
+  data.courses = { source: c.source, total: sum, domains: c.domains.slice().sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)) };
+} catch (e) {
+  if (e.code !== "ENOENT") throw e;
+  data.courses = null;
+}
 
 // Integrity checks: departments and every programme row must add up to the number of responses.
 const N = data.source.responses;

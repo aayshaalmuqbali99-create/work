@@ -17,6 +17,7 @@
 }
 *{box-sizing:border-box}
 html{font-size:var(--fs);scroll-behavior:smooth;scroll-padding-top:96px}
+html,body{overflow-x:clip}
 body{margin:0;font-family:Inter,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.5}
 h1,h2,h3,h4{margin:0;color:var(--ink);letter-spacing:-.01em}
 button{font:inherit;color:inherit}
@@ -46,7 +47,7 @@ button{font:inherit;color:inherit}
 .side a:hover{background:var(--lav);color:var(--blue)}
 .side a[aria-current=true]{background:var(--lav);color:var(--blue);box-shadow:inset 3px 0 0 var(--blue)}
 .side .meta{position:absolute;bottom:24px;inset-inline:16px;font-size:.78rem;color:var(--muted)}
-main{padding:32px clamp(16px,3vw,40px) 40px;max-width:1440px;width:100%}
+main{padding:32px clamp(16px,3vw,40px) 40px;max-width:1440px;width:100%;min-width:0}
 section{margin-bottom:40px}
 .sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:16px}
 .sec-h h2{font-size:1.45rem;font-weight:800}
@@ -178,7 +179,7 @@ footer{padding:22px 0 0;border-top:1px solid var(--line);color:var(--muted);font
 
 /* presentation mode */
 html.present-root{--fs:19px}
-body.present .shell{grid-template-columns:1fr}
+body.present .shell{grid-template-columns:minmax(0,1fr)}
 body.present .side,body.present .menu-btn{display:none}
 body.present main{max-width:1680px;margin:0 auto}
 body.present .sbar{height:42px}body.present .sbar .s{font-size:.95rem}
@@ -192,9 +193,9 @@ body.present .row{grid-template-columns:240px 1fr 28px}
 @media (max-width:900px){
   .d-top{margin:-20px -20px 14px;padding:14px 20px 12px;top:-20px}
   .menu-btn{display:inline-flex}
-  .shell{grid-template-columns:1fr}
-  .side{position:fixed;top:0;bottom:0;inset-inline-start:0;z-index:40;width:260px;height:100vh;transform:translateX(-105%);transition:transform .3s var(--ease);box-shadow:0 0 40px rgba(0,0,0,.15);padding-top:90px}
-  body.nav-open .side{transform:none}
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;top:0;bottom:0;inset-inline-start:0;z-index:40;width:260px;height:100vh;transform:translateX(-105%);visibility:hidden;transition:transform .3s var(--ease),visibility 0s linear .3s;box-shadow:0 0 40px rgba(0,0,0,.15);padding-top:90px}
+  body.nav-open .side{transform:none;visibility:visible;transition:transform .3s var(--ease),visibility 0s}
   .hdr{padding:12px 16px;gap:12px}.hdr .titles{padding-inline-start:12px}.hdr h1{font-size:1.05rem}.hdr p{font-size:.8rem}
   .logo-slot img{height:34px}.logo-slot{min-width:0;padding:0}
   .pm-label{display:none}
@@ -202,7 +203,7 @@ body.present .row{grid-template-columns:240px 1fr 28px}
   .dpanel{padding:20px}.d-top h2{font-size:1.3rem}
   .action{grid-template-columns:1fr}
 }
-@media (max-width:600px){.hdr h1{font-size:.98rem;line-height:1.25}.hdr p{font-size:.75rem}.hdr .titles{border:0;padding:0}.logo-slot img{height:28px}.hdr{gap:10px}.btn{padding:.5rem .75rem}.big{font-size:2.4rem}.sec-h h2{font-size:1.25rem}}
+@media (max-width:600px){.hdr{flex-wrap:wrap;row-gap:8px}.hdr .titles{order:9;flex:1 1 100%}#lang{margin-inline-start:auto}.hdr h1{font-size:.98rem;line-height:1.25}.hdr p{font-size:.75rem}.hdr .titles{border:0;padding:0}.logo-slot img{height:28px}.hdr{gap:10px}.btn{padding:.5rem .75rem}.big{font-size:2.4rem}.sec-h h2{font-size:1.25rem}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media print{.hdr{position:static}.side,.menu-btn,#pm{display:none}.shell{grid-template-columns:1fr}.card,.q{break-inside:avoid;box-shadow:none}.sbar .s,.sw,circle{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
 html[dir=rtl] body{font-family:"IBM Plex Sans Arabic",Inter,"Segoe UI",Tahoma,Arial,sans-serif}
@@ -231,11 +232,26 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
 .sg-list li{padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
 .sg-list p{margin:0 0 8px;font-size:1rem;line-height:1.6;unicode-bidi:plaintext}
 .chips{display:flex;flex-wrap:wrap;gap:6px}.chip{font-size:.75rem;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--blue);font-weight:600}.chip.src{background:var(--bg);color:var(--muted)}
-@media (max-width:1100px){.sg-grid{grid-template-columns:1fr}}
+@media (max-width:1100px){.sg-grid{grid-template-columns:minmax(0,1fr)}}
+.sg-list p,.sg-themes .nm{overflow-wrap:anywhere}
+.courses{padding:24px 28px}
+.cs-total{display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px;padding-bottom:18px;border-bottom:1px solid var(--line-2);margin-bottom:12px}
+.cs-total>div{flex:1;min-width:140px}.cs-total b{display:block;font-size:2.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}.cs-total>div span{color:var(--muted);font-weight:600}
+.cs-total .btn .expand{opacity:1;width:20px;height:20px}
+.dom{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.dom li{display:grid;grid-template-columns:minmax(150px,220px) 1fr minmax(96px,auto);gap:16px;align-items:center;padding:8px 6px;border-radius:10px}
+.dom li:hover{background:var(--bg)}
+.dom .nm{font-weight:700;unicode-bidi:plaintext}
+.dom .tr{height:22px;border-radius:7px;background:var(--line-2);overflow:hidden;outline:none}.dom .tr span{display:block;height:100%;background:var(--blue);border-radius:7px;transform-origin:left center}
+.dom .tr:focus-visible{box-shadow:0 0 0 3px var(--lav)}
+.dom .v{display:inline-flex;justify-content:flex-end;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}.dom .v b{font-size:1.1rem}.dom .v small{color:var(--muted)}
+html[dir=rtl] .dom .nm{text-align:right}
+html[dir=rtl] .dom .tr span{transform-origin:right center}
+@media (max-width:700px){.dom li{grid-template-columns:1fr auto}.dom .tr{grid-column:1/-1;grid-row:2;height:16px}}
 </style>
 </head>
 <body>
-<a class="sr" href="#overview" data-t="skip">Skip to content</a>
+<a class="sr" href="#courses" data-t="skip">Skip to content</a>
 <header class="hdr">
   <button class="btn menu-btn" id="menu" data-t-aria="openNav" aria-label="Open navigation" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   <div class="logo-slot" id="logo"></div>
@@ -246,6 +262,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
 <div class="shell">
   <aside class="side" id="side">
     <nav data-t-aria="sections" aria-label="Sections">
+      <a href="#courses" data-nav="courses" id="nav-courses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h6"/></svg><span data-t="navCourses">CDP-T Courses</span></a>
       <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg><span data-t="navOverview">Overview</span></a>
       <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span data-t="navProgrammes">Programme Details</span></a>
       <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg><span data-t="navContributors">Training Contributors</span></a>
@@ -255,6 +272,14 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
     <p class="meta" id="side-meta"></p>
   </aside>
   <main id="main" class="anim">
+    <section id="courses" aria-labelledby="cs-h">
+      <div class="sec-h"><h2 id="cs-h" data-t="csTitle">CDP-T Courses by Domain</h2><p data-t="csHelp">Online courses in CDP-T, grouped by domain.</p></div>
+      <div class="card courses">
+        <div class="cs-total"><span class="ico people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h6"/></svg></span><div><b id="cs-n"></b><span data-t="csCourses">courses</span></div>
+          <button class="btn" data-open="cdpt" id="cs-open"><span data-t="csSurvey">CDP-T survey results</span><span class="expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></button></div>
+        <ol class="dom" id="cs-list"></ol>
+      </div>
+    </section>
     <section id="overview" aria-labelledby="ov-h">
       <div class="sec-h"><h2 id="ov-h" data-t="navOverview">Overview</h2><ul class="legend" data-t-aria="legend" aria-label="Answer legend"><li><span class="sw y"></span><span data-t="y">Yes</span></li><li><span class="sw p"></span><span data-t="p">To some extent</span></li><li><span class="sw n"></span><span data-t="n">No</span></li></ul></div>
       <div class="card overview">
@@ -331,6 +356,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
       challengeTag: "Yes = faced challenges (red) · No = no challenges (green)", respondentsLead: "{a} of {b} respondents ({c}) {t}",
       footer: "Source: CDP 2026 employee survey. {ex} excluded. {area} accounted for {pct} of responses.", oneTest: "One test submission", nTests: "{n} test submissions",
       areasAria: "Responses by operational area",
+      navCourses: "CDP-T Courses", csTitle: "CDP-T Courses by Domain", csHelp: "Online courses in CDP-T, grouped by domain.", csCourses: "online courses", csSurvey: "CDP-T survey results", csTip: "{n} courses",
       navSuggestions: "Employee Suggestions", sgTitle: "Employee Suggestions for Improvement",
       sgIntro: "Suggestions written by employees in the survey, shown as written with names and contact details removed. One suggestion can cover several themes.",
       sgSub: "{n} suggestions from employees", sgThemes: "Most common themes", sgSource: "Survey question", sgAll: "All", sgSearch: "Search suggestions…",
@@ -353,6 +379,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
       challengeTag: "نعم = واجه تحديات (أحمر) · لا = لم يواجه (أخضر)", respondentsLead: "{a} من {b} مشاركًا ({c}) {t}",
       footer: "المصدر: استبيان موظفي CDP 2026. تم استبعاد {ex}. استحوذ مجال {area} على {pct} من الردود.", oneTest: "رد تجريبي واحد", twoTests: "ردّين تجريبيين", nTests: "{n} ردود تجريبية",
       areasAria: "الردود حسب المجال التشغيلي",
+      navCourses: "دورات CDP‑T", csTitle: "دورات CDP‑T حسب المجال", csHelp: "الدورات الإلكترونية في CDP‑T موزعة حسب المجال.", csCourses: "دورة إلكترونية", csSurvey: "نتائج استبيان CDP‑T", csTip: "{n} دورات",
       navSuggestions: "اقتراحات الموظفين", sgTitle: "اقتراحات الموظفين للتحسين",
       sgIntro: "اقتراحات كتبها الموظفون في الاستبيان، معروضة كما كُتبت بعد حذف الأسماء وبيانات التواصل. قد يتناول الاقتراح الواحد أكثر من موضوع.",
       sgSub: "{n} اقتراحًا من الموظفين", sgThemes: "أكثر الموضوعات تكرارًا", sgSource: "سؤال الاستبيان", sgAll: "الكل", sgSearch: "ابحث في الاقتراحات…",
@@ -422,6 +449,17 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
     document.querySelectorAll("[data-t-aria]").forEach(function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-t-aria"))); });
     var lb = $("lang"); lb.textContent = LANG === "ar" ? "English" : "العربية"; lb.lang = LANG === "ar" ? "en" : "ar";
     pm.querySelector(".pm-label").textContent = document.body.classList.contains("present") ? t("exitPresent") : t("present");
+
+    // CDP-T courses by domain (largest first)
+    var C = D.courses;
+    if (C) {
+      var cmax = C.domains.length ? C.domains[0].count : 1;
+      $("cs-n").textContent = nf.format(C.total);
+      $("cs-list").innerHTML = C.domains.map(function (d, i) {
+        var nm = L(d, "name");
+        return '<li><span class="nm" title="' + esc(d.name) + '">' + esc(nm) + '</span><span class="tr" tabindex="0" role="img" data-tip="' + esc(nm + "|" + t("csTip", { n: nf.format(d.count) }) + "|" + pct(d.count, C.total)) + '" aria-label="' + esc(nm + ": " + t("csTip", { n: nf.format(d.count) }) + ", " + pct(d.count, C.total)) + '"><span class="grow" style="width:' + (d.count / cmax) * 100 + "%;--i:" + i + '"></span></span><span class="v"><b>' + nf.format(d.count) + "</b><small>" + pct(d.count, C.total) + "</small></span></li>";
+      }).join("");
+    }
 
     // overview: doughnut
     var r = 15.9155, off = 0, segs = "";
@@ -507,6 +545,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
   });
   $("sg-q").addEventListener("input", function (e) { sgState.q = e.target.value.trim(); sgState.limit = 8; renderSuggestions(); });
 
+  if (!D.courses) { $("courses").remove(); $("nav-courses").remove(); }
   var pm = $("pm");
   render();
 
@@ -604,7 +643,7 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
   var io = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === en.target.id ? "true" : "false"); }); });
   }, { rootMargin: "-30% 0px -60% 0px" });
-  ["overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { io.observe($(id)); });
+  ["courses", "overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { if ($(id)) io.observe($(id)); });
   function markNav(id) { links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === id ? "true" : "false"); }); }
   addEventListener("scroll", function () { if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) markNav("priorities"); }, { passive: true });
   links.forEach(function (a) { a.addEventListener("click", function () { setTimeout(function () { markNav(a.dataset.nav); }, 700); }); });

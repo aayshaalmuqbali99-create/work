@@ -110,6 +110,9 @@ automatically; confirm remaining duplicates with `--names corrections.json`
 `--excluded` is the number of test submissions removed from the file (used in the footer). Layout and texts:
 `gm/template.html`; findings and headlines: `gm/data-entry.ts`.
 
+The first section, **CDP-T Courses by Domain**, comes from `gm/cdpt-courses.json` (course list pivot, not the survey):
+edit the counts there (or pass `--courses other.json`); the build stops if the domains do not add up to `total`.
+
 ## Tests
 ```bash
 npm test                                             # parser, mapping, counts, redaction, names (synthetic fixture)
