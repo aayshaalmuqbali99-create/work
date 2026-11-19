@@ -70,7 +70,8 @@ const programmeFile = path.resolve(opt("programme", path.join(root, "gm/cdp-prog
       process.exit(1);
     }
   }
-  data.programme = { domains: c.domains.items, fmTasks: c.fmTasks.items };
+  const meta = (x) => ({ programme: x.programme, label: x.label, labelAr: x.labelAr });
+  data.programme = { domains: c.domains.items, fmTasks: c.fmTasks.items, domainsMeta: meta(c.domains), fmTasksMeta: meta(c.fmTasks) };
 }
 
 // Integrity checks: departments and every programme row must add up to the number of responses.

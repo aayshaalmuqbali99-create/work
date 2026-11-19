@@ -1,30 +1,87 @@
 {
-  "_note": "CDP Programme data (not the survey). Two independent datasets: domain records and FM tasks. Category names are kept exactly as in the source; list them in source order (ties keep this order).",
+  "_note": "CDP Programme data (not the survey). Two independent datasets: domain records = CDP-T (online courses) and FM tasks = CDP-OJT (on-the-job training). Category names are kept exactly as in the source; list them in source order (ties keep this order).",
   "domains": {
+    "programme": "CDP-T",
+    "label": "CDP‑T · Online Courses",
+    "labelAr": "CDP‑T · الدورات الإلكترونية",
     "total": 65,
     "items": [
-      { "name": "All Functions", "count": 20 },
-      { "name": "FM", "count": 4 },
-      { "name": "FM- ELM", "count": 2 },
-      { "name": "FM-Facility Operations", "count": 2 },
-      { "name": "FM-FM TE", "count": 14 },
-      { "name": "FM-FOC", "count": 3 },
-      { "name": "FM-Power", "count": 6 },
-      { "name": "General", "count": 13 },
-      { "name": "MS - FM - BO", "count": 1 }
+      {
+        "name": "All Functions",
+        "count": 20
+      },
+      {
+        "name": "FM",
+        "count": 4
+      },
+      {
+        "name": "FM- ELM",
+        "count": 2
+      },
+      {
+        "name": "FM-Facility Operations",
+        "count": 2
+      },
+      {
+        "name": "FM-FM TE",
+        "count": 14
+      },
+      {
+        "name": "FM-FOC",
+        "count": 3
+      },
+      {
+        "name": "FM-Power",
+        "count": 6
+      },
+      {
+        "name": "General",
+        "count": 13
+      },
+      {
+        "name": "MS - FM - BO",
+        "count": 1
+      }
     ]
   },
   "fmTasks": {
+    "programme": "CDP-OJT",
+    "label": "CDP‑OJT · On-the-Job Training",
+    "labelAr": "CDP‑OJT · التدريب أثناء العمل",
     "total": 269,
     "items": [
-      { "name": "Electromechanical", "count": 36 },
-      { "name": "Facility Operations", "count": 43 },
-      { "name": "Fiber Optic Cable (FOC)", "count": 84 },
-      { "name": "General - FM", "count": 16 },
-      { "name": "General - Infra", "count": 7 },
-      { "name": "Physical Security", "count": 43 },
-      { "name": "TV", "count": 2 },
-      { "name": "Wireless / Fixed Access / Core / IP", "count": 38 }
+      {
+        "name": "Electromechanical",
+        "count": 36
+      },
+      {
+        "name": "Facility Operations",
+        "count": 43
+      },
+      {
+        "name": "Fiber Optic Cable (FOC)",
+        "count": 84
+      },
+      {
+        "name": "General - FM",
+        "count": 16
+      },
+      {
+        "name": "General - Infra",
+        "count": 7
+      },
+      {
+        "name": "Physical Security",
+        "count": 43
+      },
+      {
+        "name": "TV",
+        "count": 2
+      },
+      {
+        "name": "Wireless / Fixed Access / Core / IP",
+        "count": 38
+      }
     ]
   }
 }

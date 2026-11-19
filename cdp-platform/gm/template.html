@@ -240,10 +240,10 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
 .pv-intro{color:var(--ink-2);font-size:1.02rem;margin:4px 0 20px;max-width:80ch}
 .kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:8px}
 .kpi{padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--white);box-shadow:var(--shadow)}
-.kpi span{display:block;color:var(--muted);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+.kpi .kl{display:block;color:var(--muted);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
 .kpi b{display:block;font-size:2.6rem;font-weight:800;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
 .kpi small{color:var(--muted)}
-html[dir=rtl] .kpi span{letter-spacing:0}
+html[dir=rtl] .kpi .kl{letter-spacing:0}
 .pv-sec{margin-top:28px;padding-top:22px;border-top:1px solid var(--line-2)}
 .pv-sec h3{font-size:1.3rem;font-weight:800}
 .pv-exp{margin:6px 0 10px;color:var(--ink-2)}
@@ -271,6 +271,13 @@ html[dir=rtl] .ptable td:first-child{text-align:right}
 .ptable tr.top td:first-child{box-shadow:inset 3px 0 0 var(--orange)}
 html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--orange)}
 @media (max-width:900px){.pcard{grid-template-columns:auto 1fr}.pcard .btn{grid-column:1/-1;justify-self:start}.pv-grid{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:minmax(0,1fr)}.hb li{grid-template-columns:minmax(0,1fr)}.hb .nm{font-size:.88rem}}
+.ptags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.ptag{display:inline-flex;align-items:center;gap:6px;padding:.25rem .75rem;border-radius:999px;font-size:.8rem;font-weight:700;color:#fff;white-space:nowrap}
+.ptag.t{background:var(--blue)}.ptag.ojt{background:#2E2E3A}
+.ptag b{font-weight:800}
+.kpi .ptag{margin-bottom:10px}.kpi.ojt{border-top:4px solid #2E2E3A}.kpi.t{border-top:4px solid var(--blue)}
+.pv-sec .ptag{margin-bottom:8px}
+.pv-src{margin:-10px 0 20px;color:var(--ink-2);font-size:.95rem}
 </style>
 </head>
 <body>
@@ -298,7 +305,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
     <section id="cdp-programme" aria-labelledby="cp-h">
       <div class="card pcard">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span>
-        <div class="pc-text"><h2 id="cp-h" data-t="pcTitle">CDP Programme</h2><p data-t="pcDesc">Explore the CDP Programme’s domain distribution and FM task breakdown.</p></div>
+        <div class="pc-text"><h2 id="cp-h" data-t="pcTitle">CDP Programme</h2><p data-t="pcDesc">Explore the CDP Programme’s domain distribution and FM task breakdown.</p><div class="ptags" id="pc-tags"></div></div>
         <button class="btn primary" id="pc-open" data-open="cdp"><span data-t="pcAction">View Programme Details</span><span class="expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></button>
       </div>
     </section>
@@ -382,6 +389,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       pvIntro: "This page presents two views of the CDP Programme: how records are distributed across domain groups and how FM tasks are distributed across categories.",
       pvBack: "Back to Dashboard", kpiDom: "Total Domain Records", kpiFm: "Total FM Tasks", kpiDomSub: "{k} domain groups", kpiFmSub: "{k} FM categories",
       domTitle: "Domain Distribution", fmTitle: "FM Task Distribution",
+      pvSrc: "Domain records come from CDP‑T (online courses). FM tasks come from CDP‑OJT (on-the-job training).",
       domExp: "This breakdown shows how the {N} records are distributed across {kw} domain groups. Each percentage is the group’s share of the {N} domain records.",
       fmExp: "This breakdown shows how the {N} FM tasks are distributed across {kw} categories. Each percentage is the category’s share of the {N} FM tasks.",
       domCols: "Domain Group|Records|% of Domain Records", fmCols: "FM Category|FM Tasks|% of FM Tasks", grand: "Grand Total",
@@ -415,6 +423,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       pvIntro: "تعرض هذه الصفحة جانبين من برنامج CDP: كيف تتوزع السجلات على مجموعات المجالات، وكيف تتوزع مهام FM على الفئات.",
       pvBack: "العودة إلى لوحة المعلومات", kpiDom: "إجمالي سجلات المجالات", kpiFm: "إجمالي مهام FM", kpiDomSub: "{k} مجموعات مجالات", kpiFmSub: "{k} فئات FM",
       domTitle: "توزيع المجالات", fmTitle: "توزيع مهام FM",
+      pvSrc: "سجلات المجالات من CDP‑T (الدورات الإلكترونية)، ومهام FM من CDP‑OJT (التدريب أثناء العمل).",
       domExp: "يوضح هذا التوزيع كيف تتوزع {N} سجلًا على {k} مجموعات مجالات. كل نسبة هي حصة المجموعة من {N} سجلًا.",
       fmExp: "يوضح هذا التوزيع كيف تتوزع {N} مهمة FM على {k} فئات. كل نسبة هي حصة الفئة من {N} مهمة.",
       domCols: "مجموعة المجال|السجلات|% من سجلات المجالات", fmCols: "فئة FM|مهام FM|% من مهام FM", grand: "الإجمالي الكلي",
@@ -491,6 +500,12 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
     document.querySelectorAll("[data-t-aria]").forEach(function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-t-aria"))); });
     var lb = $("lang"); lb.textContent = LANG === "ar" ? "English" : "العربية"; lb.lang = LANG === "ar" ? "en" : "ar";
     pm.querySelector(".pm-label").textContent = document.body.classList.contains("present") ? t("exitPresent") : t("present");
+
+    // CDP Programme card: which number belongs to which programme
+    if (D.programme && $("pc-tags")) {
+      var sumOf = function (a) { return a.reduce(function (s, d) { return s + d.count; }, 0); };
+      $("pc-tags").innerHTML = ptag("dom", sumOf(D.programme.domains)) + ptag("fm", sumOf(D.programme.fmTasks));
+    }
 
     // overview: doughnut
     var r = 15.9155, off = 0, segs = "";
@@ -615,6 +630,11 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
     if (r2 && r3) s += t(r2.count === r3.count ? kind + "Ins2tie" : kind + "Ins2", { b: r2.name, d: r3.name, c2: nf.format(r2.count), c3: nf.format(r3.count), p2: pct(r2.count, N), p3: pct(r3.count, N) });
     return s;
   }
+  function ptag(kind, n) {
+    var m = kind === "dom" ? D.programme.domainsMeta : D.programme.fmTasksMeta;
+    if (!m || !m.label) return "";
+    return '<span class="ptag ' + (m.programme === "CDP-T" ? "t" : "ojt") + '">' + esc(L(m, "label")) + (n != null ? " · <b>" + nf.format(n) + "</b>" : "") + "</span>";
+  }
   function programmeSection(kind, items) {
     var rows = sortedSet(items), N = rows.reduce(function (s, d) { return s + d.count; }, 0), max = rows.length ? rows[0].count : 1;
     var cols = t(kind + "Cols").split("|");
@@ -626,14 +646,14 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       rows.map(function (d) { return '<tr' + (d.count === max ? ' class="top"' : "") + "><td>" + esc(d.name) + '</td><td class="n">' + nf.format(d.count) + '</td><td class="n">' + pct(d.count, N) + "</td></tr>"; }).join("") +
       '</tbody><tfoot><tr><td>' + esc(t("grand")) + '</td><td class="n">' + nf.format(N) + '</td><td class="n">' + pct(N, N) + "</td></tr></tfoot></table>";
     var kw = LANG === "ar" ? nf.format(rows.length) : WORDS[rows.length] || nf.format(rows.length);
-    return '<section class="pv-sec" id="pv-' + kind + '"><h3>' + esc(t(kind + "Title")) + '</h3><p class="pv-exp">' + esc(t(kind + "Exp", { N: nf.format(N), kw: kw, k: nf.format(rows.length) })) + '</p><p class="pv-ins">' + esc(insight(kind, rows, N)) + '</p><div class="pv-grid"><div>' + chart + "</div><div>" + table + "</div></div></section>";
+    return '<section class="pv-sec" id="pv-' + kind + '">' + ptag(kind) + '<h3>' + esc(t(kind + "Title")) + '</h3><p class="pv-exp">' + esc(t(kind + "Exp", { N: nf.format(N), kw: kw, k: nf.format(rows.length) })) + '</p><p class="pv-ins">' + esc(insight(kind, rows, N)) + '</p><div class="pv-grid"><div>' + chart + "</div><div>" + table + "</div></div></section>";
   }
   function programmeHtml() {
     var P = D.programme, sum = function (a) { return a.reduce(function (s, d) { return s + d.count; }, 0); };
     var nD = sum(P.domains), nF = sum(P.fmTasks);
     return '<div class="d-top"><button class="btn" id="back">' + svg("back") + esc(t("pvBack")) + "</button></div>" +
-      '<h2 id="d-title">' + esc(t("pcTitle")) + '</h2><p class="pv-intro">' + esc(t("pvIntro")) + "</p>" +
-      '<div class="kpis"><div class="kpi" id="kpi-dom"><span>' + esc(t("kpiDom")) + "</span><b>" + nf.format(nD) + "</b><small>" + esc(t("kpiDomSub", { k: nf.format(P.domains.length) })) + '</small></div><div class="kpi" id="kpi-fm"><span>' + esc(t("kpiFm")) + "</span><b>" + nf.format(nF) + "</b><small>" + esc(t("kpiFmSub", { k: nf.format(P.fmTasks.length) })) + "</small></div></div>" +
+      '<h2 id="d-title">' + esc(t("pcTitle")) + '</h2><p class="pv-intro">' + esc(t("pvIntro")) + '</p><p class="pv-src">' + esc(t("pvSrc")) + "</p>" +
+      '<div class="kpis"><div class="kpi t" id="kpi-dom">' + ptag("dom") + '<span class="kl">' + esc(t("kpiDom")) + "</span><b>" + nf.format(nD) + "</b><small>" + esc(t("kpiDomSub", { k: nf.format(P.domains.length) })) + '</small></div><div class="kpi ojt" id="kpi-fm">' + ptag("fm") + '<span class="kl">' + esc(t("kpiFm")) + "</span><b>" + nf.format(nF) + "</b><small>" + esc(t("kpiFmSub", { k: nf.format(P.fmTasks.length) })) + "</small></div></div>" +
       programmeSection("dom", P.domains) + programmeSection("fm", P.fmTasks);
   }
   function viewHtml(id) { if (id === "cdp") return programmeHtml(); var p = D.programmes.find(function (x) { return x.id === id; }); return p ? panelHtml(p) : ""; }
@@ -660,7 +680,8 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
     document.body.style.overflow = "hidden";
     $("main").setAttribute("aria-hidden", "true");
     $("back").addEventListener("click", closePanel);
-    panel.focus();
+    overlay.scrollTop = 0;
+    panel.focus({ preventScroll: true });
     location.hash = "programme-" + id;
   }
   function closePanel() {
