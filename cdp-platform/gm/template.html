@@ -234,24 +234,47 @@ html[dir=rtl] .expand svg,html[dir=rtl] #back svg{transform:scaleX(-1)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}.chip{font-size:.75rem;padding:.15rem .6rem;border-radius:999px;background:var(--lav);color:var(--blue);font-weight:600}.chip.src{background:var(--bg);color:var(--muted)}
 @media (max-width:1100px){.sg-grid{grid-template-columns:minmax(0,1fr)}}
 .sg-list p,.sg-themes .nm{overflow-wrap:anywhere}
-.courses{padding:24px 28px}
-.cs-total{display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px;padding-bottom:18px;border-bottom:1px solid var(--line-2);margin-bottom:12px}
-.cs-total>div{flex:1;min-width:140px}.cs-total b{display:block;font-size:2.6rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}.cs-total>div span{color:var(--muted);font-weight:600}
-.cs-total .btn .expand{opacity:1;width:20px;height:20px}
-.dom{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
-.dom li{display:grid;grid-template-columns:minmax(150px,220px) 1fr minmax(96px,auto);gap:16px;align-items:center;padding:8px 6px;border-radius:10px}
-.dom li:hover{background:var(--bg)}
-.dom .nm{font-weight:700;unicode-bidi:plaintext}
-.dom .tr{height:22px;border-radius:7px;background:var(--line-2);overflow:hidden;outline:none}.dom .tr span{display:block;height:100%;background:var(--blue);border-radius:7px;transform-origin:left center}
-.dom .tr:focus-visible{box-shadow:0 0 0 3px var(--lav)}
-.dom .v{display:inline-flex;justify-content:flex-end;align-items:baseline;gap:8px;font-variant-numeric:tabular-nums}.dom .v b{font-size:1.1rem}.dom .v small{color:var(--muted)}
-html[dir=rtl] .dom .nm{text-align:right}
-html[dir=rtl] .dom .tr span{transform-origin:right center}
-@media (max-width:700px){.dom li{grid-template-columns:1fr auto}.dom .tr{grid-column:1/-1;grid-row:2;height:16px}}
+.pcard{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:24px 28px;border-inline-start:6px solid var(--blue)}
+.pcard .ico{width:52px;height:52px}.pc-text h2{font-size:1.35rem;font-weight:800}.pc-text p{margin:4px 0 0;color:var(--ink-2)}
+.pcard .btn.primary .expand{color:#fff;opacity:1;width:20px;height:20px}
+.pv-intro{color:var(--ink-2);font-size:1.02rem;margin:4px 0 20px;max-width:80ch}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:8px}
+.kpi{padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--white);box-shadow:var(--shadow)}
+.kpi span{display:block;color:var(--muted);font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+.kpi b{display:block;font-size:2.6rem;font-weight:800;line-height:1.1;margin-top:6px;font-variant-numeric:tabular-nums}
+.kpi small{color:var(--muted)}
+html[dir=rtl] .kpi span{letter-spacing:0}
+.pv-sec{margin-top:28px;padding-top:22px;border-top:1px solid var(--line-2)}
+.pv-sec h3{font-size:1.3rem;font-weight:800}
+.pv-exp{margin:6px 0 10px;color:var(--ink-2)}
+.pv-ins{margin:0 0 16px;padding:12px 16px;border-radius:12px;background:#FFF6EE;border:1px solid #FFD8B8;color:var(--ink)}
+.pv-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:start}
+.hb{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.hb li{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:12px;align-items:center}
+.hb .nm{font-weight:600;font-size:.92rem;line-height:1.3;overflow-wrap:anywhere;unicode-bidi:plaintext}
+html[dir=rtl] .hb .nm{text-align:right}
+.hb .tr{position:relative;height:30px;border-radius:8px;background:var(--line-2);outline:none}
+.hb .tr:focus-visible{box-shadow:0 0 0 3px var(--lav)}
+.hb .fill{position:absolute;inset-block:0;inset-inline-start:0;border-radius:8px;background:var(--blue);transform-origin:left center}
+html[dir=rtl] .hb .fill{transform-origin:right center}
+.hb .fill.top{background:var(--orange)}
+.hb .cnt{position:absolute;inset-block:0;display:flex;align-items:center;font-weight:800;font-size:.9rem;font-variant-numeric:tabular-nums;padding:0 8px;pointer-events:none}
+.hb .cnt.in{color:#fff}.hb .cnt.in.top{color:var(--ink)}
+.ptable{width:100%;border-collapse:collapse;font-size:.92rem}
+.ptable th,.ptable td{padding:9px 10px;border-bottom:1px solid var(--line-2);text-align:start;vertical-align:top}
+.ptable th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+html[dir=rtl] .ptable th{letter-spacing:0}
+.ptable td.n,.ptable th.n{text-align:end;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ptable td:first-child{overflow-wrap:anywhere;unicode-bidi:plaintext}
+html[dir=rtl] .ptable td:first-child{text-align:right}
+.ptable tfoot td{font-weight:800;border-top:2px solid var(--line);border-bottom:0}
+.ptable tr.top td:first-child{box-shadow:inset 3px 0 0 var(--orange)}
+html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--orange)}
+@media (max-width:900px){.pcard{grid-template-columns:auto 1fr}.pcard .btn{grid-column:1/-1;justify-self:start}.pv-grid{grid-template-columns:minmax(0,1fr)}.kpis{grid-template-columns:minmax(0,1fr)}.hb li{grid-template-columns:minmax(0,1fr)}.hb .nm{font-size:.88rem}}
 </style>
 </head>
 <body>
-<a class="sr" href="#courses" data-t="skip">Skip to content</a>
+<a class="sr" href="#cdp-programme" data-t="skip">Skip to content</a>
 <header class="hdr">
   <button class="btn menu-btn" id="menu" data-t-aria="openNav" aria-label="Open navigation" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   <div class="logo-slot" id="logo"></div>
@@ -262,7 +285,7 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
 <div class="shell">
   <aside class="side" id="side">
     <nav data-t-aria="sections" aria-label="Sections">
-      <a href="#courses" data-nav="courses" id="nav-courses"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h6"/></svg><span data-t="navCourses">CDP-T Courses</span></a>
+      <a href="#cdp-programme" data-nav="cdp-programme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg><span data-t="navProgramme">CDP Programme</span></a>
       <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg><span data-t="navOverview">Overview</span></a>
       <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span data-t="navProgrammes">Programme Details</span></a>
       <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg><span data-t="navContributors">Training Contributors</span></a>
@@ -272,12 +295,11 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
     <p class="meta" id="side-meta"></p>
   </aside>
   <main id="main" class="anim">
-    <section id="courses" aria-labelledby="cs-h">
-      <div class="sec-h"><h2 id="cs-h" data-t="csTitle">CDP-T Courses by Domain</h2><p data-t="csHelp">Online courses in CDP-T, grouped by domain.</p></div>
-      <div class="card courses">
-        <div class="cs-total"><span class="ico people"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h6"/></svg></span><div><b id="cs-n"></b><span data-t="csCourses">courses</span></div>
-          <button class="btn" data-open="cdpt" id="cs-open"><span data-t="csSurvey">CDP-T survey results</span><span class="expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></button></div>
-        <ol class="dom" id="cs-list"></ol>
+    <section id="cdp-programme" aria-labelledby="cp-h">
+      <div class="card pcard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span>
+        <div class="pc-text"><h2 id="cp-h" data-t="pcTitle">CDP Programme</h2><p data-t="pcDesc">Explore the CDP Programme’s domain distribution and FM task breakdown.</p></div>
+        <button class="btn primary" id="pc-open" data-open="cdp"><span data-t="pcAction">View Programme Details</span><span class="expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></button>
       </div>
     </section>
     <section id="overview" aria-labelledby="ov-h">
@@ -342,7 +364,7 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
     en: {
       skip: "Skip to content", openNav: "Open navigation", title: "CDP 2026 Training Evaluation", subtitle: "Employee survey results",
       present: "Presentation Mode", exitPresent: "Exit Presentation", sections: "Sections", legend: "Answer legend",
-      navOverview: "Overview", navProgrammes: "Programme Details", navContributors: "Training Contributors", navPriorities: "Improvement Priorities",
+      navOverview: "Survey Overview", navProgrammes: "Programme Details", navContributors: "Training Contributors", navPriorities: "Improvement Priorities",
       y: "Yes", p: "To some extent", n: "No",
       areasTitle: "Responses by operational area", areasSub: "Operational areas, largest first · total {n}", responses: "Responses",
       satTitle: "Overall satisfaction by programme", satHelp: "Share of responses per answer. Hover, focus or tap a segment for the count; select a programme for question-level results.",
@@ -356,7 +378,17 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
       challengeTag: "Yes = faced challenges (red) · No = no challenges (green)", respondentsLead: "{a} of {b} respondents ({c}) {t}",
       footer: "Source: CDP 2026 employee survey. {ex} excluded. {area} accounted for {pct} of responses.", oneTest: "One test submission", nTests: "{n} test submissions",
       areasAria: "Responses by operational area",
-      navCourses: "CDP-T Courses", csTitle: "CDP-T Courses by Domain", csHelp: "Online courses in CDP-T, grouped by domain.", csCourses: "online courses", csSurvey: "CDP-T survey results", csTip: "{n} courses",
+      navProgramme: "CDP Programme", pcTitle: "CDP Programme", pcDesc: "Explore the CDP Programme’s domain distribution and FM task breakdown.", pcAction: "View Programme Details",
+      pvIntro: "This page presents two views of the CDP Programme: how records are distributed across domain groups and how FM tasks are distributed across categories.",
+      pvBack: "Back to Dashboard", kpiDom: "Total Domain Records", kpiFm: "Total FM Tasks", kpiDomSub: "{k} domain groups", kpiFmSub: "{k} FM categories",
+      domTitle: "Domain Distribution", fmTitle: "FM Task Distribution",
+      domExp: "This breakdown shows how the {N} records are distributed across {kw} domain groups. Each percentage is the group’s share of the {N} domain records.",
+      fmExp: "This breakdown shows how the {N} FM tasks are distributed across {kw} categories. Each percentage is the category’s share of the {N} FM tasks.",
+      domCols: "Domain Group|Records|% of Domain Records", fmCols: "FM Category|FM Tasks|% of FM Tasks", grand: "Grand Total",
+      domUnit: "{n} records", fmUnit: "{n} tasks", domChart: "Domain records by group", fmChart: "FM tasks by category",
+      domIns1: "{a} is the largest group, with {c} of {N} records ({p}).", domIns2: " {b} follows with {c2} records, and {d} has {c3}.", domIns2tie: " {b} and {d} follow with {c2} records each.",
+      fmIns1: "{a} has the highest task count, with {c} of {N} tasks ({p}).", fmIns2: " {b} follows with {c2} tasks ({p2}), and {d} has {c3} ({p3}).", fmIns2tie: " {b} and {d} each have {c2} tasks ({p2} each).",
+      topTie: "{a} and {b} share the highest count, with {c} each ({p} each).",
       navSuggestions: "Employee Suggestions", sgTitle: "Employee Suggestions for Improvement",
       sgIntro: "Suggestions written by employees in the survey, shown as written with names and contact details removed. One suggestion can cover several themes.",
       sgSub: "{n} suggestions from employees", sgThemes: "Most common themes", sgSource: "Survey question", sgAll: "All", sgSearch: "Search suggestions…",
@@ -365,7 +397,7 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
     ar: {
       skip: "انتقل إلى المحتوى", openNav: "فتح القائمة", title: "تقييم التدريب CDP 2026", subtitle: "نتائج استبيان الموظفين",
       present: "وضع العرض", exitPresent: "إنهاء العرض", sections: "الأقسام", legend: "دليل الإجابات",
-      navOverview: "نظرة عامة", navProgrammes: "تفاصيل البرامج", navContributors: "المساهمون في التدريب", navPriorities: "أولويات التحسين",
+      navOverview: "نظرة عامة على الاستبيان", navProgrammes: "تفاصيل البرامج", navContributors: "المساهمون في التدريب", navPriorities: "أولويات التحسين",
       y: "نعم", p: "إلى حد ما", n: "لا",
       areasTitle: "الردود حسب المجال التشغيلي", areasSub: "المجالات التشغيلية من الأكبر · الإجمالي {n}", responses: "ردًا",
       satTitle: "الرضا العام حسب البرنامج", satHelp: "نسبة الردود لكل إجابة. مرّر المؤشر أو انقر على أي جزء لمعرفة العدد، واختر البرنامج لعرض نتائج الأسئلة.",
@@ -379,7 +411,17 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
       challengeTag: "نعم = واجه تحديات (أحمر) · لا = لم يواجه (أخضر)", respondentsLead: "{a} من {b} مشاركًا ({c}) {t}",
       footer: "المصدر: استبيان موظفي CDP 2026. تم استبعاد {ex}. استحوذ مجال {area} على {pct} من الردود.", oneTest: "رد تجريبي واحد", twoTests: "ردّين تجريبيين", nTests: "{n} ردود تجريبية",
       areasAria: "الردود حسب المجال التشغيلي",
-      navCourses: "دورات CDP‑T", csTitle: "دورات CDP‑T حسب المجال", csHelp: "الدورات الإلكترونية في CDP‑T موزعة حسب المجال.", csCourses: "دورة إلكترونية", csSurvey: "نتائج استبيان CDP‑T", csTip: "{n} دورات",
+      navProgramme: "برنامج CDP", pcTitle: "برنامج CDP", pcDesc: "استكشف توزيع المجالات في برنامج CDP وتوزيع مهام FM.", pcAction: "عرض تفاصيل البرنامج",
+      pvIntro: "تعرض هذه الصفحة جانبين من برنامج CDP: كيف تتوزع السجلات على مجموعات المجالات، وكيف تتوزع مهام FM على الفئات.",
+      pvBack: "العودة إلى لوحة المعلومات", kpiDom: "إجمالي سجلات المجالات", kpiFm: "إجمالي مهام FM", kpiDomSub: "{k} مجموعات مجالات", kpiFmSub: "{k} فئات FM",
+      domTitle: "توزيع المجالات", fmTitle: "توزيع مهام FM",
+      domExp: "يوضح هذا التوزيع كيف تتوزع {N} سجلًا على {k} مجموعات مجالات. كل نسبة هي حصة المجموعة من {N} سجلًا.",
+      fmExp: "يوضح هذا التوزيع كيف تتوزع {N} مهمة FM على {k} فئات. كل نسبة هي حصة الفئة من {N} مهمة.",
+      domCols: "مجموعة المجال|السجلات|% من سجلات المجالات", fmCols: "فئة FM|مهام FM|% من مهام FM", grand: "الإجمالي الكلي",
+      domUnit: "{n} سجلات", fmUnit: "{n} مهام", domChart: "سجلات المجالات حسب المجموعة", fmChart: "مهام FM حسب الفئة",
+      domIns1: "‏{a} هي أكبر مجموعة، بـ {c} من {N} سجلًا ({p}).", domIns2: " تليها {b} بـ {c2} سجلًا، ثم {d} بـ {c3}.", domIns2tie: " تليها {b} و{d} بـ {c2} سجلات لكل منهما.",
+      fmIns1: "‏{a} لديها أعلى عدد من المهام، بـ {c} من {N} مهمة ({p}).", fmIns2: " تليها {b} بـ {c2} مهمة ({p2})، ثم {d} بـ {c3} ({p3}).", fmIns2tie: " ولكل من {b} و{d} ‏{c2} مهمة ({p2} لكل منهما).",
+      topTie: "‏{a} و{b} لديهما أعلى عدد، {c} لكل منهما ({p} لكل منهما).",
       navSuggestions: "اقتراحات الموظفين", sgTitle: "اقتراحات الموظفين للتحسين",
       sgIntro: "اقتراحات كتبها الموظفون في الاستبيان، معروضة كما كُتبت بعد حذف الأسماء وبيانات التواصل. قد يتناول الاقتراح الواحد أكثر من موضوع.",
       sgSub: "{n} اقتراحًا من الموظفين", sgThemes: "أكثر الموضوعات تكرارًا", sgSource: "سؤال الاستبيان", sgAll: "الكل", sgSearch: "ابحث في الاقتراحات…",
@@ -449,17 +491,6 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
     document.querySelectorAll("[data-t-aria]").forEach(function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-t-aria"))); });
     var lb = $("lang"); lb.textContent = LANG === "ar" ? "English" : "العربية"; lb.lang = LANG === "ar" ? "en" : "ar";
     pm.querySelector(".pm-label").textContent = document.body.classList.contains("present") ? t("exitPresent") : t("present");
-
-    // CDP-T courses by domain (largest first)
-    var C = D.courses;
-    if (C) {
-      var cmax = C.domains.length ? C.domains[0].count : 1;
-      $("cs-n").textContent = nf.format(C.total);
-      $("cs-list").innerHTML = C.domains.map(function (d, i) {
-        var nm = L(d, "name");
-        return '<li><span class="nm" title="' + esc(d.name) + '">' + esc(nm) + '</span><span class="tr" tabindex="0" role="img" data-tip="' + esc(nm + "|" + t("csTip", { n: nf.format(d.count) }) + "|" + pct(d.count, C.total)) + '" aria-label="' + esc(nm + ": " + t("csTip", { n: nf.format(d.count) }) + ", " + pct(d.count, C.total)) + '"><span class="grow" style="width:' + (d.count / cmax) * 100 + "%;--i:" + i + '"></span></span><span class="v"><b>' + nf.format(d.count) + "</b><small>" + pct(d.count, C.total) + "</small></span></li>";
-      }).join("");
-    }
 
     // overview: doughnut
     var r = 15.9155, off = 0, segs = "";
@@ -545,7 +576,7 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
   });
   $("sg-q").addEventListener("input", function (e) { sgState.q = e.target.value.trim(); sgState.limit = 8; renderSuggestions(); });
 
-  if (!D.courses) { $("courses").remove(); $("nav-courses").remove(); }
+  if (!D.programme) { $("cdp-programme").remove(); var nl = document.querySelector('[data-nav="cdp-programme"]'); if (nl) nl.remove(); }
   var pm = $("pm");
   render();
 
@@ -574,6 +605,38 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
     return '<div class="q' + (feat ? " feat" : "") + '"><h5>' + esc(head) + (q.challenge ? '<span class="tag">' + esc(t("challengeTag")) + "</span>" : "") + "</h5>" + (feat ? '<p class="qt">' + esc(L(q, "question")) + "</p>" : '<p class="qt">' + t("nResponses", { n: nf.format(tt) }) + (c.blank ? " · " + t("blank", { n: nf.format(c.blank) }) : "") + "</p>") + sbar(c, head, false, 0, q.challenge) + optRow(c, q.challenge) + "</div>";
   }
   var openId = null;
+  var WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+  function sortedSet(items) { return items.map(function (d, i) { return { name: d.name, count: d.count, i: i }; }).sort(function (a, b) { return b.count - a.count || a.i - b.i; }); }
+  function insight(kind, rows, N) {
+    var r1 = rows[0], r2 = rows[1], r3 = rows[2];
+    if (!r1) return "";
+    if (r2 && r2.count === r1.count) return t("topTie", { a: r1.name, b: r2.name, c: nf.format(r1.count), p: pct(r1.count, N) });
+    var s = t(kind + "Ins1", { a: r1.name, c: nf.format(r1.count), N: nf.format(N), p: pct(r1.count, N) });
+    if (r2 && r3) s += t(r2.count === r3.count ? kind + "Ins2tie" : kind + "Ins2", { b: r2.name, d: r3.name, c2: nf.format(r2.count), c3: nf.format(r3.count), p2: pct(r2.count, N), p3: pct(r3.count, N) });
+    return s;
+  }
+  function programmeSection(kind, items) {
+    var rows = sortedSet(items), N = rows.reduce(function (s, d) { return s + d.count; }, 0), max = rows.length ? rows[0].count : 1;
+    var cols = t(kind + "Cols").split("|");
+    var chart = '<ol class="hb" aria-label="' + esc(t(kind + "Chart")) + '">' + rows.map(function (d, i) {
+      var top = d.count === max, w = (d.count / max) * 100, unit = t(kind + "Unit", { n: nf.format(d.count) }), inside = w >= 14;
+      return '<li><span class="nm">' + esc(d.name) + '</span><span class="tr" tabindex="0" role="img" data-tip="' + esc(d.name + "|" + unit + "|" + pct(d.count, N)) + '" aria-label="' + esc(d.name + ": " + unit + ", " + pct(d.count, N)) + '"><span class="fill grow' + (top ? " top" : "") + '" style="width:' + w + "%;--i:" + Math.min(i, 8) + '"></span><span class="cnt' + (inside ? " in" : "") + (top ? " top" : "") + '" style="' + (inside ? "inset-inline-start:0;width:" + w + "%;justify-content:flex-end" : "inset-inline-start:" + w + "%") + '">' + nf.format(d.count) + "</span></span></li>";
+    }).join("") + "</ol>";
+    var table = '<table class="ptable"><thead><tr><th scope="col">' + esc(cols[0]) + '</th><th scope="col" class="n">' + esc(cols[1]) + '</th><th scope="col" class="n">' + esc(cols[2]) + "</th></tr></thead><tbody>" +
+      rows.map(function (d) { return '<tr' + (d.count === max ? ' class="top"' : "") + "><td>" + esc(d.name) + '</td><td class="n">' + nf.format(d.count) + '</td><td class="n">' + pct(d.count, N) + "</td></tr>"; }).join("") +
+      '</tbody><tfoot><tr><td>' + esc(t("grand")) + '</td><td class="n">' + nf.format(N) + '</td><td class="n">' + pct(N, N) + "</td></tr></tfoot></table>";
+    var kw = LANG === "ar" ? nf.format(rows.length) : WORDS[rows.length] || nf.format(rows.length);
+    return '<section class="pv-sec" id="pv-' + kind + '"><h3>' + esc(t(kind + "Title")) + '</h3><p class="pv-exp">' + esc(t(kind + "Exp", { N: nf.format(N), kw: kw, k: nf.format(rows.length) })) + '</p><p class="pv-ins">' + esc(insight(kind, rows, N)) + '</p><div class="pv-grid"><div>' + chart + "</div><div>" + table + "</div></div></section>";
+  }
+  function programmeHtml() {
+    var P = D.programme, sum = function (a) { return a.reduce(function (s, d) { return s + d.count; }, 0); };
+    var nD = sum(P.domains), nF = sum(P.fmTasks);
+    return '<div class="d-top"><button class="btn" id="back">' + svg("back") + esc(t("pvBack")) + "</button></div>" +
+      '<h2 id="d-title">' + esc(t("pcTitle")) + '</h2><p class="pv-intro">' + esc(t("pvIntro")) + "</p>" +
+      '<div class="kpis"><div class="kpi" id="kpi-dom"><span>' + esc(t("kpiDom")) + "</span><b>" + nf.format(nD) + "</b><small>" + esc(t("kpiDomSub", { k: nf.format(P.domains.length) })) + '</small></div><div class="kpi" id="kpi-fm"><span>' + esc(t("kpiFm")) + "</span><b>" + nf.format(nF) + "</b><small>" + esc(t("kpiFmSub", { k: nf.format(P.fmTasks.length) })) + "</small></div></div>" +
+      programmeSection("dom", P.domains) + programmeSection("fm", P.fmTasks);
+  }
+  function viewHtml(id) { if (id === "cdp") return programmeHtml(); var p = D.programmes.find(function (x) { return x.id === id; }); return p ? panelHtml(p) : ""; }
   function panelHtml(p) {
     var ht = L(p.headline, "text"), cnt = p.headline.count;
     var lead = p.id === "ojt" ? t("respondentsLead", { a: nf.format(cnt), b: nf.format(N), c: pct(cnt, N), t: ht }) : pct(cnt, N) + " (" + t("ofN", { a: nf.format(cnt), b: nf.format(N) }) + ") " + ht;
@@ -585,11 +648,11 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
       '<div class="qgroup"><h4>' + t(p.featured.length ? "otherQs" : "qs") + '</h4><div class="qs">' + p.questions.map(function (q) { return qcard(q, false); }).join("") + "</div></div>";
   }
   function openPanel(id, from) {
-    var p = D.programmes.find(function (x) { return x.id === id; });
-    if (!p) return;
+    var html = id === "cdp" && !D.programme ? "" : viewHtml(id);
+    if (!html) return;
     opener = from || null;
     openId = id;
-    panel.innerHTML = panelHtml(p);
+    panel.innerHTML = html;
     var b = from ? from.getBoundingClientRect() : null;
     if (b) { panel.style.setProperty("--ox", (b.left + b.width / 2 - Math.max(0, (innerWidth - Math.min(1080, innerWidth - 32)) / 2)) + "px"); panel.style.setProperty("--oy", (b.top + b.height / 2) + "px"); }
     overlay.classList.remove("anim-out");
@@ -643,7 +706,7 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
   var io = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === en.target.id ? "true" : "false"); }); });
   }, { rootMargin: "-30% 0px -60% 0px" });
-  ["courses", "overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { if ($(id)) io.observe($(id)); });
+  ["cdp-programme", "overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { if ($(id)) io.observe($(id)); });
   function markNav(id) { links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === id ? "true" : "false"); }); }
   addEventListener("scroll", function () { if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) markNav("priorities"); }, { passive: true });
   links.forEach(function (a) { a.addEventListener("click", function () { setTimeout(function () { markNav(a.dataset.nav); }, 700); }); });
@@ -673,7 +736,7 @@ html[dir=rtl] .dom .tr span{transform-origin:right center}
     try { localStorage.setItem("gm-lang", LANG); } catch (e) {}
     $("main").classList.remove("anim");
     render();
-    if (openId) { var p = D.programmes.find(function (x) { return x.id === openId; }); panel.innerHTML = panelHtml(p); $("back").addEventListener("click", closePanel); }
+    if (openId) { panel.innerHTML = viewHtml(openId); $("back").addEventListener("click", closePanel); }
   });
 
   // ── deep link ──

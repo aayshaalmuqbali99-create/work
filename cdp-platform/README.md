@@ -110,8 +110,10 @@ automatically; confirm remaining duplicates with `--names corrections.json`
 `--excluded` is the number of test submissions removed from the file (used in the footer). Layout and texts:
 `gm/template.html`; findings and headlines: `gm/data-entry.ts`.
 
-The first section, **CDP-T Courses by Domain**, comes from `gm/cdpt-courses.json` (course list pivot, not the survey):
-edit the counts there (or pass `--courses other.json`); the build stops if the domains do not add up to `total`.
+A **CDP Programme** card comes first (before Survey Overview). It opens a details view with two independent
+datasets from `gm/cdp-programme.json` (not the survey): domain records (65) and FM tasks (269), each with its own KPI,
+bar chart, table with Grand Total, percentages and generated insights. Edit the counts there (or pass
+`--programme other.json`); the build stops if a dataset does not add up to its `total`.
 
 ## Tests
 ```bash

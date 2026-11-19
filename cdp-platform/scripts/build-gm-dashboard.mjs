@@ -1,5 +1,5 @@
 // Builds the General Manager dashboard (single self-contained HTML file) from the survey workbook.
-//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--courses gm/cdpt-courses.json] [--out dist/cdp-2026-gm-dashboard.html]
+//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--programme gm/cdp-programme.json] [--out dist/cdp-2026-gm-dashboard.html]
 // Every number on the page comes from one data model computed here from the workbook: aggregated counts, plus the
 // names participants thanked for supporting their training (no respondent names, comments or individual responses). --excluded is the number of test submissions removed from the file
 // (it only feeds the footer sentence).
@@ -56,20 +56,21 @@ if (namesFile) {
 // Row numbers were only needed to merge without double counting: never written to the page.
 for (const p of data.recognition.people) delete p.rows;
 
-// CDP-T courses by domain (from the course list, not the survey): gm/cdpt-courses.json, or --courses file.json
-const coursesFile = path.resolve(opt("courses", path.join(root, "gm/cdpt-courses.json")));
-try {
-  const c = JSON.parse(readFileSync(coursesFile, "utf8"));
-  const sum = c.domains.reduce((s, d) => s + d.count, 0);
-  console.log(`CDP-T courses: ${sum} in ${c.domains.length} domains`);
-  if (c.total !== undefined && c.total !== sum) {
-    console.error(`CDP-T courses: domains add up to ${sum}, not the stated total ${c.total} — not writing the dashboard.`);
-    process.exit(1);
+// CDP Programme (not the survey): gm/cdp-programme.json, or --programme file.json. Two independent datasets —
+// domain records and FM tasks — each with its own total. Source order is kept (the page sorts by count, ties keep it).
+const programmeFile = path.resolve(opt("programme", path.join(root, "gm/cdp-programme.json")));
+{
+  const c = JSON.parse(readFileSync(programmeFile, "utf8"));
+  for (const key of ["domains", "fmTasks"]) {
+    const set = c[key];
+    const sum = set.items.reduce((s, d) => s + d.count, 0);
+    console.log(`CDP Programme ${key}: ${sum} in ${set.items.length} categories`);
+    if (set.total !== undefined && set.total !== sum) {
+      console.error(`CDP Programme ${key}: categories add up to ${sum}, not the stated total ${set.total} — not writing the dashboard.`);
+      process.exit(1);
+    }
   }
-  data.courses = { source: c.source, total: sum, domains: c.domains.slice().sort((a, b) => b.count - a.count || a.name.localeCompare(b.name)) };
-} catch (e) {
-  if (e.code !== "ENOENT") throw e;
-  data.courses = null;
+  data.programme = { domains: c.domains.items, fmTasks: c.fmTasks.items };
 }
 
 // Integrity checks: departments and every programme row must add up to the number of responses.
