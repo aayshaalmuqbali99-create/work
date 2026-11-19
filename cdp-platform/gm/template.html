@@ -278,6 +278,38 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
 .kpi .ptag{margin-bottom:10px}.kpi.ojt{border-top:4px solid #2E2E3A}.kpi.t{border-top:4px solid var(--blue)}
 .pv-sec .ptag{margin-bottom:8px}
 .pv-src{margin:-10px 0 20px;color:var(--ink-2);font-size:.95rem}
+.ccard{border-inline-start-color:var(--orange)}
+.ptag.decision{background:#FFF1E5;color:#A34B00}
+.cr-mini{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;color:var(--ink-2);font-size:.92rem}
+.cr-mini b{color:var(--ink);font-size:1.1rem;font-variant-numeric:tabular-nums;margin-inline-end:4px}
+.kpis.k5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.kpi.hl{border-color:#FFD8B8;background:#FFFAF5}.kpi.hl b{color:#A34B00}
+.cr-stack{display:flex;height:34px;border-radius:9px;overflow:hidden;background:var(--line-2);margin:6px 0 14px}
+.cr-stack span{display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#fff;min-width:0;outline:none}
+.cr-stack span + span{border-inline-start:2px solid #fff}
+.tone-good{background:var(--yes)}.tone-neutral{background:var(--some);color:var(--ink)!important}.tone-warn{background:var(--orange);color:var(--ink)!important}.tone-bad{background:var(--no)}
+.cr-rows{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cr-rows li{padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+.cr-rows .sw{display:inline-block;vertical-align:-2px;margin-inline-end:6px}
+.cr-rows b{display:block;font-size:1.8rem;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums;margin-top:6px}
+.cr-rows .pc{color:var(--muted);font-weight:700}
+.cr-rows .st{display:block;margin-top:6px;font-size:.85rem;color:var(--ink-2)}
+.weak{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.weak li{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--white);border-top:4px solid var(--no)}
+.weak h4{margin:0 0 6px;font-size:1rem}
+.weak p,.req p{margin:0;color:var(--ink-2);font-size:.92rem}
+.req{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.req li{display:flex;gap:12px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--white)}
+.req .ck{flex-shrink:0;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#E7F5EC;color:var(--yes)}
+.req h4{margin:0 0 4px;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--blue)}
+html[dir=rtl] .req h4{letter-spacing:0}
+.gate{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;counter-reset:g}
+.gate li{position:relative;display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:14px;background:var(--lav);font-weight:700;counter-increment:g}
+.gate li::before{content:counter(g);display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;font-weight:800}
+.gate li:not(:last-child)::after{content:"→";position:absolute;inset-inline-end:-12px;top:50%;transform:translateY(-50%);z-index:1;color:var(--blue);font-weight:800;font-size:1.2rem}
+html[dir=rtl] .gate li:not(:last-child)::after{content:"←"}
+@media (max-width:1100px){.kpis.k5{grid-template-columns:repeat(3,minmax(0,1fr))}.cr-rows{grid-template-columns:repeat(2,minmax(0,1fr))}.gate{grid-template-columns:repeat(2,minmax(0,1fr))}.gate li::after{display:none}}
+@media (max-width:600px){.kpis.k5,.cr-rows,.gate{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -293,6 +325,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
   <aside class="side" id="side">
     <nav data-t-aria="sections" aria-label="Sections">
       <a href="#cdp-programme" data-nav="cdp-programme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg><span data-t="navProgramme">CDP Programme</span></a>
+      <a href="#cdpt-catalogue" data-nav="cdpt-catalogue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11M9 12h11M9 19h11"/><path d="m3.5 5 1 1 2-2M3.5 12l1 1 2-2M3.5 19l1 1 2-2"/></svg><span data-t="navCatalogue">CDP-T Catalogue Review</span></a>
       <a href="#overview" data-nav="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4h6v4h-6zM4 20h6v-3H4z"/></svg><span data-t="navOverview">Overview</span></a>
       <a href="#programmes" data-nav="programmes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg><span data-t="navProgrammes">Programme Details</span></a>
       <a href="#contributors" data-nav="contributors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.8-3.6 3.2-5.5 6-5.5s5.2 1.9 6 5.5"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.6c2.5.2 4.3 1.9 5 5.4"/></svg><span data-t="navContributors">Training Contributors</span></a>
@@ -307,6 +340,13 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg></span>
         <div class="pc-text"><h2 id="cp-h" data-t="pcTitle">CDP Programme</h2><p data-t="pcDesc">Explore the CDP Programme’s domain distribution and FM task breakdown.</p><div class="ptags" id="pc-tags"></div></div>
         <button class="btn primary" id="pc-open" data-open="cdp"><span data-t="pcAction">View Programme Details</span><span class="expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></button>
+      </div>
+    </section>
+    <section id="cdpt-catalogue" aria-labelledby="cr-h">
+      <div class="card pcard ccard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5h11M9 12h11M9 19h11"/><path d="m3.5 5 1 1 2-2M3.5 12l1 1 2-2M3.5 19l1 1 2-2"/></svg></span>
+        <div class="pc-text"><div class="ptags" id="cr-tags"></div><h2 id="cr-h"></h2><p id="cr-sub"></p><div class="cr-mini" id="cr-mini"></div></div>
+        <button class="btn primary" id="cr-open" data-open="catalogue"><span data-t="crAction">View Catalogue Review</span><span class="expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg></span></button>
       </div>
     </section>
     <section id="overview" aria-labelledby="ov-h">
@@ -397,6 +437,13 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       domIns1: "{a} is the largest group, with {c} of {N} records ({p}).", domIns2: " {b} follows with {c2} records, and {d} has {c3}.", domIns2tie: " {b} and {d} follow with {c2} records each.",
       fmIns1: "{a} has the highest task count, with {c} of {N} tasks ({p}).", fmIns2: " {b} follows with {c2} tasks ({p2}), and {d} has {c3} ({p3}).", fmIns2tie: " {b} and {d} each have {c2} tasks ({p2} each).",
       topTie: "{a} and {b} share the highest count, with {c} each ({p} each).",
+      navCatalogue: "CDP-T Catalogue Review", crAction: "View Catalogue Review",
+      crKpiTotal: "Total courses", crKpiHuawei: "Huawei courses", crKpiAvail: "Available on Huawei Talent", crKpiNot: "Not found", crKpiRate: "Availability rate",
+      crRateSub: "{a} of {b} Huawei courses", crMiniTotal: "courses", crMiniHuawei: "Huawei", crMiniRate: "available",
+      crListTitle: "What the Excel list contains", crListHelp: "The {n} Huawei courses in the list, by training type. Each percentage is the type's share of the {n} Huawei courses.",
+      crWeakTitle: "Key control weaknesses", crReqTitle: "Required before release", crGateTitle: "Proposed control gate",
+      crIntroSrc: "Source: CDP-T Management Analysis (Facility Operations). These figures describe the course catalogue, not the employee survey.",
+      crUnit: "{n} courses",
       navSuggestions: "Employee Suggestions", sgTitle: "Employee Suggestions for Improvement",
       sgIntro: "Suggestions written by employees in the survey, shown as written with names and contact details removed. One suggestion can cover several themes.",
       sgSub: "{n} suggestions from employees", sgThemes: "Most common themes", sgSource: "Survey question", sgAll: "All", sgSearch: "Search suggestions…",
@@ -431,6 +478,13 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       domIns1: "‏{a} هي أكبر مجموعة، بـ {c} من {N} سجلًا ({p}).", domIns2: " تليها {b} بـ {c2} سجلًا، ثم {d} بـ {c3}.", domIns2tie: " تليها {b} و{d} بـ {c2} سجلات لكل منهما.",
       fmIns1: "‏{a} لديها أعلى عدد من المهام، بـ {c} من {N} مهمة ({p}).", fmIns2: " تليها {b} بـ {c2} مهمة ({p2})، ثم {d} بـ {c3} ({p3}).", fmIns2tie: " ولكل من {b} و{d} ‏{c2} مهمة ({p2} لكل منهما).",
       topTie: "‏{a} و{b} لديهما أعلى عدد، {c} لكل منهما ({p} لكل منهما).",
+      navCatalogue: "مراجعة كتالوج CDP‑T", crAction: "عرض مراجعة الكتالوج",
+      crKpiTotal: "إجمالي الدورات", crKpiHuawei: "دورات Huawei", crKpiAvail: "متاحة على Huawei Talent", crKpiNot: "غير موجودة", crKpiRate: "نسبة الإتاحة",
+      crRateSub: "{a} من {b} دورة Huawei", crMiniTotal: "دورة", crMiniHuawei: "Huawei", crMiniRate: "متاحة",
+      crListTitle: "محتوى قائمة Excel", crListHelp: "دورات Huawei الـ{n} في القائمة حسب نوع التدريب. كل نسبة هي حصة النوع من {n} دورة Huawei.",
+      crWeakTitle: "نقاط الضعف الرئيسية في الضبط", crReqTitle: "المطلوب قبل الإصدار", crGateTitle: "بوابة الضبط المقترحة",
+      crIntroSrc: "المصدر: تحليل إدارة CDP‑T (تشغيل المرافق). هذه الأرقام تخص كتالوج الدورات، وليست من استبيان الموظفين.",
+      crUnit: "{n} دورات",
       navSuggestions: "اقتراحات الموظفين", sgTitle: "اقتراحات الموظفين للتحسين",
       sgIntro: "اقتراحات كتبها الموظفون في الاستبيان، معروضة كما كُتبت بعد حذف الأسماء وبيانات التواصل. قد يتناول الاقتراح الواحد أكثر من موضوع.",
       sgSub: "{n} اقتراحًا من الموظفين", sgThemes: "أكثر الموضوعات تكرارًا", sgSource: "سؤال الاستبيان", sgAll: "الكل", sgSearch: "ابحث في الاقتراحات…",
@@ -500,6 +554,15 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
     document.querySelectorAll("[data-t-aria]").forEach(function (el) { el.setAttribute("aria-label", t(el.getAttribute("data-t-aria"))); });
     var lb = $("lang"); lb.textContent = LANG === "ar" ? "English" : "العربية"; lb.lang = LANG === "ar" ? "en" : "ar";
     pm.querySelector(".pm-label").textContent = document.body.classList.contains("present") ? t("exitPresent") : t("present");
+
+    // CDP-T catalogue review card
+    if (D.catalogue && $("cr-tags")) {
+      var CT = D.catalogue.totals;
+      $("cr-tags").innerHTML = catTags();
+      $("cr-h").textContent = LL(D.catalogue.title);
+      $("cr-sub").textContent = LL(D.catalogue.subtitle);
+      $("cr-mini").innerHTML = "<span><b>" + nf.format(CT.totalCourses) + "</b>" + esc(t("crMiniTotal")) + "</span><span><b>" + nf.format(CT.huaweiCourses) + "</b>" + esc(t("crMiniHuawei")) + "</span><span><b>" + pct(CT.available, CT.huaweiCourses) + "</b>" + esc(t("crMiniRate")) + "</span>";
+    }
 
     // CDP Programme card: which number belongs to which programme
     if (D.programme && $("pc-tags")) {
@@ -591,6 +654,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
   });
   $("sg-q").addEventListener("input", function (e) { sgState.q = e.target.value.trim(); sgState.limit = 8; renderSuggestions(); });
 
+  if (!D.catalogue) { $("cdpt-catalogue").remove(); var cl = document.querySelector('[data-nav="cdpt-catalogue"]'); if (cl) cl.remove(); }
   if (!D.programme) { $("cdp-programme").remove(); var nl = document.querySelector('[data-nav="cdp-programme"]'); if (nl) nl.remove(); }
   var pm = $("pm");
   render();
@@ -656,7 +720,29 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       '<div class="kpis"><div class="kpi t" id="kpi-dom">' + ptag("dom") + '<span class="kl">' + esc(t("kpiDom")) + "</span><b>" + nf.format(nD) + "</b><small>" + esc(t("kpiDomSub", { k: nf.format(P.domains.length) })) + '</small></div><div class="kpi ojt" id="kpi-fm">' + ptag("fm") + '<span class="kl">' + esc(t("kpiFm")) + "</span><b>" + nf.format(nF) + "</b><small>" + esc(t("kpiFmSub", { k: nf.format(P.fmTasks.length) })) + "</small></div></div>" +
       programmeSection("dom", P.domains) + programmeSection("fm", P.fmTasks);
   }
-  function viewHtml(id) { if (id === "cdp") return programmeHtml(); var p = D.programmes.find(function (x) { return x.id === id; }); return p ? panelHtml(p) : ""; }
+  function LL(o) { return o ? (LANG === "ar" && o.ar ? o.ar : o.en) : ""; }
+  function fill(str, map) { return str.replace(/\{(\w+)\}/g, function (_, k) { return map[k] != null ? map[k] : ""; }); }
+  function catalogueHtml() {
+    var C = D.catalogue, T = C.totals, H = T.huaweiCourses;
+    var vars = { notFound: nf.format(T.notFound), huawei: nf.format(H), requireL1Plus: nf.format(T.requireL1Plus), elearning: nf.format((C.breakdown.find(function (b) { return b.id === "elearning"; }) || { count: 0 }).count) };
+    var kpi = function (cls, label, val, sub) { return '<div class="kpi ' + cls + '"><span class="kl">' + esc(label) + "</span><b>" + val + "</b>" + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</div>"; };
+    var stack = '<div class="cr-stack" role="img" aria-label="' + esc(t("crListTitle")) + '">' + C.breakdown.map(function (b) { var w = (b.count / H) * 100; return '<span class="tone-' + b.tone + '" style="width:' + w + '%" tabindex="0" data-tip="' + esc(LL(b.name) + "|" + t("crUnit", { n: nf.format(b.count) }) + "|" + pct(b.count, H)) + '" aria-label="' + esc(LL(b.name) + ": " + t("crUnit", { n: nf.format(b.count) }) + ", " + pct(b.count, H)) + '">' + (w >= 8 ? nf.format(b.count) : "") + "</span>"; }).join("") + "</div>";
+    var rows = '<ul class="cr-rows">' + C.breakdown.map(function (b) { return '<li><span class="sw tone-' + b.tone + '"></span><strong>' + esc(LL(b.name)) + "</strong><b>" + nf.format(b.count) + ' <span class="pc">' + pct(b.count, H) + '</span></b><span class="st">' + esc(LL(b.status)) + "</span></li>"; }).join("") + "</ul>";
+    var tick = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>';
+    return '<div class="d-top"><button class="btn" id="back">' + svg("back") + esc(t("pvBack")) + "</button></div>" +
+      '<div class="ptags">' + catTags() + "</div>" +
+      '<h2 id="d-title">' + esc(LL(C.title)) + '</h2><p class="pv-intro">' + esc(LL(C.subtitle)) + '</p><p class="pv-src">' + esc(t("crIntroSrc")) + "</p>" +
+      '<div class="kpis k5">' + kpi("", t("crKpiTotal"), nf.format(T.totalCourses)) + kpi("", t("crKpiHuawei"), nf.format(H)) + kpi("", t("crKpiAvail"), nf.format(T.available)) + kpi("", t("crKpiNot"), nf.format(T.notFound)) + kpi("hl", t("crKpiRate"), pct(T.available, H), t("crRateSub", { a: nf.format(T.available), b: nf.format(H) })) + "</div>" +
+      '<section class="pv-sec" id="cr-list"><h3>' + esc(t("crListTitle")) + '</h3><p class="pv-exp">' + esc(t("crListHelp", { n: nf.format(H) })) + '</p><p class="pv-ins">' + esc(fill(LL(C.breakdownInsight), vars)) + "</p>" + stack + rows + "</section>" +
+      '<section class="pv-sec" id="cr-weak"><h3>' + esc(t("crWeakTitle")) + '</h3><ul class="weak">' + C.weaknesses.map(function (w) { return "<li><h4>" + esc(LL(w.title)) + "</h4><p>" + esc(fill(LL(w.text), vars)) + "</p></li>"; }).join("") + "</ul></section>" +
+      '<section class="pv-sec" id="cr-req"><h3>' + esc(t("crReqTitle")) + '</h3><ul class="req">' + C.required.map(function (r) { return '<li><span class="ck">' + tick + "</span><div><h4>" + esc(LL(r.action)) + "</h4><p>" + esc(LL(r.text)) + "</p></div></li>"; }).join("") + "</ul></section>" +
+      '<section class="pv-sec" id="cr-gate"><h3>' + esc(t("crGateTitle")) + '</h3><ol class="gate">' + C.gate.map(function (g) { return "<li>" + esc(LL(g)) + "</li>"; }).join("") + "</ol></section>";
+  }
+  function catTags() {
+    var C = D.catalogue;
+    return '<span class="ptag t">' + esc(C.programme.replace("-", "‑")) + " · " + esc(LL(C.scope)) + '</span><span class="ptag decision">' + esc(LL(C.badge)) + "</span>";
+  }
+  function viewHtml(id) { if (id === "catalogue") return D.catalogue ? catalogueHtml() : ""; if (id === "cdp") return programmeHtml(); var p = D.programmes.find(function (x) { return x.id === id; }); return p ? panelHtml(p) : ""; }
   function panelHtml(p) {
     var ht = L(p.headline, "text"), cnt = p.headline.count;
     var lead = p.id === "ojt" ? t("respondentsLead", { a: nf.format(cnt), b: nf.format(N), c: pct(cnt, N), t: ht }) : pct(cnt, N) + " (" + t("ofN", { a: nf.format(cnt), b: nf.format(N) }) + ") " + ht;
@@ -668,7 +754,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
       '<div class="qgroup"><h4>' + t(p.featured.length ? "otherQs" : "qs") + '</h4><div class="qs">' + p.questions.map(function (q) { return qcard(q, false); }).join("") + "</div></div>";
   }
   function openPanel(id, from) {
-    var html = id === "cdp" && !D.programme ? "" : viewHtml(id);
+    var html = (id === "cdp" && !D.programme) || (id === "catalogue" && !D.catalogue) ? "" : viewHtml(id);
     if (!html) return;
     opener = from || null;
     openId = id;
@@ -727,7 +813,7 @@ html[dir=rtl] .ptable tr.top td:first-child{box-shadow:inset -3px 0 0 var(--oran
   var io = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === en.target.id ? "true" : "false"); }); });
   }, { rootMargin: "-30% 0px -60% 0px" });
-  ["cdp-programme", "overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { if ($(id)) io.observe($(id)); });
+  ["cdp-programme", "cdpt-catalogue", "overview", "programmes", "contributors", "suggestions", "priorities"].forEach(function (id) { if ($(id)) io.observe($(id)); });
   function markNav(id) { links.forEach(function (a) { a.setAttribute("aria-current", a.dataset.nav === id ? "true" : "false"); }); }
   addEventListener("scroll", function () { if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) markNav("priorities"); }, { passive: true });
   links.forEach(function (a) { a.addEventListener("click", function () { setTimeout(function () { markNav(a.dataset.nav); }, 700); }); });

@@ -1,5 +1,5 @@
 // Builds the General Manager dashboard (single self-contained HTML file) from the survey workbook.
-//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--programme gm/cdp-programme.json] [--out dist/cdp-2026-gm-dashboard.html]
+//   node scripts/build-gm-dashboard.mjs path/to/responses.xlsx --excluded 1 [--names corrections.json] [--programme gm/cdp-programme.json] [--catalogue gm/cdpt-catalogue-review.json] [--out dist/cdp-2026-gm-dashboard.html]
 // Every number on the page comes from one data model computed here from the workbook: aggregated counts, plus the
 // names participants thanked for supporting their training (no respondent names, comments or individual responses). --excluded is the number of test submissions removed from the file
 // (it only feeds the footer sentence).
@@ -72,6 +72,25 @@ const programmeFile = path.resolve(opt("programme", path.join(root, "gm/cdp-prog
   }
   const meta = (x) => ({ programme: x.programme, label: x.label, labelAr: x.labelAr });
   data.programme = { domains: c.domains.items, fmTasks: c.fmTasks.items, domainsMeta: meta(c.domains), fmTasksMeta: meta(c.fmTasks) };
+}
+
+// CDP-T Training Catalogue Review (Facility Operations): gm/cdpt-catalogue-review.json, or --catalogue file.json
+{
+  const f = path.resolve(opt("catalogue", path.join(root, "gm/cdpt-catalogue-review.json")));
+  let c = null;
+  try { c = JSON.parse(readFileSync(f, "utf8")); } catch (e) { if (e.code !== "ENOENT") throw e; }
+  if (c) {
+    const T = c.totals, sum = c.breakdown.reduce((s, b) => s + b.count, 0);
+    const problems = [];
+    if (T.available + T.notFound !== T.huaweiCourses) problems.push(`available ${T.available} + not found ${T.notFound} ≠ Huawei courses ${T.huaweiCourses}`);
+    if (sum !== T.huaweiCourses) problems.push(`list breakdown adds up to ${sum}, not ${T.huaweiCourses}`);
+    if (T.huaweiCourses > T.totalCourses) problems.push("more Huawei courses than total courses");
+    if (T.requireL1Plus > T.huaweiCourses) problems.push("L1+ courses exceed Huawei courses");
+    console.log(`CDP-T catalogue review: ${T.totalCourses} courses, ${T.huaweiCourses} Huawei, ${T.available} available, ${T.notFound} not found`);
+    if (problems.length) { console.error("CDP-T catalogue review: " + problems.join("; ") + " — not writing the dashboard."); process.exit(1); }
+    delete c._note;
+    data.catalogue = c;
+  }
 }
 
 // Integrity checks: departments and every programme row must add up to the number of responses.

@@ -1,0 +1,36 @@
+{
+  "_note": "CDP-T Training Catalogue Review (Facility Operations) — from CDPT_Management_Analysis.pptx. Not the survey and not the CDP Programme counts. Counts are checked at build time (available + notFound = huaweiCourses; breakdown adds up to huaweiCourses); percentages are calculated on the page.",
+  "programme": "CDP-T",
+  "scope": { "en": "Facility Operations", "ar": "تشغيل المرافق" },
+  "title": { "en": "CDP-T Training Catalogue Review", "ar": "مراجعة كتالوج تدريب CDP‑T" },
+  "subtitle": { "en": "Audit of the latest training list shared by the Secondment Team", "ar": "تدقيق آخر قائمة تدريب شاركها فريق الإعارة (Secondment Team)" },
+  "badge": { "en": "Management decision required", "ar": "مطلوب قرار إداري" },
+  "totals": { "totalCourses": 121, "huaweiCourses": 85, "available": 70, "notFound": 15, "requireL1Plus": 78 },
+  "breakdown": [
+    { "id": "elearning", "name": { "en": "E-learning", "ar": "تعلّم إلكتروني" }, "status": { "en": "Suitable format", "ar": "صيغة مناسبة" }, "tone": "good", "count": 57 },
+    { "id": "certification", "name": { "en": "Certification", "ar": "شهادات" }, "status": { "en": "Exclude / verify separately", "ar": "تُستبعد أو يُتحقق منها منفصلة" }, "tone": "neutral", "count": 9 },
+    { "id": "new", "name": { "en": "New", "ar": "New" }, "status": { "en": "Not a training type", "ar": "ليس نوع تدريب" }, "tone": "warn", "count": 4 },
+    { "id": "unidentified", "name": { "en": "Not identified", "ar": "غير محددة" }, "status": { "en": "Not found on Huawei Talent", "ar": "غير موجودة على Huawei Talent" }, "tone": "bad", "count": 15 }
+  ],
+  "breakdownInsight": { "en": "Only {elearning} of {huawei} Huawei entries are clearly E-learning.", "ar": "{elearning} فقط من أصل {huawei} دورة Huawei هي تعلّم إلكتروني بوضوح." },
+  "weaknesses": [
+    { "title": { "en": "Availability", "ar": "الإتاحة" }, "text": { "en": "{notFound} courses could not be located on Huawei Talent.", "ar": "تعذّر العثور على {notFound} دورة في Huawei Talent." } },
+    { "title": { "en": "Training type", "ar": "نوع التدريب" }, "text": { "en": "“New” and Certification were mixed with E-learning.", "ar": "خُلطت «New» والشهادات مع التعلّم الإلكتروني." } },
+    { "title": { "en": "Course lifecycle", "ar": "دورة حياة الدورة" }, "text": { "en": "Closing Time / availability window was not controlled.", "ar": "لم يُضبط وقت الإغلاق ونافذة إتاحة الدورة." } },
+    { "title": { "en": "Eligibility", "ar": "الأهلية" }, "text": { "en": "{requireL1Plus} of {huawei} courses require L1+, while employee level may show L0.", "ar": "{requireL1Plus} من {huawei} دورة تتطلب مستوى L1 فأعلى، بينما قد يظهر مستوى الموظف L0." } },
+    { "title": { "en": "System readiness", "ar": "جاهزية النظام" }, "text": { "en": "Catalogue can be circulated before suitable courses are ready in AgileOps.", "ar": "قد يُعمَّم الكتالوج قبل أن تجهز الدورات المناسبة في AgileOps." } }
+  ],
+  "required": [
+    { "action": { "en": "Verify", "ar": "تحقّق" }, "text": { "en": "Confirm every course is active and accessible in Huawei Talent.", "ar": "التأكد من أن كل دورة مفعّلة ومتاحة في Huawei Talent." } },
+    { "action": { "en": "Filter", "ar": "تصفية" }, "text": { "en": "Publish E-learning only; exclude “New” and Certification.", "ar": "نشر دورات التعلّم الإلكتروني فقط، واستبعاد «New» والشهادات." } },
+    { "action": { "en": "Control", "ar": "ضبط" }, "text": { "en": "Record exact title, link, language, duration and Closing Time.", "ar": "تسجيل العنوان الدقيق والرابط واللغة والمدة ووقت الإغلاق." } },
+    { "action": { "en": "Align", "ar": "مواءمة" }, "text": { "en": "Validate Training Level, Minimum Skill Level and team relevance.", "ar": "التحقق من مستوى التدريب والحد الأدنى لمستوى المهارة وملاءمة الدورة للفريق." } },
+    { "action": { "en": "Upload", "ar": "رفع" }, "text": { "en": "Load approved, team-specific courses into AgileOps before circulation.", "ar": "رفع الدورات المعتمدة الخاصة بالفريق إلى AgileOps قبل التعميم." } }
+  ],
+  "gate": [
+    { "en": "Secondment Team validates", "ar": "فريق الإعارة يتحقق" },
+    { "en": "FOM confirms relevance", "ar": "FOM يؤكد الملاءمة" },
+    { "en": "Courses uploaded in AgileOps", "ar": "رفع الدورات إلى AgileOps" },
+    { "en": "Final catalogue released to employees", "ar": "إصدار الكتالوج النهائي للموظفين" }
+  ]
+}
